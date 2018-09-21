@@ -1,0 +1,653 @@
+1
+00:00:00,210 --> 00:00:00,869
+Hello again!
+
+2
+00:00:00,869 --> 00:00:05,270
+In this sequence we will look at
+definitions in OCaml.
+
+3
+00:00:05,270 --> 00:00:09,370
+In fact definitions are used to
+give names to values,
+
+4
+00:00:09,370 --> 00:00:12,710
+and definitions in OCaml come in two kinds:
+
+5
+00:00:12,710 --> 00:00:15,420
+global definitions and local definitions.
+
+6
+00:00:15,420 --> 00:00:18,390
+Let's start with global definitions.
+
+7
+00:00:18,390 --> 00:00:24,200
+Global definitions are definitions which are
+effective from the moment on you write them down
+
+8
+00:00:24,220 --> 00:00:31,900
+until the end of the session or at the end
+of your program in case of a compiled program.
+
+9
+00:00:31,970 --> 00:00:37,640
+The syntax is very simple, you write <u>let</u>,
+the name of your liking, <u>=</u>,
+
+10
+00:00:37,640 --> 00:00:43,879
+and then the expression which calculates the
+value to which you want to assign the name.
+
+11
+00:00:43,879 --> 00:00:50,100
+Again, there is no need to give a separate
+definition of an identifier,
+
+12
+00:00:50,170 --> 00:00:57,100
+and there is no need to declare the type of
+this identifier, as the type will be inferred by the system.
+
+13
+00:00:57,199 --> 00:01:02,839
+A very important feature of functional programming
+languages in general is that
+
+14
+00:01:02,839 --> 00:01:07,579
+once set the value of an identifier never changes.
+
+15
+00:01:07,579 --> 00:01:10,909
+This even is true in presence of the imperative features,
+
+16
+00:01:10,909 --> 00:01:13,500
+which we will see in week 5.
+
+17
+00:01:13,500 --> 00:01:15,600
+This might seem surprising at the moment
+
+18
+00:01:15,600 --> 00:01:21,200
+but we will learn in week 5 how this is in fact possible.
+
+19
+00:01:21,200 --> 00:01:24,750
+Of course, once we have defined a name and
+bound it to a value,
+
+20
+00:01:24,750 --> 00:01:29,380
+we can use it in expressions written down
+later in the program.
+
+21
+00:01:29,380 --> 00:01:34,520
+This is of course the "raison d'être" of
+having definitions.
+
+22
+00:01:37,549 --> 00:01:43,500
+So here are some simple examples of definitions
+of global identifiers.
+
+23
+00:01:43,500 --> 00:01:46,960
+So first, we have here a global definition
+of the identifier named <u>x</u>,
+
+24
+00:01:46,960 --> 00:01:50,640
+which obtains the value of <u>5</u>.
+
+25
+00:01:50,649 --> 00:01:53,810
+Of course, once we have defined the identifier <u>x</u>,
+
+26
+00:01:53,810 --> 00:01:57,030
+we can use it the following to
+compute others values
+
+27
+00:01:57,030 --> 00:02:01,430
+like this example where we define
+a global identifier <u>y</u>
+
+28
+00:02:01,430 --> 00:02:04,200
+which will be bound to <u>2 * x</u>,
+
+29
+00:02:04,200 --> 00:02:06,799
+that is this of course the value of <u>10</u>.
+
+30
+00:02:06,799 --> 00:02:12,800
+Now, it is perfectly OK to give a new global
+definition of an identifier with the same name
+
+31
+00:02:12,800 --> 00:02:15,700
+as we have already used it before.
+
+32
+00:02:15,700 --> 00:02:20,100
+What in fact is happening here, is that we
+have defined a new identifier,
+
+33
+00:02:20,120 --> 00:02:23,870
+which just happens to have
+the same name than the old one.
+
+34
+00:02:23,870 --> 00:02:26,860
+Which means that
+the old definition will be shadowed,
+
+35
+00:02:26,860 --> 00:02:29,280
+and it will be hidden for the moment.
+
+36
+00:02:29,280 --> 00:02:31,280
+For the moment, you just have to believe me that
+
+37
+00:02:31,280 --> 00:02:33,190
+the old definition is still there,
+
+38
+00:02:33,190 --> 00:02:35,470
+and can still be accessed in other ways.
+
+39
+00:02:35,470 --> 00:02:40,400
+In the next sequence in fact I will give you
+a demonstration that it is really the case.
+
+40
+00:02:40,780 --> 00:02:42,420
+So let pass this to the toplevel,
+
+41
+00:02:42,420 --> 00:02:47,400
+we obtain of course that
+<u>x</u> now is bound to a value of <u>42</u>.
+
+42
+00:02:47,400 --> 00:02:52,560
+So we still have here for <u>y</u>,
+the value of <u>10</u>, as before.
+
+43
+00:02:52,560 --> 00:02:55,800
+However when we ask now
+about the value of <u>x</u>,
+
+44
+00:02:55,800 --> 00:02:59,040
+then it is the last binding which is active,
+
+45
+00:02:59,040 --> 00:03:01,400
+and the <u>x</u> that we have here in line 9
+
+46
+00:03:01,400 --> 00:03:06,450
+will now refer to the last definition 
+of an identifier named <u>x</u>,
+
+47
+00:03:06,450 --> 00:03:10,920
+which will give us the value of 42.
+
+48
+00:03:13,400 --> 00:03:18,700
+We also might have local definitions, which
+work almost the same,
+
+49
+00:03:18,700 --> 00:03:25,290
+except that the scope, which means the region
+of the program where this definition is effective,
+
+50
+00:03:25,290 --> 00:03:28,870
+will be delimited by the syntax.
+
+51
+00:03:28,870 --> 00:03:36,000
+To use a local definition, we would write:
+<u>let</u>, 'name', <u>=</u>, the expression to be named,
+
+52
+00:03:36,000 --> 00:03:38,180
+<u>in</u>, expression "2".
+
+53
+00:03:38,180 --> 00:03:42,800
+And expression "2", here, would be
+the scope that is the delimited region
+
+54
+00:03:42,800 --> 00:03:45,120
+where this definition will be effective.
+
+55
+00:03:45,120 --> 00:03:49,750
+You may in fact write down
+in a program several definitions,
+
+56
+00:03:49,750 --> 00:03:53,730
+local and global ones, using the same name.
+
+57
+00:03:53,730 --> 00:03:56,750
+If this is the case, then the most local definition,
+
+58
+00:03:56,750 --> 00:03:58,290
+the most inner one,
+
+59
+00:03:58,290 --> 00:04:03,050
+always has priority over more global,
+more outer definitions.
+
+60
+00:04:05,200 --> 00:04:08,550
+Here, we have now some local definitions.
+
+61
+00:04:08,550 --> 00:04:12,000
+So on the first line,
+we have a local definition of an identifier <u>x</u>,
+
+62
+00:04:12,000 --> 00:04:14,900
+which will be bound to <u>9</u>.
+
+63
+00:04:14,900 --> 00:04:19,959
+And this identifier is visible in the expression
+which we will see behind the <u>in</u>.
+
+64
+00:04:19,959 --> 00:04:24,389
+Which means that the result which we calculate
+will be <u>18</u>, of course.
+
+65
+00:04:24,389 --> 00:04:27,600
+However, with a local definition
+
+66
+00:04:27,600 --> 00:04:33,710
+the definition is no longer visible once
+you leave the scope of this definition.
+
+67
+00:04:33,710 --> 00:04:38,020
+Which means that on the next line,
+where we ask for the value of <u>x</u>,
+
+68
+00:04:38,020 --> 00:04:43,590
+the local definition of <u>x</u> is no longer in
+effect, and we get an error message.
+
+69
+00:04:43,590 --> 00:04:49,889
+Only if you have a global definition of an
+identifier like <u>x</u> to the value of <u>17</u>,
+
+70
+00:04:49,889 --> 00:04:55,560
+we can use it in the following phrases which
+we pass to the toplevel.
+
+71
+00:04:55,560 --> 00:04:59,840
+So once we have passed a global definition of <u>x</u>,
+
+72
+00:04:59,840 --> 00:05:01,749
+we might ask for the value of <u>x</u>.
+
+73
+00:05:01,749 --> 00:05:05,789
+And we obtain, as we can expect,
+the value of <u>17</u>.
+
+74
+00:05:05,789 --> 00:05:10,600
+And then, we can use this value of <u>x</u>
+in another, for instance, local definition
+
+75
+00:05:10,600 --> 00:05:14,169
+which just uses this value of <u>x</u>.
+
+76
+00:05:14,169 --> 00:05:17,300
+Like in this case, 
+we have a local definition of <u>y</u>,
+
+77
+00:05:17,300 --> 00:05:20,030
+which will be bound to <u>x + 1</u>,
+that is <u>18</u>,
+
+78
+00:05:20,030 --> 00:05:26,199
+in <u>y / 3</u>, so we might expect that
+this gives us the value of <u>6</u>.
+
+79
+00:05:26,199 --> 00:05:28,999
+And this is indeed the case.
+
+80
+00:05:28,999 --> 00:05:34,590
+Our next example shows us again the same as
+we have seen before: the shadowing.
+
+81
+00:05:34,590 --> 00:05:41,219
+A recent definition, or an inner or more local
+definitions shadows a more global definition,
+
+82
+00:05:41,219 --> 00:05:43,969
+as we can see it on this example.
+
+83
+00:05:43,969 --> 00:05:48,180
+So here we have a nesting of three local definitions.
+
+84
+00:05:48,180 --> 00:05:50,000
+First we define <u>x</u> to be <u>4</u>.
+
+85
+00:05:50,000 --> 00:05:55,700
+Then we define <u>y</u> by referring to 
+the <u>x</u> we just have defined.
+
+86
+00:05:55,700 --> 00:05:59,400
+And finally we define a new identifier called <u>x</u>
+
+87
+00:05:59,400 --> 00:06:04,069
+which refers to <u>y</u> which we just have defined.
+
+88
+00:06:04,069 --> 00:06:06,259
+Now the only question is:
+what we obtain in the end ?
+
+89
+00:06:06,259 --> 00:06:09,620
+And in fact, following the principle that
+I just have announced,
+
+90
+00:06:09,620 --> 00:06:15,159
+it is always the more local definition which
+take priority over a more global one,
+
+91
+00:06:15,159 --> 00:06:18,169
+which means that the <u>x</u>,
+which we have here in the last line,
+
+92
+00:06:18,169 --> 00:06:24,430
+will refer to the last definition which
+we have passed to the toplevel.
+
+93
+00:06:24,430 --> 00:06:30,029
+And indeed, the result which we obtain here
+is <u>10</u>. Which means <u>2 * 5</u>.
+
+94
+00:06:30,029 --> 00:06:34,300
+And this is of course,
+what we might have expected.
+
+95
+00:06:34,300 --> 00:06:35,800
+The last example, finally,
+
+96
+00:06:35,800 --> 00:06:39,900
+is in the same spirit as what we have seen before,
+with conditional expressions.
+
+97
+00:06:39,900 --> 00:06:42,580
+We have just in OCaml several principles,
+
+98
+00:06:42,580 --> 00:06:45,000
+which allow you to combine expressions
+
+99
+00:06:45,000 --> 00:06:48,689
+and to build more complex expressions 
+of simpler ones.
+
+100
+00:06:48,689 --> 00:06:52,969
+So we can nest them in any arbitrary way as,
+for instance, in this case,
+
+101
+00:06:52,969 --> 00:06:58,719
+here we have a local definition,
+where the have in the scope of the definition
+
+102
+00:06:58,719 --> 00:07:01,749
+an expression which is itself a local definition.
+
+103
+00:07:01,749 --> 00:07:04,120
+And this is absolutely OK.
+
+104
+00:07:04,120 --> 00:07:10,600
+So let's pass this to the system and we obtain
+an integer value which is <u>22</u>.
+
+105
+00:07:12,889 --> 00:07:18,659
+On this schema we have tried to illustrate
+the principle of priority of local definitions
+
+106
+00:07:18,659 --> 00:07:20,759
+over more global ones.
+
+107
+00:07:20,759 --> 00:07:24,960
+Here we see three bindings to
+three different identifiers
+
+108
+00:07:24,960 --> 00:07:28,259
+which all carry the same name <u>x</u>.
+
+109
+00:07:28,259 --> 00:07:32,789
+As you can see on this schema,
+this is always the most local one which wins,
+
+110
+00:07:32,789 --> 00:07:40,860
+and which takes priority over more global
+definitions of identifier with the same name.
+
+111
+00:07:40,860 --> 00:07:46,100
+In some cases it is necessary to define several
+things at the same time.
+
+112
+00:07:46,129 --> 00:07:53,089
+If you write down a definition like 
+<u>let x = e</u>, then what happen is the following:
+
+113
+00:07:53,089 --> 00:07:58,689
+first the expression <u>e</u> is evaluated
+in the environment which you have before the <u>let</u>;
+
+114
+00:07:58,689 --> 00:08:02,059
+this gives you a new definition and
+a new environment
+
+115
+00:08:02,059 --> 00:08:07,889
+which will be used in the sequel of the program.
+
+116
+00:08:07,889 --> 00:08:10,200
+Sometimes this may cause problems,
+
+117
+00:08:10,200 --> 00:08:14,719
+in cases where you have to define
+two things at the same time,
+
+118
+00:08:14,719 --> 00:08:19,529
+and in this case,
+you will need simultaneous definitions.
+
+119
+00:08:19,529 --> 00:08:21,929
+Simultaneous definitions allow you
+to
+
+120
+00:08:21,929 --> 00:08:26,720
+evaluate two expressions, <u>e1</u> and <u>e2</u>,
+in the old environment,
+
+121
+00:08:26,729 --> 00:08:33,229
+and give, at the same time,
+names <u>x1</u> and <u>x2</u> to this two values.
+
+122
+00:08:33,229 --> 00:08:39,430
+Which means that is you write down something
+like <u>let x1 = e1 and x2 = e2</u>
+
+123
+00:08:39,430 --> 00:08:46,920
+this will exactly the same as changing the
+order and writing <u>let x2 = e2 and x1 = e1</u>,
+
+124
+00:08:46,920 --> 00:08:51,910
+since both expressions will be
+evaluated in the old environment.
+
+125
+00:08:51,910 --> 00:08:55,830
+This works both with global definitions
+and with local definitions.
+
+126
+00:08:58,900 --> 00:09:03,520
+In this example I will demonstrate to you
+the difference between sequential definitions
+
+127
+00:09:03,520 --> 00:09:05,730
+and simultaneous definitions.
+
+128
+00:09:05,730 --> 00:09:10,280
+So, first let's bind <u>x</u> to value of <u>1</u>,
+
+129
+00:09:10,280 --> 00:09:13,300
+and then we have a sequential definition
+
+130
+00:09:13,300 --> 00:09:17,750
+which is a sequential local definition.
+
+131
+00:09:17,750 --> 00:09:21,080
+What is important here is that
+we define a new identifier,
+
+132
+00:09:21,080 --> 00:09:23,510
+also called <u>x</u> to value of 2,
+
+133
+00:09:23,510 --> 00:09:26,640
+and on the next line the <u>x</u> that
+we see in the expression
+
+134
+00:09:26,640 --> 00:09:30,380
+on this line is in fact the most recent one,
+
+135
+00:09:30,380 --> 00:09:33,980
+which means that this would refer to
+the value of <u>x</u> to be <u>2</u>.
+
+136
+00:09:33,980 --> 00:09:40,320
+So, when we pass this to the compiler,
+we obtain in this case the value of <u>6</u>.
+
+137
+00:09:40,320 --> 00:09:45,170
+Now this is different of when we use
+the form of the simultaneous definition.
+
+138
+00:09:45,170 --> 00:09:47,920
+In the simultaneous definition, the two expressions,
+
+139
+00:09:47,920 --> 00:09:53,710
+which we have after the equality sign are
+evaluated in the previous environment,
+
+140
+00:09:53,710 --> 00:09:58,770
+which means in the environment
+where <u>x</u> has the value of <u>1</u>.
+
+141
+00:09:58,770 --> 00:10:04,680
+And this means that in this case,
+<u>y</u> would be bound to the value of <u>1+1</u> .
+
+142
+00:10:04,680 --> 00:10:09,000
+And we obtain as a result the integer value of <u>4</u>.
+

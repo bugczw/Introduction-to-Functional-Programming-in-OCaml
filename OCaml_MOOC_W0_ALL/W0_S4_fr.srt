@@ -1,0 +1,866 @@
+1
+00:00:00,149 --> 00:00:01,910
+Re-bonjour, voici la séquence quatre.
+
+2
+00:00:01,910 --> 00:00:05,120
+Nous allons découvrir le système OCaml réel.
+
+3
+00:00:05,120 --> 00:00:09,360
+Cela vous donnera un bref aperçu du système lui-même.
+
+4
+00:00:09,360 --> 00:00:13,829
+Donc, OCaml est un système aujourd'hui mature,
+avec un riche ensemble d'outils de développement.
+
+5
+00:00:13,829 --> 00:00:16,110
+Par exemple, il y a un gestionnaire de paquets moderne,
+
+6
+00:00:16,110 --> 00:00:17,880
+pour installer les bibliothèques dont vous avez besoin,
+
+7
+00:00:17,880 --> 00:00:19,039
+et accélérer votre développement.
+
+8
+00:00:19,039 --> 00:00:24,800
+Il s'appelle OPAM et vous pouvez le trouver ici :
+https://opam.ocaml.org/
+
+9
+00:00:24,800 --> 00:00:28,449
+Avec ce gestionnaire de paquets vient un dépôt
+vous donnant accès à des centaines de bibliothèques.
+
+10
+00:00:28,570 --> 00:00:32,590
+Vous avez également un débogueur,
+un profileur, un profileur de mémoire,
+
+11
+00:00:32,590 --> 00:00:34,550
+et tout plein d'autres outils de ce genre.
+
+12
+00:00:34,550 --> 00:00:39,750
+Permettez-moi de me concentrer maintenant sur le
+compilateur qui vient avec le système OCaml.
+
+13
+00:00:39,750 --> 00:00:46,420
+Il y a une partie très utile du système,
+qui est une BLEI (REPL, en anglais):
+
+14
+00:00:46,420 --> 00:00:49,470
+"Boucle Lire-Évaluer-Imprimer"
+qui est utilisée pour le développement rapide et
+
+15
+00:00:49,470 --> 00:00:53,400
+que vous allez utiliser dans ce cours particulier.
+
+16
+00:00:53,400 --> 00:01:01,610
+Ensuite, vous avez le compilateur en code-octet
+<u>ocamlc</u> qui produit du code-octet (bytecode) portable.
+
+17
+00:01:01,610 --> 00:01:04,470
+Vous pouvez le porter facilement
+sur de nombreuses architectures.
+
+18
+00:01:04,470 --> 00:01:08,320
+Vous aurez plus de détails sur la portabilité ici.
+
+19
+00:01:08,320 --> 00:01:12,010
+Et puis vous avez la série
+de compilateurs natifs <u>ocamlopt</u>,
+
+20
+00:01:12,010 --> 00:01:14,750
+qui peut cibler différentes architectures.
+
+21
+00:01:14,750 --> 00:01:22,620
+Typiquement les architectures i386, 64 ou 32 bits,
+PowerPC, différentes variantes de ARM.
+
+22
+00:01:22,620 --> 00:01:24,720
+Et vous obtenez des exécutables très rapides,
+
+23
+00:01:24,730 --> 00:01:26,670
+bien plus rapides qu'avec
+le compilateur en code-octet.
+
+24
+00:01:26,670 --> 00:01:29,659
+Bien sûr, vous perdez la portabilité, dans ce cas.
+
+25
+00:01:29,659 --> 00:01:34,070
+Et puis, enfin,
+le dernier-né de la famille : <u>js_of_ocaml</u>.
+
+26
+00:01:34,070 --> 00:01:38,670
+c'est un compilateur révolutionnaire qui compile
+du code OCaml en Javascript, directement.
+
+27
+00:01:38,670 --> 00:01:42,030
+C'est fondamental pour construire des applications web.
+
+28
+00:01:42,030 --> 00:01:45,100
+Voyons un peu ce que cela signifie vraiment.
+
+29
+00:01:45,100 --> 00:01:47,640
+Qu'est-ce qu'une BLEI,
+une "Boucle Lire-Évaluer-Imprimer" ?
+
+30
+00:01:47,640 --> 00:01:51,979
+Eh bien, en OCaml, nous avons cette
+"Boucle Lire-Évaluer-Imprimer"
+
+31
+00:01:51,979 --> 00:01:55,140
+qui est généralement appelée
+un toplevel par les programmeurs OCaml.
+
+32
+00:01:55,140 --> 00:01:59,830
+Et ce qu'elle fait vraiment est de lire
+votre programme, phrase par phrase.
+
+33
+00:01:59,830 --> 00:02:03,119
+--- quand vous le saisissez et tapez sur "Entrée",
+il est lu par ce système ---
+
+34
+00:02:03,119 --> 00:02:07,990
+Dès qu'une phrase est complète,
+cette phrase est compilée,
+
+35
+00:02:07,990 --> 00:02:11,200
+--- pas interprétée, vraiment compilée, à la volée ---
+
+36
+00:02:11,200 --> 00:02:13,519
+et toute erreur trouvée est rapportée,
+
+37
+00:02:13,519 --> 00:02:15,819
+--- généralement des erreurs de type sont signalées,
+au passage ---
+
+38
+00:02:15,819 --> 00:02:17,799
+Ensuite, le code compilé est évalué, et
+
+39
+00:02:17,799 --> 00:02:23,719
+le résultat obtenu est imprimé pour nous.
+
+40
+00:02:23,719 --> 00:02:27,529
+Ceci est utile pour essayer des idées,
+de nouvelles idées,
+
+41
+00:02:27,529 --> 00:02:31,230
+essayer de développer une partie sophistiquée
+dans un algorithme,
+
+42
+00:02:31,230 --> 00:02:33,700
+parce que nous pouvons voir le résultat
+produit par le programme,
+
+43
+00:02:33,700 --> 00:02:36,650
+juste en face de nos yeux dans ce toplevel,
+
+44
+00:02:36,650 --> 00:02:39,620
+sans avoir à écrire un analyseur
+ou un programme d'impression
+
+45
+00:02:39,620 --> 00:02:43,139
+--- toutes les choses pénibles de ce genre ---
+
+46
+00:02:43,139 --> 00:02:45,919
+Voyons donc une interaction typique :
+
+47
+00:02:45,919 --> 00:02:48,120
+à quoi l'utilisation de ce toplevel ressemble vraiment.
+
+48
+00:02:48,120 --> 00:02:50,569
+Si vous avez OCaml installé sur votre machine,
+
+49
+00:02:50,569 --> 00:02:52,200
+--- ce qui n'est pas nécessaire pour ce cours ---
+
+50
+00:02:52,200 --> 00:02:55,709
+vous exécutez <u>ocaml</u>, vous obtiendrez alors
+une bannière comme celle-ci :
+
+51
+00:02:55,709 --> 00:03:00,919
+elle dit que c'est la version OCaml 4.02.0,
+puis vous avez cette invite.
+
+52
+00:03:00,919 --> 00:03:03,559
+Ce signe, ici, juste une invite, vous dit simplement:
+
+53
+00:03:03,559 --> 00:03:07,549
+"Je suis à l'écoute, s'il vous plaît tapez
+du code."
+
+54
+00:03:07,549 --> 00:03:10,549
+Ensuite, vous pouvez entrer un programme,
+ou une phrase comme celle-ci.
+
+55
+00:03:10,549 --> 00:03:15,999
+--- bon, vous ne connaissez pas encore le langage,
+mais laissez-moi vous indiquer ce que cela signifie ---
+
+56
+00:03:15,999 --> 00:03:20,389
+Nous appelons la fonction <u>map</u>, du module <u>List</u>.
+
+57
+00:03:20,389 --> 00:03:22,559
+Nous passons à cette fonction <u>map</u>,
+
+58
+00:03:22,559 --> 00:03:24,799
+une autre fonction qui est une fonction anonyme.
+
+59
+00:03:24,799 --> 00:03:28,169
+Cette fonction anonyme attend juste un <u>x</u>,
+et renvoie <u>x + 1</u>.
+
+60
+00:03:28,169 --> 00:03:31,049
+Ceci est la fonction "successeur".
+
+61
+00:03:31,049 --> 00:03:32,169
+Puis le deuxième paramètre de <u>map</u> est une liste.
+
+62
+00:03:32,169 --> 00:03:37,439
+Oui, cela est la syntaxe pour représenter
+une liste de 6 éléments, de <u>1</u> à <u>6</u>.
+
+63
+00:03:37,439 --> 00:03:41,449
+Dès que vous appuyez sur Entrée ici,
+
+64
+00:03:41,449 --> 00:03:43,269
+cette phrase est envoyée au compilateur :
+
+65
+00:03:43,269 --> 00:03:46,869
+les types sont vérifiés, la phrase est compilée
+et évaluée ;
+
+66
+00:03:46,869 --> 00:03:48,749
+et, finalement, le résultat vous est imprimé.
+
+67
+00:03:48,749 --> 00:03:51,400
+En fait, ce que vous obtenez est cette ligne bleue ici.
+
+68
+00:03:51,400 --> 00:03:54,909
+Le système revient vers vous en disant:
+
+69
+00:03:54,909 --> 00:03:59,379
+« vous avez écrit du code qui ne
+définit pas un nouvel identificateur »
+
+70
+00:03:59,379 --> 00:04:02,769
+« le type de résultat est une liste de nombres entiers »
+
+71
+00:04:02,769 --> 00:04:06,150
+« et la valeur du résultat »
+--- ici de l'autre côté du signe égal ---
+
+72
+00:04:06,150 --> 00:04:11,389
+« est cette liste ici »
+Qui contient sans surprise les nombres de <u>2</u> à <u>7</u>,
+
+73
+00:04:11,389 --> 00:04:14,519
+puisque j'ai ajouté <u>1</u> à
+toutes les valeurs de <u>1</u> à <u>6</u>.
+
+74
+00:04:14,519 --> 00:04:18,739
+Le résultat est maintenant juste devant nos yeux.
+
+75
+00:04:18,739 --> 00:04:23,669
+Je n'ai pas besoin d'écrire un analyseur pour lire
+cette structure de données particulière ici,
+
+76
+00:04:23,669 --> 00:04:28,449
+ou un programme d'impression pour imprimer
+cette structure de données.
+
+77
+00:04:28,449 --> 00:04:32,919
+Pour ce cours, vous allez exécuter le toplevel OCaml
+directement dans votre navigateur.
+
+78
+00:04:32,919 --> 00:04:34,590
+Il n'y a pas besoin d'installer quoi que ce soit.
+
+79
+00:04:34,590 --> 00:04:40,629
+Il suffit d'aller à la page des exercices, et
+il va juste s'ouvrir pour vous.
+
+80
+00:04:40,629 --> 00:04:45,120
+Vous aurez la même interface, pas de différences.
+
+81
+00:04:45,120 --> 00:04:47,210
+C'est entièrement intégré
+dans le système d'apprentissage.
+
+82
+00:04:47,210 --> 00:04:50,770
+Ainsi, les résultats de ce que vous tapez seront
+sauvés de cette session à la suivante.
+
+83
+00:04:50,770 --> 00:04:54,050
+Il n'y a pas besoin de dépendre d'un serveur externe.
+
+84
+00:04:54,050 --> 00:04:55,610
+Il y a beaucoup d'autres endroits où
+
+85
+00:04:55,610 --> 00:04:59,690
+vous avez l'impression de taper
+un programme dans votre navigateur,
+
+86
+00:04:59,690 --> 00:05:04,699
+mais il y a un gros serveur quelque part
+où votre phrase est envoyée et d'où le résultat est tiré.
+
+87
+00:05:04,699 --> 00:05:07,079
+Ce n'est pas le cas ici.
+
+88
+00:05:07,080 --> 00:05:09,600
+Cela ressemble à de la magie.
+
+89
+00:05:09,600 --> 00:05:12,180
+Eh bien, honnêtement, c'est presque magique.
+
+90
+00:05:12,180 --> 00:05:14,080
+Parce qu'en fait, ce toplevel,
+
+91
+00:05:14,080 --> 00:05:17,040
+avec tout l'environnement,
+est entièrement écrit en OCaml.
+
+92
+00:05:17,050 --> 00:05:23,710
+Il a été compilé en bytecode
+en utilisant le compilateur bytecode <u>ocamlc</u>.
+
+93
+00:05:23,710 --> 00:05:31,699
+Puis le binaire résultant a été compilé
+en Javascript à l'aide de <u>js_of_ocaml</u>.
+
+94
+00:05:31,699 --> 00:05:34,520
+puis, tout cela est chargé dans votre navigateur.
+
+95
+00:05:34,520 --> 00:05:41,189
+Ceci est juste un code javascript,
+chargé dès que vous accédez à la page Web.
+
+96
+00:05:41,189 --> 00:05:43,169
+Alors peut-être est-il temps de l'essayer.
+
+97
+00:05:43,169 --> 00:05:44,580
+Voyons quelques exemples.
+
+98
+00:05:47,000 --> 00:05:50,639
+Ici, nous voyons un exemple typique des exercices,
+
+99
+00:05:50,639 --> 00:05:52,460
+que vous aurez à résoudre pendant le cours.
+
+100
+00:05:52,460 --> 00:05:58,940
+Nous avons une description de
+la tâche que vous êtes supposés accomplir.
+
+101
+00:05:58,949 --> 00:06:01,909
+Par exemple, on vous demande juste de remplir
+
+102
+00:06:01,909 --> 00:06:06,759
+les définitions des opérations sur les nombres entiers
+<u>plus</u>, <u>minus</u>, <u>times</u>, et <u>divide</u>.
+
+103
+00:06:06,759 --> 00:06:15,780
+Cette zone ici est un éditeur de texte où,
+en général, vous trouverez un squelette de programme.
+
+104
+00:06:15,780 --> 00:06:17,370
+--- un squelette que vous aurez juste à compléter ---
+
+105
+00:06:17,370 --> 00:06:21,909
+--- mais dans d'autres cas,
+vous aurez besoin de les écrire à partir de zéro ---
+
+106
+00:06:21,909 --> 00:06:26,210
+Dans cet éditeur, vous pouvez éditer directement
+votre programme.
+
+107
+00:06:26,210 --> 00:06:27,210
+Faisons-le.
+
+108
+00:06:27,210 --> 00:06:30,130
+Donc, nous avons à remplir
+la définition de la fonction <u>plus</u>
+
+109
+00:06:30,130 --> 00:06:32,909
+qui prend deux arguments <u>x</u> et <u>y</u>.
+
+110
+00:06:32,909 --> 00:06:35,189
+Probablement, même si nous ne connaissons pas
+encore le langage,
+
+111
+00:06:35,189 --> 00:06:39,090
+ce sera quelque chose comme <u>x + y</u>.
+
+112
+00:06:39,090 --> 00:06:43,439
+Ensuite, nous devons compléter la phrase
+avec un double point-virgule.
+
+113
+00:06:43,439 --> 00:06:43,979
+Fantastique!
+
+114
+00:06:43,979 --> 00:06:46,069
+Je vais essayer de faire la même chose
+pour les autres exemples.
+
+115
+00:06:46,069 --> 00:06:50,360
+Donc <u>minus</u> est <u>x-y</u>.
+
+116
+00:06:50,360 --> 00:06:52,680
+Ensuite <u>times</u>, vous voyez, ici il y a un hic.
+
+117
+00:06:52,680 --> 00:06:56,060
+La définition qui est ici n'est pas
+exactement celle qui est correcte.
+
+118
+00:06:56,060 --> 00:06:59,289
+Donc, parfois, vous aurez besoin de
+changer le squelette que l'on vous a fourni.
+
+119
+00:06:59,289 --> 00:07:03,800
+Donc <u>x * y</u>.
+
+120
+00:07:03,800 --> 00:07:06,960
+Et puis finalement <u>divide</u> est <u>x / y</u>.
+
+121
+00:07:06,960 --> 00:07:09,229
+Ok, ça a été très simple et direct.
+
+122
+00:07:09,229 --> 00:07:11,050
+Juste pour montrer un exemple.
+
+123
+00:07:11,050 --> 00:07:12,400
+Une fois que vous avez fait cela,
+
+124
+00:07:12,400 --> 00:07:15,930
+vous pouvez décider, par exemple,
+d'évaluer votre programme.
+
+125
+00:07:15,930 --> 00:07:19,749
+Vous pouvez cliquer sur ce bouton <u>Evaluate >></u> ici.
+
+126
+00:07:19,749 --> 00:07:25,539
+Et tout ce que vous avez tapé
+sera envoyé au toplevel.
+
+127
+00:07:25,539 --> 00:07:28,120
+Qui s'exécute maintenant devant vous.
+
+128
+00:07:28,120 --> 00:07:31,990
+Ainsi, vous voyez que les fonctions <u>plus</u>,
+<u>minus</u>, <u>times</u>, et <u>divide</u> ont été définies.
+
+129
+00:07:31,990 --> 00:07:35,729
+Nous trouvons le type tel
+qu'il est produit par le système.
+
+130
+00:07:35,729 --> 00:07:38,599
+Nous pouvons revenir à l'éditeur de texte.
+
+131
+00:07:38,599 --> 00:07:44,599
+Vous pouvez basculer entre la session interactive
+et l'éditeur de texte autant que vous voulez.
+
+132
+00:07:44,610 --> 00:07:51,740
+Vous pouvez revenir à la session interactive
+sans ré-évaluer avec le bouton <u>Switch >></u>.
+
+133
+00:07:51,740 --> 00:07:55,509
+Et même avant d'évaluer un bout de code,
+
+134
+00:07:55,509 --> 00:07:59,460
+vous pouvez juste cliquer sur le bouton <u>Typecheck</u>.
+
+135
+00:07:59,460 --> 00:08:04,340
+--- Vous avez vu le flash vert là,
+il nous a montré que tout va bien ---
+
+136
+00:08:04,340 --> 00:08:09,039
+Ceci effectue la vérification de syntaxe de type.
+
+137
+00:08:09,039 --> 00:08:12,779
+Ajoutons une erreur de syntaxe,
+juste pour voir ce qui se passe.
+
+138
+00:08:12,779 --> 00:08:16,270
+Je retire l'un des arguments de la fonction <u>plus</u>,
+
+139
+00:08:16,270 --> 00:08:17,499
+et j'exécute <u>Typecheck >></u> à nouveau.
+
+140
+00:08:17,499 --> 00:08:21,749
+Voyez, maintenant il y a une erreur de syntaxe.
+
+141
+00:08:21,749 --> 00:08:27,539
+Elle est annotée pour vous dans l'éditeur.
+
+142
+00:08:27,539 --> 00:08:31,799
+Il suffit de passer la souris sur la croix rouge.
+
+143
+00:08:31,800 --> 00:08:34,710
+À tout moment vous pouvez réinitialiser l'éditeur
+pour retrouver le squelette initial.
+
+144
+00:08:34,710 --> 00:08:38,090
+Lorsque vous cliquez sur le bouton <u>Reset template</u>,
+
+145
+00:08:38,090 --> 00:08:40,870
+l'éditeur revient au squelette initial.
+
+146
+00:08:40,870 --> 00:08:46,250
+Mais dans ce cas, tout votre travail semble perdu,
+~~~ Note: vous pouvez annuler avec Ctrl-Z ~~~
+
+147
+00:08:46,250 --> 00:08:52,020
+Et, si vous vous sentez limité par l'interface,
+
+148
+00:08:52,030 --> 00:08:56,130
+vous pouvez cliquer sur le bouton <u>Fullscreen</u>.
+
+149
+00:08:56,130 --> 00:08:58,790
+Vous obtiendrez une présentation plein écran où
+
+150
+00:08:58,790 --> 00:09:00,880
+l'éditeur est à gauche,
+
+151
+00:09:00,880 --> 00:09:03,460
+et le toplevel à droite.
+
+152
+00:09:03,460 --> 00:09:05,890
+Si votre écran est encore plus large, comme ici,
+
+153
+00:09:05,890 --> 00:09:12,090
+alors vous pouvez zoomer avec <u>control-plus</u>, ou
+
+154
+00:09:12,090 --> 00:09:16,680
+dans l'autre sens avec <u>control-minus</u>.
+
+155
+00:09:16,680 --> 00:09:18,880
+jusqu'à vous sentir à l'aise.
+
+156
+00:09:18,880 --> 00:09:19,720
+Une fois que vous êtes dans la fenêtre en plein écran,
+
+157
+00:09:19,720 --> 00:09:22,880
+nous pouvons décider, par exemple,
+de terminer à nouveau
+
+158
+00:09:22,880 --> 00:09:26,800
+la définition de <u>plus</u> : <u>x + y</u>.
+
+159
+00:09:26,810 --> 00:09:30,780
+Nous pouvons sélectionner cette section avec la souris,
+
+160
+00:09:30,780 --> 00:09:33,960
+et décider d'évaluer seulement la sélection.
+
+161
+00:09:33,960 --> 00:09:37,400
+Maintenant, dans le toplevel,
+nous avons défini que cette fonction <u>plus</u>.
+
+162
+00:09:37,400 --> 00:09:40,520
+Je peux aussi écrire directement
+dans la session interactive.
+
+163
+00:09:40,520 --> 00:09:45,910
+Par exemple, <u>plus 3 4</u> et voilà.
+
+164
+00:09:45,910 --> 00:09:51,400
+Vous pouvez, bien sûr, revenir à l'écran d'origine.
+
+165
+00:09:51,400 --> 00:09:54,710
+Une fois que vous avez fait tout votre programme,
+
+166
+00:09:54,710 --> 00:09:56,700
+lorsque vous êtes satisfait du résultat,
+
+167
+00:09:56,700 --> 00:09:59,780
+vous devez appuyer sur le bouton <u>Check</u>.
+
+168
+00:09:59,780 --> 00:10:04,040
+Vos solutions seront testées et évaluées.
+
+169
+00:10:04,040 --> 00:10:06,900
+Allons-y.
+
+170
+00:10:06,900 --> 00:10:09,680
+Ainsi, par exemple, faisons une erreur dans <u>minus</u>:
+
+171
+00:10:09,680 --> 00:10:15,080
+J'ai écrit <u>minus</u> dans l'autre sens.
+
+172
+00:10:15,080 --> 00:10:22,430
+pour <u>times</u> ... nous pouvons mettre ...
+
+173
+00:10:22,430 --> 00:10:28,810
+nous allons faire une seule erreur dans cet exercice.
+
+174
+00:10:28,810 --> 00:10:34,400
+Tout d'abord, je vérifie que le typeur est d'accord.
+
+175
+00:10:34,410 --> 00:10:41,350
+Puis, je l'évalue
+et le teste à la main dans le toplevel.
+
+176
+00:10:41,350 --> 00:10:46,030
+Pour obtenir ma note, j'appuie sue le bouton <u>Check</u>.
+
+177
+00:10:46,030 --> 00:10:51,680
+Cela interagit en fait avec la plate-forme FUN
+--- que vous utilisez pour suivre ce cours ---
+
+178
+00:10:51,680 --> 00:10:55,370
+~~~ Note: ceci est un logiciel en version bêta ... ~~~
+~~~ En vrai le score vient bien plus rapidement! ~~~
+
+179
+00:10:55,370 --> 00:10:59,760
+Et le résultat de la vérification vous est présenté,
+
+180
+00:10:59,760 --> 00:11:01,130
+dans un joli résumé.
+
+181
+00:11:01,130 --> 00:11:07,140
+Dans ce cas, nous ne réussissons pas tous les tests.
+
+182
+00:11:07,140 --> 00:11:09,040
+Donc l'exercice est incomplet.
+
+183
+00:11:09,040 --> 00:11:13,460
+Mais vous pouvez voir fonction par fonction,
+
+184
+00:11:13,460 --> 00:11:15,790
+parmi celles que vous avez été invité à écrire,
+
+185
+00:11:15,790 --> 00:11:19,580
+celles qui réussissent les tests.
+
+186
+00:11:19,580 --> 00:11:21,200
+--- Comme <u>plus</u> ici, qui est correcte ---
+
+187
+00:11:21,200 --> 00:11:22,840
+Et celles qui sont défectueuses.
+
+188
+00:11:22,840 --> 00:11:28,020
+--- comme <u>minus</u> ici, lorsque tous les tests
+ne donnent pas les résultats escomptés ---
+
+189
+00:11:28,030 --> 00:11:32,490
+Bien sûr, vous pouvez revenir à l'éditeur,
+
+190
+00:11:32,490 --> 00:11:37,190
+corriger la fonction qui est erronée,
+
+191
+00:11:37,190 --> 00:11:38,700
+puis la soumettre à nouveau.
+
+192
+00:11:38,700 --> 00:11:42,940
+~~~ Note: encore une fois, c'est un logiciel beta ~~~
+~~~ En vrai, la note vient bien plus rapidement! ~~~
+
+193
+00:11:42,950 --> 00:11:46,470
+Maintenant, tout va bien.
+
+194
+00:11:46,470 --> 00:11:48,960
+L'exercice est terminé.
+
+195
+00:11:48,960 --> 00:11:51,610
+Nous recevons douze points sur les douze possibles.
+
+196
+00:11:51,610 --> 00:11:54,510
+Votre note sera stockée dans la plate-forme FUN,
+
+197
+00:11:54,510 --> 00:11:58,529
+de sorte que vous pouvez suivre
+l'évolution de votre apprentissage.

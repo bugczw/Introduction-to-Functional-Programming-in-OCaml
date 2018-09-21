@@ -1,0 +1,477 @@
+1
+00:00:00,110 --> 00:00:01,000
+Welcome back.
+
+2
+00:00:01,000 --> 00:00:02,580
+This is the sequence 2 of the course.
+
+3
+00:00:02,580 --> 00:00:06,040
+We will discover a little bit of
+the history of the OCaml language,
+
+4
+00:00:06,040 --> 00:00:07,320
+and where it comes from.
+
+5
+00:00:07,330 --> 00:00:14,169
+The origin of all this really start
+from the seminal work, by Sir Robin Milner,
+
+6
+00:00:14,169 --> 00:00:20,970
+It developped a family of languages,
+which are called ML, Meta-Language.
+
+7
+00:00:20,970 --> 00:00:27,030
+It is a family of statically and strongly-typed
+functional programming languages.
+
+8
+00:00:27,030 --> 00:00:32,950
+You see here is a copy of the
+1978 paper by Robin Milner
+
+9
+00:00:32,950 --> 00:00:36,530
+that introduces the theory of type polymorphism programming,
+
+10
+00:00:36,530 --> 00:00:39,460
+which was at core of the ML system.
+
+11
+00:00:39,460 --> 00:00:45,680
+So, what are the features of
+these languages in the ML family?
+
+12
+00:00:45,680 --> 00:00:48,380
+Well, of course they are functional languages,
+
+13
+00:00:48,380 --> 00:00:51,760
+so you have first-class functions.
+
+14
+00:00:51,770 --> 00:00:53,980
+But it is not the only thing you find.
+
+15
+00:00:53,980 --> 00:00:56,739
+There are some key additionnal ingredients,
+
+16
+00:00:56,739 --> 00:01:01,450
+one is type inference,
+this vertex of the triangle here.
+
+17
+00:01:01,450 --> 00:01:03,280
+You have polymorphic types.
+
+18
+00:01:03,280 --> 00:01:04,940
+---we will learn more about this---
+
+19
+00:01:04,940 --> 00:01:09,840
+---they are very flexible and powerful types---
+
+20
+00:01:09,850 --> 00:01:12,410
+But the other point which is even more impressive:
+
+21
+00:01:12,410 --> 00:01:15,700
+the types are present all along.
+
+22
+00:01:15,700 --> 00:01:18,680
+They are there to check the safety of your
+program,
+
+23
+00:01:18,680 --> 00:01:20,070
+but you never need to write them.
+
+24
+00:01:20,070 --> 00:01:23,860
+There is a fantastic type inference algorithm
+
+25
+00:01:23,860 --> 00:01:26,159
+that actually write them for you.
+
+26
+00:01:26,159 --> 00:01:29,579
+And finally you have a third element,
+
+27
+00:01:29,580 --> 00:01:34,540
+which is called traditionally Algebraic Data Types (ADT),
+
+28
+00:01:34,549 --> 00:01:36,909
+---you will learn about this in the course later on---
+
+29
+00:01:36,909 --> 00:01:38,560
+and pattern matching.
+
+30
+00:01:38,560 --> 00:01:43,049
+These are life saving data manipulation features,
+
+31
+00:01:43,049 --> 00:01:48,420
+that make the full combination of these three
+features extremely valuable for programmers.
+
+32
+00:01:48,420 --> 00:01:52,130
+Well lets see the history of OCaml.
+
+33
+00:01:52,130 --> 00:01:54,890
+Robin Milner started this ML language.
+
+34
+00:01:54,890 --> 00:02:01,290
+And in 1980, Gerard Huet at Inria in France,
+which was leading the "projet Formel",
+
+35
+00:02:01,290 --> 00:02:05,200
+did some seminal work
+on mechanizing mathematics.
+
+36
+00:02:05,200 --> 00:02:10,520
+To do this seminal work, they used the
+first version of the ML language
+
+37
+00:02:10,520 --> 00:02:12,600
+---developped by Robin Milner---
+
+38
+00:02:12,610 --> 00:02:14,230
+and started contributing to it.
+
+39
+00:02:14,230 --> 00:02:19,840
+For example, pattern-matching was introduced
+into the ML language by people working at Inria.
+
+40
+00:02:19,840 --> 00:02:26,900
+And then, as it often happens,
+they started making a branch of their own,
+
+41
+00:02:26,900 --> 00:02:30,920
+to make it more fit to their particular application:
+the mechanization of mathematics.
+
+42
+00:02:30,920 --> 00:02:40,230
+And in the middle of 80's many people in this
+project started working on the system.
+
+43
+00:02:40,230 --> 00:02:42,040
+They were very excited about this.
+
+44
+00:02:42,040 --> 00:02:46,280
+For example in 1985 you have Guy Cousineau,
+Pierre Louis Curien and Michel Mauny
+
+45
+00:02:46,280 --> 00:02:50,560
+who designed the Categorical Abstract Machine.
+
+46
+00:02:50,569 --> 00:02:56,780
+It is an abstract machine that is used to
+execute very efficiently highly functionnal programs.
+
+47
+00:02:56,780 --> 00:03:02,080
+Actually, Categorical Abstract Machine
+if you write the acronym CAM.
+
+48
+00:03:02,080 --> 00:03:05,700
+On the other side you have the ML,
+the language coming from Edinburgh.
+
+49
+00:03:05,700 --> 00:03:09,489
+And so, put together that makes CAML.
+
+50
+00:03:09,489 --> 00:03:14,150
+The first implementation of CAML was in 1987
+by Ascander Suarez.
+
+51
+00:03:14,150 --> 00:03:19,700
+So actually CAML is not a beast
+with two humps crossing a desert,
+
+52
+00:03:19,700 --> 00:03:23,640
+it is just a combination of CAM and ML.
+
+53
+00:03:23,640 --> 00:03:29,610
+Then from 1988 to 1992 you have many people
+that worked on the system,
+
+54
+00:03:29,610 --> 00:03:32,849
+in particular Michel Mauny and Pierre Weis
+and make it grow.
+
+55
+00:03:32,849 --> 00:03:33,869
+And at the end,
+
+56
+00:03:33,869 --> 00:03:37,560
+-- I have fond memory of this
+because I had just arrived in France---
+
+57
+00:03:37,560 --> 00:03:41,360
+---and discovered these people,
+and this incredible work just in these years---
+
+58
+00:03:41,360 --> 00:03:45,100
+you had an impressive system,
+very sofisticated, very powerful,
+
+59
+00:03:45,100 --> 00:03:48,909
+but also very complex and very heavy to use.
+
+60
+00:03:48,909 --> 00:03:51,750
+You needed a professionnal workstation
+to run it on.
+
+61
+00:03:51,750 --> 00:03:56,200
+So it's what limited it to some kind
+of very specific research work.
+
+62
+00:03:56,200 --> 00:04:01,330
+Then, in the early 1990's,
+there are some game changing events.
+
+63
+00:04:01,330 --> 00:04:05,470
+This the age of  "Caml Light".
+
+64
+00:04:05,470 --> 00:04:09,190
+---as opposed to the old CAML
+which was very heavy to use---
+
+65
+00:04:09,190 --> 00:04:11,870
+So in 1991 Xavier Leroy,
+
+66
+00:04:11,870 --> 00:04:14,990
+---who is now recognized
+as the leading developer of the OCaml language---
+
+67
+00:04:14,990 --> 00:04:16,559
+---the creator the OCaml language---
+
+68
+00:04:16,559 --> 00:04:19,949
+created an other abstract machine, called ZINC,
+
+69
+00:04:19,949 --> 00:04:24,389
+much more efficient than the CAM
+for general programs,
+
+70
+00:04:24,389 --> 00:04:28,300
+Damien Doligez wrote a great memory manager.
+
+71
+00:04:28,300 --> 00:04:31,440
+The results put together is was what called "Caml Light".
+
+72
+00:04:31,440 --> 00:04:34,740
+small footprint, very little code,
+
+73
+00:04:34,740 --> 00:04:37,240
+so it fit on a floppy disk
+
+74
+00:04:37,240 --> 00:04:40,080
+---it was a big achievement for the moment---
+
+75
+00:04:40,080 --> 00:04:42,380
+Portable: you had a bytecode interpreter,
+
+76
+00:04:42,380 --> 00:04:44,380
+so it could run on any kind of machine.
+
+77
+00:04:44,380 --> 00:04:48,999
+And efficient:
+it was able to run on a basic PC of that ages
+
+78
+00:04:48,999 --> 00:04:54,119
+which was even less of what you have
+in your pocket in your cellphones today.
+
+79
+00:04:54,119 --> 00:04:58,740
+The Zinc machine,
+which was at the core for the success of Caml light,
+
+80
+00:04:58,740 --> 00:05:01,659
+is very different from the original
+Categorical Abstract Machine.
+
+81
+00:05:01,659 --> 00:05:06,749
+But the name stayed,
+and it still is called Caml.
+
+82
+00:05:06,749 --> 00:05:12,889
+The things start moving up
+very quickly in the middle of the 90's.
+
+83
+00:05:12,889 --> 00:05:17,709
+In 1995, Caml Special Light is released:
+you have a native compiler;
+
+84
+00:05:17,709 --> 00:05:21,259
+a rich ground breaking module system.
+
+85
+00:05:21,259 --> 00:05:26,979
+Then in 1996, you have an other incredible feature,
+I mean Objective Caml.
+
+86
+00:05:26,979 --> 00:05:29,319
+---you start to see why it is called OCaml today---
+
+87
+00:05:29,319 --> 00:05:38,400
+Jérôme Vouillon and Didier Rémy added to
+the system an efficient, elegant object oriented layer,
+
+88
+00:05:38,460 --> 00:05:40,229
+still with type inference.
+
+89
+00:05:40,229 --> 00:05:43,979
+That was a really major result at that moment,
+
+90
+00:05:43,979 --> 00:05:48,529
+because before that period, everybody was
+convinced that it was not possible
+
+91
+00:05:48,529 --> 00:05:53,169
+to have at the same time object orientation and
+polymorphic type inference together.
+
+92
+00:05:53,169 --> 00:05:57,839
+Actually, it was possible,
+it was done by these great people.
+
+93
+00:05:57,839 --> 00:06:00,719
+In 2000, other features are arriving,
+
+94
+00:06:00,719 --> 00:06:04,689
+Jacques Garrigue was working on a branch.
+called Objective Label,
+
+95
+00:06:04,689 --> 00:06:08,200
+and this was merged into the system so you
+had polymorphic methods, labels,
+
+96
+00:06:08,200 --> 00:06:11,199
+optional arguments and polymorphic variants.
+
+97
+00:06:11,199 --> 00:06:13,800
+And finally, many other things,
+we are going to skip today.
+
+98
+00:06:13,800 --> 00:06:20,559
+In 2011, a few years ago, the name was definitely
+changed and standardized to OCaml.
+
+99
+00:06:20,559 --> 00:06:23,349
+But now you known where this comes from.
+
+100
+00:06:23,349 --> 00:06:26,300
+So over the years, OCaml gained attraction.
+
+101
+00:06:26,300 --> 00:06:31,480
+And today, you have
+an incredible amount of wonderful users
+
+102
+00:06:31,480 --> 00:06:36,139
+that use the rich set of unique features
+which are provided by the system.
+
+103
+00:06:36,139 --> 00:06:40,729
+But it is better that you don't believe what
+we are going to tell to you.
+
+104
+00:06:40,729 --> 00:06:46,660
+It is much better to listen what the OCaml
+users themselves have to say about the language.
+
+105
+00:06:46,660 --> 00:06:48,439
+and why they have chosen this one.
+
+106
+00:06:48,439 --> 00:06:50,400
+We will see this in the next sequence.
+

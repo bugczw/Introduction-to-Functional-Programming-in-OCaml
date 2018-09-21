@@ -1,0 +1,866 @@
+1
+00:00:00,120 --> 00:00:02,620
+Welcome back to this sequence five of the course, and
+
+2
+00:00:02,620 --> 00:00:07,669
+we will look more precisely at the OCaml language now,
+
+3
+00:00:07,669 --> 00:00:10,530
+getting some little review and glimpse of the language,
+
+4
+00:00:10,530 --> 00:00:13,009
+to see how it's look like.
+
+5
+00:00:13,009 --> 00:00:14,259
+Let's take the tour.
+
+6
+00:00:14,259 --> 00:00:18,910
+So the objective of this sequence is really
+just to present you some examples,
+
+7
+00:00:18,910 --> 00:00:21,940
+that showcase some of the advanced features
+of the OCaml language.
+
+8
+00:00:21,940 --> 00:00:24,730
+Remember, the users told us that what they like is:
+
+9
+00:00:24,730 --> 00:00:27,400
+safety: because of strong static typing
+and pattern-matching;
+
+10
+00:00:27,480 --> 00:00:30,670
+conciseness: because of polymorphic typing
+and type inference;
+
+11
+00:00:30,670 --> 00:00:33,000
+expressiveness from higher-order functions.
+
+12
+00:00:33,000 --> 00:00:40,500
+So let's look at some examples that show, short,
+sequences of code with these features.
+
+13
+00:00:40,510 --> 00:00:44,160
+Little disclaimer. It's the first of all.
+
+14
+00:00:44,160 --> 00:00:48,649
+This is just a quick tour to give you an example,
+and the taste of the language,
+
+15
+00:00:48,649 --> 00:00:52,620
+so you are not expected to
+fully understand the examples right now.
+
+16
+00:00:52,620 --> 00:00:54,559
+Just carry on with us a bit.
+
+17
+00:00:54,559 --> 00:00:58,879
+Of course you will understand everything and
+much more than this at the end of the course.
+
+18
+00:00:58,879 --> 00:01:01,339
+So, hold tight and let's go.
+
+19
+00:01:01,339 --> 00:01:05,610
+So, let's start by meeting the <u>list</u> data structure.
+
+20
+00:01:05,610 --> 00:01:10,300
+This data structure is built-in in OCaml.
+It is predefined, you have special syntax for this.
+
+21
+00:01:10,340 --> 00:01:16,660
+In particular these square brackets, open and close,
+are just the representation of the empty list,
+
+22
+00:01:16,690 --> 00:01:24,290
+and this <u>a::l</u> is a list that contains a
+<u>a</u> as first element and <u>l</u> as the rest of it.
+
+23
+00:01:24,290 --> 00:01:25,970
+And of course you have already seen examples where,
+
+24
+00:01:25,970 --> 00:01:30,440
+if you put elements inside the list
+that's a list with few elements in it.
+
+25
+00:01:30,440 --> 00:01:36,390
+Let's write a function now to sum all the
+elements of an integer list.
+
+26
+00:01:36,390 --> 00:01:39,900
+How could you write this ? Let me do it for you.
+
+27
+00:01:39,900 --> 00:01:45,440
+We define a function which is called <u>suml</u>:
+sum of the element of the list.
+
+28
+00:01:45,450 --> 00:01:51,670
+And we use what is called pattern matching
+to define the function by cases.
+
+29
+00:01:51,670 --> 00:01:56,500
+We say, if the list has been given to me is
+empty then the result will be 0.
+
+30
+00:01:56,500 --> 00:02:01,900
+Else, if it is not empty and it has the shape
+of having a first element and a rest,
+
+31
+00:02:01,900 --> 00:02:05,450
+then the result will be: taking the first element, and
+
+32
+00:02:05,450 --> 00:02:10,280
+adding it to the result of
+summing the elements of the rest of the list.
+
+33
+00:02:10,280 --> 00:02:13,959
+Ok so, doesn't matter if you don't really
+understand what is going on.
+
+34
+00:02:13,959 --> 00:02:15,340
+It is really simple definition.
+
+35
+00:02:15,340 --> 00:02:21,499
+What is really important to notice here is that
+we did not declare any type in our code.
+
+36
+00:02:21,499 --> 00:02:26,419
+We didn't say: what is the type of <u>a</u>;
+what is the type of <u>rest</u>; what is the type of <u>suml</u>.
+
+37
+00:02:26,430 --> 00:02:27,469
+Nothing!
+
+38
+00:02:27,469 --> 00:02:30,010
+And yet, as soon as you hit enter here,
+
+39
+00:02:30,010 --> 00:02:33,040
+well, the system will answer you with this message.
+
+40
+00:02:33,040 --> 00:02:38,060
+It says:
+"Thanks a lot, you defined a value which is <u>suml</u>."
+
+41
+00:02:38,060 --> 00:02:44,180
+this is actually a function that takes an
+integer list and returns an integer.
+
+42
+00:02:44,180 --> 00:02:45,269
+Ok.
+
+43
+00:02:45,269 --> 00:02:51,269
+So the OCaml type-checker has inferred, for us,
+the good type of this program, for free.
+
+44
+00:02:51,269 --> 00:02:53,200
+We have nothing to do.
+
+45
+00:02:53,200 --> 00:03:00,540
+And this types, which are inferred by the compiler,
+are actually computed and enforced at compile time.
+
+46
+00:03:00,540 --> 00:03:01,900
+Not at execution time.
+
+47
+00:03:01,900 --> 00:03:03,560
+Let's see an example.
+
+48
+00:03:03,560 --> 00:03:09,260
+For example, if I use this <u>suml</u> function to sum
+the elements of the list that contains <u>1</u>, <u>2</u> and <u>3</u>,
+
+49
+00:03:09,260 --> 00:03:13,200
+well, the compiler computes the result and says:
+
+50
+00:03:13,200 --> 00:03:16,090
+"Yes. the result is an integer and its value is <u>6</u>."
+
+51
+00:03:16,090 --> 00:03:17,560
+That's correct.
+
+52
+00:03:17,560 --> 00:03:20,310
+But let's make, on purpose, a mistake.
+
+53
+00:03:20,310 --> 00:03:25,469
+Now, I'm going to apply this function,
+that should work only on integer list,
+
+54
+00:03:25,469 --> 00:03:31,749
+I tried to cheat the system and pass it not an integer list,
+but a list of strings, that contains integers.
+
+55
+00:03:31,749 --> 00:03:33,129
+Let's see what happens.
+
+56
+00:03:33,129 --> 00:03:35,669
+Well, the system answers by saying :
+
+57
+00:03:35,669 --> 00:03:43,900
+"Stop. The reason error: this particular expression,
+is a string but you were expecting an integer."
+
+58
+00:03:43,919 --> 00:03:47,249
+Why ? Because <u>suml</u> is waiting for an integer list.
+
+59
+00:03:47,249 --> 00:03:52,459
+"I found a list but not of integer, of strings."
+So this is an error.
+
+60
+00:03:52,459 --> 00:03:56,439
+No code was executed up to now.
+This is just during the compilation phase.
+
+61
+00:03:56,439 --> 00:04:00,249
+During the compilation, the types are checked.
+
+62
+00:04:00,249 --> 00:04:05,800
+Actually, this very small example--you will see this
+more in details later---has a fantastic property,
+
+63
+00:04:05,859 --> 00:04:09,279
+which was defined by Robin Milner
+for the ML class of languages;
+
+64
+00:04:09,279 --> 00:04:13,859
+he really wanted to make sure that
+"well-typed programs cannot go wrong".
+
+65
+00:04:13,859 --> 00:04:17,650
+I mean, type errors do not show up during the execution.
+
+66
+00:04:17,650 --> 00:04:19,840
+They are caught by the compiler, by the typechecker.
+
+67
+00:04:19,840 --> 00:04:24,759
+If you pass the compiler and the typechecker
+you will not have type errors at execution.
+
+68
+00:04:24,759 --> 00:04:30,239
+So, we have written our nice function <u>suml</u>
+that sums all the elements of the list.
+
+69
+00:04:30,240 --> 00:04:36,370
+But if you look at the code,
+actually I mean this <u>0</u> here, and <u>+</u> there,
+
+70
+00:04:36,370 --> 00:04:41,300
+they can be just parameters of the function,
+just keeping the same structure of the function here.
+
+71
+00:04:41,389 --> 00:04:45,610
+So, let's try to turn them into parameters
+and see what happens.
+
+72
+00:04:45,610 --> 00:04:49,530
+I will rewrite the function,
+give it a new name, let's call it <u>fold</u> now.
+
+73
+00:04:49,530 --> 00:04:56,000
+It has two extra parameters : <u>op</u> which will
+play the role of this <u>+</u> operator here,
+
+74
+00:04:56,000 --> 00:05:01,009
+and <u>e</u> which play the role of
+the result returned for the empty list.
+
+75
+00:05:01,009 --> 00:05:05,319
+It is again a definition of a function;
+it is defined by cases.
+
+76
+00:05:05,319 --> 00:05:11,139
+On the empty list, instead of <u>0</u>,
+I will return this <u>e</u>, here.
+
+77
+00:05:11,139 --> 00:05:14,340
+On the non-empty list, here, remember:
+
+78
+00:05:14,340 --> 00:05:18,979
+I was taking <u>a</u> plus the result of
+the recursive call of the function.
+
+79
+00:05:18,979 --> 00:05:25,509
+Here, we apply the operator <u>op</u> to
+<u>a</u> and the result of the recursive call.
+
+80
+00:05:25,509 --> 00:05:28,300
+Basically, it is the exact same structure of the function
+
+81
+00:05:28,300 --> 00:05:34,220
+but I have turned <u>op</u> and <u>e</u> to
+parameter of the new function <u>fold</u>.
+
+82
+00:05:34,220 --> 00:05:39,460
+Again, here, we did not declare any type in our code.
+
+83
+00:05:39,460 --> 00:05:41,050
+We didn't say what is the type of <u>fold</u>;
+
+84
+00:05:41,050 --> 00:05:42,400
+we didn't say what is the type of <u>op</u>;
+
+85
+00:05:42,400 --> 00:05:44,879
+and we didn't say what is the type of <u>e</u>.
+
+86
+00:05:44,879 --> 00:05:49,139
+And yet the compiler reads the program,
+accepts it , and tells us:
+
+87
+00:05:49,139 --> 00:05:52,580
+"Thanks a lot. You defined a <u>fold</u> function."
+
+88
+00:05:52,580 --> 00:05:56,139
+And look:
+"I believe that what you have given me,"
+
+89
+00:05:56,139 --> 00:05:57,379
+---actually I don't believe I'm sure--
+
+90
+00:05:57,379 --> 00:05:58,900
+"what you have given me is a function,"
+
+91
+00:05:58,900 --> 00:06:06,400
+"that takes a parameter <u>op</u>,
+that takes an argument of type <u>a</u>,"
+
+92
+00:06:06,400 --> 00:06:10,400
+"another argument of type <u>b</u> and
+gives a result of <u>b</u>;"
+
+93
+00:06:10,430 --> 00:06:13,560
+"then, expects an argument of type <u>b</u>"
+---our <u>e</u> here---;
+
+94
+00:06:13,560 --> 00:06:19,009
+"then, takes a list of element of type <u>a</u>"
+---well this list here---, and
+
+95
+00:06:19,009 --> 00:06:24,000
+"gives back a result which is again of type <u>b</u>."
+---which is the type of this <u>e</u> for example---
+
+96
+00:06:24,000 --> 00:06:28,080
+Well I'm not sure you are really convinced
+this is the right type,
+
+97
+00:06:28,080 --> 00:06:30,069
+---this will become clearer over the course---
+
+98
+00:06:30,069 --> 00:06:34,639
+but what is important is that this is actually
+the most general type one can give to this function.
+
+99
+00:06:34,639 --> 00:06:39,819
+And the OCaml typechecker just inferred, for us,
+the most general type for free.
+
+100
+00:06:39,830 --> 00:06:42,139
+We have nothing to do to get it.
+
+101
+00:06:42,139 --> 00:06:44,830
+And once you have a function of this general type,
+
+102
+00:06:44,830 --> 00:06:49,810
+you can apply to many different situation
+without changing the code.
+
+103
+00:06:49,810 --> 00:06:52,389
+So let's do it. Ok?
+
+104
+00:06:52,389 --> 00:06:54,569
+So now, I'm using this <u>fold</u>:
+
+105
+00:06:54,569 --> 00:06:56,979
+the operator is the sum;
+
+106
+00:06:56,979 --> 00:06:59,599
+the value for the empty list is <u>0</u>;
+
+107
+00:06:59,599 --> 00:07:02,919
+I apply to the list <u>[1;2;3;4;5]</u>.
+
+108
+00:07:02,919 --> 00:07:07,830
+This, unsurprisingly, will compute the sum
+of all the elements of the list,
+
+109
+00:07:07,830 --> 00:07:12,569
+which is, you see, <u>1+2+3+4+5</u>. This makes <u>15</u>.
+
+110
+00:07:12,569 --> 00:07:14,569
+And actually the system tells us:
+
+111
+00:07:14,569 --> 00:07:18,050
+"OK, the result is an integer and the value is <u>15</u>."
+
+112
+00:07:18,050 --> 00:07:23,240
+But now imagine you want, not to add all the
+elements of the list but multiply them.
+
+113
+00:07:23,240 --> 00:07:26,240
+Well, you use the same function <u>fold</u>.
+
+114
+00:07:26,240 --> 00:07:31,229
+Now the operation is a multiplication and
+for the empty list you just write on <u>1</u>.
+
+115
+00:07:31,229 --> 00:07:40,139
+You call it and the multiplication of this list here is the factorial of <u>5</u> which is <u>120</u> and this is the result you get.
+
+116
+00:07:40,139 --> 00:07:43,080
+But then you can decide to use the function
+in other environment too.
+
+117
+00:07:43,080 --> 00:07:49,189
+For example you can decide to
+concatenate all the strings in a list.
+
+118
+00:07:49,189 --> 00:07:53,520
+Using <u>^</u> which---you will discover---is
+the concatenation operator for string.
+
+119
+00:07:53,520 --> 00:07:55,770
+And for the base case I return the empty string.
+
+120
+00:07:55,770 --> 00:08:04,599
+So concatenating the string with <u>"1"</u>, <u>"2"</u>, <u>"3"</u> should
+return us the string <u>"123"</u>, which is exactly the case.
+
+121
+00:08:04,599 --> 00:08:06,789
+And then you can do more complicated stuff.
+
+122
+00:08:06,789 --> 00:08:09,200
+Like for example here, I have a list of pairs,
+
+123
+00:08:09,200 --> 00:08:13,360
+and I would like to compute the sum just of the
+first elements of each of the pairs.
+
+124
+00:08:13,360 --> 00:08:17,189
+I mean, here it would two plus three, which is five.
+
+125
+00:08:17,189 --> 00:08:20,509
+Again, I use the same higher order function <u>fold</u>,
+
+126
+00:08:20,509 --> 00:08:23,539
+and here is a combination operator:
+
+127
+00:08:23,539 --> 00:08:32,279
+I tell the system I will take a pair and a value <u>a</u>, and
+add <u>a</u> with the first element of the pair.
+
+128
+00:08:32,289 --> 00:08:34,329
+And <u>0</u> is returned for the empty list.
+
+129
+00:08:34,329 --> 00:08:39,320
+And of course the system gives you back <u>5</u>,
+which is exactly the sum of the two entries.
+
+130
+00:08:39,320 --> 00:08:41,760
+These are toy examples but you have seen:
+
+131
+00:08:41,760 --> 00:08:44,850
+we have a general function, with a very general type.
+
+132
+00:08:44,850 --> 00:08:51,300
+It can be applied to different type and data-structures.
+
+133
+00:08:51,300 --> 00:08:53,300
+The type is checked and is safe.
+
+134
+00:08:53,300 --> 00:08:55,399
+You will never have a type error.
+
+135
+00:08:55,399 --> 00:08:58,100
+And, it provides big flexibility.
+
+136
+00:08:58,100 --> 00:08:59,730
+You have written the code once, and
+
+137
+00:08:59,730 --> 00:09:06,139
+you specialise it to different situation without
+the need of using any kind of boilerplate.
+
+138
+00:09:06,139 --> 00:09:08,310
+That was a first example.
+
+139
+00:09:08,310 --> 00:09:10,370
+Now let's talk about pattern matching.
+
+140
+00:09:10,370 --> 00:09:14,250
+We have got an idea what pattern matching
+is in the example before.
+
+141
+00:09:14,250 --> 00:09:17,730
+But why it is so powerfull? Why does people love it?
+
+142
+00:09:17,730 --> 00:09:26,430
+Well let's write a function that removes all
+consecutive duplicates from a list of elements.
+
+143
+00:09:26,430 --> 00:09:31,380
+A good name is <u>destutter</u>: remove stuttering from a list.
+
+144
+00:09:31,380 --> 00:09:35,700
+It will be a function, again.
+
+145
+00:09:35,700 --> 00:09:38,040
+If the list, that is given to me, is empty, then
+
+146
+00:09:38,040 --> 00:09:40,529
+there is nothing to do, I return the empty list.
+
+147
+00:09:40,529 --> 00:09:43,800
+If the list has at least two elements, here
+<u>x</u> and <u>y</u>
+
+148
+00:09:43,800 --> 00:09:46,200
+---and that's the interesting part of the story---
+
+149
+00:09:46,209 --> 00:09:50,149
+I need to remove <u>y</u> if it is the same as <u>x</u>. Ok?
+
+150
+00:09:50,149 --> 00:09:51,100
+So, what happens ?
+
+151
+00:09:51,100 --> 00:10:01,560
+If <u>x</u> and <u>y</u> are equal, then I drop the <u>x</u>, and keep on
+working on the list that contains only <u>y</u> and the rest.
+
+152
+00:10:01,560 --> 00:10:03,440
+So I removed the first duplicate.
+
+153
+00:10:03,440 --> 00:10:09,040
+Otherwise, if <u>x</u> and <u>y</u> are different, what I need to
+keep is the <u>x</u> and keep on working on the rest of the list.
+
+154
+00:10:09,040 --> 00:10:15,699
+This seems to be a very sensible operation to do,
+up to now, since the complete function should work.
+
+155
+00:10:15,699 --> 00:10:18,600
+Let's pass it to the compiler and see what happens.
+
+156
+00:10:18,600 --> 00:10:21,589
+Ah! Here we get a warning.
+
+157
+00:10:21,589 --> 00:10:22,880
+The compiler is telling us:
+
+158
+00:10:22,880 --> 00:10:26,850
+"Look, the definition you have given has no type errors."
+
+159
+00:10:26,850 --> 00:10:31,970
+"I have well understood:
+you are defining a function from list to list."
+
+160
+00:10:31,970 --> 00:10:33,949
+---of course, a polymorphic function---
+
+161
+00:10:33,949 --> 00:10:40,100
+"But I'm not happy because your definition by cases
+---here this pattern-matching---is not exhaustive"
+
+162
+00:10:40,100 --> 00:10:41,060
+What does it mean ?
+
+163
+00:10:41,060 --> 00:10:46,670
+It means that there is at least one case,
+that I didn't cover.
+
+164
+00:10:46,670 --> 00:10:51,250
+And the compiler tells us what is an example
+of these cases I'm not covering.
+
+165
+00:10:51,250 --> 00:10:53,990
+Here is an example of a value that is not matched:
+
+166
+00:10:53,990 --> 00:10:59,940
+a list that has something as the first element
+and nothing less at the end.
+
+167
+00:10:59,940 --> 00:11:01,699
+Basically it's a list with just one element.
+
+168
+00:11:01,699 --> 00:11:02,829
+Well, it is right.
+
+169
+00:11:02,829 --> 00:11:08,240
+I have handled the case of an empty list;
+the case of a list that have at least two elements; but
+
+170
+00:11:08,240 --> 00:11:13,199
+I forgot to say what happens if
+I had a list with just one element.
+
+171
+00:11:13,199 --> 00:11:17,760
+So, the compiler is telling us which case we missed, and
+
+172
+00:11:17,760 --> 00:11:22,480
+we can follow its advice by completing the
+definition adding the handling of that particular case.
+
+173
+00:11:22,490 --> 00:11:24,240
+So, let's do it again.
+
+174
+00:11:24,240 --> 00:11:27,589
+So, for the empty list I do nothing.
+
+175
+00:11:27,589 --> 00:11:30,970
+For the list that has just one element
+I need to say what happens.
+
+176
+00:11:30,970 --> 00:11:34,529
+And what happen in this case: if the list
+has just one element there no stuttering;
+
+177
+00:11:34,529 --> 00:11:38,579
+so I have nothing to do; I return the same list as it is.
+
+178
+00:11:38,579 --> 00:11:40,610
+And the last clause is the same before.
+
+179
+00:11:40,610 --> 00:11:42,839
+Now the compiler is happy. It says:
+
+180
+00:11:42,839 --> 00:11:44,279
+"Ok, All the cases are covered."
+
+181
+00:11:44,279 --> 00:11:49,719
+"You have defined a function which is well typed:
+it takes list to list."
+
+182
+00:11:49,720 --> 00:11:50,959
+And we can test it.
+
+183
+00:11:50,959 --> 00:11:57,350
+Let's try to destuttering this list, where
+you have many consecutive duplicates.
+
+184
+00:11:57,350 --> 00:12:01,500
+Since I didn't make any mistake in this program,
+
+185
+00:12:01,500 --> 00:12:07,420
+you see, you have this list here where all consecutive
+duplicates have been collapsed to single value.
+
+186
+00:12:07,420 --> 00:12:09,880
+Here it is actually an integer list.
+
+187
+00:12:09,880 --> 00:12:17,140
+But again remember, the type of this, <u>destutter</u> now
+can be used on any data structure, not just integers.
+
+188
+00:12:17,140 --> 00:12:21,731
+Any list of something, not just list of integers.
+
+189
+00:12:21,740 --> 00:12:24,300
+Well, that was a very quick tour. Ok?
+
+190
+00:12:24,300 --> 00:12:28,000
+Just a glimpse of the OCaml language features,
+
+191
+00:12:28,000 --> 00:12:30,730
+and much more of this stuff will
+be done in the rest of the course.
+
+192
+00:12:30,730 --> 00:12:33,060
+But I do hope that you are starting to get the feeling why
+
+193
+00:12:33,060 --> 00:12:36,180
+this language is so concise, efficient, safe,
+
+194
+00:12:36,180 --> 00:12:37,560
+as the users told us.
+

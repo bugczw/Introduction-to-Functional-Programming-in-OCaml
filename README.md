@@ -1,5 +1,3 @@
-
-
 ## The content of this course includes:  
 0. _Week 0:Introduction and overview:_
     * S0: Introduction to the course
@@ -9,3 +7,12 @@
 	* S4: Tools and development environment:first steps in Ocaml
 	* S5: A brief showcase of some of Ocaml's features
 	* S6: Overview of the available resouces
+	
+	
+1. _Week 1: Basic types,definitions and functions:_	
+    * S0: Basic Data Types
+	* S1: More Data Types
+	* S2: Expressions
+	* S3: Definitions
+	* S4: Functions
+	* S5: Recursion

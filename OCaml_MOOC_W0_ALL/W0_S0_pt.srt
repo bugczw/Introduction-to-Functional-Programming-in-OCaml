@@ -1,0 +1,338 @@
+1
+00:00:08,000 --> 00:00:09,040
+Bem-vindos a este curso,
+
+2
+00:00:09,040 --> 00:00:13,799
+que se trata de uma introdução à programação
+funcional, utilizando a linguagem OCaml.
+
+3
+00:00:13,799 --> 00:00:20,380
+Um famoso programador de jogos, um programador
+fantástico, John Carmack, disse um dia:
+
+4
+00:00:20,380 --> 00:00:23,380
+<< Às vezes, a concepção elegante é uma função. >>
+
+5
+00:00:23,380 --> 00:00:28,470
+<< Não um método, não uma classe, não uma framework.
+Apenas uma função. >>
+
+6
+00:00:28,470 --> 00:00:32,480
+E portanto, aqui, vamos conduzir-vos numa viagem
+
+7
+00:00:32,480 --> 00:00:35,620
+que é uma introdução
+à programação funcional,
+
+8
+00:00:35,620 --> 00:00:38,670
+com o apoio da linguagem state-of-the-art OCaml.
+
+9
+00:00:38,670 --> 00:00:43,320
+Com um ambiente de exercícios,
+directamente no vosso navegador,
+
+10
+00:00:43,320 --> 00:00:45,550
+que utiliza ele próprio tecnologia de ponta
+baseada em OCaml.
+
+11
+00:00:45,550 --> 00:00:49,000
+Sim, isso significa que não precisam de instalar nada.
+
+12
+00:00:49,000 --> 00:00:51,030
+Tudo irá funcionar com a toda a simplicidade.
+
+13
+00:00:51,030 --> 00:00:52,780
+No final deste curso,
+
+14
+00:00:52,780 --> 00:00:57,789
+temos a certeza de que irão compreender
+o que John Carmack queria dizer verdadeiramente.
+
+15
+00:00:57,789 --> 00:01:01,460
+Quais são os objectivos de aprendizagem deste curso?
+
+16
+00:01:01,460 --> 00:01:05,479
+Queremos ensinar-vos a programar
+utilizando o estilo funcional, em geral.
+
+17
+00:01:05,479 --> 00:01:09,680
+Mas em particular,
+iremos utilizar a linguagem de programação OCaml,
+
+18
+00:01:09,680 --> 00:01:12,549
+e o seu avançado sistema de tipos;
+
+19
+00:01:12,549 --> 00:01:16,380
+descobrir como manipular
+estruturas de dados complexas,
+
+20
+00:01:16,380 --> 00:01:20,130
+que são definidas pelo utilizador
+de uma forma bastante concisa;
+
+21
+00:01:20,130 --> 00:01:25,150
+e começar em seguida a explorar outras características
+ricas e poderosas da linguagem OCaml;
+
+22
+00:01:25,150 --> 00:01:29,860
+e descobrir como o ecossistema em torno desta linguagem,
+
+23
+00:01:29,860 --> 00:01:34,460
+se desenvolve de forma cada vez mais dinâmica
+desde há uns anos a esta parte.
+
+24
+00:01:34,460 --> 00:01:36,280
+A organização do curso é bastante simples.
+
+25
+00:01:36,280 --> 00:01:37,990
+Teremos sete semanas.
+
+26
+00:01:37,990 --> 00:01:40,259
+Em cada semana, aproximadamente uma hora de vídeo,
+
+27
+00:01:40,259 --> 00:01:43,790
+composta por sequências curtas.
+
+28
+00:01:43,790 --> 00:01:45,850
+Terão diversos exercícios,
+
+29
+00:01:45,850 --> 00:01:49,759
+que serão avaliados et classificados
+directamente no vosso navegador.
+
+30
+00:01:49,759 --> 00:01:51,860
+Iremos fornecer igualmente
+alguns documentos suplementares,
+
+31
+00:01:51,860 --> 00:01:56,360
+se desejarem saber mais sobre
+as aplicações avançadas do OCaml,
+
+32
+00:01:56,360 --> 00:01:59,970
+utilizadas na vida real
+pelos utilizadores industriais.
+
+33
+00:01:59,970 --> 00:02:06,259
+E no fim, terão um verdadeiro
+un projecto de programação
+
+34
+00:02:06,259 --> 00:02:09,899
+Terão a oportunidade de
+programar algo de interessante.
+
+35
+00:02:09,899 --> 00:02:12,380
+Tal será uma surpresa para o final do curso.
+
+36
+00:02:12,380 --> 00:02:13,010
+O plano geral.
+
+37
+00:02:13,010 --> 00:02:17,780
+Uma introdução e uma visão geral
+de todo o curso e das noções de base
+
+38
+00:02:17,780 --> 00:02:22,520
+durante a semana 0,
+esta que estão a escutar agora.
+
+39
+00:02:22,520 --> 00:02:29,800
+Em seguida, avançamos et começamos a aprender
+os tipos de dados de base fornecidos pela linguagem.
+
+40
+00:02:29,800 --> 00:02:32,080
+Como definir funções.
+
+41
+00:02:32,080 --> 00:02:38,650
+Depois, irão aprender a definir
+estruturas de dados de base.
+
+42
+00:02:38,650 --> 00:02:42,849
+E então iremos aprofundar mais este tema
+
+43
+00:02:42,849 --> 00:02:47,470
+e escrever programas mais avançados
+com tais estruturas de dados.
+
+44
+00:02:47,470 --> 00:02:51,370
+Na semana 4, utilizaremos verdadeiramente
+o poder de uma linguagem de programação funcional
+
+45
+00:02:51,370 --> 00:02:55,849
+aprendendo a utilizar, definir,
+e manipular funções de ordem superior.
+
+46
+00:02:55,849 --> 00:02:58,450
+Após isto, e já que OCaml é uma linguagem funcional,
+
+47
+00:02:58,450 --> 00:03:01,080
+mas não unicamente << puramente funcional >>,
+
+48
+00:03:01,080 --> 00:03:01,690
+na semana 5,
+
+49
+00:03:01,690 --> 00:03:03,760
+vamos descobrir igualmente as excepções,
+
+50
+00:03:03,760 --> 00:03:06,680
+o input/output
+e outas construções imperativas;
+
+51
+00:03:06,680 --> 00:03:08,379
+já que, na linguagem de programação OCaml,
+
+52
+00:03:08,379 --> 00:03:12,810
+podem modificar igualmente o estado de memória.
+
+53
+00:03:12,810 --> 00:03:14,269
+E então, na semana 6,
+
+54
+00:03:14,269 --> 00:03:17,590
+começaremos a descobrir
+o sistema de módulos avançado,
+
+55
+00:03:17,590 --> 00:03:18,769
+--- que pertence à linguagem ---
+
+56
+00:03:18,769 --> 00:03:23,980
+e como o utilizar para fornecer
+abstração de dados.
+
+57
+00:03:23,980 --> 00:03:28,599
+E assim, esta semana, na verdade
+esta dividida em algumas sessões.
+
+58
+00:03:28,599 --> 00:03:30,440
+A primeira trata-se da introdução ao curso,
+
+59
+00:03:30,440 --> 00:03:33,250
+É lá que se encontram.
+
+60
+00:03:33,250 --> 00:03:37,049
+Depois, discutiremos elementos de cultura geral
+sobre a programação funcional em geral:
+
+61
+00:03:37,049 --> 00:03:38,769
+um pouco de história e motivações.
+
+62
+00:03:38,769 --> 00:03:43,230
+Na sequência 2, passaremos à linguagem OCaml,
+
+63
+00:03:43,230 --> 00:03:45,209
+aprenderemos de onde ela vem,
+
+64
+00:03:45,209 --> 00:03:48,360
+quais são as principais
+características da linguagem
+
+65
+00:03:48,360 --> 00:03:50,090
+E na sequência 3,
+
+66
+00:03:50,090 --> 00:03:56,120
+de modo a vos permitir compreender porque somos
+tão entusiasmados com esta linguagem de programação,
+
+67
+00:03:56,120 --> 00:03:58,060
+e de la vos ensinar,
+
+68
+00:03:58,060 --> 00:04:02,890
+conhecerão alguns
+utilizadores industriais e investigadores,
+
+69
+00:04:02,890 --> 00:04:07,340
+e ouvir o que eles têm a dizer
+a propósito deste semana fantástico.
+
+70
+00:04:07,340 --> 00:04:08,489
+Na sequência 4,
+
+71
+00:04:08,489 --> 00:04:12,750
+apresentaremos rapidamente as ferramentas
+e o ambiente de desenvolvimento.
+
+72
+00:04:12,750 --> 00:04:16,930
+Darão os vossos primeiros passos
+no sistema de programação OCaml.
+
+73
+00:04:16,930 --> 00:04:22,760
+A seguir terão uma breve demonstração
+de algumas das funcionalidades avançadas do OCaml.
+
+74
+00:04:22,760 --> 00:04:24,090
+E na sequência final,
+
+75
+00:04:24,090 --> 00:04:27,950
+dar-vos-emos uma breve visão
+dos recursos disponíveis.

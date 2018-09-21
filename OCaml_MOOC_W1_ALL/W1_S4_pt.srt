@@ -1,0 +1,480 @@
+1
+00:00:00,080 --> 00:00:01,110
+Bem-vindos de novo!
+
+2
+00:00:01,110 --> 00:00:05,279
+Nos últimos dois vídeos desta semana
+iremos olhar para as funções em OCaml.
+
+3
+00:00:05,279 --> 00:00:12,849
+Na semana 4, vamos explicar detalhadamente
+todos os mecanismos sobre funções.
+
+4
+00:00:12,849 --> 00:00:20,900
+Mas, por agora, vou apenas explicar
+como podemos definir funções em OCaml.
+
+5
+00:00:20,900 --> 00:00:25,710
+Na verdade, não há nada de especial
+sobre funções em OCaml:
+
+6
+00:00:25,710 --> 00:00:30,859
+As funções são na verdade apenas valores
+como qualquer outro valor em OCaml.
+
+7
+00:00:30,859 --> 00:00:33,610
+Mas vamos ver isto com mais detalhe na semana 4.
+
+8
+00:00:33,610 --> 00:00:39,020
+Por agora, para definirmos uma função <u>f</u>
+com um argumento,
+
+9
+00:00:39,020 --> 00:00:47,080
+poderíamos escrever apenas <u>let f x = exp</u>,
+onde <u>exp</u> seria o corpo da função.
+
+10
+00:00:47,080 --> 00:00:51,330
+Que normalmente usaria como seu parâmetro <u>x</u>.
+
+11
+00:00:51,330 --> 00:00:56,290
+Podemos também escrever definições locais
+com um âmbito limitado.
+
+12
+00:00:56,290 --> 00:01:04,500
+Podiam escrever da seguinte forma:
+<u>let f x = exp1</u> (o seu corpo) <u>in exp2</u> (o seu âmbito).
+
+13
+00:01:04,640 --> 00:01:09,740
+As regras de âmbito seriam precisamente as mesmas
+que vimos no último vídeo.
+
+14
+00:01:09,740 --> 00:01:15,200
+O que significa que as definições locais
+têm sempre prioridade sobre definições mais globais.
+
+15
+00:01:15,500 --> 00:01:19,470
+Como já vimos também,
+poderiamos escrever uma definição de função
+
+16
+00:01:19,470 --> 00:01:21,390
+ao escrever o seu nome, seguido de
+
+17
+00:01:21,390 --> 00:01:26,720
+da expressão que atribui o valor
+do seu parâmetro.
+
+18
+00:01:26,720 --> 00:01:31,200
+Não têm que usar parêntesis, a não ser que
+
+19
+00:01:31,200 --> 00:01:34,000
+seja necessário indicar a estrutura
+das expressões.
+
+20
+00:01:36,500 --> 00:01:40,900
+Vamos ver agora alguns exemplos simples
+de definições de funções.
+
+21
+00:01:40,900 --> 00:01:47,710
+Primeiro, temos uma definição global
+<u>let f x = x + 1</u>.
+
+22
+00:01:47,710 --> 00:01:52,820
+E como podemos ver <u>f</u> é reconhecida como
+uma função do tipo <u>int -> int</u>.
+
+23
+00:01:52,820 --> 00:01:57,810
+Podemos agora aplicar esta função a um argumento,
+
+24
+00:01:57,810 --> 00:01:59,390
+e obter o valor que esperamos.
+
+25
+00:01:59,390 --> 00:02:04,340
+O próximo exemplo é apenas uma
+definição de uma função local.
+
+26
+00:02:04,340 --> 00:02:06,930
+Temos aqui uma definição local da função <u>g</u>,
+
+27
+00:02:06,930 --> 00:02:12,120
+que só irá ser vísivel a seguir
+à expressão <u>in</u>.
+
+28
+00:02:12,120 --> 00:02:14,580
+E também funciona como previsto.
+
+29
+00:02:14,580 --> 00:02:19,640
+Finalmente, em alguns casos, podemos
+obter algo que não estavamos à espera:
+
+30
+00:02:19,640 --> 00:02:21,690
+quando tentamos escrever algo
+
+31
+00:02:21,690 --> 00:02:25,640
+que possa ser interpretado como
+uma sequência de aplicação de funções.
+
+32
+00:02:25,640 --> 00:02:29,130
+Como neste caso, onde <u>f</u> é definida como
+uma função com apenas um argumento.
+
+33
+00:02:29,130 --> 00:02:32,290
+Quando enviamos isto para o "toplevel",
+
+34
+00:02:32,290 --> 00:02:36,740
+temos um erro que nunca
+vimos antes.
+
+35
+00:02:36,740 --> 00:02:42,959
+O OCaml diz-nos que estamos a tentar aplicar
+uma função unária a demasiados argumentos.
+
+36
+00:02:42,959 --> 00:02:44,630
+Porquê?
+
+37
+00:02:44,630 --> 00:02:47,390
+Na verdade, o que escrevemos nesta linha foi:
+
+38
+00:02:47,390 --> 00:02:56,010
+A aplicação de <u>f</u> a dois argumentos,
+nomeadamente <u>f</u>, e um segundo argumento <u>1</u>.
+
+39
+00:02:56,010 --> 00:02:58,750
+Isto não é, claramente, o que queremos escrever.
+
+40
+00:02:58,750 --> 00:03:05,650
+A única coisa que podia fazer sentido neste linha
+seria aplicar <u>f</u> duas vezes ao valor <u>1</u>.
+
+41
+00:03:05,650 --> 00:03:08,410
+Se quisermos aplicar funções nesta ordem,
+
+42
+00:03:08,410 --> 00:03:12,349
+então temos que usar parêntesis
+para indicarmos a estrutura correcta.
+
+43
+00:03:12,349 --> 00:03:16,000
+Quando fazemos isto, obtemos o que era esperado.
+
+44
+00:03:17,910 --> 00:03:21,989
+O OCaml, como todas as linguagens de programação moderna,
+
+45
+00:03:21,989 --> 00:03:26,090
+é governada pelo princípio de âmbito lexical.
+
+46
+00:03:26,090 --> 00:03:29,220
+Isto é um princípio fundamental das
+linguagens de programação modernas.
+
+47
+00:03:29,220 --> 00:03:31,410
+Deixem-me explicar melhor.
+
+48
+00:03:31,410 --> 00:03:33,340
+Se escrevermos a definição de uma função,
+
+49
+00:03:33,340 --> 00:03:38,000
+e se usarmos, no corpo da função, o nome
+de um identificador,
+
+50
+00:03:38,000 --> 00:03:42,730
+então este nome vai sempre referir
+ao identificador que estava visível
+
+51
+00:03:42,730 --> 00:03:46,420
+no momento da declaração da função.
+
+52
+00:03:46,420 --> 00:03:52,970
+E não aquele que é visível no momento de execução
+da função.
+
+53
+00:03:52,970 --> 00:03:57,800
+---isso seria o oposto do princípio
+de programação dinâmica---
+
+54
+00:04:00,400 --> 00:04:04,849
+Agora, vou demonstrar importantíssimo
+princípio de âmbito lexical
+
+55
+00:04:04,849 --> 00:04:06,849
+que existe no OCaml.
+
+56
+00:04:06,849 --> 00:04:08,410
+Âmbito lexical significa
+
+57
+00:04:08,410 --> 00:04:11,870
+quando temos uma definição de função,
+como esta definição de <u>g</u>,
+
+58
+00:04:11,870 --> 00:04:15,660
+então <u>f</u>, que vemos no corpo
+da definição da função,
+
+59
+00:04:15,660 --> 00:04:19,009
+será o que estava visível no momento
+da sua definição.
+
+60
+00:04:19,009 --> 00:04:22,210
+Ou seja, o que está definido na linha 2.
+
+61
+00:04:22,210 --> 00:04:25,439
+E não o que está definido na linha 4.
+
+62
+00:04:25,439 --> 00:04:31,039
+Mesmo que tenhamos uma aplicação de <u>g</u>
+que vem depois desta segunda definição da função <u>f</u>.
+
+63
+00:04:31,789 --> 00:04:37,309
+E então, quando passamos esta frase para o OCaml,
+
+64
+00:04:37,309 --> 00:04:40,550
+podemos ver que <u>f</u> irá
+ser usada pela função <u>g</u>
+
+65
+00:04:40,550 --> 00:04:44,689
+é a função que mapeia <u>x</u> para <u>x+1</u>.
+
+66
+00:04:44,689 --> 00:04:49,860
+Isto significa que, neste exemplo, temos
+o princípio de âmbito lexical.
+
+67
+00:04:49,860 --> 00:04:55,050
+E obtemos assim, quando <u>g</u> é aplicada a 5,
+o valor 7.
+
+68
+00:04:55,050 --> 00:04:56,889
+Se tivéssemos âmbito dinâmico,
+
+69
+00:04:56,889 --> 00:04:59,839
+então <u>f</u> que é usada na execução de <u>g</u>
+
+70
+00:04:59,839 --> 00:05:02,129
+seria a função que duplica o seu argumento.
+
+71
+00:05:02,129 --> 00:05:04,419
+Ou seja, teríamos como resultado
+o valor 20.
+
+72
+00:05:04,419 --> 00:05:10,400
+Temos exactamente a mesma coisa,
+quando usamos definições globais
+
+73
+00:05:10,400 --> 00:05:12,069
+em vez de definições locais.
+
+74
+00:05:12,069 --> 00:05:18,479
+Temos aqui a mesma coisa,
+exactamente o mesmo tipo de exemplo,
+
+75
+00:05:18,479 --> 00:05:21,919
+mas expresso com definições globais,
+
+76
+00:05:21,919 --> 00:05:24,200
+e obtemos exactamente o mesmo resultado.
+
+77
+00:05:26,200 --> 00:05:29,520
+Como vimos no último vídeo,
+
+78
+00:05:29,520 --> 00:05:36,669
+É permitido definir várias definições de identificadores
+com o mesmo nome.
+
+79
+00:05:36,669 --> 00:05:39,499
+Como vos expliquei,
+no último vídeo,
+
+80
+00:05:39,499 --> 00:05:43,499
+isto apenas significa que estamos a criar uma nova
+definição de um novo identificador
+
+81
+00:05:43,499 --> 00:05:49,059
+que pode, localmente, ocultar uma definição anterior.
+
+82
+00:05:49,059 --> 00:05:55,360
+De qualquer forma, isto não pode ser confundido
+com a alteração de um valor de uma variável,
+
+83
+00:05:55,360 --> 00:06:00,469
+como fazemos numa linguagem de programação imperativa
+tradicional.
+
+84
+00:06:00,469 --> 00:06:06,389
+Agora, usando o princípio de âmbito lexical
+---ou atribuição estática---
+
+85
+00:06:06,389 --> 00:06:11,800
+Posso demonstrar-vos que é isto
+que realmente acontece.
+
+86
+00:06:14,700 --> 00:06:18,240
+Usando então o princípio de âmbito lexical,
+
+87
+00:06:18,240 --> 00:06:23,770
+posso fazer uma demonstração.
+
+88
+00:06:23,770 --> 00:06:28,819
+Nomeadamente, se fizermos uma atribuição "let" duas vezes
+num identificador com o mesmo nome,
+
+89
+00:06:28,819 --> 00:06:30,569
+então isto não será uma atribuição.
+
+90
+00:06:30,569 --> 00:06:32,889
+mas, na verdade, uma definição de um novo identificador.
+
+91
+00:06:32,889 --> 00:06:35,099
+Para mostrar isto,
+
+92
+00:06:35,099 --> 00:06:40,669
+vamos primeiro fazer uma atribuição
+para o identificador <u>a</u>,
+
+93
+00:06:40,669 --> 00:06:45,780
+vamos também definir uma função <u>f</u>
+que usa no seu corpo o identificador <u>a</u>.
+
+94
+00:06:46,800 --> 00:06:50,000
+Ok, agora definimos <u>f</u>.
+
+95
+00:06:50,000 --> 00:06:57,000
+<u>f</u> é agora uma função que envia
+um <u>x</u> a <u>x+a</u>, que é, neste caso <u>x+1</u>.
+
+96
+00:06:57,000 --> 00:07:01,529
+Se aplicarmos a esta função o valor 2,
+
+97
+00:07:01,529 --> 00:07:03,939
+obtemos como resultado o valor 3.
+
+98
+00:07:03,939 --> 00:07:07,270
+Agora, para vos demonstrar que
+
+99
+00:07:07,270 --> 00:07:12,619
+adicionar uma atribuição para o identificador <u>a</u>
+irá, na verdade, devolver um novo identificador,
+
+100
+00:07:12,619 --> 00:07:15,990
+que não altera o valor do identificador antigo,
+
+101
+00:07:15,990 --> 00:07:18,800
+Vamos só passar uma nova atribuição para <u>a</u>.
+
+102
+00:07:18,800 --> 00:07:23,800
+---como aqui, o valor de <u>a</u> ser 73---
+
+103
+00:07:23,800 --> 00:07:30,899
+Quando chamamos a função <u>f</u>
+com exactamente o mesmo argumento,
+
+104
+00:07:30,899 --> 00:07:34,599
+ficamos com o mesmo resultado.
+
+105
+00:07:34,599 --> 00:07:39,619
+Isto prova que o segundo <u>a</u> é novo,
+
+106
+00:07:39,619 --> 00:07:47,689
+que não é visivel de todo pela função
+<u>f</u> que foi definida anteriormente.

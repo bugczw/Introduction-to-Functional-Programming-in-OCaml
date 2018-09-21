@@ -1,0 +1,535 @@
+1
+00:00:00,000 --> 00:00:04,920
+Bonjour ! Dans cette séquence,
+nous allons continuer notre tour d'OCaml,
+
+2
+00:00:04,920 --> 00:00:08,340
+avec la construction de quelques expressions de base.
+
+3
+00:00:08,860 --> 00:00:12,720
+Le rôle des expressions est de calculer les valeurs.
+
+4
+00:00:12,720 --> 00:00:16,380
+En OCaml nous avons un système très riche de valeurs
+
+5
+00:00:16,380 --> 00:00:19,419
+et en fait les valeurs jouent un rôle très important
+en OCaml.
+
+6
+00:00:19,419 --> 00:00:26,619
+Pour cette raison, les expressions sont tout à fait
+centrales dans la définition du langage.
+
+7
+00:00:26,620 --> 00:00:31,900
+Une première construction, qui est très importante,
+est la construction d'une expression conditionnelle,
+
+8
+00:00:31,900 --> 00:00:37,660
+qui s'écrit toujours : <u>if</u> condition <u>then</u>
+première expression <u>else</u> seconde expression.
+
+9
+00:00:37,660 --> 00:00:43,540
+Ici, il est important de noter que cette construction
+vous donne toujours une expression,
+
+10
+00:00:43,540 --> 00:00:46,660
+et non une chose qui s'appellerait une instruction.
+
+11
+00:00:46,660 --> 00:00:49,340
+Une expression doit toujours avoir un type,
+
+12
+00:00:49,350 --> 00:00:53,399
+ce qui signifie que la condition, elle-même une
+expression, doit être de type booléen.
+
+13
+00:00:53,399 --> 00:00:58,420
+Et, en outre, les deux expressions que
+vous avez après le <u>then</u> et après le <u>else</u>,
+
+14
+00:00:58,420 --> 00:00:59,800
+doivent être du même type.
+
+15
+00:00:59,800 --> 00:01:05,040
+Et ce type vous donne le type de
+l'expression conditionnelle complète.
+
+16
+00:01:05,040 --> 00:01:11,450
+Il y a en fait une valeur par défaut qui est utilisée
+au cas où vous n'écririez pas la partie <u>else</u>,
+
+17
+00:01:11,450 --> 00:01:18,370
+mais s'il vous plaît ne l'utilisez pas pour le moment,
+ce n'est pas la valeur à laquelle vous vous attendriez.
+
+18
+00:01:20,260 --> 00:01:23,180
+Ici nous avons quelques
+expressions conditionnelles simples.
+
+19
+00:01:23,180 --> 00:01:25,560
+Le premier exemple serait un cas d'utilisation typique.
+
+20
+00:01:25,570 --> 00:01:30,970
+Dans la partie condition nous avons bien sûr
+une expression qui doit être de type booléen,
+
+21
+00:01:30,970 --> 00:01:32,180
+ce qui est le cas ici,
+
+22
+00:01:32,180 --> 00:01:36,390
+puis nous avons deux expressions, dans la partie
+<u>then</u> et dans la partie <u>else</u>, qui doivent
+
+23
+00:01:36,390 --> 00:01:38,890
+être toutes deux du même type.
+
+24
+00:01:38,890 --> 00:01:42,090
+Dans ce cas, la condition serait évidemment
+évaluée à <u>true</u>,
+
+25
+00:01:42,090 --> 00:01:49,750
+et donc le résultat de cette évaluation serait
+le résultat de la partie <u>then</u>, qui est bien sûr <u>13</u>.
+
+26
+00:01:50,560 --> 00:01:54,720
+Une chose importante à retenir à propos des
+expressions conditionnelles est que
+
+27
+00:01:54,720 --> 00:01:59,280
+les expressions après le <u>then</u> et après le <u>else</u>
+doivent être de même type.
+
+28
+00:01:59,280 --> 00:02:03,340
+Sinon, comment pourrions-nous obtenir un type pour
+l'expression conditionnelle complète ?
+
+29
+00:02:03,340 --> 00:02:06,750
+Comme nous pouvons le voir dans cet exemple,
+ce n'est pas le cas,
+
+30
+00:02:06,750 --> 00:02:11,790
+et en fait le système OCaml nous dit que
+nous avons commis une erreur de type.
+
+31
+00:02:13,540 --> 00:02:20,760
+Toutefois, il est bien sûr permis de combiner des
+expressions conditionnelles avec d'autres constructions
+
+32
+00:02:20,760 --> 00:02:26,960
+que vous pourriez connaître pour fabriquer des
+expressions imbriquées plus compliquées,
+
+33
+00:02:26,960 --> 00:02:29,640
+comme dans cet exemple.
+
+34
+00:02:29,650 --> 00:02:34,560
+Ici, nous avons une expression conditionnelle qui est
+combinée par une conjonction
+
+35
+00:02:34,560 --> 00:02:36,920
+avec une autre expression booléenne
+
+36
+00:02:36,920 --> 00:02:42,260
+et cela est bien sûr parfaitement correct et nous
+donne la valeur booléenne <u>true</u>.
+
+37
+00:02:42,260 --> 00:02:48,040
+Enfin, un autre genre d'emboîtement qui est tout-à-fait
+permis dans les expressions booléennes :
+
+38
+00:02:48,040 --> 00:02:50,980
+ici nous avons une expression emboîtée comme condition.
+
+39
+00:02:50,980 --> 00:02:58,420
+Cela est bien sûr correct et ce que nous obtenons
+alors est, comme prévu, la valeur <u>true</u>.
+
+40
+00:03:00,000 --> 00:03:04,300
+Nous pouvons également construire des expressions
+par application de fonction.
+
+41
+00:03:04,310 --> 00:03:07,950
+Pour savoir comment utiliser une fonction dans
+la construction d'une expression, vous
+
+42
+00:03:07,950 --> 00:03:11,350
+devez d'abord connaître le type de votre fonction.
+
+43
+00:03:11,350 --> 00:03:14,580
+En général, la fonction peut prendre
+plusieurs arguments.
+
+44
+00:03:14,580 --> 00:03:19,820
+Et dans ce cas, le type est écrit comme une
+séquence composée de tous les types des arguments
+
+45
+00:03:19,820 --> 00:03:22,020
+et du type du résultat à la fin.
+
+46
+00:03:22,020 --> 00:03:25,620
+Tous ces éléments sont séparés par des flèches.
+
+47
+00:03:25,620 --> 00:03:30,740
+Pour appliquer une fonction avec plusieurs arguments
+on écrit juste le nom de la fonction,
+
+48
+00:03:30,750 --> 00:03:36,950
+suivi des différentes expressions qui
+calculent les valeurs des arguments.
+
+49
+00:03:37,320 --> 00:03:41,260
+Par exemple, on pourrait avoir une fonction comme
+<u>String.get</u>
+
+50
+00:03:41,260 --> 00:03:44,490
+qui attend d'abord une chaîne, puis un entier
+
+51
+00:03:44,490 --> 00:03:46,290
+et qui renvoie un caractère.
+
+52
+00:03:46,290 --> 00:03:53,550
+Et on appliquerait cette fonction en écrivant juste
+<u>String.get</u>, puis la chaîne, et enfin l'entier.
+
+53
+00:03:53,550 --> 00:04:00,190
+Et cela donne dans ce cas la lettre <u>'c'</u>,
+puisque les chaînes sont indicées à partir de 0.
+
+54
+00:04:00,200 --> 00:04:04,000
+Comme vous pouvez le voir à nouveau,
+les parenthèses ne sont a priori pas nécessaires.
+
+55
+00:04:04,000 --> 00:04:08,060
+Elles ne seraient nécessaires qu'au cas où vous
+auriez des expressions plus complexes,
+
+56
+00:04:08,060 --> 00:04:10,600
+dans lesquelles vous devez préciser la structure.
+
+57
+00:04:13,200 --> 00:04:19,980
+Les exemples de cette diapositive montrent comment
+appliquer une fonction qui attend plusieurs arguments,
+
+58
+00:04:19,980 --> 00:04:26,280
+comme ici, la fonction <u>String.get</u>, qui attend
+en arguments d'abord une chaîne, puis un entier,
+
+59
+00:04:26,280 --> 00:04:28,540
+vous écrivez simplement le nom de la fonction
+
+60
+00:04:28,540 --> 00:04:32,099
+suivi du premier argument, puis du second argument,
+
+61
+00:04:32,099 --> 00:04:37,919
+et nous obtenons bien sûr le résultat prévu, qui est
+<u>'c'</u>, le troisième caractère dans cette chaîne.
+
+62
+00:04:37,920 --> 00:04:42,340
+En fait, vous êtes autorisé à écrire à la position
+du paramètre effectif
+
+63
+00:04:42,349 --> 00:04:47,209
+toute expression qui calcule une valeur du
+type attendu.
+
+64
+00:04:47,209 --> 00:04:52,860
+Par exemple, le deuxième et le premier
+argument peuvent être des expressions plus complexes,
+
+65
+00:04:52,860 --> 00:04:57,499
+qui doivent être évaluées avant de passer
+les valeurs à la fonction.
+
+66
+00:04:57,499 --> 00:05:01,479
+Nous pouvons aussi avoir quelque chose de plus
+compliqué, comme l'application de cette fonction,
+
+67
+00:05:01,479 --> 00:05:04,079
+ce qui nous donne dans ce cas le caractère <u>'l'</u>.
+
+68
+00:05:04,080 --> 00:05:10,440
+Ou bien, comme dans le cas suivant,
+nous avons différentes sortes de calcul,
+
+69
+00:05:10,440 --> 00:05:14,159
+où nous convertissons d'abord un entier en chaîne
+pour le premier argument,
+
+70
+00:05:14,159 --> 00:05:17,579
+et une chaîne en entier
+pour obtenir le second argument.
+
+71
+00:05:20,080 --> 00:05:26,500
+Les expressions peuvent être emboîtées arbitrairement
+et devenir très complexes et compliquées,
+
+72
+00:05:26,500 --> 00:05:32,860
+vous pouvez alors utiliser des définitions locales
+pour couper une grande expression en petits morceaux,
+
+73
+00:05:32,860 --> 00:05:36,420
+comme vous le verrez dans la prochaine séquence.
+
+74
+00:05:37,700 --> 00:05:42,979
+Il est possible de fournir aux fonctions des arguments
+en quantité a priori insuffisante.
+
+75
+00:05:42,979 --> 00:05:49,259
+Si vous essayez de le faire, alors vous obtenez un
+résultat de type différent de ce que vous pourriez attendre,
+
+76
+00:05:49,260 --> 00:05:51,940
+comme on le verra en semaine 4.
+
+77
+00:05:51,940 --> 00:05:56,360
+Encore une fois, les parenthèses ne font pas partie
+de l'application de fonction.
+
+78
+00:05:56,360 --> 00:06:04,460
+Si vous essayez quelque chose comme <u>f (e1, e2)</u> pour
+l'application d'une fonction à deux arguments,
+
+79
+00:06:04,460 --> 00:06:10,000
+vous obtiendrez une erreur, et l'explication
+en sera donnée en semaine 2.
+
+80
+00:06:10,000 --> 00:06:14,140
+Les opérateurs sont juste des fonctions
+avec une syntaxe particulière
+
+81
+00:06:14,140 --> 00:06:19,260
+qui vous permet d'écrire une application avec
+une notation infixe.
+
+82
+00:06:19,270 --> 00:06:23,650
+Les opérateurs, puisqu'ils sont des fonctions,
+ont également toujours un type.
+
+83
+00:06:23,650 --> 00:06:32,720
+Comme par exemple <u>+</u> a le type <u>int -> int -> int</u>
+car c'est l'addition entière habituelle.
+
+84
+00:06:32,720 --> 00:06:38,680
+Nous avons déjà vu des opérateurs qui ont en fait un
+type polymorphe, comme les opérateurs de comparaison
+
+85
+00:06:38,680 --> 00:06:42,580
+puisque ces opérateurs attendent des valeurs de
+n'importe quel type.
+
+86
+00:06:42,589 --> 00:06:48,809
+Dans ce cas, le type des arguments est
+indiqué avec une variable dite de type.
+
+87
+00:06:48,809 --> 00:06:52,769
+Les variables de type sont écrites avec une apostrophe.
+
+88
+00:06:54,080 --> 00:06:58,800
+Dans le cas où ces variables sont constituées
+d'une apostrophe et d'une seule lettre,
+
+89
+00:06:58,800 --> 00:07:00,800
+elles sont orthographiées sur le papier avec
+des lettres grecques.
+
+90
+00:07:01,360 --> 00:07:06,860
+Ainsi, dans notre exemple, nous écririons
+"alpha flèche alpha vers bool".
+
+91
+00:07:06,860 --> 00:07:09,480
+Les variables de type peuvent être instanciées,
+
+92
+00:07:09,490 --> 00:07:11,790
+mais, puisque ce sont des variables de type,
+
+93
+00:07:11,790 --> 00:07:15,070
+elles ne peuvent être instanciées que par des types.
+
+94
+00:07:15,070 --> 00:07:19,500
+Et, comme on le voit sur l'exemple <u>'a ->' a -> bool</u>,
+
+95
+00:07:19,500 --> 00:07:25,560
+cela signifie que la variable doit bien sûr
+être toujours instanciée par le même type
+
+96
+00:07:25,560 --> 00:07:27,500
+dans une invocation donnée.
+
+97
+00:07:30,040 --> 00:07:34,199
+Donc, tout ceci pour rappeler certaines choses sur
+les opérateurs polymorphes,
+
+98
+00:07:34,199 --> 00:07:37,719
+que nous avons déjà expliquées
+dans une séquence précédente.
+
+99
+00:07:37,720 --> 00:07:44,660
+Un opérateur de comparaison polymorphe attend
+toujours deux arguments de même type.
+
+100
+00:07:44,660 --> 00:07:50,860
+Donc, si on essaie de l'appliquer à deux valeurs de
+types différents, on obtient une erreur de type.
+
+101
+00:07:50,860 --> 00:07:54,960
+Cependant, si on a plusieurs invocations
+d'un opérateur de comparaison,
+
+102
+00:07:54,960 --> 00:08:00,520
+alors le type commun des deux valeurs comparées peut
+être différent à chaque invocation.
+
+103
+00:08:00,520 --> 00:08:04,300
+Comme dans l'exemple suivant où, d'abord,
+on compare deux valeurs entières,
+
+104
+00:08:04,300 --> 00:08:06,900
+puis on compare deux valeurs en virgule flottante,
+
+105
+00:08:06,900 --> 00:08:09,839
+et enfin on compare deux caractères.
+
+106
+00:08:09,839 --> 00:08:15,199
+Nous pouvons bien sûr combiner les résultats obtenus
+et cela est parfaitement correct.
+
+107
+00:08:15,200 --> 00:08:17,560
+Et nous obtenons la valeur booléenne <u>true</u>.
+
+108
+00:08:19,580 --> 00:08:22,000
+Un avertissement pour terminer.
+
+109
+00:08:22,000 --> 00:08:28,040
+L'opérateur de comparaison s'écrit toujours
+avec un seul signe d'égalité <u>=</u>.
+
+110
+00:08:28,040 --> 00:08:36,040
+En fait, il existe en OCaml un opérateur
+s'écrivant <u>==</u>, mais il signifie autre chose,
+
+111
+00:08:36,040 --> 00:08:38,800
+comme vous pourrez le voir en semaine 2.
+
+112
+00:08:38,800 --> 00:08:43,100
+Comme toujours, vous trouverez bien plus
+d'informations dans le manuel OCaml.
+
+113
+00:08:43,100 --> 00:08:47,400
+Et si vous voulez en apprendre davantage sur le jeu
+complet des constructions pour les expressions,
+
+114
+00:08:47,400 --> 00:08:53,120
+vous pouvez consulter le chapitre sur les expressions
+dans le manuel de référence de OCaml.

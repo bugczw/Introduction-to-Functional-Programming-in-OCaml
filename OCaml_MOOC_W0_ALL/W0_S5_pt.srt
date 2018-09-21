@@ -1,0 +1,873 @@
+1
+00:00:00,120 --> 00:00:02,620
+Bem-vindo nesta quinta sequência da aula, onde
+
+2
+00:00:02,620 --> 00:00:07,669
+iremos examinar mais em detalhe a linguagem OCaml,
+
+3
+00:00:07,669 --> 00:00:10,530
+e assim ter uma ideia geral,
+
+4
+00:00:10,530 --> 00:00:13,009
+do que esta é.
+
+5
+00:00:13,009 --> 00:00:14,259
+Comecemos assim por uma visita.
+
+6
+00:00:14,259 --> 00:00:18,910
+O objectivo desta sequência é apenas apresentar
+alguns exemplos,
+
+7
+00:00:18,910 --> 00:00:21,940
+que põem em destaque alguma das funcionalidades
+avançadas da linguagem.
+
+8
+00:00:21,940 --> 00:00:24,730
+relembre-se, os utilizadores dizem-nos que
+o que apreciam é :
+
+9
+00:00:24,730 --> 00:00:27,400
+a segurança : graças à tipagem estática forte
+e à filtragem (pattern-matching);
+
+10
+00:00:27,480 --> 00:00:30,670
+à concisão : graças à tipagem polimórfica
+e à inferência de tipos;
+
+11
+00:00:30,670 --> 00:00:33,000
+à expressividade das funções de ordem superior.
+
+12
+00:00:33,000 --> 00:00:40,500
+Então olhemos para alguns exemplos que mostram pequenas
+pequenos trechos de código com estas características.
+
+13
+00:00:40,510 --> 00:00:44,160
+Uma pequena advertência, é uma primeira
+
+14
+00:00:44,160 --> 00:00:48,649
+visão global rápida para vos dar
+uma primeira impressão da linguagem,
+
+15
+00:00:48,649 --> 00:00:52,620
+por forma a que não é esperado que perceba em
+todo o detalhe os exemplos por enquanto,
+
+16
+00:00:52,620 --> 00:00:54,559
+mas sim perceber por alto.
+
+17
+00:00:54,559 --> 00:00:58,879
+Claro, no fim do curso terão todos uma compreensão
+aprofundada e mais muito mais do que isso.
+
+18
+00:00:58,879 --> 00:01:01,339
+Então, força! e vamos a isso.
+
+19
+00:01:01,339 --> 00:01:05,610
+Por começar, comecemos pela estrutura de dados <u>list</u>.
+
+20
+00:01:05,610 --> 00:01:10,300
+Esta estrutura de dados é predefinida em OCaml.
+Assim consegue uma sintaxe especial.
+
+21
+00:01:10,340 --> 00:01:16,660
+Em particular, estes parêntesis retos, abrir e fechar
+representam a lista vazia,
+
+22
+00:01:16,690 --> 00:01:24,290
+e este <u>a::l</u> é uma lista que contém
+<u>a</u> como primeiro elemento e <u>l</u> como o resto.
+
+23
+00:01:24,290 --> 00:01:25,970
+E claro, já viu exemplos onde,
+
+24
+00:01:25,970 --> 00:01:30,440
+se coloca elementos dentro da lista, forma
+uma lista que contém estes elementos.
+
+25
+00:01:30,440 --> 00:01:36,390
+Vamos escrever agora uma função que soma
+todos os elementos de uma lista de inteiros.
+
+26
+00:01:36,390 --> 00:01:39,900
+Como acha que isso se escreve?
+Bem, deixe-me fazer isso.
+
+27
+00:01:39,900 --> 00:01:45,440
+Definimos uma função chamada <u>suml</u>:
+soma os elementos da lista.
+
+28
+00:01:45,450 --> 00:01:51,670
+E utilizamos o que chamamos a filtragem
+para definir uma função que opera caso a caso.
+
+29
+00:01:51,670 --> 00:01:56,500
+Dizemos que, se a lista que me foi dada é vazia
+então o resultado é 0.
+
+30
+00:01:56,500 --> 00:02:01,900
+Senão, se estiver vazia e tem a forma de um
+primeiro elemento seguido duma lista remanescente,
+
+31
+00:02:01,900 --> 00:02:05,450
+o resultado é obtido da seguinte forma :
+tomamos o primeiro elemento, e
+
+32
+00:02:05,450 --> 00:02:10,280
+somamo-lo ao resultado da soma dos
+elementos da lista remanescente.
+
+33
+00:02:10,280 --> 00:02:13,959
+Bem, não é importante se não percebe
+tudo o que acontece aqui.
+
+34
+00:02:13,959 --> 00:02:15,340
+É uma definição de facto simples.
+
+35
+00:02:15,340 --> 00:02:21,499
+O que é realmente importante é aperceber-se que
+não declaramos nenhum tipo de dados neste código.
+
+36
+00:02:21,499 --> 00:02:26,419
+Não dizemos : aqui está o tipo de <u>a</u>; aqui está
+o tipo de <u>rest</u>; aqui está o tipo de <u>suml</u>.
+
+37
+00:02:26,430 --> 00:02:27,469
+Nada!
+
+38
+00:02:27,469 --> 00:02:30,010
+E no entanto, mal carrega na tecla <u>return</u>,
+
+39
+00:02:30,010 --> 00:02:33,040
+bem, o sistema responde com esta mensagem.
+
+40
+00:02:33,040 --> 00:02:38,060
+Diz : « Muito obrigado, definiu um valor que é <u>suml</u>. »
+
+41
+00:02:38,060 --> 00:02:44,180
+é de facto uma função que aceita uma
+lista de inteiros e devolve um inteiro.
+
+42
+00:02:44,180 --> 00:02:45,269
+Ok.
+
+43
+00:02:45,269 --> 00:02:51,269
+Assim, o verificador de tipos de OCaml deduziu,
+para nós, o tipo certo deste programa, gratuitamente.
+
+44
+00:02:51,269 --> 00:02:53,200
+Não precisamos de fazer nada.
+
+45
+00:02:53,200 --> 00:03:00,540
+E estes tipos, deduzidos pelo compilador, são efetivamente
+calculados e forçados aquando da compilação.
+
+46
+00:03:00,540 --> 00:03:01,900
+E não durante a execução.
+
+47
+00:03:01,900 --> 00:03:03,560
+Vejamos um exemplo.
+
+48
+00:03:03,560 --> 00:03:09,260
+Se utilizo esta função <u>suml</u> para somar os
+elementos da lista que contém <u>1</u>, <u>2</u> et <u>3</u>,
+
+49
+00:03:09,260 --> 00:03:13,200
+bem, o compilador calcula o resultado e diz:
+
+50
+00:03:13,200 --> 00:03:16,090
+« Sim, o resultado é um inteiro e o seu
+valor é <u>6</u>. »
+
+51
+00:03:16,090 --> 00:03:17,560
+Está certo.
+
+52
+00:03:17,560 --> 00:03:20,310
+Agora, cometamos propositadamente um erro.
+
+53
+00:03:20,310 --> 00:03:25,469
+Aqui, vou aplicar esta função, que deveria
+funcionar exclusivamente para listas de inteiros, 
+
+54
+00:03:25,469 --> 00:03:31,749
+mas tentando enganar o sistema vou aplicá-la sobre
+uma lista de strings que representam inteiros
+
+
+55
+00:03:31,749 --> 00:03:33,129
+Vejamos o que acontece.
+
+56
+00:03:33,129 --> 00:03:35,669
+Bem, o sistema responde :
+
+57
+00:03:35,669 --> 00:03:43,900
+« Stop. Razão do erro : esta expressão aqui é
+uma string mas estava a espera de um inteiro. »
+
+58
+00:03:43,919 --> 00:03:47,249
+Porquê ? Porque <u>suml</u> espera uma lista de inteiros.
+
+59
+00:03:47,249 --> 00:03:52,459
+« Encontrei uma lista, mas não de inteiros, de strings. »
+Logo, é um erro.
+
+60
+00:03:52,459 --> 00:03:56,439
+Nenhum código ainda foi executado até ao momento.
+Isto acontece somente na fase de compilação.
+
+61
+00:03:56,439 --> 00:04:00,249
+Aquando da compilação, os tipos são verificados.
+
+62
+00:04:00,249 --> 00:04:05,800
+Na verdade, e verá isso mais  adiante, este
+pequeníssimo exemplo possuí uma propriedade fantástica,
+
+63
+00:04:05,859 --> 00:04:09,279
+que foi definido por Robin Milner
+para a classe das linguagens ML;
+
+64
+00:04:09,279 --> 00:04:13,859
+ele pretendia mesmo possibilitar que
+« os programas bem tipados não podem correr mal. »
+
+65
+00:04:13,859 --> 00:04:17,650
+quero eu dizer, os erros de tipos não
+aparecem durante a execução.
+
+66
+00:04:17,650 --> 00:04:19,840
+Estes são apanhados sistematicamente antes pelo
+compilador, pelo controlador de tipos.
+
+67
+00:04:19,840 --> 00:04:24,759
+Se ultrapassam a compilação e a verificação de tipos,
+não terá erros de tipos durante a compilação.
+
+68
+00:04:24,759 --> 00:04:30,239
+Assim, escrevemos a nossa bela função <u>suml</u>
+que soma todos os elementos da lista.
+
+69
+00:04:30,240 --> 00:04:36,370
+Mas se olhar para o código,
+quero eu dizer este <u>0</u>, ou este <u>+</u> aqui,
+
+70
+00:04:36,370 --> 00:04:41,300
+estes podem ser parâmetros da função, e conservamos
+a mesma estrutura para esta função.
+
+71
+00:04:41,389 --> 00:04:45,610
+Tentemos então de os transformar em parâmetro
+e vejamos o que acontece.
+
+72
+00:04:45,610 --> 00:04:49,530
+Vou reescrever a função, dar-lhe um novo nome, chamemo-lha
+agora <u>fold</u>.
+
+73
+00:04:49,530 --> 00:04:56,000
+Ela tem dois parâmetros suplementares : <u>op</u>, que tem
+o papel do operador <u>+</u> aqui,
+
+74
+00:04:56,000 --> 00:05:01,009
+e <u>e</u> que tem o papel do resultado
+retornado para a lista vazia.
+
+75
+00:05:01,009 --> 00:05:05,319
+É novamente uma definição de uma função;
+esta é definida por casos.
+
+76
+00:05:05,319 --> 00:05:11,139
+Sobre a lista vazia, no lugar de <u>0</u>,
+vou devolver este <u>e</u>, aqui.
+
+77
+00:05:11,139 --> 00:05:14,340
+Sobre a lista não vazia, aqui, relembre-se :
+
+78
+00:05:14,340 --> 00:05:18,979
+Somávamos o valor de <u>a</u> ao resultado da chamada
+recursiva da função.
+
+79
+00:05:18,979 --> 00:05:25,509
+Aqui, aplicamos o operador <u>op</u> a
+<u>a</u> e ao resultado da chamada recursiva.
+
+80
+00:05:25,509 --> 00:05:28,300
+Fondamentalmente, é exactamente a mesma
+estrutura de função
+
+81
+00:05:28,300 --> 00:05:34,220
+mas mudei <u>op</u> e <u>e</u> em 
+parâmetro da nova função <u>fold</u>.
+
+82
+00:05:34,220 --> 00:05:39,460
+Mais uma vez, aqui não declaramos nenhum tipo
+no código.
+
+83
+00:05:39,460 --> 00:05:41,050
+Não dissemos qual é o tipo de <u>fold</u> ;
+
+84
+00:05:41,050 --> 00:05:42,400
+não dissemos qual é o tipo de <u>op</u> ;
+
+85
+00:05:42,400 --> 00:05:44,879
+e não dissemos qual é o tipo de <u>e</u> .
+
+86
+00:05:44,879 --> 00:05:49,139
+E no entanto, o compilador lê o programa,
+aceita-o e diz-nos :
+
+87
+00:05:49,139 --> 00:05:52,580
+« Muito obrigado. definiu uma função <u>fold</u>. »
+
+88
+00:05:52,580 --> 00:05:56,139
+E olhe :
+« acredito que me deu, »
+
+89
+00:05:56,139 --> 00:05:57,379
+-- na verdade, não acredito, tenho a certeza --
+
+90
+00:05:57,379 --> 00:05:58,900
+« que o que me deu é uma função, »
+
+91
+00:05:58,900 --> 00:06:06,400
+« que aceita um parâmetro <u>op</u>,
+que aceita por seu turno um argumento de tipo <u>a</u>, »
+
+92
+00:06:06,400 --> 00:06:10,400
+« um outro argumento de tipo <u>b</u> e dá um
+resultado de tipo <u>b</u>; »
+
+93
+00:06:10,430 --> 00:06:13,560
+« em seguida, espera por um argumento de tipo <u>b</u> »
+--- o nosso <u>e</u> ici --- ;
+
+94
+00:06:13,560 --> 00:06:19,009
+« em seguida, aceita uma lista  de elementos de tipo <u>a</u> »
+--- é sim esta lista aqui ---,
+
+95
+00:06:19,009 --> 00:06:24,000
+« e devolve um resultado que é também do tipo <u>b</u>. »
+--- que é o tipo deste <u>e</u> por exemplo ---
+
+96
+00:06:24,000 --> 00:06:28,080
+Bem, não sei se estão convencidos que se
+trata bem do tipo certo,
+
+97
+00:06:28,080 --> 00:06:30,069
+--- isto ficará mais óbvio durante este curso ---
+
+98
+00:06:30,069 --> 00:06:34,639
+mas o que é importante é que de facto este é o tipo
+mais geral que se pode dar a esta função.
+
+99
+00:06:34,639 --> 00:06:39,819
+E o verificador de tipos de OCaml acabou de deduzir,
+para nós, o tipo mais geral, gratuitamente.
+
+100
+00:06:39,830 --> 00:06:42,139
+Não tivemos nenhum trabalho para obtê-lo.
+
+101
+00:06:42,139 --> 00:06:44,830
+E uma vez que tem uma função com este tipo geral,
+
+102
+00:06:44,830 --> 00:06:49,810
+pode aplicá-lo em variadas situações sem alterar o código.
+
+103
+00:06:49,810 --> 00:06:52,389
+Que assim seja feito, ok?
+
+104
+00:06:52,389 --> 00:06:54,569
+Então agora, utilizo este <u>fold</u> :
+
+105
+00:06:54,569 --> 00:06:56,979
+o operador é a soma ;
+
+106
+00:06:56,979 --> 00:06:59,599
+o valor da lista vazia é <u>0</u> ;
+
+107
+00:06:59,599 --> 00:07:02,919
+aplico-a à lista <u>[1;2;3;4;5]</u>.
+
+108
+00:07:02,919 --> 00:07:07,830
+Sem surpresa, vai calcular a soma de todos os
+elementos da lista,
+
+109
+00:07:07,830 --> 00:07:12,569
+que é, como vê, <u>1+2+3+4+5</u>. O que dá <u>15</u>.
+
+110
+00:07:12,569 --> 00:07:14,569
+E efectivamente o sistema diz-nos :
+
+111
+00:07:14,569 --> 00:07:18,050
+« OK, o resultado é um inteiro e o valor é <u>15</u>. »
+
+112
+00:07:18,050 --> 00:07:23,240
+Agora, imagine que queria, não somar os elementos da
+lista mas multiplicá-los.
+
+113
+00:07:23,240 --> 00:07:26,240
+Bem, basta usar a mesma função <u>fold</u>.
+
+114
+00:07:26,240 --> 00:07:31,229
+Neste caso, a operação é uma multiplicação e
+para a lista vazia, coloque simplesmente <u>1</u>.
+
+115
+00:07:31,229 --> 00:07:40,139
+Invoca a função, e o produto desta lista é aqui a factorial de <u>5</u>
+qu e é <u>120</u>, o resultado obtido.
+
+116
+00:07:40,139 --> 00:07:43,080
+Mas então, pode decidir utilizar a função noutros contextos.
+
+117
+00:07:43,080 --> 00:07:49,189
+Por exemplo, pode decidir concatenar todas as
+strings colocadas numa lista
+
+118
+00:07:49,189 --> 00:07:53,520
+Utilize então <u>^</u> que, como vai descobrir,
+é o operador de concatenação de strings.
+
+119
+00:07:53,520 --> 00:07:55,770
+e para o caso de base, basta retornar a string vazia.
+
+120
+00:07:55,770 --> 00:08:04,599
+Assim, com <u>"1"</u>, <u>"2"</u>, <u>"3"</u> isto deverá retornar
+a string <u>"123"</u>, que é exactamente o que acontece.
+
+121
+00:08:04,599 --> 00:08:06,789
+E depois, pode fazer coisas ainda mais complicadas.
+
+122
+00:08:06,789 --> 00:08:09,200
+Como por exemplo aqui, utilizo uma ista de pares,
+
+123
+00:08:09,200 --> 00:08:13,360
+e gostaria de calcular só a soma dos primeiros
+elementos de cada par.
+
+124
+00:08:13,360 --> 00:08:17,189
+Aqui, isso é dois mais três, o que dá cinco.
+
+125
+00:08:17,189 --> 00:08:20,509
+Mais uma vez, utilizei a mesma função de ordem superior <u>fold</u>,
+
+126
+00:08:20,509 --> 00:08:23,539
+e aqui vai um operador de combinação :
+
+127
+00:08:23,539 --> 00:08:32,279
+eu digo ao sistema que vou aceitar um par e um valor <u>a</u>,
+e somar <u>a</u> ao primeiro elemento do par.
+
+128
+00:08:32,289 --> 00:08:34,329
+E retornamos <u>0</u> para a lista vazia.
+
+129
+00:08:34,329 --> 00:08:39,320
+E claro, o sistema retorna-nos <u>5</u>,
+que é exactamente a soma das duas entradas.
+
+130
+00:08:39,320 --> 00:08:41,760
+Estes exemplos são exemplos brinquedos, mas viu :
+
+131
+00:08:41,760 --> 00:08:44,850
+temos uma função muito geral, com um tipo muito geral.
+
+132
+00:08:44,850 --> 00:08:51,300
+Esta pode ser aplicada a diferentes tipos
+e estruturas de dados.
+
+133
+00:08:51,300 --> 00:08:53,300
+O tipo é verificado e inócuo.
+
+134
+00:08:53,300 --> 00:08:55,399
+Não terá nunca erros de tipos.
+
+135
+00:08:55,399 --> 00:08:58,100
+e, ele oferece uma flexibilidade alargada.
+
+136
+00:08:58,100 --> 00:08:59,730
+Escreveu o código uma só vez, e
+
+137
+00:08:59,730 --> 00:09:06,139
+instancia-o para situações diferentes
+sem grandes artifícios.
+
+138
+00:09:06,139 --> 00:09:08,310
+Era um primeiro exemplo.
+
+139
+00:09:08,310 --> 00:09:10,370
+Agora, vamos falar de filtro.
+
+140
+00:09:10,370 --> 00:09:14,250
+Já tivemos uma primeira abordagem à
+filtragem no exemplo anterior.
+
+141
+00:09:14,250 --> 00:09:17,730
+Mas porque é assim tão poderoso? Porque será que
+os utilizadores o apreciam tanto?
+
+142
+00:09:17,730 --> 00:09:26,430
+Bem, escrevamos uma função que elimine todas as repetições
+dentro de elementos consecutivos de uma lista.
+
+143
+00:09:26,430 --> 00:09:31,380
+Um bom nome é <u>destutter</u> : remove a "gagueira"
+numa lista.
+
+144
+00:09:31,380 --> 00:09:35,700
+Trata-se novamente de um função.
+
+145
+00:09:35,700 --> 00:09:38,040
+Se a lista que me é dada está vazia,
+
+146
+00:09:38,040 --> 00:09:40,529
+não tenho nada por fazer, retorno a lista vazia.
+
+147
+00:09:40,529 --> 00:09:43,800
+Se a lista contém pelo menos dois elementos, aqui
+<u>x</u> e <u>y</u>
+
+148
+00:09:43,800 --> 00:09:46,200
+--- e está aqui a parte interessante da história ---
+
+149
+00:09:46,209 --> 00:09:50,149
+devo retirar <u>y</u> se este for igual a <u>x</u>. Certo?
+
+150
+00:09:50,149 --> 00:09:51,100
+Assim, o que acontece ?
+
+151
+00:09:51,100 --> 00:10:01,560
+Se <u>x</u> e <u>y</u> são iguais, então retira-se <u>x</u>, e
+prossegue-se com a lista que tem <u>y</u> em cabeça e o seu resto.
+
+152
+00:10:01,560 --> 00:10:03,440
+Assim, removi a primeira repetição.
+
+153
+00:10:03,440 --> 00:10:09,040
+Senão, se <u>x</u> e <u>y</u> são diferentes, devo guardar
+<u>x</u> e continuar o trabalho sobre o resto da lista.
+
+154
+00:10:09,040 --> 00:10:15,699
+Isto parece ser uma operação sensata, até aqui,
+já que a função completa deva funcionar.
+
+155
+00:10:15,699 --> 00:10:18,600
+Passemos para o compilador e vejamos o que acontece.
+
+156
+00:10:18,600 --> 00:10:21,589
+Ah ! Temos aqui uma advertência.
+
+157
+00:10:21,589 --> 00:10:22,880
+O compilador diz-nos :
+
+158
+00:10:22,880 --> 00:10:26,850
+« Olhe, a definição que me deu não tem erros de tipo. »
+
+159
+00:10:26,850 --> 00:10:31,970
+« Percebi bem : quer definir uma função de listas para listas. »
+
+160
+00:10:31,970 --> 00:10:33,949
+--- claro, uma função polimórfica ---
+
+161
+00:10:33,949 --> 00:10:40,100
+« Maos não estou satisfeito porque a sua definição
+por caso --- este filtro aqui --- não é exaustivo. »
+
+162
+00:10:40,100 --> 00:10:41,060
+O que isso significa ?
+
+163
+00:10:41,060 --> 00:10:46,670
+Significa que existe pelo menos um caso,
+que me esqueci de considerar.
+
+164
+00:10:46,670 --> 00:10:51,250
+E o compilador dá-me um exemplo destes casos esquecidos.
+
+165
+00:10:51,250 --> 00:10:53,990
+Aqui está um exemplo de valor que não corresponde :
+
+166
+00:10:53,990 --> 00:10:59,940
+uma lista que tem algo como primero elemento
+mas mais nada no fim.
+
+167
+00:10:59,940 --> 00:11:01,699
+Fundamentalmente, é uma lista com um só elemento.
+
+168
+00:11:01,699 --> 00:11:02,829
+E de fato, está certo.
+
+169
+00:11:02,829 --> 00:11:08,240
+Tratei do caso de uma lista vazia; tratei do caso de
+uma lista com pelo menos dois elementos; mas
+
+170
+00:11:08,240 --> 00:11:13,199
+esqueci de contemplar o que acontece quando tenho
+uma lista com um só elemento,
+
+171
+00:11:13,199 --> 00:11:17,760
+Assim, o compilador disse-nos que caso esquecemos e
+
+172
+00:11:17,760 --> 00:11:22,480
+podemos seguir o conselho dele completando a definição
+pelo tratamento deste caso particular.
+
+173
+00:11:22,490 --> 00:11:24,240
+Assim seja, recomecemos.
+
+174
+00:11:24,240 --> 00:11:27,589
+Não faço nada para a lista vazia.
+
+175
+00:11:27,589 --> 00:11:30,970
+Para a lista que tem um só elemento
+devo dizer o que acontece.
+
+176
+00:11:30,970 --> 00:11:34,529
+E o que acontece neste caso: se a lista só tem um elemento,
+não há gagueira ;
+
+177
+00:11:34,529 --> 00:11:38,579
+não tenho assim nada por fazer ;
+retorno a lista tal e qual.
+
+178
+00:11:38,579 --> 00:11:40,610
+E a última cláusula é a mesma do que antes.
+
+179
+00:11:40,610 --> 00:11:42,839
+Agora, o compilador já está satisfeito. Ele diz :
+
+180
+00:11:42,839 --> 00:11:44,279
+« Ok, todos os casos estão cobertos. »
+
+181
+00:11:44,279 --> 00:11:49,719
+« Definiu uma função que está bem tipada :
+aceita uma lista e retorna uma lista. »
+
+182
+00:11:49,720 --> 00:11:50,959
+E podemos testá-la.
+
+183
+00:11:50,959 --> 00:11:57,350
+tentemos alguma "gagueira" nesta lista, onde há
+várias repetições.
+
+184
+00:11:57,350 --> 00:12:01,500
+Como não fiz nenhum erro no programa,
+
+185
+00:12:01,500 --> 00:12:07,420
+veja, tem esta lista aqui onde todos os elementos
+repetidos ficaram agrupados num só.
+
+186
+00:12:07,420 --> 00:12:09,880
+Aqui, é na realidade uma lista de inteiros.
+
+187
+00:12:09,880 --> 00:12:17,140
+Mas relembremos mais uma vez que o tipo de <u>destutter</u> permite
+que seja usado sobre qualquer estrutura de dados, não só inteiros.
+
+188
+00:12:17,140 --> 00:12:21,731
+Todas as listas de qualquer coisa, não só somente listas de inteiros.
+
+189
+00:12:21,740 --> 00:12:24,300
+Bem, foi um passeio bem rápido, certo?
+
+190
+00:12:24,300 --> 00:12:28,000
+Só uma vista de olhos sobre as funcionalidades da linguagem OCaml,
+
+191
+00:12:28,000 --> 00:12:30,730
+e muitas outras coisas destas vão ser abordadas no resto da aula.
+
+192
+00:12:30,730 --> 00:12:33,060
+Mas o que desejo é que comece a perceber porque
+
+193
+00:12:33,060 --> 00:12:36,180
+esta linguagem é tão concisa, eficiente e segura
+
+194
+00:12:36,180 --> 00:12:37,560
+quanto os utilizadores nos disseram.

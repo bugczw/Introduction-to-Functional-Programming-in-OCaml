@@ -1,0 +1,736 @@
+1
+00:00:00,120 --> 00:00:02,400
+Bom dia novamente. Esta é a sequência 3 desta aula.
+
+2
+00:00:02,400 --> 00:00:06,800
+Vamos perceber porque escolhemos OCaml
+
+3
+00:00:06,819 --> 00:00:10,200
+ouvindo os testemunhos dos utilizadores
+--- de utilizadores reais ---
+
+4
+00:00:10,200 --> 00:00:15,200
+e perceber porque são também entusiastas
+a propósito desta linguagem.
+
+5
+00:00:15,250 --> 00:00:17,500
+então, quem utiliza a linguagem de programação OCaml?
+
+6
+00:00:17,500 --> 00:00:20,550
+Claro, é utilizado no ensino,
+em numerosas universidades,
+
+7
+00:00:20,550 --> 00:00:23,000
+em França, naturalmente, onde a linguagem nasceu,
+
+8
+00:00:23,000 --> 00:00:25,990
+em várias universidades, em Paris e arredores.
+
+9
+00:00:25,990 --> 00:00:28,800
+Na Europa, várias universidades de diferentes países:
+
+10
+00:00:28,800 --> 00:00:33,600
+em Itália, na Dinamarca, Polónia, Áustria.
+~~~ nota do tradutor: Em Portugal! ~~~
+
+11
+00:00:33,600 --> 00:00:37,000
+Nos Estados Unidos, em locais de prestígio como
+nas universidades de Cornell, Harvard,
+
+12
+00:00:37,000 --> 00:00:38,890
+ou Massachusetts, Pennsylvania.
+
+13
+00:00:38,890 --> 00:00:41,030
+E muitos outros sítios.
+
+14
+00:00:41,030 --> 00:00:46,269
+Mas interessa-nos particularmente aqui perceber porque
+é utilizado em projectos de investigação.
+
+15
+00:00:46,269 --> 00:00:47,400
+O assistente de prova Coq,
+
+16
+00:00:47,400 --> 00:00:49,900
+que recebeu o Prémio "Software System"
+
+17
+00:00:49,999 --> 00:00:52,000
+da Association for Computer Machinery,
+
+18
+00:00:52,000 --> 00:00:54,000
+no ano 2014.
+
+19
+00:00:54,079 --> 00:00:56,800
+O analisador estático Astrée,
+que é utilizado diariamente
+
+20
+00:00:56,800 --> 00:01:02,400
+para verificar o código de controlo e de comando
+do Airbus A380.
+
+21
+00:01:02,400 --> 00:01:06,800
+A plataforma Frama-C,
+que realiza análises avançadas de programas C.
+
+22
+00:01:06,800 --> 00:01:11,480
+Ocsigen, que possibilita uma forma revolucionária
+de escrever aplicações web.
+
+23
+00:01:11,480 --> 00:01:15,590
+Alt-Ergo, um solver SAT módulo teoria.
+
+24
+00:01:15,590 --> 00:01:19,800
+Mirage OS, que é um feito incrível:
+desenvolver um núcleo na forma de uma biblioteca
+
+25
+00:01:19,800 --> 00:01:25,200
+que pode ligar directamente no interior
+da sua aplicação,
+
+26
+00:01:25,200 --> 00:01:27,600
+para executar a aplicação sobre bare metal
+
+27
+00:01:27,600 --> 00:01:32,270
+Ou Flow e Hack, que são verificador de tipos
+para PHP ou Javascript.
+
+28
+00:01:32,270 --> 00:01:35,400
+Sim, é verdade, fazemos verificação de
+tipos para outras linguagens,
+
+29
+00:01:35,400 --> 00:01:39,000
+mas o verificador de tipos é escrito em OCaml
+é fundamentalmente código OCaml.
+
+30
+00:01:39,000 --> 00:01:41,290
+E é um projecto proveniente de Facebook.
+
+31
+00:01:41,290 --> 00:01:42,600
+E muitos outros.
+
+32
+00:01:42,600 --> 00:01:50,000
+E há depois existe a indústria que utiliza OCaml para
+as aplicações avançadas e complexas.
+
+33
+00:01:50,000 --> 00:01:53,000
+Claro, encontrará aplicações financeiras,
+
+34
+00:01:53,000 --> 00:01:56,500
+Bloomberg, JaneStreet, LexiFi...
+
+35
+00:01:56,550 --> 00:01:58,400
+Mas existem também sistemas aerospaciais
+
+36
+00:01:58,400 --> 00:02:01,500
+como Dassault Aviation que o utiliza.
+
+37
+00:02:01,590 --> 00:02:05,500
+Há também virtualização da Cloud: Citrix.
+
+38
+00:02:05,500 --> 00:02:10,200
+Sistemas Operativos: Microsoft, Red Hat,
+e muitos outros.
+
+39
+00:02:10,200 --> 00:02:13,769
+É assim muito interessante ouvir o que as
+pessoas têm a dizer.
+
+40
+00:02:13,769 --> 00:02:15,800
+Pedimos a muito deles
+
+41
+00:02:15,800 --> 00:02:18,300
+que nos forneçam uma palavrinha para esta aula
+
+42
+00:02:18,300 --> 00:02:19,900
+explicando porque escolheram a linguagem,
+
+43
+00:02:19,989 --> 00:02:22,200
+e porque está é importante para eles.
+
+44
+00:02:22,200 --> 00:02:25,000
+Comecemos então com Astrée,
+
+45
+00:02:25,000 --> 00:02:30,700
+que é utilizada para assegurar a segurança
+de código embutido crítico.
+
+46
+00:02:30,700 --> 00:02:33,700
+Assim, Antoine Miné, investigador,
+
+47
+00:02:33,700 --> 00:02:36,870
+é um dos principais contribuidores do sistema Astrée,
+
+48
+00:02:36,870 --> 00:02:39,800
+diz-nos que a linguagem foi essencial
+
+49
+00:02:39,800 --> 00:02:43,370
+para desenvolver um sistema tão sofisticado quanto este analisador,
+
+50
+00:02:43,370 --> 00:02:44,600
+porque a sua tipagem é segura,
+
+51
+00:02:44,600 --> 00:02:46,400
+é uma linguagem funcional,
+
+52
+00:02:46,400 --> 00:02:47,500
+é robusto,
+
+53
+00:02:47,500 --> 00:02:50,719
+e tem um compilador para código nativo de alta performance,
+
+54
+00:02:50,719 --> 00:02:53,800
+o que é importante quando deve verificar
+milhões de linhas de código,
+
+55
+00:02:53,800 --> 00:02:55,480
+escritas por outras pessoas.
+
+56
+00:02:55,480 --> 00:02:57,359
+Temos de seguida provas mecânicas:
+
+57
+00:02:57,359 --> 00:02:58,600
+dissemos que o assistente de prova Coq
+
+58
+00:02:58,600 --> 00:03:01,500
+--- que recebeu um prémio importante ---
+
+59
+00:03:01,500 --> 00:03:04,739
+foi também integralmente escrito em OCaml.
+
+60
+00:03:04,739 --> 00:03:06,800
+E a equipa de Coq disse-nos,
+
+61
+00:03:06,800 --> 00:03:10,600
+que se tivessem de escolher um aspecto
+particular da linguagem
+
+62
+00:03:10,629 --> 00:03:13,489
+que é essencial para eles, seria
+o filtro (pattern matching).
+
+63
+00:03:13,489 --> 00:03:18,849
+Porque, sem isso, implementar cálculos
+simbólicos seria um pesadelo.
+
+64
+00:03:18,849 --> 00:03:23,000
+TrustInSoft é uma Start-up que fornece
+
+65
+00:03:23,000 --> 00:03:28,939
+uma tecnologia revolucionária para
+verificar a segurança do software,
+
+66
+00:03:28,939 --> 00:03:32,829
+que é utilizada em aplicações de segurança.
+
+67
+00:03:32,829 --> 00:03:37,760
+Para eles, a escolha de OCaml é fundamental porque é
+eficaz e é expressivo,
+
+68
+00:03:37,760 --> 00:03:39,600
+de facto, precisam de eficiência,
+
+69
+00:03:39,600 --> 00:03:43,300
+porque trabalham na fronteira do que é
+tecnicamente possível fazer hoje,
+
+70
+00:03:43,389 --> 00:03:46,000
+precisam de expressividade
+porque, mais uma vez,
+
+71
+00:03:46,000 --> 00:03:50,000
+desenvolvem analisadores sofisticados,
+assim, precisam de concisão,
+
+72
+00:03:50,000 --> 00:03:52,200
+de verificação estática de tipos,
+
+73
+00:03:52,200 --> 00:03:57,629
+porque desta forma, evita-se um
+número incrível de erros.
+
+74
+00:03:57,629 --> 00:04:02,019
+Há também, a próxima geração de aplicações
+internet como o ambiente Ocsigen.
+
+75
+00:04:02,019 --> 00:04:05,000
+Vincent Balat, que é o criador de Ocsigen,
+
+76
+00:04:05,000 --> 00:04:09,419
+considera que é graça ao sistema de tipos de OCaml,
+
+77
+00:04:09,419 --> 00:04:16,359
+que Ocsigen pode fazer coisas incríveis
+como a verificação estática de tipos:
+
+78
+00:04:16,359 --> 00:04:20,299
+uma aplicação Web nunca irá gerar
+páginas HTML inválidas,
+
+79
+00:04:20,300 --> 00:04:25,509
+ou um formulário terá sempre os campos
+esperados para que a aplicação funcione.
+
+80
+00:04:25,509 --> 00:04:30,800
+E, pensa também que um sistema de tipos
+é extremamente poderoso
+
+81
+00:04:30,800 --> 00:04:33,599
+e útil para reorganizar um grande projecto.
+
+82
+00:04:33,599 --> 00:04:36,200
+Quando precisa de mudar uma definição de dados,
+
+83
+00:04:36,200 --> 00:04:38,699
+e adaptar o programa a uma nova
+definição de dados,
+
+84
+00:04:38,699 --> 00:04:42,270
+o compilador aponta realmente para todos os locais
+do código que precisam de serem modificados.
+
+85
+00:04:42,270 --> 00:04:44,800
+E para eles, isso salva-lhes a vida.
+
+86
+00:04:44,800 --> 00:04:46,940
+Permite-lhes evitar dias de
+testes e debugging.
+
+87
+00:04:48,550 --> 00:04:50,800
+Depois, temos OCamlPro,
+que é uma empresa
+
+88
+00:04:50,800 --> 00:04:53,449
+especializada precisamente no desenvolvimento em OCaml.
+
+89
+00:04:53,449 --> 00:04:55,800
+São os melhores que podem encontrar nas redondezas,
+
+90
+00:04:55,800 --> 00:04:58,400
+se pretende desenvolver aplicações em OCaml,
+
+91
+00:04:58,400 --> 00:05:02,600
+e mais uma vez, sublinham que o
+que é fascinante
+
+92
+00:05:02,600 --> 00:05:03,800
+--- quando comparado com outras linguagens ---
+
+93
+00:05:03,800 --> 00:05:07,800
+é que em OCaml, frequentemente,
+define-se simplesmente um tipo de dado,
+
+94
+00:05:07,800 --> 00:05:11,400
+e então, naturalmente, subtilmente,
+
+95
+00:05:11,400 --> 00:05:17,300
+o compilador vos conduz para o desenvolvimento
+do programa certo, muito rapidamente.
+
+96
+00:05:17,300 --> 00:05:19,490
+E, para eles, é fascinante.
+
+97
+00:05:19,490 --> 00:05:23,600
+Nós esperamos que aprecie o
+sabor deste poder
+
+98
+00:05:23,600 --> 00:05:26,599
+durante este MOOC.
+
+99
+00:05:26,599 --> 00:05:32,210
+Criptografia. Em criptografia, existe uma
+outra start-up que se chama Cryptosense.
+
+100
+00:05:32,210 --> 00:05:38,550
+Eles desenvolvem software utilizado para avaliar
+vulnerabilidades de sistemas criptográficos.
+
+101
+00:05:38,550 --> 00:05:43,129
+E para eles, OCaml é uma vantagem tecnológica,
+
+102
+00:05:43,129 --> 00:05:45,600
+porque podem produzir rapidamente,
+
+103
+00:05:45,600 --> 00:05:52,699
+software que é, para eles, de alta
+qualidade, legível e reutilizável.
+
+104
+00:05:52,699 --> 00:05:53,990
+Finanças.
+
+105
+00:05:53,990 --> 00:05:55,400
+aqui encontrará LexiFi,
+
+106
+00:05:55,400 --> 00:06:01,040
+que é provavelmente uma das primeiras
+empresas que adotou a linguagem OCaml.
+
+107
+00:06:01,050 --> 00:06:05,200
+Criam software inovador para a gestão
+de produtos financeiros complexos.
+
+108
+00:06:05,200 --> 00:06:09,900
+E para eles, para além da segurança, da legibilidade
+da expressividade e da excelente performance,
+
+109
+00:06:09,900 --> 00:06:12,229
+que são mencionados por muitos outros,
+
+110
+00:06:12,229 --> 00:06:16,780
+é muito importante poder dispor
+de um sistema portável.
+
+111
+00:06:16,780 --> 00:06:21,439
+Têm clientes que utilizam Unix, Windows,
+ou até mesmo somente um browser,
+
+112
+00:06:21,439 --> 00:06:26,189
+e são capaz de distribuir o produto deles
+para todas estas configurações.
+
+113
+00:06:26,189 --> 00:06:29,960
+E estou muito feliz de ver o acréscimo de
+interesse e actividade a volta de OCaml hoje.
+
+114
+00:06:29,960 --> 00:06:31,970
+Agora, nos sistemas operativos.
+
+115
+00:06:31,970 --> 00:06:33,500
+Encontra aqui o projeto Mirage,
+
+116
+00:06:33,500 --> 00:06:37,000
+que é uma empresa fantástica,
+
+117
+00:06:37,000 --> 00:06:42,200
+para escrever um exokernel, ou um unikernel,
+completo, inteiramente em OCaml.
+
+118
+00:06:42,200 --> 00:06:45,500
+Isto significa que vão escrever todas as funcionalidades
+
+119
+00:06:45,500 --> 00:06:48,800
+que são necessárias para que uma aplicação se executa
+sobre bare metal.
+
+120
+00:06:48,800 --> 00:06:52,420
+Uma parte do sistema operativo, que pode ser integrada
+diretamente dentro da aplicação,
+
+121
+00:06:52,430 --> 00:06:57,409
+conferindo assim uma aceleração em magnitude de
+várias ordens superior a uma execução clássica.
+
+122
+00:06:57,409 --> 00:07:02,039
+Já atingiram este objetivo, e
+foi inteiramente feito em OCaml.
+
+123
+00:07:02,039 --> 00:07:05,200
+Para eles, a combinação da segurança
+da tipagem estática
+
+124
+00:07:05,200 --> 00:07:07,979
+e da compilação para código nativo rápido,
+
+125
+00:07:07,979 --> 00:07:12,419
+é fulcral para realizar este desenvolvimento
+ao nível do sistema operativo.
+
+126
+00:07:12,419 --> 00:07:17,000
+E enfim, podemos referir um documento
+muito interessante.
+
+127
+00:07:17,000 --> 00:07:21,000
+Sugiro fortemente que procure
+esta comunicação da ACM.
+
+128
+00:07:21,000 --> 00:07:24,659
+Neste número de 2011,
+Yaron Minsky, de Jane Street,
+
+129
+00:07:24,659 --> 00:07:26,500
+escreveu um paper de título
+
+130
+00:07:26,500 --> 00:07:27,800
+"OCaml for the masses",
+
+131
+00:07:27,800 --> 00:07:29,000
+que explica porque JaneStreet,
+
+132
+00:07:29,000 --> 00:07:31,700
+que é uma impresa que construiu ferramentas
+de negociação financeira,
+
+133
+00:07:31,700 --> 00:07:34,110
+que manipulam 10 mil milhões de
+doláres por dia,
+
+134
+00:07:34,110 --> 00:07:37,000
+dois por cento de todas as transações
+financeiras do mundo,
+
+135
+00:07:37,000 --> 00:07:40,159
+e que o faz com software inteiramente
+escrito em OCaml.
+
+136
+00:07:40,159 --> 00:07:43,200
+Para eles é muito importante ser
+capaz de escrever
+
+137
+00:07:43,200 --> 00:07:45,530
+sistemas de tamanho menor, mais simples,
+mais fáceis de perceber,
+
+138
+00:07:45,530 --> 00:07:47,000
+em vez de utilizar outras linguagens
+
+139
+00:07:47,000 --> 00:07:48,740
+por uma razão muito simples, que é:
+
+140
+00:07:48,740 --> 00:07:51,000
+se tem um pequeno pedaço de código,
+
+141
+00:07:51,000 --> 00:07:53,780
+minora a probabilidade de ter bugs.
+--- É muito claro. ---
+
+142
+00:07:53,780 --> 00:07:56,000
+Para eles, uma organização financeira,
+
+143
+00:07:56,000 --> 00:07:58,900
+onde um erro pode custar milhões de doláres,
+
+144
+00:07:58,900 --> 00:08:01,530
+tais características são fundamentais.
+
+145
+00:08:01,530 --> 00:08:04,600
+E para eles igualmente, o sistema de tipos
+é fundamental para detectar bugs
+
+146
+00:08:04,600 --> 00:08:09,440
+que são de deteção difícil via teste.
+
+147
+00:08:09,879 --> 00:08:12,300
+E enfim, a virtualização e o Cloud Computing.
+
+148
+00:08:12,300 --> 00:08:15,599
+Encaramo-nos com a Citrix, com o hypervisor Xen,
+
+149
+00:08:15,599 --> 00:08:19,969
+aqui, todos as ferramentas que acompanham o
+hypervisor Xen estão escritos em OCaml.
+
+150
+00:08:19,969 --> 00:08:22,400
+Richard Sharp, da Citrix diz-nos que
+
+151
+00:08:22,400 --> 00:08:28,240
+OCaml foi realmente a chave para melhorar
+a produtividade
+
+152
+00:08:28,240 --> 00:08:32,700
+e a eficiência no desenvolvimento.
+
+153
+00:08:32,700 --> 00:08:37,400
+Portanto, para resumir, há uma grande
+variedade de utilizadores OCaml,
+
+154
+00:08:37,400 --> 00:08:40,389
+do ensino para a investigação, para a indústria.
+
+155
+00:08:40,389 --> 00:08:42,000
+E se quer olhar para todas estes citações,
+
+156
+00:08:42,000 --> 00:08:47,000
+verá que todas as pessoas apreciam
+todas a segurança,
+
+157
+00:08:47,000 --> 00:08:50,200
+que é trazida pela tipagem estática forte,
+
+158
+00:08:50,200 --> 00:08:52,110
+e pelo filtro,
+
+159
+00:08:52,110 --> 00:08:54,510
+a eficiência, devido ao compilador de alta performante,
+
+160
+00:08:54,510 --> 00:08:57,900
+não quer de uma linguagem de programação segura
+que torna lento os vossos programas.
+
+161
+00:08:57,900 --> 00:08:59,320
+Quer igualmente programas rápidos.
+
+162
+00:08:59,320 --> 00:09:03,060
+E expressividade, que torna esta combinação mágica,
+
+163
+00:09:03,060 --> 00:09:05,399
+--- este triângulo mágico que vimos na sequência anterior ---
+
+164
+00:09:05,399 --> 00:09:10,769
+duma linguagem funcional com inferência de tipos, polimorfismo
+e tipos de dados abstratos.
+
+165
+00:09:10,769 --> 00:09:15,800
+Vamos ver mais adiante uma pequena seleção de exemplos
+que vos dará um antevisão disto tudo.

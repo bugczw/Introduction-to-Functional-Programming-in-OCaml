@@ -1,0 +1,273 @@
+1
+00:00:00,120 --> 00:00:00,860
+Welcome back,
+
+2
+00:00:00,860 --> 00:00:02,969
+this is the final sequence of the first week.
+
+3
+00:00:02,969 --> 00:00:06,209
+We will talk about some of the ressources.
+
+4
+00:00:06,209 --> 00:00:07,939
+that you have at your disposal for learning now.
+
+5
+00:00:07,939 --> 00:00:11,519
+But let me start by telling you that
+this course is really self-contained.
+
+6
+00:00:11,519 --> 00:00:16,980
+You will not need anything more than
+what is provided in the learning environment.
+
+7
+00:00:16,980 --> 00:00:25,160
+But anyway, for curious minds, there are quite
+a lot of ressources, available in the web and for free.
+
+8
+00:00:25,160 --> 00:00:32,100
+The first pointer I would like you to follow is the <u>http://ocaml.org/</u> community website.
+
+9
+00:00:32,140 --> 00:00:37,980
+This is a website that evolved over the last
+years to bring together the community.
+
+10
+00:00:37,980 --> 00:00:41,030
+You will have documentation and information
+about all the available packages,
+
+11
+00:00:41,030 --> 00:00:46,940
+news, tutorials, a lot of things
+that are useful to be aware of,
+
+12
+00:00:46,940 --> 00:00:48,199
+even if you don't need it for the course.
+
+13
+00:00:48,199 --> 00:00:52,690
+You can get general help
+on forums and mailing-lists.
+
+14
+00:00:52,690 --> 00:00:54,480
+Let me start by saying very clearly,
+
+15
+00:00:54,480 --> 00:01:00,019
+that, during this MOOC, we really suggest you
+to use the forum on the FUN platform,
+
+16
+00:01:00,019 --> 00:01:01,280
+right in the learning environment,
+
+17
+00:01:01,280 --> 00:01:04,000
+for the reason that you will find other people like you,
+
+18
+00:01:04,000 --> 00:01:06,570
+which are progressing at a similar pace.
+
+19
+00:01:06,570 --> 00:01:10,000
+There are teaching assistants
+that know exactly what is going on in this course
+
+20
+00:01:10,000 --> 00:01:12,690
+and are specifically here to help.
+
+21
+00:01:12,690 --> 00:01:16,620
+The other people are going to use exactly
+the same environment.
+
+22
+00:01:16,620 --> 00:01:18,330
+You will have support with the learning platform.
+
+23
+00:01:18,330 --> 00:01:21,900
+So this is really the first place
+where you have to go.
+
+24
+00:01:21,900 --> 00:01:25,720
+And, in general, you should not need
+to have anything else to follow this MOOC.
+
+25
+00:01:25,720 --> 00:01:31,040
+But if you really want to have a look,
+there are interesting mailing-lists to explore.
+
+26
+00:01:31,040 --> 00:01:35,540
+There is the <u>ocaml-beginners</u> group on <u>Yahoo groups</u>.
+
+27
+00:01:35,540 --> 00:01:42,660
+There is an official <u>ocaml-list</u> still ran by INRIA,
+
+28
+00:01:42,660 --> 00:01:46,580
+where confirmed OCaml programmers
+go to post questions, post information.
+
+29
+00:01:46,580 --> 00:01:49,390
+But this is an advanced mailing-list.
+
+30
+00:01:49,390 --> 00:01:55,470
+As always the netiquette is the same,
+search archives before asking a question.
+
+31
+00:01:55,470 --> 00:02:00,610
+Don't ask elementary questions
+on the advanced mailing list.
+
+32
+00:02:00,610 --> 00:02:03,490
+Start with the MOOC environment first.
+
+33
+00:02:03,490 --> 00:02:05,980
+But you also have books and manuals available.
+
+34
+00:02:05,980 --> 00:02:10,390
+There are many ressources, very valuable ones,
+available for free online.
+
+35
+00:02:10,390 --> 00:02:14,680
+The first one is the OCaml user manual.
+
+36
+00:02:14,680 --> 00:02:17,930
+This comes from the designers of the language.
+
+37
+00:02:17,930 --> 00:02:24,829
+The lattest and always up-to-date version
+is available exactly from this link here.
+
+38
+00:02:24,829 --> 00:02:27,780
+Of course, this is not a tutorial.
+
+39
+00:02:27,780 --> 00:02:29,489
+It's a user manual.
+
+40
+00:02:29,489 --> 00:02:35,669
+If you really want to have the precise specification
+of each feature of the language that the reference point.
+
+41
+00:02:35,670 --> 00:02:38,400
+And there is a book which was written in 2000.
+
+42
+00:02:38,400 --> 00:02:41,200
+---yes, fifteen years ago, but still quite valuable---
+
+43
+00:02:41,200 --> 00:02:45,200
+from Emmanuel Chailloux,
+Pascal Manoury, and Bruno Pagano.
+
+44
+00:02:45,249 --> 00:02:47,989
+It was originally written in French,
+then translated into English.
+
+45
+00:02:47,989 --> 00:02:54,709
+It is vailable for free, again  from this link here.
+
+46
+00:02:54,709 --> 00:02:58,249
+It doesn't cover the most recent
+advances in the language
+
+47
+00:02:58,249 --> 00:03:01,349
+but for the introduction, it is really beautiful.
+
+48
+00:03:01,349 --> 00:03:05,200
+And if you really want to know more about
+the theory behind this,
+
+49
+00:03:05,200 --> 00:03:08,810
+I would strongly recommend you have a look to
+
+50
+00:03:08,810 --> 00:03:12,600
+the course notes by Didier Remy from
+"Applied Semantics Summer School"
+
+51
+00:03:12,600 --> 00:03:14,989
+which was also held in the year 2000.
+
+52
+00:03:14,989 --> 00:03:18,800
+This gives you really the understanding of
+how the system works inside,
+
+53
+00:03:18,800 --> 00:03:21,599
+from a theoretical point of view.
+
+54
+00:03:21,599 --> 00:03:27,739
+But then, if you look for more recent ressources,
+there are many which are non free,
+
+55
+00:03:27,739 --> 00:03:31,269
+there are quite a few books available,
+in English and in French.
+
+56
+00:03:31,269 --> 00:03:36,169
+Again, go to the <u>ocaml.org</u> community website,
+
+57
+00:03:36,169 --> 00:03:40,590
+where there is a comprehensive list of books.
+
+58
+00:03:40,590 --> 00:03:47,560
+So in conclusion, after this first week,
+you should be setup to enjoy the course.
+
+59
+00:03:47,560 --> 00:03:49,169
+You have discovered the exercise environment,
+
+60
+00:03:49,169 --> 00:03:52,760
+you know where we are coming from.
+
+61
+00:03:52,760 --> 00:03:59,000
+And we are really looking forward seeing you next week,
+to start the real technical journey with us.
+

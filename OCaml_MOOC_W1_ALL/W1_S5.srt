@@ -1,0 +1,383 @@
+1
+00:00:00,110 --> 00:00:00,590
+Hello.
+
+2
+00:00:01,280 --> 00:00:05,480
+We will finish this week by some words on
+recursive functions.
+
+3
+00:00:07,560 --> 00:00:12,400
+A recursive function is a function which is
+defined by calling on itself.
+
+4
+00:00:13,230 --> 00:00:17,470
+This is something which is very natural for
+recursively defined data structures,
+
+5
+00:00:17,470 --> 00:00:20,850
+as you will see them in week 3.
+
+6
+00:00:20,850 --> 00:00:26,800
+Since we don't have seen them so far, I have to
+demonstrate to you the principle on some toy examples.
+
+7
+00:00:26,840 --> 00:00:36,600
+Please be aware of the fact that you will see
+much more useful examples in the coming weeks.
+
+8
+00:00:36,660 --> 00:00:40,300
+So here is a scholarly example of a recursive function,
+
+9
+00:00:40,300 --> 00:00:45,390
+it is the factorial function, which is defined by:
+
+10
+00:00:45,390 --> 00:00:49,010
+factorial of <u>n</u> is one if the argument <u>n</u> is one;
+
+11
+00:00:49,640 --> 00:00:58,000
+and if <u>n</u> is greater than one, the factorial
+of <u>n</u> would be <u>n</u> multiplied by factorial of <u>n - 1</u>.
+
+12
+00:00:58,050 --> 00:01:04,700
+So here you can see that the definition of
+the function <u>fact</u> makes use of the function <u>fact</u> itself.
+
+13
+00:01:04,750 --> 00:01:12,870
+Which of course make sense, since the argument
+that you use in the body of this definition is smaller than
+
+14
+00:01:13,040 --> 00:01:15,540
+the argument for which you tried to evaluate the function.
+
+15
+00:01:17,720 --> 00:01:24,060
+Now, if you would like to write a definition
+in this way in OCaml, we have a small problem.
+
+16
+00:01:24,780 --> 00:01:29,200
+The problem is:
+when you write down the definition using <u>let</u>,
+
+17
+00:01:29,200 --> 00:01:36,200
+then the expression, which you have to the right of
+the equality sign, is always a priori evaluated in
+
+18
+00:01:36,240 --> 00:01:39,780
+the environment which you had before the <u>let</u>.
+
+19
+00:01:39,780 --> 00:01:44,400
+This of course does not work with recursive function
+because with a recursive function:
+
+20
+00:01:44,400 --> 00:01:49,659
+the function used in the body refers to
+the function which you are currently defining.
+
+21
+00:01:49,659 --> 00:01:53,170
+And not to something which has been defined before.
+
+22
+00:01:53,170 --> 00:01:58,000
+For this reason,
+we use a new keyword <u>rec</u> which changes this,
+
+23
+00:01:58,079 --> 00:02:02,639
+and which allows you to refer to the function
+which you are currently defining.
+
+24
+00:02:05,829 --> 00:02:12,100
+So here we will see, why we will need the
+keyword <u>rec</u> if we want to define recursive functions.
+
+25
+00:02:12,120 --> 00:02:16,819
+Let's first have again a look at bindings
+for identifiers for integer values.
+
+26
+00:02:16,819 --> 00:02:21,390
+So here, we define a first binding for <u>x</u>
+which has the value one.
+
+27
+00:02:21,390 --> 00:02:27,900
+Now, if we do a second binding for <u>x</u> and
+we refer in the expression to the value of <u>x</u>.
+
+28
+00:02:27,940 --> 00:02:30,400
+then this <u>x</u> would be the previous one,
+
+29
+00:02:30,400 --> 00:02:35,680
+which means that in this case of course <u>x</u>
+would be bound to the value of <u>1+1</u>,
+
+30
+00:02:35,680 --> 00:02:36,910
+that is the value 2.
+
+31
+00:02:36,910 --> 00:02:40,690
+And now <u>x</u> is of course the value of 2.
+
+32
+00:02:40,690 --> 00:02:43,600
+Which means that in the expression of a let-binding,
+
+33
+00:02:43,600 --> 00:02:46,360
+the expression is always
+evaluated in the old environment.
+
+34
+00:02:47,480 --> 00:02:51,020
+Now, it is the same, precisely the same, with functions.
+
+35
+00:02:51,020 --> 00:02:59,100
+So here we have a first definition of a function <u>f</u>,
+which is the successor function,
+
+36
+00:02:59,120 --> 00:03:04,700
+and we do a new binding for <u>f</u>;
+we define <u>f</u> to be now a new function.
+
+37
+00:03:04,700 --> 00:03:10,690
+And if we refer in the body to <u>f</u>, then the
+<u>f</u> in the body would be the old one.
+
+38
+00:03:10,690 --> 00:03:16,090
+Which means in this case <u>f</u> would be the
+function which send <u>x</u> to <u>x+2</u>.
+
+39
+00:03:16,090 --> 00:03:22,260
+So if we apply this new function <u>f</u> to argument one,
+you obtain the value of three.
+
+40
+00:03:22,260 --> 00:03:27,900
+And this is exactly as can be expected according
+to all the principles we have seen so far.
+
+41
+00:03:27,900 --> 00:03:33,480
+The problem is that this is not want we want
+if we try to define recursive functions.
+
+42
+00:03:33,480 --> 00:03:36,300
+So let's now write down the definition of
+the factorial function,
+
+43
+00:03:36,300 --> 00:03:39,129
+which I explain to you on the previous slide.
+
+44
+00:03:39,129 --> 00:03:42,890
+If we try to do this then you will see that
+this can not work.
+
+45
+00:03:42,890 --> 00:03:48,300
+Since the <u>fact</u> which you have in the body
+refers to a <u>fact</u> which has to be defined before,
+
+46
+00:03:48,310 --> 00:03:49,760
+but it does not exists.
+
+47
+00:03:49,760 --> 00:03:52,000
+So if you try to pass this to the toplevel,
+
+48
+00:03:52,000 --> 00:03:57,780
+we get an error message since the <u>fact</u> does
+not exist before the start of this definition.
+
+49
+00:03:58,629 --> 00:04:04,800
+And this is the reason while we need a new keyword <u>rec</u>,
+in order to write down now a recursive definition,
+
+50
+00:04:04,849 --> 00:04:12,129
+When we write the definition in the form
+<u>let rec n = ...</u> then this is considered to be recursive, and
+
+51
+00:04:12,200 --> 00:04:17,440
+now the fact which we have in the body of this definition
+refers to function which we are currently defining.
+
+52
+00:04:18,359 --> 00:04:23,699
+And now, passing this to the toplevel,
+you obtain that the definition has been accepted.
+
+53
+00:04:23,699 --> 00:04:26,300
+And if you know the value of <u>fact</u>,
+
+54
+00:04:26,300 --> 00:04:31,740
+you can see that when we applied to 10,
+you obtain exactly the right result.
+
+55
+00:04:34,050 --> 00:04:36,529
+Sometimes we have to go a little bit further,
+
+56
+00:04:36,529 --> 00:04:42,759
+and we have to define functions which are
+mutually recursive, or simultaneously recursive.
+
+57
+00:04:42,759 --> 00:04:48,129
+This is just a generalization of direct recursion
+which we have seen before.
+
+58
+00:04:48,129 --> 00:04:53,449
+It just means that you want to define several
+functions by recursion,
+
+59
+00:04:53,449 --> 00:04:58,489
+and which in fact can call on each other during
+the recursive definition.
+
+60
+00:05:00,020 --> 00:05:06,600
+This is again very natural with mutually recursive
+data structures as we will see them in week 3.
+
+61
+00:05:06,680 --> 00:05:14,900
+Our toy example consists of two boolean functions,
+which may test whether an integer is even or is odd.
+
+62
+00:05:14,949 --> 00:05:19,379
+And one way to define this function is by
+mutual recursions:
+
+63
+00:05:19,379 --> 00:05:24,219
+so we would say that an integer <u>n</u> is even
+if either it is 0,
+
+64
+00:05:24,219 --> 00:05:28,819
+or it is strictly positive and <u>n-1</u> is odd,
+on the one hand.
+
+65
+00:05:28,819 --> 00:05:36,400
+On the other hand, <u>n</u> is odd if either it is 1,
+or it is strictly greater than 1 and <u>n-1</u> is even.
+
+66
+00:05:36,490 --> 00:05:41,850
+And here you can see that the definition of <u>even</u>
+recurses on <u>odd</u> and the definition <u>odd</u> on <u>even</u>.
+
+67
+00:05:45,040 --> 00:05:49,060
+Let's try out simultaneously recursive definitions,
+
+68
+00:05:49,220 --> 00:05:52,160
+on the toy example I just explained to you.
+
+69
+00:05:52,240 --> 00:05:56,719
+And here you will see why it is really necessary
+to use simultaneous definitions.
+
+70
+00:05:56,719 --> 00:06:02,249
+Now, if we try to define the two functions
+without simultaneous definitions,
+
+71
+00:06:02,249 --> 00:06:04,629
+like first defining <u>even</u> and then defining <u>odd</u>,
+
+72
+00:06:04,629 --> 00:06:06,839
+then, of course, it can not work.
+
+73
+00:06:06,839 --> 00:06:09,539
+Since we try to pass this
+definition of a function <u>even</u>,
+
+74
+00:06:09,539 --> 00:06:13,460
+we have to refer to <u>odd</u>,
+and <u>odd</u> would not be defined yet.
+
+75
+00:06:13,460 --> 00:06:18,969
+This is of course not accepted, and
+we obtain an error message from the toplevel.
+
+76
+00:06:18,969 --> 00:06:23,509
+The only way to define this two functions
+is to define boths at a same time,
+
+77
+00:06:23,509 --> 00:06:27,589
+and for that we need a simultaneous definition,
+using the keyword <u>and</u>,
+
+78
+00:06:27,589 --> 00:06:32,349
+which we have already seen before on definition
+of integer identifiers.
+
+79
+00:06:33,550 --> 00:06:37,890
+So if we pass both definition at the same time,
+joined with the keyword <u>and</u>,
+
+80
+00:06:38,360 --> 00:06:43,639
+then both definitions are accepted,
+as you can see from the response of toplevel.
+
+81
+00:06:43,639 --> 00:06:49,079
+And now <u>even</u> and <u>odd</u> are the functions
+they are supposed to be.
+

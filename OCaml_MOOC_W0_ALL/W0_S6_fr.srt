@@ -1,0 +1,280 @@
+1
+00:00:00,120 --> 00:00:00,860
+Re-bonjour,
+
+2
+00:00:00,860 --> 00:00:02,969
+voici la dernière séquence de la première semaine.
+
+3
+00:00:02,969 --> 00:00:06,209
+Nous allons parler de quelques-unes des ressources que
+
+4
+00:00:06,209 --> 00:00:07,939
+vous avez à votre disposition pour apprendre davantage.
+
+5
+00:00:07,939 --> 00:00:11,519
+Mais laissez-moi commencer en vous disant qu'en fait
+ce cours se suffit vraiment à lui-même.
+
+6
+00:00:11,519 --> 00:00:16,980
+Vous n'aurez besoin de rien de plus que ce qui est
+fourni dans l'environnement d'apprentissage.
+
+7
+00:00:16,980 --> 00:00:25,160
+Ceci dit, pour les esprits curieux, il y a pas mal de
+ressources, disponibles sur le web et gratuitement.
+
+8
+00:00:25,160 --> 00:00:32,100
+Le premier pointeur que je vous recommande est
+<u>http://ocaml.org/</u>, le site de la communauté.
+
+9
+00:00:32,140 --> 00:00:37,980
+C'est un site web qui a beaucoup évolué au cours
+des dernières années pour rassembler la communauté.
+
+10
+00:00:37,980 --> 00:00:41,030
+Vous y trouverez de la documentation et de
+l'information sur tous les paquets disponibles,
+
+11
+00:00:41,030 --> 00:00:46,940
+des nouvelles, des tutoriels, beaucoup de choses
+qui sont utiles pour être au courant,
+
+12
+00:00:46,940 --> 00:00:48,199
+même si vous n'en avez pas besoin pour le cours.
+
+13
+00:00:48,199 --> 00:00:52,690
+Vous pouvez obtenir de l'aide générale
+sur les forums et les listes de diffusion.
+
+14
+00:00:52,690 --> 00:00:54,480
+Permettez-moi de commencer par dire très clairement,
+
+15
+00:00:54,480 --> 00:01:00,019
+qu'au cours de ce MOOC, nous vous suggérons vraiment
+d'utiliser le forum sur la plate-forme de FUN,
+
+16
+00:01:00,019 --> 00:01:01,280
+directement dans l'environnement d'apprentissage,
+
+17
+00:01:01,280 --> 00:01:04,000
+pour la raison que vous trouverez
+d'autres gens comme vous,
+
+18
+00:01:04,000 --> 00:01:06,570
+qui progressent à un rythme similaire.
+
+19
+00:01:06,570 --> 00:01:10,000
+Il y a des assistants d'enseignement qui savent
+exactement ce qui se passe dans ce cours
+
+20
+00:01:10,000 --> 00:01:12,690
+et sont ici spécialement pour vous aider.
+
+21
+00:01:12,690 --> 00:01:16,620
+Les autres personnes vont utiliser
+exactement le même environnement.
+
+22
+00:01:16,620 --> 00:01:18,330
+Vous aurez aussi de l'aide avec
+la plate-forme d'apprentissage.
+
+23
+00:01:18,330 --> 00:01:21,900
+Donc c'est vraiment le premier endroit où aller.
+
+24
+00:01:21,900 --> 00:01:25,720
+Et en général vous ne devriez avoir
+besoin de rien d'autre que ce MOOC.
+
+25
+00:01:25,720 --> 00:01:31,040
+Mais si vous voulez vraiment y jeter un oeil,
+il y a des listes de diffusion intéressantes à explorer.
+
+26
+00:01:31,040 --> 00:01:35,540
+Il y a le groupe <u>ocaml-beginners</u>
+sur <i>Yahoo Groups</i>.
+
+27
+00:01:35,540 --> 00:01:42,660
+Il y a une liste officielle <u>ocaml-list</u> gérée par INRIA,
+
+28
+00:01:42,660 --> 00:01:46,580
+où des programmeurs OCaml confirmés vont pour
+poster des questions, de l'information,
+
+29
+00:01:46,580 --> 00:01:49,390
+mais c'est une liste de diffusion
+pour utilisateur avancé.
+
+30
+00:01:49,390 --> 00:01:55,470
+Comme toujours, la nétiquette est la même, chercher
+d'abord dans les archives avant de poser une question.
+
+31
+00:01:55,470 --> 00:02:00,610
+Ne posez pas de question élémentaire
+sur la liste de diffusion avancée.
+
+32
+00:02:00,610 --> 00:02:03,490
+Commencez en premier par l'environnement MOOC.
+
+33
+00:02:03,490 --> 00:02:05,980
+Mais vous avez aussi des livres
+et manuels à votre disposition.
+
+34
+00:02:05,980 --> 00:02:10,390
+Il y a de nombreuses ressources, qui sont très valables
+et disponibles gratuitement en ligne.
+
+35
+00:02:10,390 --> 00:02:14,680
+La première est le manuel d'utilisation d'OCaml.
+
+36
+00:02:14,680 --> 00:02:17,930
+Il provient des concepteurs même du langage.
+
+37
+00:02:17,930 --> 00:02:24,829
+La dernière version, toujours à jour,
+est disponible exactement sur le lien ici.
+
+38
+00:02:24,829 --> 00:02:27,780
+Bien sûr, ce n'est pas un tutoriel.
+
+39
+00:02:27,780 --> 00:02:29,489
+C'est un manuel d'utilisation.
+
+40
+00:02:29,489 --> 00:02:35,669
+Si vous voulez vraiment avoir la spécification précise
+de chaque trait du langage, c'est le point de référence.
+
+41
+00:02:35,670 --> 00:02:38,400
+Et il y a un livre qui a été écrit en 2000,
+
+42
+00:02:38,400 --> 00:02:41,200
+--- eh oui, il y a quinze ans ---
+mais encore très valable,
+
+43
+00:02:41,200 --> 00:02:45,200
+par Emmanuel Chailloux, Pascal Manoury et Bruno Pagano.
+
+44
+00:02:45,249 --> 00:02:47,989
+Il a été écrit à l'origine en français,
+puis traduit en anglais.
+
+45
+00:02:47,989 --> 00:02:54,709
+Il est disponible gratuitement, là encore,
+à partir de ce lien :
+
+46
+00:02:54,709 --> 00:02:58,249
+Il ne couvre pas les avancées
+les plus récentes du langage
+
+47
+00:02:58,249 --> 00:03:01,349
+mais pour une introduction, il est vraiment bon.
+
+48
+00:03:01,349 --> 00:03:05,200
+Et si vous voulez vraiment en savoir plus
+sur la théorie derrière tout cela,
+
+49
+00:03:05,200 --> 00:03:08,810
+je vous recommanderais de jeter un oeil sur
+
+50
+00:03:08,810 --> 00:03:12,600
+les notes de cours de Didier Remy à
+« Applied Semantics Summer School »
+
+51
+00:03:12,600 --> 00:03:14,989
+qui s'est également tenue en l'an 2000.
+
+52
+00:03:14,989 --> 00:03:18,800
+Cela vous donne vraiment la compréhension du
+fonctionnement interne du système,
+
+53
+00:03:18,800 --> 00:03:21,599
+d'un point de vue théorique.
+
+54
+00:03:21,599 --> 00:03:27,739
+Mais ensuite, si vous cherchez des ressources plus
+récentes, il y en a beaucoup qui ne sont pas gratuites,
+
+55
+00:03:27,739 --> 00:03:31,269
+il y a pas mal de livres disponibles
+en anglais et en français.
+
+56
+00:03:31,269 --> 00:03:36,169
+Là encore, allez sur le site web de la communauté,
+<u>http://ocaml.org/</u>
+
+57
+00:03:36,169 --> 00:03:40,590
+où il y a une liste complète de livres.
+
+58
+00:03:40,590 --> 00:03:47,560
+Donc, en conclusion, après cette première semaine, vous
+devriez avoir tout ce qu'il faut pour profiter du cours.
+
+59
+00:03:47,560 --> 00:03:49,169
+Vous avez découvert l'environnement d'exercice,
+
+60
+00:03:49,169 --> 00:03:52,760
+vous savez d'où nous venons.
+
+61
+00:03:52,760 --> 00:03:59,000
+Et nous sommes vraiment impatients
+de vous voir la semaine prochaine pour commencer
+le véritable voyage technique avec nous.

@@ -1,0 +1,649 @@
+1
+00:00:00,210 --> 00:00:00,869
+Re-bonjour !
+
+2
+00:00:00,869 --> 00:00:05,270
+Dans cette séquence, nous allons voir
+les définitions en OCaml.
+
+3
+00:00:05,270 --> 00:00:09,370
+En fait, les définitions sont utilisées pour
+donner des noms à des valeurs,
+
+4
+00:00:09,370 --> 00:00:12,710
+et les définitions en OCaml sont de deux sortes :
+
+5
+00:00:12,710 --> 00:00:15,420
+les définitions globales et les définitions locales.
+
+6
+00:00:15,420 --> 00:00:18,390
+Commençons par les définitions globales.
+
+7
+00:00:18,390 --> 00:00:24,200
+Les définitions globales sont des définitions qui sont
+effectives à partir du moment où vous les écrivez
+
+8
+00:00:24,220 --> 00:00:31,900
+jusqu'à la fin de la séance, ou de votre programme
+dans le cas d'un programme compilé.
+
+9
+00:00:31,970 --> 00:00:37,640
+La syntaxe est très simple, vous écrivez <u>let</u>,
+le nom de votre choix, <u>=</u>,
+
+10
+00:00:37,640 --> 00:00:43,879
+et ensuite l'expression qui calcule la
+valeur que vous souhaitez attribuer au nom.
+
+11
+00:00:43,879 --> 00:00:50,100
+Un identificateur n'a pas lieu d'être déclaré
+préalablement,
+
+12
+00:00:50,170 --> 00:00:57,100
+et il n'y a pas lieu de déclarer son type,
+car il pourra être déduit par le système.
+
+13
+00:00:57,199 --> 00:01:02,839
+Une caractéristique très importante des langages de
+programmation fonctionnelle en général est que
+
+14
+00:01:02,839 --> 00:01:07,579
+une fois définie, la valeur d'un identificateur
+ne change jamais.
+
+15
+00:01:07,579 --> 00:01:10,909
+C'est vrai même en présence des traits impératifs,
+
+16
+00:01:10,909 --> 00:01:13,500
+que nous verrons en semaine 5.
+
+17
+00:01:13,500 --> 00:01:15,600
+Cela peut paraître surprenant sur le moment
+
+18
+00:01:15,600 --> 00:01:21,200
+mais nous apprendrons en semaine 5 comment cela
+est en fait possible.
+
+19
+00:01:21,200 --> 00:01:24,750
+Bien sûr, une fois que nous avons défini un nom et
+l'avons lié à une valeur,
+
+20
+00:01:24,750 --> 00:01:29,380
+nous pouvons l'utiliser dans les expressions écrites
+plus loin dans le programme.
+
+21
+00:01:29,380 --> 00:01:34,520
+Ceci est bien sûr la «raison d'être» des définitions.
+
+22
+00:01:37,549 --> 00:01:43,500
+Alors voici quelques exemples simples de définitions
+d'identificateurs globaux.
+
+23
+00:01:43,500 --> 00:01:46,960
+Tout d'abord, nous avons ici une définition globale
+de l'identificateur nommé <u>x</u>,
+
+24
+00:01:46,960 --> 00:01:50,640
+qui renvoie la valeur de <u>5</u>.
+
+25
+00:01:50,649 --> 00:01:53,810
+Bien sûr, après avoir défini l'identificateur <u>x</u>,
+
+26
+00:01:53,810 --> 00:01:57,030
+nous pouvons l'utiliser par la suite pour
+calculer d'autres valeurs
+
+27
+00:01:57,030 --> 00:02:01,430
+comme dans cet exemple, où nous définissons
+un identificateur global <u>y</u>
+
+28
+00:02:01,430 --> 00:02:04,200
+qui sera lié à la valeur de <u>2 * x</u>,
+
+29
+00:02:04,200 --> 00:02:06,799
+qui est ainsi de <u>10</u>. Maintenant,
+
+30
+00:02:06,799 --> 00:02:12,800
+il est tout à fait correct de donner une nouvelle
+définition globale pour un identificateur de même nom
+
+31
+00:02:12,800 --> 00:02:15,700
+qu'un autre que nous avons défini auparavant.
+
+32
+00:02:15,700 --> 00:02:20,100
+En fait, ce qui se passe ici, c'est que nous
+avons défini un nouvel identificateur
+
+33
+00:02:20,120 --> 00:02:23,870
+qui se trouve juste avoir le même nom que l'ancien.
+
+34
+00:02:23,870 --> 00:02:26,860
+ce qui signifie que l'ancienne définition sera masquée,
+
+35
+00:02:26,860 --> 00:02:29,280
+et elle sera cachée pour le moment.
+
+36
+00:02:29,280 --> 00:02:31,280
+Pour l'instant, croyez-moi simplement que
+
+37
+00:02:31,280 --> 00:02:33,190
+l'ancienne définition est toujours présente,
+
+38
+00:02:33,190 --> 00:02:35,470
+et peut encore être consultée par d'autres moyens.
+
+39
+00:02:35,470 --> 00:02:40,400
+Dans la séquence suivante, en fait, je vais vous
+montrer que c'est vraiment le cas.
+
+40
+00:02:40,780 --> 00:02:42,420
+Soumettons donc ceci au toplevel,
+
+41
+00:02:42,420 --> 00:02:47,400
+nous obtenons bien sûr que
+<u>x</u> est maintenant lié à la valeur <u>42</u>.
+
+42
+00:02:47,400 --> 00:02:52,560
+Nous avons encore ici pour <u>y</u>,
+la valeur <u>10</u>, comme précédemment.
+
+43
+00:02:52,560 --> 00:02:55,800
+Cependant, lorsque nous demandons maintenant
+la valeur de <u>x</u>,
+
+44
+00:02:55,800 --> 00:02:59,040
+alors c'est la dernière liaison qui est active,
+
+45
+00:02:59,040 --> 00:03:01,400
+et le <u>x</u> que nous avons ici à la ligne 9
+
+46
+00:03:01,400 --> 00:03:06,450
+va maintenant se référer à la dernière définition
+d'un identificateur appelé <u>x</u>,
+
+47
+00:03:06,450 --> 00:03:10,920
+qui nous renverra la valeur 42.
+
+48
+00:03:13,400 --> 00:03:18,700
+Nous pouvons aussi avoir des définitions locales, qui
+fonctionnent presque de même,
+
+49
+00:03:18,700 --> 00:03:25,290
+sauf que la portée, c'est-à-dire la région
+du programme où cette définition s'applique,
+
+50
+00:03:25,290 --> 00:03:28,870
+sera délimitée par la syntaxe.
+
+51
+00:03:28,870 --> 00:03:36,000
+Pour utiliser une définition locale, on écrit :
+<u>let</u>, 'nom', <u>=</u>, l'expression à nommer,
+
+52
+00:03:36,000 --> 00:03:38,180
+<u>in</u>, expression «2».
+
+53
+00:03:38,180 --> 00:03:42,800
+Et l'expression «2», ici, est la portée,
+c'est-à-dire la région délimitée
+
+54
+00:03:42,800 --> 00:03:45,120
+où cette définition sera utilisable.
+
+55
+00:03:45,120 --> 00:03:49,750
+En fait vous pouvez écrire dans un programme
+plusieurs définitions,
+
+56
+00:03:49,750 --> 00:03:53,730
+locales et globales, pour le même nom.
+
+57
+00:03:53,730 --> 00:03:56,750
+Si tel est le cas, alors la définition la plus locale,
+
+58
+00:03:56,750 --> 00:03:58,290
+la plus à l'intérieur,
+
+59
+00:03:58,290 --> 00:04:03,050
+a toujours la priorité sur les définitions
+plus globales ou plus à l'extérieur.
+
+60
+00:04:05,200 --> 00:04:08,550
+Ici, nous avons quelques définitions locales.
+
+61
+00:04:08,550 --> 00:04:12,000
+Ainsi, sur la première ligne, nous avons
+une définition locale d'un identificateur <u>x</u>,
+
+62
+00:04:12,000 --> 00:04:14,900
+qui sera lié à <u>9</u>.
+
+63
+00:04:14,900 --> 00:04:19,959
+Et cet identificateur est visible dans l'expression
+que nous allons voir derrière le <u>in</u>.
+
+64
+00:04:19,959 --> 00:04:24,389
+Ce qui veut dire que le résultat que nous calculons
+sera <u>18</u>, bien sûr.
+
+65
+00:04:24,389 --> 00:04:27,600
+Cependant, avec une définition locale
+
+66
+00:04:27,600 --> 00:04:33,710
+la définition n'est plus visible une fois
+que vous quittez la portée de cette définition.
+
+67
+00:04:33,710 --> 00:04:38,020
+Ce qui signifie que sur la ligne suivante,
+où nous demandons la valeur de <u>x</u>,
+
+68
+00:04:38,020 --> 00:04:43,590
+la définition locale de <u>x</u> n'a plus d'effet,
+et nous obtenons un message d'erreur.
+
+69
+00:04:43,590 --> 00:04:49,889
+C'est seulement lorsqu'on a une définition globale
+d'un identificateur comme <u>x</u> à la valeur <u>17</u>,
+
+70
+00:04:49,889 --> 00:04:55,560
+qu'il est possible d'utiliser cet identificateur
+dans les phrases soumises ensuite au toplevel.
+
+71
+00:04:55,560 --> 00:04:59,840
+Donc, une fois que nous avons entré une définition
+globale de <u>x</u>,
+
+72
+00:04:59,840 --> 00:05:01,749
+nous pouvons demander la valeur de <u>x</u>.
+
+73
+00:05:01,749 --> 00:05:05,789
+Et nous obtenons, comme on peut s'y attendre,
+la valeur <u>17</u>.
+
+74
+00:05:05,789 --> 00:05:10,600
+Et ensuite, nous pouvons utiliser cette valeur de <u>x</u>
+dans une autre définition, locale par exemple,
+
+75
+00:05:10,600 --> 00:05:14,169
+qui utilise juste cette valeur de <u>x</u>.
+
+76
+00:05:14,169 --> 00:05:17,300
+Comme ici, nous avons une définition locale de <u>y</u>,
+
+77
+00:05:17,300 --> 00:05:20,030
+qui sera liée à la valeur de <u>x + 1</u>, qui est <u>18</u>,
+
+78
+00:05:20,030 --> 00:05:26,199
+dans <u>y / 3</u>, de sorte que nous pouvons nous attendre
+à ce que cela nous renvoie la valeur <u>6</u>.
+
+79
+00:05:26,199 --> 00:05:28,999
+Et c'est bien le cas.
+
+80
+00:05:28,999 --> 00:05:34,590
+L'exemple suivant illustre à nouveau quelque chose que
+nous avons vu auparavant : le masquage.
+
+81
+00:05:34,590 --> 00:05:41,219
+Une définition plus récente, ou plus à l'intérieur ou
+plus locale masque une définition plus globale,
+
+82
+00:05:41,219 --> 00:05:43,969
+comme nous pouvons le voir sur cet exemple.
+
+83
+00:05:43,969 --> 00:05:48,180
+Nous avons ici trois définitions locales emboîtées.
+
+84
+00:05:48,180 --> 00:05:50,000
+On définit d'abord que <u>x</u> est <u>4</u>.
+
+85
+00:05:50,000 --> 00:05:55,700
+Ensuite, on définit <u>y</u> en se référant au
+<u>x</u> qu'on vient de définir.
+
+86
+00:05:55,700 --> 00:05:59,400
+Et enfin, on définit un nouvel identificateur
+appelé <u>x</u>
+
+87
+00:05:59,400 --> 00:06:04,069
+qui se réfère au <u>y</u> que nous venons de définir.
+
+88
+00:06:04,069 --> 00:06:06,259
+Maintenant, la seule question est:
+qu'est-ce que nous obtenons à la fin?
+
+89
+00:06:06,259 --> 00:06:09,620
+Et en fait, suivant le principe que je vous ai énoncé,
+
+90
+00:06:09,620 --> 00:06:15,159
+c'est toujours la définition la plus locale qui a
+la priorité sur une autre plus globale,
+
+91
+00:06:15,159 --> 00:06:18,169
+ce qui veut dire que le <u>x</u>,
+que nous avons ici dans la dernière ligne,
+
+92
+00:06:18,169 --> 00:06:24,430
+se réfère à la dernière définition que
+nous avons passé au toplevel.
+
+93
+00:06:24,430 --> 00:06:30,029
+Et en effet, le résultat que nous obtenons ici
+est <u>10</u>, qui vient de <u>2 * 5</u>.
+
+94
+00:06:30,029 --> 00:06:34,300
+Et cela est bien sûr, ce à quoi nous aurions
+pu nous attendre.
+
+95
+00:06:34,300 --> 00:06:35,800
+Le dernier exemple, enfin,
+
+96
+00:06:35,800 --> 00:06:39,900
+est dans le même esprit que ce que nous avons
+vu auparavant, avec des expressions conditionnelles.
+
+97
+00:06:39,900 --> 00:06:42,580
+Nous avons juste en OCaml plusieurs principes,
+
+98
+00:06:42,580 --> 00:06:45,000
+qui permettent de combiner les expressions
+
+99
+00:06:45,000 --> 00:06:48,689
+et de construire des expressions plus complexes
+à partir d'expressions plus simples.
+
+100
+00:06:48,689 --> 00:06:52,969
+Donc, nous pouvons les emboîter de manière quelconque,
+par exemple, dans ce cas,
+
+101
+00:06:52,969 --> 00:06:58,719
+nous avons ici une définition locale, où,
+dans la portée de la définition, nous avons
+
+102
+00:06:58,719 --> 00:07:01,749
+une expression qui est elle-même une définition locale.
+
+103
+00:07:01,749 --> 00:07:04,120
+Et cela est parfaitement valide.
+
+104
+00:07:04,120 --> 00:07:10,600
+Donc, nous allons soumettre ceci au système et nous
+obtenons une valeur entière qui est <u>22</u>.
+
+105
+00:07:12,889 --> 00:07:18,659
+Sur ce schéma, nous avons essayé d'illustrer
+le principe de priorité des définitions locales
+
+106
+00:07:18,659 --> 00:07:20,759
+sur celles plus globales.
+
+107
+00:07:20,759 --> 00:07:24,960
+Ici, nous voyons trois liaisons à
+trois identificateurs différents
+
+108
+00:07:24,960 --> 00:07:28,259
+qui portent tous le même nom <u>x</u>.
+
+109
+00:07:28,259 --> 00:07:32,789
+Comme vous pouvez le voir sur ce schéma,
+c'est toujours la plus locale qui gagne,
+
+110
+00:07:32,789 --> 00:07:40,860
+et qui prend la priorité sur la définition
+d'identificateur de même nom la plus globale.
+
+111
+00:07:40,860 --> 00:07:46,100
+Dans certains cas, il est nécessaire de définir
+plusieurs choses en même temps.
+
+112
+00:07:46,129 --> 00:07:53,089
+Si on écrit une définition comme
+<u>let x = e</u>, alors il se passe ce qui suit :
+
+113
+00:07:53,089 --> 00:07:58,689
+d'abord l'expression <u>e</u> est évaluée
+dans l'environnement que vous avez avant le <u>let</u>;
+
+114
+00:07:58,689 --> 00:08:02,059
+cela vous donne une nouvelle définition et
+un nouvel environnement
+
+115
+00:08:02,059 --> 00:08:07,889
+qui sera utilisé dans la suite du programme.
+
+116
+00:08:07,889 --> 00:08:10,200
+Parfois, cela peut causer des problèmes,
+
+117
+00:08:10,200 --> 00:08:14,719
+dans les cas où vous avez à définir
+deux choses en même temps,
+
+118
+00:08:14,719 --> 00:08:19,529
+et dans ce cas,
+vous aurez besoin de définitions simultanées.
+
+119
+00:08:19,529 --> 00:08:21,929
+Les définitions simultanées permettent
+
+120
+00:08:21,929 --> 00:08:26,720
+d'évaluer deux expressions, <u>e1</u> et <u>e2</u>,
+dans l'ancien environnement,
+
+121
+00:08:26,729 --> 00:08:33,229
+et de lier, en même temps,
+les noms <u>x1</u> et <u>x2</u> à ces deux valeurs.
+
+122
+00:08:33,229 --> 00:08:39,430
+Ce qui signifie que si on écrit quelque chose
+comme <u>let x1 = e1 and x2 = e2</u>
+
+123
+00:08:39,430 --> 00:08:46,920
+ce sera exactement la même chose que si on change
+l'ordre et qu'on écrit <u>let x2 = e2 et x1 = e1</u>,
+
+124
+00:08:46,920 --> 00:08:51,910
+puisque les deux expressions seront
+évaluées dans l'ancien environnement.
+
+125
+00:08:51,910 --> 00:08:55,830
+Cela fonctionne aussi bien avec les
+définitions globales qu'avec les définitions locales.
+
+126
+00:08:58,900 --> 00:09:03,520
+Dans cet exemple, je vais vous montrer
+la différence entre les définitions séquentielles
+
+127
+00:09:03,520 --> 00:09:05,730
+et les définitions simultanées.
+
+128
+00:09:05,730 --> 00:09:10,280
+Donc, d'abord nous allons lier <u>x</u> à la valeur <u>1</u>,
+
+129
+00:09:10,280 --> 00:09:13,300
+puis nous avons une définition séquentielle
+
+130
+00:09:13,300 --> 00:09:17,750
+qui est une définition locale séquentielle.
+
+131
+00:09:17,750 --> 00:09:21,080
+Ce qui est important ici est que
+nous définissons un nouvel identificateur,
+
+132
+00:09:21,080 --> 00:09:23,510
+lui aussi appelé <u>x</u> mais de valeur 2,
+
+133
+00:09:23,510 --> 00:09:26,640
+et à la ligne suivante le <u>x</u> que
+nous voyons dans l'expression
+
+134
+00:09:26,640 --> 00:09:30,380
+sur cette ligne est en fait le plus récent,
+
+135
+00:09:30,380 --> 00:09:33,980
+ce qui signifie qu'il se réfère à
+la valeur de <u>x</u> qui est <u>2</u>.
+
+136
+00:09:33,980 --> 00:09:40,320
+Donc, quand on soumet ceci au compilateur,
+on obtient la valeur <u>6</u>.
+
+137
+00:09:40,320 --> 00:09:45,170
+Maintenant, c'est différent lorsque nous utilisons
+une définition simultanée.
+
+138
+00:09:45,170 --> 00:09:47,920
+Dans la définition simultanée, les deux expressions
+
+139
+00:09:47,920 --> 00:09:53,710
+que nous avons après le signe d'égalité sont
+évaluées dans l'environnement précédent,
+
+140
+00:09:53,710 --> 00:09:58,770
+c'est-à-dire dans l'environnement où <u>x</u>
+a la valeur <u>1</u>.
+
+141
+00:09:58,770 --> 00:10:04,680
+Et cela veut dire que dans ce cas,
+<u>y</u> serait lié à la valeur de <u>1 + 1</u>.
+
+142
+00:10:04,680 --> 00:10:09,000
+Et on obtient en conséquence la valeur entière <u>4</u>.

@@ -1,0 +1,522 @@
+1
+00:00:00,190 --> 00:00:00,810
+Re-bonjour!
+
+2
+00:00:00,810 --> 00:00:05,040
+Continuons notre exposé des
+types de données de base en OCaml.
+
+3
+00:00:05,040 --> 00:00:10,269
+Et nous continuons avec le type
+des nombres à virgule flottante.
+
+4
+00:00:10,269 --> 00:00:15,739
+Les valeurs des nombres flottants sont toujours
+écrites d'une manière qui indique
+
+5
+00:00:15,740 --> 00:00:20,280
+que vous avez vraiment affaire à
+un nombre flottant et non à un nombre entier,
+
+6
+00:00:20,290 --> 00:00:22,870
+ce qui signifie que vous devez utiliser
+soit un point décimal,
+
+7
+00:00:22,870 --> 00:00:26,280
+soit un exposant, soit même les deux.
+
+8
+00:00:26,280 --> 00:00:27,980
+De la même manière,
+
+9
+00:00:27,990 --> 00:00:33,239
+les opérateurs sur des nombres flottants doivent
+être écrits avec un point à la fin,
+
+10
+00:00:33,239 --> 00:00:36,979
+de sorte que vous avez <u>+.</u>, <u>-.</u>, et ainsi de suite.
+
+11
+00:00:36,980 --> 00:00:41,100
+Vous avez bien sûr toutes les fonctions habituelles
+sur les nombres à virgule flottante,
+
+12
+00:00:41,109 --> 00:00:45,829
+comme la racine carrée, le sinus, le cosinus,
+la valeur absolue, et ainsi de suite...
+
+13
+00:00:46,200 --> 00:00:49,440
+Attention, c'est très important alors je le répète,
+
+14
+00:00:49,449 --> 00:00:53,869
+vous devez indiquer dans l'écriture d'une constante
+
+15
+00:00:53,869 --> 00:00:58,169
+le fait que vous utilisez des nombres flottants
+et non des entiers.
+
+16
+00:00:58,169 --> 00:01:01,689
+Donc, vous devez toujours utiliser un point
+ou un exposant
+
+17
+00:01:01,689 --> 00:01:04,300
+dans les constantes de type flottant,
+
+18
+00:01:04,300 --> 00:01:09,540
+et vous devez toujours utiliser un point dans les
+opérateurs travaillant sur les nombres flottants.
+
+19
+00:01:12,600 --> 00:01:15,800
+Maintenant, nous allons jeter un oeil à
+certaines expressions flottantes simples.
+
+20
+00:01:15,800 --> 00:01:20,260
+Ici, nous avons une addition
+entre deux constantes à virgule flottante.
+
+21
+00:01:20,260 --> 00:01:25,240
+Ensuite, nous avons une multiplication
+entre deux constantes à virgule flottante.
+
+22
+00:01:25,240 --> 00:01:32,060
+Encore une fois, les deux derniers exemples montrent
+que vous ne pouvez vraiment pas mélanger des entiers
+
+23
+00:01:32,070 --> 00:01:35,390
+avec des flottants sans conversion explicite.
+
+24
+00:01:35,390 --> 00:01:38,470
+Par exemple, essayer de calculer une somme entière
+
+25
+00:01:38,470 --> 00:01:43,510
+entre un entier et un nombre flottant
+nous donne une erreur de type.
+
+26
+00:01:43,510 --> 00:01:49,910
+Exactement de la même façon, essayer de multiplier
+un flottant par un entier
+
+27
+00:01:49,910 --> 00:01:51,890
+nous renvoie une erreur de type.
+
+28
+00:01:53,780 --> 00:01:56,900
+Ceci est en fait un principe important en OCaml.
+
+29
+00:01:56,900 --> 00:01:59,740
+Tous les types de base sont disjoints,
+
+30
+00:01:59,740 --> 00:02:04,200
+ce qui signifie qu'aucune valeur n'appartient
+en même temps à un type
+
+31
+00:02:04,200 --> 00:02:07,300
+et à un type différent.
+
+32
+00:02:07,760 --> 00:02:10,300
+Contrairement à d'autres langages de programmation
+
+33
+00:02:10,300 --> 00:02:14,520
+il n'y a pas de conversion implicite entre
+types de données,
+
+34
+00:02:14,520 --> 00:02:17,320
+ce qui signifie que si vous voulez avoir une conversion
+
+35
+00:02:17,320 --> 00:02:21,660
+alors vous devez écrire explicitement
+l'opérateur de conversion.
+
+36
+00:02:21,660 --> 00:02:24,000
+Il y a une très bonne raison à cela,
+
+37
+00:02:24,010 --> 00:02:29,170
+qui est que la conversion implicite entre types
+cohabiterait mal avec l'inférence de type.
+
+38
+00:02:29,170 --> 00:02:34,390
+Donc, c'est un petit prix à payer pour avoir cette
+fonctionnalité très importante et très pratique
+
+39
+00:02:34,390 --> 00:02:37,470
+dans le système OCaml : l'inférence de type.
+
+40
+00:02:37,470 --> 00:02:43,670
+En OCaml nous avons des opérations de conversion
+explicite entre la quasi-totalité des types de base,
+
+41
+00:02:43,670 --> 00:02:47,980
+et s'ils n'existent pas, alors il est très facile
+de les ajouter soi-même.
+
+42
+00:02:47,980 --> 00:02:51,480
+Par exemple, entre les nombres flottants
+et les nombres entiers,
+
+43
+00:02:51,490 --> 00:02:54,530
+on a <u>float_of_int</u> pour convertir un <u>int</u> en <u>float</u>
+
+44
+00:02:54,540 --> 00:02:58,140
+et <u>int_of_float</u> pour convertir un <u>float</u> en <u>int</u>.
+
+45
+00:02:58,140 --> 00:03:02,360
+Pour les utiliser, il faut vous dire
+comment écrire une application de fonction.
+
+46
+00:03:02,360 --> 00:03:07,640
+Ceci est très facile. Vous écrivez simplement
+le nom de la fonction suivi de l'argument.
+
+47
+00:03:07,640 --> 00:03:10,900
+Nous reviendrons sur les fonctions
+plus tard au cours de cette semaine,
+
+48
+00:03:10,900 --> 00:03:16,520
+soulignons que les parenthèses ne font pas partie
+de la syntaxe de l'application de fonction.
+
+49
+00:03:16,520 --> 00:03:20,140
+Ainsi, on écrit juste le nom de la fonction
+suivi de l'argument.
+
+50
+00:03:20,150 --> 00:03:27,690
+On n'utilise des parenthèses que pour regrouper,
+ou pour structurer une expression plus compliquée.
+
+51
+00:03:27,690 --> 00:03:31,830
+Notre type de données suivant est celui des caractères,
+il s'écrit <u>char</u>.
+
+52
+00:03:31,830 --> 00:03:38,440
+Ce type contient 256 valeurs de type caractère.
+
+53
+00:03:38,440 --> 00:03:42,840
+Les constantes peuvent être écrites
+avec des lettres entre apostrophes,
+
+54
+00:03:42,840 --> 00:03:49,540
+ou en utilisant d'autres notations comme des chiffres
+octaux, décimaux, hexadécimaux, etc.
+
+55
+00:03:49,550 --> 00:03:52,430
+que vous pouvez toutes trouver dans le manuel.
+
+56
+00:03:52,430 --> 00:03:57,650
+Nous avons des fonctions de conversion entre entiers
+et caractères dans les deux directions.
+
+57
+00:03:57,650 --> 00:04:01,739
+Et en fait vous pourriez voir à partir
+des noms de ces fonctions,
+
+58
+00:04:01,739 --> 00:04:05,339
+que ceux-ci viennent en fait d'un module appelé <u>Char</u>.
+
+59
+00:04:05,340 --> 00:04:09,340
+C'est tout ce que nous devons savoir pour le moment
+sur l'utilisation de ce module.
+
+60
+00:04:09,340 --> 00:04:14,520
+En fait, nous allons apprendre beaucoup plus sur
+les modules dans la dernière semaine de ce MOOC.
+
+61
+00:04:17,560 --> 00:04:21,600
+Ici nous avons quelques expressions simples
+avec des caractères.
+
+62
+00:04:21,600 --> 00:04:27,140
+Ainsi, par exemple, nous pouvons demander
+le code entier du caractère <u>'A'</u>,
+
+63
+00:04:28,740 --> 00:04:30,540
+qui est 65.
+
+64
+00:04:30,540 --> 00:04:38,580
+On peut aussi utiliser des nombres décimaux pour
+désigner les caractères constants, voici un exemple.
+
+65
+00:04:38,580 --> 00:04:42,740
+Nous avons ici une constante de type caractère
+avec le code entier 122.
+
+66
+00:04:42,740 --> 00:04:49,860
+Et quand nous le convertissons en entier, nous obtenons
+précisément cette valeur, à savoir 122.
+
+67
+00:04:49,860 --> 00:04:56,380
+Nous pouvons aussi procéder dans l'autre sens,
+c'est-à-dire convertir un code entier en caractère.
+
+68
+00:04:56,380 --> 00:05:01,100
+Comme vous pouvez le voir sur l'exemple suivant
+avec <u>Char.chr</u>.
+
+69
+00:05:01,620 --> 00:05:06,040
+Et voici à nouveau notre lettre 'A' majuscule.
+
+70
+00:05:06,040 --> 00:05:11,360
+Et, enfin, le dernier exemple montre
+que, en fait, les deux fonctions de conversion,
+
+71
+00:05:11,360 --> 00:05:16,100
+<u>Char.chr</u> et <u>Char.code</u>,
+sont bien les inverses l'une de l'autre,
+
+72
+00:05:16,120 --> 00:05:21,400
+de sorte qu'en allant dans un sens puis dans l'autre,
+on retrouve exactement la même valeur.
+
+73
+00:05:23,060 --> 00:05:27,820
+Enfin, nous avons le type des chaînes, comme dans
+pratiquement tous les langages de programmation.
+
+74
+00:05:27,820 --> 00:05:31,000
+Les chaînes constantes sont écrites entre guillemets.
+
+75
+00:05:31,000 --> 00:05:37,120
+On a l'opérateur <u>^</u>, utilisé comme opérateur
+infixe pour représenter la concaténation de chaînes.
+
+76
+00:05:37,120 --> 00:05:42,860
+Et on a de nombreuses fonctions habituelles, comme
+<u>String.length</u> pour calculer la longueur d'une chaîne.
+
+77
+00:05:42,860 --> 00:05:49,440
+On peut convertir une chaîne en entier, pourvu
+que la chaîne représente effectivement un entier.
+
+78
+00:05:49,440 --> 00:05:54,120
+Et de la même façon, on peut convertir une chaîne
+en flottant, à condition d'avoir écrit
+
+79
+00:05:54,120 --> 00:05:57,120
+une chaîne qui représente effectivement un flottant.
+
+80
+00:05:57,120 --> 00:06:03,140
+Quelques pièges. Pardonnez-moi de le répéter :
+les types de données de base sont disjoints.
+
+81
+00:06:03,140 --> 00:06:08,820
+Donc vous ne pouvez pas compter sur la conversion
+implicite, comme pour d'autres langages.
+
+82
+00:06:08,820 --> 00:06:13,240
+Et vous devez toujours utiliser
+des fonctions de conversion explicites.
+
+83
+00:06:13,240 --> 00:06:17,100
+Les chaînes, comme beaucoup de choses en informatique
+et dans ce MOOC,
+
+84
+00:06:17,100 --> 00:06:21,500
+sont toujours numérotées à partir de 0
+et non à partir de 1.
+
+85
+00:06:21,509 --> 00:06:27,409
+Un dernier point : s'il vous arrive de lire
+une ancienne documentation du système OCaml,
+
+86
+00:06:27,409 --> 00:06:30,400
+vous pouvez y trouver un module différent
+pour les chaînes,
+
+87
+00:06:30,400 --> 00:06:34,340
+à une époque où elles étaient modifiables ;
+mais ce n'est plus le cas.
+
+88
+00:06:34,340 --> 00:06:38,580
+En OCaml les chaînes aussi sont des constantes,
+donc non modifiables.
+
+89
+00:06:41,880 --> 00:06:44,800
+Maintenant, certaines expressions sur les chaînes.
+
+90
+00:06:44,800 --> 00:06:50,020
+Ici, nous avons la concaténation de 2 chaînes,
+<u>"abc"</u> et <u>"def"</u>,
+
+91
+00:06:50,020 --> 00:06:53,220
+ce qui nous donne bien sûr la chaîne <u>"abcdef"</u>.
+
+92
+00:06:53,220 --> 00:06:59,760
+Ensuite, nous avons des fonctions de base
+importantes sur les chaînes, comme la longueur,
+
+93
+00:06:59,760 --> 00:07:03,020
+qui se calcule avec la fonction <u>String.length</u>.
+
+94
+00:07:03,920 --> 00:07:07,040
+Ici on obtient <u>5</u> comme prévu.
+
+95
+00:07:07,040 --> 00:07:10,500
+Nous pouvons essayer de convertir une chaîne en entier.
+
+96
+00:07:10,500 --> 00:07:16,000
+Cette évaluation pourrait échouer si on mettait en
+argument une chaîne arbitraire.
+
+97
+00:07:16,009 --> 00:07:21,949
+Toutefois, si cette chaîne mise en argument
+représente bien un nombre entier, alors voici
+
+98
+00:07:21,949 --> 00:07:24,600
+la valeur entière que vous obtenez.
+
+99
+00:07:24,600 --> 00:07:30,140
+Cependant, vous ne devez pas confondre le type chaîne,
+qui pourrait représenter un nombre entier
+
+100
+00:07:30,140 --> 00:07:32,300
+avec la valeur entière elle-même,
+
+101
+00:07:32,300 --> 00:07:34,620
+qui est évidemment d'un type très différent.
+
+102
+00:07:34,620 --> 00:07:40,280
+Donc, ici, nous obtenons bien une valeur entière
+qui est <u>12345</u>.
+
+103
+00:07:40,900 --> 00:07:45,840
+Nous pouvons également aller dans l'autre direction,
+prendre une valeur entière et la convertir
+
+104
+00:07:45,840 --> 00:07:49,760
+pour donner une chaîne.
+
+105
+00:07:49,760 --> 00:07:55,300
+Et nous pouvons aussi tenter d'obtenir le caractère
+à une position particulière dans une chaîne,
+
+106
+00:07:55,300 --> 00:07:56,500
+comme dans notre dernier exemple.
+
+107
+00:07:56,500 --> 00:08:06,160
+On prend la chaîne <u>"abcdef"</u> et on demande le
+caractère à la position 1, qui est bien sûr <u>'b'</u>.
+
+108
+00:08:06,160 --> 00:08:11,480
+Puisque <u>'a'</u> serait à la position numéro 0 et
+que l'on trouve le caractère <u>'b'</u> la position 1.
+
+109
+00:08:13,480 --> 00:08:17,320
+Encore une fois, vous pouvez trouver des informations
+complètes sur les types de données de base,
+
+110
+00:08:17,320 --> 00:08:20,080
+vus dans cette séquence, dans le manuel OCaml.
+
+111
+00:08:20,080 --> 00:08:24,760
+Vous avez la description de l'arithmétique flottante
+dans le module <u>Pervasives</u>.
+
+112
+00:08:24,760 --> 00:08:30,440
+Et dans la bibliothèque standard vous avez des modules
+dédiés aux caractères et aux chaînes.

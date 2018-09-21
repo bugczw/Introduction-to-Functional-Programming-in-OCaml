@@ -1,0 +1,382 @@
+1
+00:00:00,110 --> 00:00:00,590
+Olá.
+
+2
+00:00:01,280 --> 00:00:05,480
+Vamos terminar esta semana com algumas noções
+sobre funções recursivas.
+
+3
+00:00:07,560 --> 00:00:12,400
+Uma função recursiva é uma função que é definida por
+chamando-se a ela própria.
+
+4
+00:00:13,230 --> 00:00:17,470
+Isto é algo que é muito natural para estruturas de
+dados definidas recursivamente,
+
+5
+00:00:17,470 --> 00:00:20,850
+como verá na semana 3.
+
+6
+00:00:20,850 --> 00:00:26,800
+Visto que ainda não as vimos, vou demonstrar-lhe
+o princípio com alguns exemplos.
+
+7
+00:00:26,840 --> 00:00:36,600
+Por favor, esteja ciente do facto de que verá
+exemplos mais úteis nas próximas semanas.
+
+8
+00:00:36,660 --> 00:00:40,300
+Aqui está um exemplo ilustrado de uma função
+recursiva,
+
+9
+00:00:40,300 --> 00:00:45,390
+é a função fatorial, que é definida por:
+
+10
+00:00:45,390 --> 00:00:49,010
+o fatorial de <u>n</u> é um se o argumento <u>n</u> é um;
+
+11
+00:00:49,640 --> 00:00:58,000
+e se <u>n</u> é maior que um, o fatorial de <u>n</u>
+será <u>n</u> multiplicado pelo facorial de <u>n - 1</u>.
+
+12
+00:00:58,050 --> 00:01:04,700
+Então aqui poderá ver que a definição da
+função <u>fact</u> faz uso de ela própria.
+
+13
+00:01:04,750 --> 00:01:12,870
+Claro que faz sentido, visto que o argumento
+que usamos no corpo da definição é menor que
+
+14
+00:01:13,040 --> 00:01:15,540
+o argumento para o qual tentou avaliar a função.
+
+15
+00:01:17,720 --> 00:01:24,060
+Agora, se gostar de escrever uma definição
+desta forma em OCaml, temos um pequeno problema.
+
+16
+00:01:24,780 --> 00:01:29,200
+O problema é:
+quando escrevemos a definição usando <u>let</u>,
+
+17
+00:01:29,200 --> 00:01:36,200
+então a expressão, que está à direita do
+sinal de igualdade, é sempre avaliada à priori no
+
+18
+00:01:36,240 --> 00:01:39,780
+contexto que está antes do <u>let</u>.
+
+19
+00:01:39,780 --> 00:01:44,400
+Isto claro que não funciona com funções recursivas
+porque com uma função recursiva:
+
+20
+00:01:44,400 --> 00:01:49,659
+a função usado no corpo refere-se à
+função que está atualmente a definir.
+
+21
+00:01:49,659 --> 00:01:53,170
+E não algo que foi definido anteriormente.
+
+22
+00:01:53,170 --> 00:01:58,000
+Por esta razão,
+usamos a keyword <u>rec</u> que muda isto,
+
+23
+00:01:58,079 --> 00:02:02,639
+e permite-nos referenciar a função
+que estamos atualmente a definir.
+
+24
+00:02:05,829 --> 00:02:12,100
+Então aqui vamos ver porque vamos precisar a
+keyword <u>rec</u> se quisermos definir função recursivas.
+
+25
+00:02:12,120 --> 00:02:16,819
+Vamos primeiro dar uma vista de olhos às associações
+para identificadores de valores inteiros.
+
+26
+00:02:16,819 --> 00:02:21,390
+Então aqui definimos uma primeira atribuição para
+<u>x</u> que tem o valor um.
+
+27
+00:02:21,390 --> 00:02:27,900
+Agora, se quisermos fazer uma segunda atribuição de <u>x</u> e
+se referimos na expressão o valor de <u>x</u>.
+
+28
+00:02:27,940 --> 00:02:30,400
+Então este <u>x</u> seria o anterior,
+
+29
+00:02:30,400 --> 00:02:35,680
+o que significa que neste caso, claro, <u>x</u>
+estaria associado ao valor <u>1+1</u>,
+
+30
+00:02:35,680 --> 00:02:36,910
+que é o valor 2.
+
+31
+00:02:36,910 --> 00:02:40,690
+E agora <u>x</u> é claramente o valor 2.
+
+32
+00:02:40,690 --> 00:02:43,600
+O que significa que numa expressão de
+atribuição let,
+
+33
+00:02:43,600 --> 00:02:46,360
+a expressão sempre avaliada no contexto antigo.
+
+34
+00:02:47,480 --> 00:02:51,020
+O mesmo se passa, precisamente o mesmo, com funções.
+
+35
+00:02:51,020 --> 00:02:59,100
+Então aqui temos uma primeira definição de uma função
+<u>f</u>, que é a função sucessor,
+
+36
+00:02:59,120 --> 00:03:04,700
+e fazemos uma nova atribuição para <u>f</u>;
+definimos <u>f</u> para ser uma nova função.
+
+37
+00:03:04,700 --> 00:03:10,690
+Se nos referirmos no corpo a <u>f</u>, então o
+<u>f</u> no corpo será o antigo.
+
+38
+00:03:10,690 --> 00:03:16,090
+O que significa que neste caso <u>f</u> será a
+função que vai de <u>x</u> para <u>x+2</u>.
+
+39
+00:03:16,090 --> 00:03:22,260
+Então se aplicarmos esta nova função <u>f</u> ao
+argumento um, obtemos o valor de três.
+
+40
+00:03:22,260 --> 00:03:27,900
+E isto é exatamente como seria esperado de acordo com
+todos os princípios que vimos até agora.
+
+41
+00:03:27,900 --> 00:03:33,480
+O problema é que isto não é o que queremos
+se tentarmos definir uma função recursiva.
+
+42
+00:03:33,480 --> 00:03:36,300
+Vamos então escrever a definição da
+função fatorial,
+
+43
+00:03:36,300 --> 00:03:39,129
+a qual eu expliquei no slide anterior.
+
+44
+00:03:39,129 --> 00:03:42,890
+E se tentarmos fazer isto verá que
+não vai funcionar.
+
+45
+00:03:42,890 --> 00:03:48,300
+Visto que o <u>fact</u> que está no corpo
+refere-se ao <u>fact</u> que foi definido anteriormente,
+
+46
+00:03:48,310 --> 00:03:49,760
+mas não existe.
+
+47
+00:03:49,760 --> 00:03:52,000
+Então se tentar passar isto ao toplevel,
+
+48
+00:03:52,000 --> 00:03:57,780
+obtemos uma mensagem de erro visto que o <u>fact</u>
+não existe antes do ínicio desta definição.
+
+49
+00:03:58,629 --> 00:04:04,800
+E esta é a razão pela qual precisamos de a keyword <u>rec</u>,
+por forma a escrever agora uma definição recursiva.
+
+50
+00:04:04,849 --> 00:04:12,129
+Quando escrevemos a definição na forma
+<u>let rec n = ...</u> então esta é considerada recursiva, e
+
+51
+00:04:12,200 --> 00:04:17,440
+agora o <u>fact</u> que temos no corpo desta definição
+refere-se à função que estamos atualmente a definir.
+
+52
+00:04:18,359 --> 00:04:23,699
+Agora, passando isto ao toplevel,
+vemos que a definição foi aceite.
+
+53
+00:04:23,699 --> 00:04:26,300
+E se souber o valor de <u>fact</u>,
+
+54
+00:04:26,300 --> 00:04:31,740
+pode ver que quando aplicado a 10,
+obtém exatamente o resultado certo.
+
+55
+00:04:34,050 --> 00:04:36,529
+Por vezes temos de ir um pouco mais longe,
+
+56
+00:04:36,529 --> 00:04:42,759
+e temos de definir funções que são
+mutualmente recursivas, ou simultaneamente recursivas.
+
+57
+00:04:42,759 --> 00:04:48,129
+Isto é só a generalização da recursividade direta
+que vimos anteriormente.
+
+58
+00:04:48,129 --> 00:04:53,449
+Significa apenas que queremos definir várias
+funções por recursividade,
+
+59
+00:04:53,449 --> 00:04:58,489
+e que de facto podem chamar-se umas nas outras
+durante a definição recursiva.
+
+60
+00:05:00,020 --> 00:05:06,600
+Isto, novamente, é muito natural com estruturas de dados
+mutualmente recursivas como iremos ver na semana 3.
+
+61
+00:05:06,680 --> 00:05:14,900
+O nosso exemplo ilustrativo consiste em duas funções
+booleanas, que verificam se um inteiro é par ou ímpar.
+
+62
+00:05:14,949 --> 00:05:19,379
+Uma maneira de definir esta função é por
+recursividade mútua:
+
+63
+00:05:19,379 --> 00:05:24,219
+digamos que, de um lado, um inteiro <u>n</u> é par
+
+64
+00:05:24,219 --> 00:05:28,819
+se é ou 0, ou estritamente positivo e
+<u>n-1</u> é ímpar.
+
+65
+00:05:28,819 --> 00:05:36,400
+De outro lado, <u>n</u> é ímpar se é ou 1,
+ou é estritamente maior que 1 e <u>n-1</u> é par.
+
+66
+00:05:36,490 --> 00:05:41,850
+E aqui podemos ver que a definição de <u>even</u>
+é recursiva em <u>odd</u> e a definição de <u>odd</u> em <u>even</u>.
+
+67
+00:05:45,040 --> 00:05:49,060
+Vamos tentar definições simultaneamente recursivas,
+
+68
+00:05:49,220 --> 00:05:52,160
+com o exemplo ilustrativo que expliquei.
+
+69
+00:05:52,240 --> 00:05:56,719
+Aqui verá porque é que é realmente necessário
+usar definição simultâneas.
+
+70
+00:05:56,719 --> 00:06:02,249
+Agora, se tentarmos definir as duas funções
+sem definições simultâneas,
+
+71
+00:06:02,249 --> 00:06:04,629
+como definir primeiro <u>even</u> e depois definir <u>odd</u>,
+
+72
+00:06:04,629 --> 00:06:06,839
+então, claro, não vai funcionar.
+
+73
+00:06:06,839 --> 00:06:09,539
+Visto que tentamos passar esta
+definição de uma função <u>even</u>,
+
+74
+00:06:09,539 --> 00:06:13,460
+temos de referir <u>odd</u>,
+e <u>odd</u> ainda não está definida.
+
+75
+00:06:13,460 --> 00:06:18,969
+Isto claro que não é aceite, e
+obtemos uma mensagem de erro do toplevel.
+
+76
+00:06:18,969 --> 00:06:23,509
+A única forma de definir estas duas funções,
+é definindo ambas ao mesmo tempo,
+
+77
+00:06:23,509 --> 00:06:27,589
+e para isso precisamos de uma definição simultânea,
+usando a keyword <u>and</u>,
+
+78
+00:06:27,589 --> 00:06:32,349
+que já vimos anteriormente na definição
+de identificadores de inteiros.
+
+79
+00:06:33,550 --> 00:06:37,890
+Portanto se passarmos ambas as definições ao mesmo tempo,
+juntas com a keyword <u>and</u>,
+
+80
+00:06:38,360 --> 00:06:43,639
+então ambas as definições são aceites,
+como pode ver pela resposta do toplevel.
+
+81
+00:06:43,639 --> 00:06:49,079
+E agora <u>even</u> e <u>odd</u> são as funções
+que deveriam ser.

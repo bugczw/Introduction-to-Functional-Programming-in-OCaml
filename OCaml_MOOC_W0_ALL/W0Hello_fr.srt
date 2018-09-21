@@ -1,0 +1,184 @@
+1
+00:00:02,240 --> 00:00:03,500
+Bonjour.
+
+2
+00:00:03,500 --> 00:00:07,010
+Bienvenue à ce cours en ligne
+sur la programmation fonctionnelle en OCaml.
+
+3
+00:00:07,010 --> 00:00:09,580
+Mon nom est Xavier Leroy.
+
+4
+00:00:09,580 --> 00:00:12,580
+Je suis un chercheur, ici en France.
+
+5
+00:00:12,580 --> 00:00:18,050
+Et l'un des concepteurs et développeurs
+du langage OCaml,
+
+6
+00:00:18,050 --> 00:00:20,720
+que vous utiliserez pendant ce cours.
+
+7
+00:00:20,720 --> 00:00:23,170
+Ceci est le premier MOOC sur OCaml,
+
+8
+00:00:23,170 --> 00:00:30,539
+Cela signifie beaucoup pour moi
+et pour les autres développeurs d'OCaml.
+
+9
+00:00:30,539 --> 00:00:34,680
+Nous sommes donc ravis de voir un
+si grand nombre d'entre vous joindre ce cours.
+
+10
+00:00:34,680 --> 00:00:37,970
+Et nous sommes également très reconnaissants
+aux trois instructeurs,
+
+11
+00:00:37,970 --> 00:00:42,820
+et tous ceux qui ont participé
+à la mise en place de ce cours.
+
+12
+00:00:42,820 --> 00:00:46,710
+Si vous avez déjà certaines notions
+de programmation fonctionnelle,
+
+13
+00:00:46,710 --> 00:00:50,130
+J'espère, vous trouverez OCaml robuste,
+
+14
+00:00:50,130 --> 00:00:54,870
+et très adéquat à ce style de programmation.
+
+15
+00:00:54,870 --> 00:00:57,400
+Il possède beaucoup de domaines d'application,
+
+16
+00:00:57,400 --> 00:00:59,780
+comme des outils de vérification de logiciels,
+
+17
+00:00:59,780 --> 00:01:02,860
+l'analyse statique, la démonstration de théorèmes,
+
+18
+00:01:02,860 --> 00:01:05,460
+mais aussi dans la programmation web,
+
+19
+00:01:05,460 --> 00:01:06,500
+dans la programmation système,
+
+20
+00:01:06,500 --> 00:01:09,359
+dans le secteur financier,
+
+21
+00:01:09,359 --> 00:01:11,859
+ou la bio-informatique,
+
+22
+00:01:11,859 --> 00:01:14,159
+et de nombreux autres
+domaines d'application passionnants,
+
+23
+00:01:14,159 --> 00:01:18,560
+où OCaml est un très bon choix.
+
+24
+00:01:18,560 --> 00:01:22,280
+Mais si ceci est votre première exposition
+à la programmation fonctionnelle,
+
+25
+00:01:22,280 --> 00:01:24,329
+franchement, je vous envie.
+
+26
+00:01:24,329 --> 00:01:28,399
+Parce que cela me rappelle ma première expérience
+de programmation fonctionnelle,
+
+27
+00:01:28,399 --> 00:01:31,299
+C'était il y a très longtemps.
+
+28
+00:01:31,299 --> 00:01:34,530
+Et au début, c'était étrange comme sensation...
+
+29
+00:01:34,530 --> 00:01:39,590
+tout était légèrement différent de ce que
+je connaisais à l'époque de la programmation.
+
+30
+00:01:39,590 --> 00:01:43,900
+Mais après un moment, il y a eu comme un déclic,
+et je fut séduit
+
+31
+00:01:43,900 --> 00:01:50,310
+par l'élégance et à l'expressivité
+de ce style de programmation.
+
+32
+00:01:50,310 --> 00:01:55,509
+Tant et si bien que j'ai passé
+de nombreuses années à travailler sur OCaml.
+
+33
+00:01:55,509 --> 00:02:01,889
+Juste pour rendre la programmation fonctionnelle
+plus utilisable en pratique.
+
+34
+00:02:01,889 --> 00:02:06,149
+Je vous souhaite donc la même épiphanie.
+
+35
+00:02:06,149 --> 00:02:07,929
+Et je suis sûr que d'ici la fin de ce cours,
+
+36
+00:02:07,929 --> 00:02:10,770
+vous vous sentirez meilleur programmeur.
+
+37
+00:02:12,300 --> 00:02:13,760
+Une dernière chose...
+
+38
+00:02:15,110 --> 00:02:17,600
+Rappelez-vous :
+la programmation devrait être "fun" !
+
+39
+00:02:17,600 --> 00:02:20,310
+Je veux dire : il y a du plaisir à programmer,
+
+40
+00:02:20,310 --> 00:02:22,420
+et nous ne devrions pas oublier cette joie.
+
+41
+00:02:22,420 --> 00:02:25,920
+Alors, amusez-vous bien
+avec la programmation fonctionnelle.
+
+42
+00:02:25,920 --> 00:02:26,810
+Et profitez de ce cours.

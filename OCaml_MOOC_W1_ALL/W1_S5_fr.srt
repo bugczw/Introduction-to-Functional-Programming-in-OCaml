@@ -1,0 +1,383 @@
+1
+00:00:00,110 --> 00:00:00,590
+Bonjour.
+
+2
+00:00:01,280 --> 00:00:05,480
+Nous allons terminer cette semaine par quelques mots
+sur les fonctions récursives.
+
+3
+00:00:07,560 --> 00:00:12,400
+Une fonction récursive est une fonction qui est
+définie en s'appelant elle-même.
+
+4
+00:00:13,230 --> 00:00:17,470
+C'est quelque chose de très naturel pour les
+structures de données définies de manière récursive,
+
+5
+00:00:17,470 --> 00:00:20,850
+comme vous les verrez en semaine 3.
+
+6
+00:00:20,850 --> 00:00:26,800
+Puisque nous n'en avons pas vu jusqu'ici, je dois
+vous montrer le principe sur quelques exemples simples.
+
+7
+00:00:26,840 --> 00:00:36,600
+Mais sachez bien que vous verrez
+des exemples beaucoup plus utiles par la suite.
+
+8
+00:00:36,660 --> 00:00:40,300
+Donc voici un exemple classique de fonction récursive,
+
+9
+00:00:40,300 --> 00:00:45,390
+c'est la fonction factorielle, définie ainsi :
+
+10
+00:00:45,390 --> 00:00:49,010
+la factorielle de <u>n</u> vaut 1 si l'argument <u>n</u> est 1 ;
+
+11
+00:00:49,640 --> 00:00:58,000
+et si <u>n</u> est supérieur à 1, la factorielle de <u>n</u>
+est <u>n</u> multiplié par la factorielle de <u>n - 1</u>.
+
+12
+00:00:58,050 --> 00:01:04,700
+Donc, ici on voit que la définition de la fonction
+<u>fact</u> fait usage de la fonction <u>fact</u> elle-même.
+
+13
+00:01:04,750 --> 00:01:12,870
+Ce qui a un sens, puisque l'argument utilisé
+dans le corps de cette définition est plus petit que
+
+14
+00:01:13,040 --> 00:01:15,540
+l'argument pour lequel vous évaluez la fonction.
+
+15
+00:01:17,720 --> 00:01:24,060
+Maintenant, si on veut écrire une définition de
+cette manière en OCaml, on a un petit problème.
+
+16
+00:01:24,780 --> 00:01:29,200
+Le problème est :
+lorsqu'on écrit la définition en utilisant <u>let</u>,
+
+17
+00:01:29,200 --> 00:01:36,200
+alors l'expression, que vous avez à droite du
+signe =, est toujours a priori évaluée dans
+
+18
+00:01:36,240 --> 00:01:39,780
+l'environnement que vous aviez avant le <u>let</u>.
+
+19
+00:01:39,780 --> 00:01:44,400
+Bien sûr, cela ne fonctionne pas avec une fonction
+récursive car avec elle
+
+20
+00:01:44,400 --> 00:01:49,659
+la fonction utilisée dans le corps se réfère à
+la fonction que vous êtes en train de définir ;
+
+21
+00:01:49,659 --> 00:01:53,170
+et pas à quelque chose qui a été défini auparavant.
+
+22
+00:01:53,170 --> 00:01:58,000
+Pour cette raison, nous utilisons
+un nouveau mot-clé <u>rec</u> qui change cela,
+
+23
+00:01:58,079 --> 00:02:02,639
+et qui vous permet de faire référence à la fonction
+que vous êtes en train de définir.
+
+24
+00:02:05,829 --> 00:02:12,100
+Donc ici, nous allons voir pourquoi on a besoin
+du mot-clé <u>rec</u> pour définir des fonctions récursives.
+
+25
+00:02:12,120 --> 00:02:16,819
+Pour commencer, regardons à nouveau les liaisons
+des identificateurs pour les valeurs entières.
+
+26
+00:02:16,819 --> 00:02:21,390
+Donc ici, on définit une première liaison pour <u>x</u>
+qui a la valeur 1.
+
+27
+00:02:21,390 --> 00:02:27,900
+Ensuite, si on fabrique une deuxième liaison pour <u>x</u>
+en mentionnant la valeur de <u>x</u> dans l'expression,
+
+28
+00:02:27,940 --> 00:02:30,400
+alors ce <u>x</u> serait le précédent,
+
+29
+00:02:30,400 --> 00:02:35,680
+ce qui veut dire que dans ce cas, <u>x</u>
+serait lié à la valeur de <u>1 + 1</u>,
+
+30
+00:02:35,680 --> 00:02:36,910
+c'est-à-dire la valeur 2.
+
+31
+00:02:36,910 --> 00:02:40,690
+Et maintenant <u>x</u> a bien sûr la valeur 2.
+
+32
+00:02:40,690 --> 00:02:43,600
+Ainsi, dans l'expression d'une liaison let,
+
+33
+00:02:43,600 --> 00:02:46,360
+l'expression est toujours évaluée
+dans l'ancien environnement.
+
+34
+00:02:47,480 --> 00:02:51,020
+Or, il en est de même, exactement de même,
+avec les fonctions.
+
+35
+00:02:51,020 --> 00:02:59,100
+Voici donc une première définition d'une fonction <u>f</u>,
+qui est la fonction successeur,
+
+36
+00:02:59,120 --> 00:03:04,700
+puis nous créons une nouvelle liaison pour <u>f</u> --
+on définit <u>f</u> comme une nouvelle fonction.
+
+37
+00:03:04,700 --> 00:03:10,690
+Et si nous mentionnons <u>f</u> dans son corps, ce
+<u>f</u> dans le corps désignerait l'ancien.
+
+38
+00:03:10,690 --> 00:03:16,090
+Ce qui veut dire dans ce cas que <u>f</u> serait la
+fonction qui envoie <u>x</u> vers <u>x + 2</u>.
+
+39
+00:03:16,090 --> 00:03:22,260
+Donc, si nous appliquons cette nouvelle fonction <u>f</u>
+à l'argument 1, on obtient la valeur 3.
+
+40
+00:03:22,260 --> 00:03:27,900
+Et c'est exactement ce à quoi l'on peut s'attendre
+d'après tous les principes vus jusqu'ici.
+
+41
+00:03:27,900 --> 00:03:33,480
+Le problème est que cela ne correspond pas à ce que l'on
+veut pour définir des fonctions récursives.
+
+42
+00:03:33,480 --> 00:03:36,300
+Donc, nous allons maintenant écrire la définition de
+la fonction factorielle,
+
+43
+00:03:36,300 --> 00:03:39,129
+que j'ai expliquée sur la diapositive précédente.
+
+44
+00:03:39,129 --> 00:03:42,890
+Si nous essayons ceci, alors vous verrez que
+cela ne peut pas fonctionner.
+
+45
+00:03:42,890 --> 00:03:48,300
+Puisque le <u>fact</u> que vous avez dans le corps
+se réfère à un <u>fact</u> qui doit être défini avant,
+
+46
+00:03:48,310 --> 00:03:49,760
+mais il n'existe pas.
+
+47
+00:03:49,760 --> 00:03:52,000
+Donc, si nous essayons de soumettre ceci au toplevel,
+
+48
+00:03:52,000 --> 00:03:57,780
+nous recevons un message d'erreur puisque <u>fact</u>
+n'existe pas avant le début de cette définition.
+
+49
+00:03:58,629 --> 00:04:04,800
+Et c'est pourquoi on a un nouveau mot-clé <u>rec</u>,
+qui permet de pouvoir écrire une définition récursive.
+
+50
+00:04:04,849 --> 00:04:12,129
+Une définition de la forme <u>let rec fact n = ...</u>
+est considérée comme récursive, et maintenant
+
+51
+00:04:12,200 --> 00:04:17,440
+le <u>fact</u> qu'on a dans le corps de cette définition
+indique la fonction en cours de définition.
+
+52
+00:04:18,359 --> 00:04:23,699
+Et maintenant, en la soumettant au toplevel,
+vous observez que la définition a été acceptée.
+
+53
+00:04:23,699 --> 00:04:26,300
+Et si vous connaissez la valeur de <u>fact</u>,
+
+54
+00:04:26,300 --> 00:04:31,740
+vous pouvez voir que lorsque nous l'appliquons à 10,
+on obtient exactement ce bon résultat.
+
+55
+00:04:34,050 --> 00:04:36,529
+Parfois, nous devons aller un peu plus loin,
+
+56
+00:04:36,529 --> 00:04:42,759
+et nous devons définir des fonctions qui sont
+mutuellement récursives, ou simultanément récursives.
+
+57
+00:04:42,759 --> 00:04:48,129
+C'est juste une généralisation de la récursivité
+directe que nous avons vue auparavant.
+
+58
+00:04:48,129 --> 00:04:53,449
+Cela veut simplement dire que vous voulez définir
+plusieurs fonctions par récursion,
+
+59
+00:04:53,449 --> 00:04:58,489
+et qui, en fait, peuvent chacune appeler l'autre
+au cours de la définition récursive.
+
+60
+00:05:00,020 --> 00:05:06,600
+C'est là aussi très naturel avec des structures de
+données mutuellement récursives, voir en Semaine 3.
+
+61
+00:05:06,680 --> 00:05:14,900
+Voici un exemple jouet avec deux fonctions booléennes
+pour tester si un entier est pair ou impair.
+
+62
+00:05:14,949 --> 00:05:19,379
+Une façon de définir cette fonction est par
+récursion mutuelle :
+
+63
+00:05:19,379 --> 00:05:24,219
+donc on peut dire ,d'une part, qu'un nombre entier <u>n</u> est pair
+si, soit il vaut 0,
+
+64
+00:05:24,219 --> 00:05:28,819
+soit il est strictement positif et que
+<u>n-1</u> est impair.
+
+65
+00:05:28,819 --> 00:05:36,400
+D'autre part, <u>n</u> est impair si, soit il vaut 1, soit
+il est strictement supérieur à 1 et <u>n-1</u> est pair.
+
+66
+00:05:36,490 --> 00:05:41,850
+On voit ici que la définition de <u>even</u> est récursive
+sur <u>odd</u> et que <u>odd</u> l'est sur <u>even</u>.
+
+67
+00:05:45,040 --> 00:05:49,060
+Essayons des définitions simultanément récursives,
+
+68
+00:05:49,220 --> 00:05:52,160
+sur l'exemple jouet que je viens de vous expliquer.
+
+69
+00:05:52,240 --> 00:05:56,719
+Et là, vous verrez pourquoi il est vraiment nécessaire
+d'utiliser des définitions simultanées.
+
+70
+00:05:56,719 --> 00:06:02,249
+D'abord, si nous essayons de définir les deux
+fonctions sans définitions simultanées,
+
+71
+00:06:02,249 --> 00:06:04,629
+en définissant <u>even</u> d'abord, puis <u>odd</u>,
+
+72
+00:06:04,629 --> 00:06:06,839
+eh bien évidemment, ça ne peut pas marcher,
+
+73
+00:06:06,839 --> 00:06:09,539
+puisqu'en essayant de soumettre cette
+définition d'une fonction <u>even</u>,
+
+74
+00:06:09,539 --> 00:06:13,460
+nous devons nous référer à <u>odd</u>,
+et que <u>odd</u> n'est pas encore défini.
+
+75
+00:06:13,460 --> 00:06:18,969
+Ceci n'est bien sûr pas accepté, et on obtient
+un message d'erreur au toplevel.
+
+76
+00:06:18,969 --> 00:06:23,509
+La seule façon de définir ces deux fonctions
+est de les définir toutes deux en même temps,
+
+77
+00:06:23,509 --> 00:06:27,589
+et pour cela nous avons besoin d'une définition
+simultanée, utilisant le mot clé <u>and</u>,
+
+78
+00:06:27,589 --> 00:06:32,349
+que nous avons déjà vu avant sur des définitions
+d'identificateurs entiers.
+
+79
+00:06:33,550 --> 00:06:37,890
+Donc, si on soumet les deux définitions
+conjointement avec le mot-clé <u>and</u>,
+
+80
+00:06:38,360 --> 00:06:43,639
+alors elles sont acceptées,
+comme on peut le voir sur la réponse du toplevel.
+
+81
+00:06:43,639 --> 00:06:49,079
+Et maintenant, <u>even</u> et <u>odd</u> sont bien les fonctions
+qu'elles sont censées être.

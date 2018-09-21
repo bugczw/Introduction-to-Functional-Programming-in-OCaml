@@ -1,0 +1,483 @@
+1
+00:00:00,080 --> 00:00:01,110
+Welcome back!
+
+2
+00:00:01,110 --> 00:00:05,279
+In the last two sequences of this week,
+we will look at functions in OCaml.
+
+3
+00:00:05,279 --> 00:00:12,849
+In week 4, we will explain with great details
+all the mechanisms about functions.
+
+4
+00:00:12,849 --> 00:00:20,900
+But for now, I will just explain
+how you can define functions in OCaml.
+
+5
+00:00:20,900 --> 00:00:25,710
+In fact there is nothing special
+about functions in OCaml:
+
+6
+00:00:25,710 --> 00:00:30,859
+functions are in reality values,
+as any other values in OCaml.
+
+7
+00:00:30,859 --> 00:00:33,610
+But we will see this in details during week 4.
+
+8
+00:00:33,610 --> 00:00:39,020
+For now, in order to define a function <u>f</u>
+with one argument,
+
+9
+00:00:39,020 --> 00:00:47,080
+you would just write down <u>let f x = exp</u>,
+where <u>exp</u> would be the body of the function.
+
+10
+00:00:47,080 --> 00:00:51,330
+Which in general will use its parameter <u>x</u>.
+
+11
+00:00:51,330 --> 00:00:56,290
+You can also write down a local definition
+with a delimited scope.
+
+12
+00:00:56,290 --> 00:01:04,500
+You would write it:
+<u>let f x = exp1</u> (its body) <u>in exp2</u> (its scope).
+
+13
+00:01:04,640 --> 00:01:09,740
+The scoping rules would be precisely the same
+as we have seen in the last sequence.
+
+14
+00:01:09,740 --> 00:01:15,200
+Which means that local definitions
+always take priority over more global definitions.
+
+15
+00:01:15,500 --> 00:01:19,470
+As we have seen already,
+you would write a function application by
+
+16
+00:01:19,470 --> 00:01:21,390
+writing its name, followed by
+
+17
+00:01:21,390 --> 00:01:26,720
+the expression which gives the value
+of its actual parameter.
+
+18
+00:01:26,720 --> 00:01:31,200
+You don't have to use parenthesis, unless
+
+19
+00:01:31,200 --> 00:01:34,000
+it is necessary to indicate
+the structure of expressions.
+
+20
+00:01:36,500 --> 00:01:40,900
+Now let's look at some simple examples
+of function definitions.
+
+21
+00:01:40,900 --> 00:01:47,710
+First, we have a global function definition
+<u>let f x = x + 1</u>.
+
+22
+00:01:47,710 --> 00:01:52,820
+And we see that <u>f</u> is recognized as
+a function of type <u>int -> int</u>.
+
+23
+00:01:52,820 --> 00:01:57,810
+We may now apply this function to an argument,
+
+24
+00:01:57,810 --> 00:01:59,390
+and obtain the value as expected.
+
+25
+00:01:59,390 --> 00:02:04,340
+The next example is just
+a local variant of a function definition.
+
+26
+00:02:04,340 --> 00:02:06,930
+Here we have a local definition of function <u>g</u>,
+
+27
+00:02:06,930 --> 00:02:12,120
+it would only be known in
+the expression after the <u>in</u>.
+
+28
+00:02:12,120 --> 00:02:14,580
+And it also works as expected.
+
+29
+00:02:14,580 --> 00:02:19,640
+Finally, you might in some cases,
+obtain something not expected:
+
+30
+00:02:19,640 --> 00:02:21,690
+when you try to write down something
+
+31
+00:02:21,690 --> 00:02:25,640
+which can be interpreted as
+a sequence of function applications.
+
+32
+00:02:25,640 --> 00:02:29,130
+Like in this case, where <u>f</u> is defined as
+a function with only one argument.
+
+33
+00:02:29,130 --> 00:02:32,290
+When we try to pass this to the toplevel,
+
+34
+00:02:32,290 --> 00:02:36,740
+we obtain an error which
+we haven't seen before.
+
+35
+00:02:36,740 --> 00:02:42,959
+OCaml is telling us that we tried to
+apply a unary function to too many arguments.
+
+36
+00:02:42,959 --> 00:02:44,630
+Why?
+
+37
+00:02:44,630 --> 00:02:47,390
+In fact, what we wrote on this line is:
+
+38
+00:02:47,390 --> 00:02:56,010
+the application of <u>f</u> to two arguments,
+namely <u>f</u>, and then to a second argument <u>1</u>.
+
+39
+00:02:56,010 --> 00:02:58,750
+This is of course not what we meant to write.
+
+40
+00:02:58,750 --> 00:03:05,650
+The only thing which makes sense in this line
+would be to apply <u>f</u> twice to the value of <u>1</u>.
+
+41
+00:03:05,650 --> 00:03:08,410
+If we want to apply functions in this order,
+
+42
+00:03:08,410 --> 00:03:12,349
+then we have to use parentheses
+in order to indicate the correct structure.
+
+43
+00:03:12,349 --> 00:03:16,000
+When we do this, we obtain what we expected.
+
+44
+00:03:17,910 --> 00:03:21,989
+OCaml, as almost all modern programming languages,
+
+45
+00:03:21,989 --> 00:03:26,090
+is governed by the principle of lexical scoping.
+
+46
+00:03:26,090 --> 00:03:29,220
+This is a very fundamental principle of
+modern programming languages.
+
+47
+00:03:29,220 --> 00:03:31,410
+So let me spell it out.
+
+48
+00:03:31,410 --> 00:03:33,340
+If you write the definition of a function,
+
+49
+00:03:33,340 --> 00:03:38,000
+and you use in the body of the function
+the name of an identifier,
+
+50
+00:03:38,000 --> 00:03:42,730
+then this name always refers to
+the identifier which was visible at
+
+51
+00:03:42,730 --> 00:03:46,420
+the moment of declaration of the function.
+
+52
+00:03:46,420 --> 00:03:52,970
+And not to the one which is visible at the
+moment of execution of the function.
+
+53
+00:03:52,970 --> 00:03:57,800
+---that would be the opposite
+principle of dynamic scoping---
+
+54
+00:04:00,400 --> 00:04:04,849
+Now, I wish to demonstrate to you
+the very important principe of lexical scoping
+
+55
+00:04:04,849 --> 00:04:06,849
+which we have in OCaml.
+
+56
+00:04:06,849 --> 00:04:08,410
+Lexical scoping means that
+
+57
+00:04:08,410 --> 00:04:11,870
+when you have a function definition,
+like here the definition of <u>g</u>,
+
+58
+00:04:11,870 --> 00:04:15,660
+then the <u>f</u>, that you see in
+the body of the function definition,
+
+59
+00:04:15,660 --> 00:04:19,009
+is the one which has been visible at
+the moment of its definition.
+
+60
+00:04:19,009 --> 00:04:22,210
+That means, the one defined on line 2.
+
+61
+00:04:22,210 --> 00:04:25,439
+And not the one defined on line 4.
+
+62
+00:04:25,439 --> 00:04:31,039
+Even if we have an application of <u>g</u> which
+comes after this second definition of function <u>f</u>.
+
+63
+00:04:31,789 --> 00:04:37,309
+So, when we pass this phrase to OCaml,
+
+64
+00:04:37,309 --> 00:04:40,550
+we see that the <u>f</u> which
+will be used by the function <u>g</u>
+
+65
+00:04:40,550 --> 00:04:44,689
+is the function which maps <u>x</u> to <u>x+1</u>.
+
+66
+00:04:44,689 --> 00:04:49,860
+That means, we really have
+the principle of lexical scoping on this example.
+
+67
+00:04:49,860 --> 00:04:55,050
+And we obtain, when <u>g</u> is applied to 5,
+the value of 7.
+
+68
+00:04:55,050 --> 00:04:56,889
+If we had dynamic scoping,
+
+69
+00:04:56,889 --> 00:04:59,839
+then the <u>f</u> used in the execution of <u>g</u>
+
+70
+00:04:59,839 --> 00:05:02,129
+would have been the function which
+doubles its argument.
+
+71
+00:05:02,129 --> 00:05:04,419
+That is, we would have obtained,
+the value of 20.
+
+72
+00:05:04,419 --> 00:05:10,400
+We have precisely the same thing,
+when we use global definitions
+
+73
+00:05:10,400 --> 00:05:12,069
+instead of local ones.
+
+74
+00:05:12,069 --> 00:05:18,479
+So here is the same thing,
+exactly the same kind of example,
+
+75
+00:05:18,479 --> 00:05:21,919
+only expressed with global definitions,
+
+76
+00:05:21,919 --> 00:05:24,200
+and we obtain precisely the same result.
+
+77
+00:05:26,200 --> 00:05:29,520
+As we have seen in the previous sequence,
+
+78
+00:05:29,520 --> 00:05:36,669
+you are allowed to give several definitions
+of identifiers using the same name.
+
+79
+00:05:36,669 --> 00:05:39,499
+As I have explained to you,
+in the last sequence,
+
+80
+00:05:39,499 --> 00:05:43,499
+this just means that you give a new definition
+of a new identifier
+
+81
+00:05:43,499 --> 00:05:49,059
+which might locally shadow a previous definition.
+
+82
+00:05:49,059 --> 00:05:55,360
+In any case, this must not be confused
+with the changing of the value of a variable,
+
+83
+00:05:55,360 --> 00:06:00,469
+as you have in traditional
+imperative programming languages.
+
+84
+00:06:00,469 --> 00:06:06,389
+Now, using the principle of lexical scoping
+---or static binding---
+
+85
+00:06:06,389 --> 00:06:11,800
+I can give you a demonstration
+that this really is the fact.
+
+86
+00:06:14,700 --> 00:06:18,240
+So, now using the principle of lexical scoping,
+
+87
+00:06:18,240 --> 00:06:23,770
+I can give you the demonstration
+which I promised to you on the previous sequence.
+
+88
+00:06:23,770 --> 00:06:28,819
+Namely that if you do twice a let-binding
+on an identifier with the same name,
+
+89
+00:06:28,819 --> 00:06:30,569
+then this is not an assignment.
+
+90
+00:06:30,569 --> 00:06:32,889
+but really a definition of a new identifier.
+
+91
+00:06:32,889 --> 00:06:35,099
+Now, to show this to you,
+
+92
+00:06:35,099 --> 00:06:40,669
+let's first make a binding
+for an identifier <u>a</u>,
+
+93
+00:06:40,669 --> 00:06:45,780
+then let's define a function <u>f</u>
+which uses in its body this identifier <u>a</u>.
+
+94
+00:06:46,800 --> 00:06:50,000
+Ok, now we have defined <u>f</u>.
+
+95
+00:06:50,000 --> 00:06:57,000
+<u>f</u> is now the function which sends
+an <u>x</u> to <u>x+a</u>, that is in this case <u>x+1</u>.
+
+96
+00:06:57,000 --> 00:07:01,529
+If you apply this function to the value of 2,
+
+97
+00:07:01,529 --> 00:07:03,939
+we obtain the value of 3.
+
+98
+00:07:03,939 --> 00:07:07,270
+Now, to demonstrate to you the fact that
+
+99
+00:07:07,270 --> 00:07:12,619
+adding a new binding for identifier <u>a</u>
+really gives a new identifier, and
+
+100
+00:07:12,619 --> 00:07:15,990
+doesn't change the value of the old identifier,
+
+101
+00:07:15,990 --> 00:07:18,800
+let's just pass a new binding for <u>a</u>.
+
+102
+00:07:18,800 --> 00:07:23,800
+---like here, say, the value of <u>a</u> to be 73---
+
+103
+00:07:23,800 --> 00:07:30,899
+When we call now upon function <u>f</u>
+with exactly the same argument,
+
+104
+00:07:30,899 --> 00:07:34,599
+we obtain still exactly the same result.
+
+105
+00:07:34,599 --> 00:07:39,619
+This proves that the second <u>a</u> is a new one,
+
+106
+00:07:39,619 --> 00:07:47,689
+which just is not visible at all by
+the function <u>f</u> which has been defined before.
+

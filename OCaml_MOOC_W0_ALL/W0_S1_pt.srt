@@ -1,0 +1,845 @@
+1
+00:00:00,110 --> 00:00:00,690
+Olá de novo.
+
+2
+00:00:00,690 --> 00:00:05,800
+Vamos agora revisitar rapidamente a história e a
+motivação relativas à programação funcional.
+
+3
+00:00:05,830 --> 00:00:12,929
+A actividade de programação baseia-se na "Computação".
+
+4
+00:00:12,929 --> 00:00:17,160
+A Computação é o estudo dos algoritmos e processos
+
+5
+00:00:17,160 --> 00:00:19,860
+utilizados para descrever e transformar a informação.
+
+6
+00:00:19,860 --> 00:00:27,850
+A questão fundamental da Computação é
+"como automatizar eficazmente um processo".
+
+7
+00:00:27,850 --> 00:00:34,460
+É isto que podem encontrar no relatório
+da ACM sobre "Computação como uma Disciplina".
+
+8
+00:00:34,460 --> 00:00:37,430
+Os componentes de base da Computação são:
+
+9
+00:00:37,430 --> 00:00:42,850
+um programa que descreve
+a transformação esperada da informação;
+
+10
+00:00:42,850 --> 00:00:46,160
+e uma máquina que executa o programa.
+
+11
+00:00:46,160 --> 00:00:53,850
+Tal pode parecer surpreendente, mas de facto
+as "máquinas" disponíveis podem ser bastante diferentes
+
+12
+00:00:53,850 --> 00:00:57,600
+e temos maneiras diferentes bastante diferentes
+de escrever um programa.
+
+13
+00:00:57,600 --> 00:01:00,680
+Algumas destas máquinas,
+e maneiras de as programar,
+
+14
+00:01:00,680 --> 00:01:06,500
+foram inventadas bem antes que
+o primeiro computador moderno fosse construído.
+
+15
+00:01:06,500 --> 00:01:09,310
+Aqui, iremos relembrar
+esta história, já que
+
+16
+00:01:09,310 --> 00:01:13,580
+como terão oportunidade de ver, tal dá-nos
+as bases da programação funcional.
+
+17
+00:01:13,580 --> 00:01:24,380
+Se tivermos que escolher uma data, 1928 poderia ser
+um ano para a << origem >> da programação,
+
+18
+00:01:24,380 --> 00:01:30,970
+já que é o ano no qual um célebre matemático,
+David Hilbert, colocou o << problema da decisão >>.
+
+19
+00:01:30,970 --> 00:01:38,090
+Desafiou a comunidade de investigação a encontrar
+um meio --- de conceber um processo ---
+
+20
+00:01:38,090 --> 00:01:44,740
+para decidir se um enunciado lógico é valido, ou não,
+
+21
+00:01:44,740 --> 00:01:48,320
+utilizando um número finito de operações.
+
+22
+00:01:48,320 --> 00:01:50,580
+Bom, era de facto um problema bastante geral...
+
+23
+00:01:50,580 --> 00:01:57,200
+E para chegar a uma resposta, seria preciso
+definir exactamente o que é uma << operação >>,
+
+24
+00:01:57,200 --> 00:01:59,220
+e o que é um << processo de cálculo >>.
+
+25
+00:01:59,220 --> 00:02:02,000
+Várias pessoas trabalharam sobre este problema.
+
+26
+00:02:02,000 --> 00:02:09,800
+O célebre Alan Turing, em 1936,
+chegou a uma resposta à questão de Hilbert.
+
+27
+00:02:09,810 --> 00:02:15,860
+Para tal, ele inventou a máquina de Turing,
+bem conhecida hoje em dia.
+
+28
+00:02:15,860 --> 00:02:19,000
+É essencialmente um autómato de estados finitos.
+
+29
+00:02:19,000 --> 00:02:24,000
+Ela é capaz de ler e escrever
+sobre uma fita potencialmente infinita,
+
+30
+00:02:24,000 --> 00:02:29,430
+e de se movimentar à esquerda e à direita sobre a fita.
+
+31
+00:02:29,430 --> 00:02:31,250
+Seria um fundamento teórico
+das calculadoras modernas,
+
+32
+00:02:31,250 --> 00:02:32,940
+e da programação imperativa.
+
+33
+00:02:32,940 --> 00:02:37,670
+De certa forma, a fita é uma abstração
+de uma memória endereçável de escrita e leitura,
+
+34
+00:02:37,670 --> 00:02:41,550
+capaz de armazenar não somente dados
+mas também um programa.
+
+35
+00:02:41,550 --> 00:02:48,720
+O autómato é uma abstração
+do micro-processador moderno.
+
+36
+00:02:48,720 --> 00:02:58,099
+Nestas máquinas, os programas que escrevemos
+comportam-se de forma imperativa.
+
+37
+00:02:58,099 --> 00:03:04,019
+De facto, os programas imperativos leem,
+escrevem e tomam decisões
+
+38
+00:03:04,019 --> 00:03:09,800
+baseando-se sobre o que é apresentado
+nas células de memória (a fita).
+
+39
+00:03:09,800 --> 00:03:11,980
+Estas células armazenam o conteúdo das << variáveis >>
+
+40
+00:03:11,980 --> 00:03:16,000
+que conhecem bem se utilizaram
+linguagens de programação imperativas.
+
+41
+00:03:16,000 --> 00:03:23,000
+As variáveis são como os <u>c</u>, <u>n</u> e <u>res</u>, que
+vêem neste pequeno excerto de um programa Java.
+
+42
+00:03:23,000 --> 00:03:26,050
+Estes são apenas nomes para células de memória.
+
+43
+00:03:26,050 --> 00:03:30,209
+Neste programa, que calcula a função factorial,
+
+44
+00:03:30,209 --> 00:03:35,560
+utilizamos as variáveis
+--- colocando os valores nas células de memória ---
+
+45
+00:03:35,560 --> 00:03:39,769
+e de seguida lemos os valores das células de memória,
+efectuamos operações sobre estas,
+
+46
+00:03:39,769 --> 00:03:44,000
+substituimos os resultados nas células de memória
+e devolvemos de seguida o resultado.
+
+47
+00:03:44,000 --> 00:03:48,000
+Tudo isto trata-se apenas de manipulações
+de células de memória.
+
+48
+00:03:48,000 --> 00:03:54,000
+Mais ou menos ao mesmo tempo, Alonzo Church,
+
+49
+00:03:54,000 --> 00:03:57,660
+--- que, já agora, era o orientador
+de doutoramento de Alan Turing ---
+
+50
+00:03:57,660 --> 00:04:02,640
+respondeu à questão de Hilbert
+de uma forma completamente diferente.
+
+51
+00:04:02,650 --> 00:04:06,400
+Ele inventou o << lambda-calcul >>:
+
+52
+00:04:06,400 --> 00:04:10,180
+um formalismo que cabe inteiramente
+nestas duas linhas.
+
+53
+00:04:10,180 --> 00:04:15,800
+Este sistema possui apenas alguns símbolos,
+
+54
+00:04:15,800 --> 00:04:18,760
+que permitem escrever funções, sem nomes.
+
+55
+00:04:18,769 --> 00:04:22,000
+Este lê-se << lambda x ponto M >>.
+
+56
+00:04:22,000 --> 00:04:24,360
+É uma função (sem nome),
+
+57
+00:04:24,369 --> 00:04:28,000
+tendo como parâmetro formal <u>x</u> e como corpo <u>M</u>
+
+58
+00:04:28,000 --> 00:04:29,559
+--- é igualmente chamada << abstração >> ---
+
+59
+00:04:29,559 --> 00:04:32,200
+De seguida, temos aquilo que se chama uma << aplicação >>.
+
+60
+00:04:32,200 --> 00:04:34,349
+Colocando <u>M</u> e <u>N</u> lado a lado, pensamos:
+
+61
+00:04:34,349 --> 00:04:46,080
+<< Vou chamar a função <u>M</u>,
+passando-lhe <u>N</u> como parâmetro >>.
+
+62
+00:04:46,080 --> 00:04:48,430
+Este é de facto o fundamento teórico
+da programação funcional.
+
+63
+00:04:48,430 --> 00:04:52,539
+Escrever programas exclusivamente com
+abstrações e aplicações,
+
+64
+00:04:52,539 --> 00:04:56,110
+--- isto é definir funções,
+e as aplicar a valores.
+
+65
+00:04:56,110 --> 00:05:03,099
+A única regra utilizada neste sistema para
+<< computar >> é a regra dita << beta >>.
+
+66
+00:05:03,099 --> 00:05:06,759
+Ela diz: << sendo dada uma função
+com um parâmetro formal <u>x</u> e como corpo <u>M</u> »
+
+67
+00:05:06,759 --> 00:05:12,000
+à qual passamos <u>N</u>
+como parâmetro efectivo para evolução >>
+
+68
+00:05:12,000 --> 00:05:14,749
+<< avaliamos simplesmente o corpo <u>M</u>... »
+
+69
+00:05:14,749 --> 00:05:24,189
+<< apos substituir todas as ocorrências do
+parâmetro formal <u>x</u> pelo parâmetro efectivo <u>N</u> ».
+
+70
+00:05:24,189 --> 00:05:26,250
+Não existe mais nada!
+
+71
+00:05:26,259 --> 00:05:32,289
+Na programação funcional, hoje em dia,
+programamos verdadeiramente desta forma!
+
+72
+00:05:32,289 --> 00:05:36,400
+Definimos funções, eventualmente recursivas,
+
+73
+00:05:36,400 --> 00:05:40,040
+e aplicamo-las a valores, compomos funções
+
+74
+00:05:40,050 --> 00:05:42,610
+para obter os resultados esperados.
+
+75
+00:05:42,610 --> 00:05:47,699
+Por exemplo o mesmo algoritmo
+para o factorial visto anteriormente
+
+76
+00:05:47,699 --> 00:05:52,349
+pode ser escrito en OCaml como se segue:
+
+77
+00:05:52,349 --> 00:05:56,000
+Definimos uma função <u>fact</u> recursiva.
+
+78
+00:05:56,000 --> 00:05:59,160
+Ela tem como parâmetro formal <u>n</u>.
+
+79
+00:05:59,169 --> 00:06:00,800
+Ela verifica se este é igual a <u>0</u>;
+
+80
+00:06:00,800 --> 00:06:03,139
+se sim, devolve <u>1</u>.
+
+81
+00:06:03,139 --> 00:06:08,439
+Senão, multiplicamos <u>n</u> pelo
+resultado da computação do factorial de <u>n-1</u>.
+
+82
+00:06:08,439 --> 00:06:11,839
+Trata-se apenas de uma definição recursiva.
+
+83
+00:06:11,839 --> 00:06:18,330
+Numa linguagem de programação verdadeiramente funcional,
+as funções são cidadãos de primeira classe.
+
+84
+00:06:18,330 --> 00:06:21,000
+Isto quer dizer que lhes podem dar um nome,
+
+85
+00:06:21,000 --> 00:06:23,360
+podem avaliar avaliar funções,
+
+86
+00:06:23,369 --> 00:06:25,800
+podem passar funções como
+argumento de outras funções,
+
+87
+00:06:25,800 --> 00:06:29,200
+podem devolver uma função como
+o resultado de uma computação;
+
+88
+00:06:29,200 --> 00:06:35,520
+e de maneira geral podem utilizar
+uma função onde se espera uma expressão.
+
+89
+00:06:35,520 --> 00:06:39,619
+Este NãO é de todo o caso da maior parte das linguagens
+de programação a que estão habituados.
+
+90
+00:06:39,619 --> 00:06:44,400
+As vantagens de ter
+funções como cidadãos de primeira classe
+
+91
+00:06:44,400 --> 00:06:47,200
+tornar-se-á evidente no final do curso.
+
+92
+00:06:47,210 --> 00:06:54,649
+Até aqui, apenas vimos as máquinas de Turing
+--- a base da programação imperativa ---
+
+93
+00:06:54,649 --> 00:06:59,050
+e o lambda-cálculo
+--- a base da programação funcional ---.
+
+94
+00:06:59,050 --> 00:07:11,199
+Ambos nasceram apenas para responder
+a uma questão da lógica matemática.
+
+95
+00:07:11,199 --> 00:07:14,500
+Por um abuso de notação original de Church,
+
+96
+00:07:14,500 --> 00:07:17,500
+podemos escrever a segunda linha do programa anterior
+
+97
+00:07:17,500 --> 00:07:23,000
+--- esta linha aqui ---
+
+98
+00:07:23,000 --> 00:07:29,759
+utilizando esta notação lambda:
+<< lambda ponto n... >>
+
+99
+00:07:29,759 --> 00:07:34,400
+Eis porque, hoje em dia, assistem
+a toda esta excitação a propósito dos << lambdas >>
+
+100
+00:07:34,700 --> 00:07:38,599
+que são introduzidos em
+linguagens como Java e C++.
+
+101
+00:07:38,599 --> 00:07:46,449
+Sim, o que se passa é que eles estão prestes
+a introduzir verdadeiras funções nestas linguagens.
+
+102
+00:07:46,449 --> 00:07:53,860
+Até aqui, vimos as máquinas de Turing
+--- a base da programação imperativa ---
+
+103
+00:07:53,860 --> 00:07:59,980
+e o lambda-cálculo
+--- a base da programação funcional ---.
+
+104
+00:07:59,980 --> 00:08:08,620
+Ambos nascidos apenas para
+responder a uma questão colocada em 1928.
+
+105
+00:08:08,629 --> 00:08:17,999
+Pouco após o aparecimento destas duas funções, em 1936,
+alguns começaram a perguntar-se quais seriam
+
+106
+00:08:17,999 --> 00:08:23,899
+as suas diferenças em termos de poder computacional.
+
+107
+00:08:23,900 --> 00:08:33,200
+Um belo resultado de Turing de 1937 prova que
+
+108
+00:08:33,200 --> 00:08:35,800
+toda a função que é computável
+por uma máquina de Turing
+
+109
+00:08:35,800 --> 00:08:37,569
+é igualmente computável no lambda-calcul,
+
+110
+00:08:37,569 --> 00:08:41,000
+e reciprocamente.
+
+111
+00:08:41,000 --> 00:08:45,300
+Em princípio, podem tudo programar tudo em
+qualquer um destes dois modelos.
+
+112
+00:08:45,300 --> 00:08:48,380
+Foi um resultado central.
+
+113
+00:08:48,389 --> 00:08:54,400
+Após isso, eles chegaram
+à famosa tese de << Church-Turing >>,
+
+114
+00:08:54,400 --> 00:08:59,000
+que diz essencialmente que qualquer função computável
+utilizando um qualquer dispositivo de computação
+
+115
+00:08:59,000 --> 00:09:04,720
+é igualmente computável com recurso às
+máquinas de Turing, ou ao lamba-cálculo.
+
+116
+00:09:04,720 --> 00:09:11,260
+Por outras palavras, todas as linguagens de
+programação de uso geral, hoje em dia,
+
+117
+00:09:11,260 --> 00:09:17,520
+são equivalentes em termos de poder computacional.
+
+118
+00:09:17,520 --> 00:09:20,000
+Quer isto dizer que
+qualquer função programável numa linguagem,
+
+119
+00:09:20,000 --> 00:09:22,660
+pode ser também programada numa outra linguagem.
+
+120
+00:09:22,670 --> 00:09:29,709
+Eis assim um critério não utilizável quando
+escolhem uma linguagem de programação.
+
+121
+00:09:29,709 --> 00:09:33,819
+Mas as linguagens de programação
+não nasceram de facto iguais !
+
+122
+00:09:33,819 --> 00:09:39,690
+Já que apesar da tese de Church-Turing,
+elas têm expressividades muito diferentes.
+
+123
+00:09:39,690 --> 00:09:44,890
+A expressividade não é a mesma coisa
+que a capacidade de computar uma função:
+
+124
+00:09:45,790 --> 00:09:49,639
+ela indica o quão conciso, o quão eficazmente o podem fazer!
+
+125
+00:09:49,639 --> 00:09:52,990
+E a busca por mais poder expressivo
+nunca termina.
+
+126
+00:09:52,990 --> 00:09:57,120
+Tal conduziu a diferentes representações
+de dados, diferentes modelos de execução,
+
+127
+00:09:57,120 --> 00:09:58,740
+diferentes mecanismos de abstração.
+
+128
+00:09:58,740 --> 00:10:02,680
+E esta busca continua hoje em dia.
+
+129
+00:10:02,689 --> 00:10:04,109
+Também, quando escolhem uma linguagem,
+
+130
+00:10:04,109 --> 00:10:07,729
+procuram de facto algo mais que
+simplesmente aquilo que podem computar.
+
+131
+00:10:07,730 --> 00:10:11,019
+Procuram outras características desejáveis,
+como por exemplo:
+
+132
+00:10:11,019 --> 00:10:12,959
+que segurança vos trás a linguagem:
+
+133
+00:10:12,960 --> 00:10:17,660
+pode ela vos impedir de cometer erros
+antes que estes apareçam no momento da execução?
+
+134
+00:10:17,660 --> 00:10:19,300
+qual é a sua eficácia:
+
+135
+00:10:19,300 --> 00:10:24,840
+posso eu programar uma função de maneira que
+o resultado seja computado mais rapidamente
+
+136
+00:10:24,840 --> 00:10:26,840
+que com outra linguagem de programação?
+
+137
+00:10:28,899 --> 00:10:30,750
+A que ponto o código é mantível?
+
+138
+00:10:30,750 --> 00:10:33,420
+A questão não é simplesmente
+escrever um pedaço de código
+
+139
+00:10:33,420 --> 00:10:36,500
+mas também de o modificar, de o reler.
+
+140
+00:10:36,500 --> 00:10:40,860
+Também, de acordo com os problemas que
+queiram resolver,
+
+141
+00:10:40,860 --> 00:10:46,560
+certas linguagens de programação podem-se
+mostrar bem melhores que outras.
+
+142
+00:10:46,560 --> 00:10:50,189
+Acho que conseguem perceber o que queremos dizer.
+
+143
+00:10:50,189 --> 00:10:53,749
+Acreditamos realmente que em vários casos
+a programação funcional
+
+144
+00:10:53,749 --> 00:10:56,500
+é bem melhor que a programação imperativa.
+
+145
+00:10:56,500 --> 00:11:00,699
+E isto não é somente a opinião daqueles
+que vos dão hoje este curso.
+
+146
+00:11:00,699 --> 00:11:06,899
+Se voltarem a John Backus
+--- o criador da linguagem de programação FORTRAN ---
+
+147
+00:11:06,899 --> 00:11:10,410
+--- uma das primeiras linguagens de programação ---
+
+148
+00:11:10,410 --> 00:11:13,570
+ele recebeu o prémio Turing em 1978,
+
+149
+00:11:13,570 --> 00:11:16,710
+e na sua conferência, intitulada:
+
+150
+00:11:16,710 --> 00:11:21,010
+<< Pode a programação libertar-se
+do estilo de Von Neumann? >>
+
+151
+00:11:21,010 --> 00:11:22,839
+Disse ele:
+
+152
+00:11:22,839 --> 00:11:27,029
+<< Quero encontrar uma forma de escrever código
+de maneira funcional, >>
+
+153
+00:11:27,029 --> 00:11:30,489
+<< já que a programação funcional
+trata dados estruturados, >>
+
+154
+00:11:30,489 --> 00:11:35,109
+<< e ela não requer
+o complexo mecanismo de declaração de procedimentos. >>
+
+155
+00:11:35,110 --> 00:11:41,750
+É uma leitura extremamente interessante,
+que vos sugiro verdadeiramente.
+
+156
+00:11:41,750 --> 00:11:45,590
+Portanto, John Backus declarou há já alguns anos que
+
+157
+00:11:45,590 --> 00:11:47,720
+a programação funcional era qualquer coisa
+de verdadeiramente interessante a conhecer.
+
+158
+00:11:47,720 --> 00:11:49,840
+E hoje em dia, se olharem à vossa volta,
+
+159
+00:11:49,840 --> 00:11:53,060
+veêm que a programação funcional
+continua a crescer.
+
+160
+00:11:53,060 --> 00:11:58,080
+Existe um relatório interessante da CMU
+sobre a educação da ciência da computação onde explicam
+
+161
+00:11:58,080 --> 00:12:02,839
+porque decidiram utilizar a programação
+funcional na unidade curricular de primeiro ano.
+
+162
+00:12:02,839 --> 00:12:05,769
+Eles observam algumas tendências claramente a emergir:
+
+163
+00:12:05,769 --> 00:12:11,229
+uma delas é que temos necessidade
+de uma maior fiabilidade de <i>software</i>,
+
+164
+00:12:11,229 --> 00:12:13,369
+--- programas com menos <i>bugs</i> ---
+
+165
+00:12:13,369 --> 00:12:16,229
+temos necessidade de provar que
+os programas são correctos;
+
+166
+00:12:16,229 --> 00:12:21,120
+e os programas puramente funcionais são mais
+fáceis de provar correctos que outros que são imperativos.
+
+167
+00:12:21,120 --> 00:12:25,940
+Por outro lado, devemos igualmente explorar
+o poder da computação paralela:
+
+168
+00:12:25,940 --> 00:12:32,800
+existe um grande número de sistemas informáticos
+disponíveis e máquinas distribuídas,
+
+169
+00:12:32,800 --> 00:12:35,720
+e não se devem contentar em escrever um programa
+para o executar numa só máquina,
+
+170
+00:12:35,720 --> 00:12:39,939
+agora querem explorar o poder
+das várias máquinas disponíveis.
+
+171
+00:12:39,939 --> 00:12:45,379
+Dizem eles que, se escolherem sabiamente
+um conjunto de funções de ordem superior,
+
+172
+00:12:45,380 --> 00:12:50,580
+será então mais fácil escrever
+programas que se podem tornar paralelos
+
+173
+00:12:50,580 --> 00:12:54,160
+-- e executarem-se eficazmente em várias máquinas --
+
+174
+00:12:54,160 --> 00:12:56,569
+do que aqueles que fizerem num estilo imperativo.
+
+175
+00:12:56,569 --> 00:13:03,319
+Um exemplo bastante conhecido é o do
+combinador MapReduce fornecido pela Google.
+
+176
+00:13:03,319 --> 00:13:09,539
+Map e Reduce... vamos aprender sobre estes temas
+um pouco mais à frente no curso...
+
+177
+00:13:10,460 --> 00:13:15,291
+Estas são apenas funções de ordem superior.
+
+178
+00:13:15,340 --> 00:13:20,420
+As funções estão verdadeiramente por todo
+lado à nossa volta.
+
+179
+00:13:20,420 --> 00:13:24,760
+A expressividade e o poder da programação
+funcional são agora largamente reconhecidos:
+
+180
+00:13:24,760 --> 00:13:31,220
+Java 1.8 e C++ 11
+introduzem expressões lambdas.
+
+181
+00:13:31,230 --> 00:13:35,790
+Portanto, qualquer que seja a vossa linguagem favorita,
+
+182
+00:13:35,790 --> 00:13:41,100
+compreender os fundamentos da programação
+funcional é de facto uma competência base dos dias de hoje.
+
+183
+00:13:41,100 --> 00:13:43,880
+É esta razão pela qual
+queremo-vos levar connosco nesta viagem:
+
+184
+00:13:43,880 --> 00:13:47,940
+vão aprender estas competências
+utilizando a linguagem de programação OCaml.

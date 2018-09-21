@@ -1,0 +1,511 @@
+1
+00:00:07,860 --> 00:00:08,970
+Bonjour à tous.
+
+2
+00:00:08,970 --> 00:00:10,120
+Bienvenue à la semaine 1.
+
+3
+00:00:10,120 --> 00:00:14,660
+où nous allons commencer avec le
+contenu technique de ce MOOC.
+
+4
+00:00:14,660 --> 00:00:17,070
+Donc, cette semaine, nous allons commencer
+avec les bases.
+
+5
+00:00:17,070 --> 00:00:18,660
+Au cours des deux premières séquences
+
+6
+00:00:18,660 --> 00:00:21,130
+nous examinerons quelques types de données de base
+
+7
+00:00:21,130 --> 00:00:23,970
+que vous auriez dans tout langage de programmation.
+
+8
+00:00:23,970 --> 00:00:26,230
+Nous allons examiner quelques-unes des façons
+
+9
+00:00:26,230 --> 00:00:31,220
+que l'on a en OCaml de construire des expressions ;
+
+10
+00:00:31,230 --> 00:00:34,570
+des identificateurs nous permettrons de donner des
+noms à des valeurs ;
+
+11
+00:00:34,570 --> 00:00:38,039
+et nous finirons la semaine par les fonctions
+
+12
+00:00:38,039 --> 00:00:40,720
+et les fonctions récursives.
+
+13
+00:00:40,720 --> 00:00:42,250
+Comme nous l'avons vu la semaine dernière,
+
+14
+00:00:42,250 --> 00:00:45,430
+en OCaml les types sont en fait déduits par le système,
+
+15
+00:00:45,430 --> 00:00:49,760
+et vous n'avez pas besoin de les déclarer
+si vous ne voulez pas le faire.
+
+16
+00:00:49,760 --> 00:00:54,160
+Ceci est en fait une caractéristique distinctive
+du système OCaml,
+
+17
+00:00:54,160 --> 00:00:58,579
+qui permet de concilier la flexibilité
+des langages de programmation non typés avec
+
+18
+00:00:58,579 --> 00:01:02,489
+la sécurité des langages de programmation typés.
+
+19
+00:01:02,489 --> 00:01:05,170
+Nous avons un système de type très riche en OCaml,
+
+20
+00:01:05,170 --> 00:01:08,200
+comme vous le verrez au cours de ce MOOC, et en fait
+
+21
+00:01:08,200 --> 00:01:11,720
+le polymorphisme nous donne encore plus de flexibilité.
+
+22
+00:01:14,120 --> 00:01:20,020
+Examinons les différents types de réponses que nous
+pouvons obtenir à partir du toplevel.
+
+23
+00:01:20,030 --> 00:01:23,830
+Nous commençons donc ici avec la première phrase,
+qui est bien sûr correcte,
+
+24
+00:01:23,830 --> 00:01:26,200
+puisque c'est une expression arithmétique correcte.
+
+25
+00:01:26,200 --> 00:01:29,070
+Et le système répond avec le type, qui est <u>int</u>.
+
+26
+00:01:29,070 --> 00:01:31,710
+Et la valeur est bien sûr <u>8</u>.
+
+27
+00:01:31,710 --> 00:01:36,720
+Maintenant, la phrase suivante est en fait
+incorrecte sur le plan syntaxique,
+
+28
+00:01:36,720 --> 00:01:39,640
+puisque le second argument de l'opérateur <u>+</u>
+est absent.
+
+29
+00:01:39,640 --> 00:01:42,580
+Et dans ce cas, le toplevel OCaml répond :
+
+30
+00:01:42,580 --> 00:01:44,119
+"Erreur de syntaxe."
+
+31
+00:01:44,119 --> 00:01:45,770
+Comme nous pouvons le voir sur la droite.
+
+32
+00:01:45,770 --> 00:01:49,900
+Enfin, nous avons la troisième phrase
+qui est syntaxiquement correcte,
+
+33
+00:01:49,990 --> 00:01:52,820
+mais qui est incorrecte au niveau du typage,
+
+34
+00:01:52,820 --> 00:01:55,060
+puisque le second argument est une chaîne,
+
+35
+00:01:55,060 --> 00:01:57,030
+là où l'on attend un entier.
+
+36
+00:01:57,030 --> 00:01:59,030
+Et quand nous soumettons ceci au toplevel,
+
+37
+00:01:59,030 --> 00:02:02,850
+il nous répond en indiquant l'erreur de typage exacte.
+
+38
+00:02:03,840 --> 00:02:07,420
+Nous allons commencer cette semaine avec les types de
+données de base
+
+39
+00:02:07,420 --> 00:02:11,939
+que sont les entiers, les booléens, les nombres à virgule
+flottante, les chaînes et les caractères.
+
+40
+00:02:11,939 --> 00:02:15,099
+Ensuite, les deux semaines suivantes, nous verrons
+
+41
+00:02:15,100 --> 00:02:16,780
+les types de données structurées.
+
+42
+00:02:16,790 --> 00:02:20,770
+En semaine 4 nous examinerons les fonctions,
+et les types de données fonctionnels.
+
+43
+00:02:20,770 --> 00:02:24,730
+La semaine 5 sera consacrée aux traits impératifs.
+
+44
+00:02:24,730 --> 00:02:29,150
+Et là, nous verrons que cela est lié aussi
+à des types en OCaml.
+
+45
+00:02:29,150 --> 00:02:32,040
+Nous avons même des classes et des objets en OCaml,
+
+46
+00:02:32,040 --> 00:02:35,880
+mais ceux-ci sont hors du champ de ce MOOC.
+
+47
+00:02:36,480 --> 00:02:40,459
+Commençons donc avec le type des entiers, qui s'écrit <u>int</u>.
+
+48
+00:02:40,459 --> 00:02:43,419
+Si vous travaillez sur une architecture CPU de 64 bits
+
+49
+00:02:43,420 --> 00:02:47,980
+alors les entiers sont représentés avec l'ensemble des 64 bits
+
+50
+00:02:47,980 --> 00:02:52,260
+Cependant, dans l'environnement que vous utiliserez
+pour les exercices de ce MOOC
+
+51
+00:02:52,260 --> 00:02:54,040
+vous aurez beaucoup moins.
+
+52
+00:02:54,050 --> 00:02:56,959
+Mais ce sera largement suffisant pour les exercices
+
+53
+00:02:56,959 --> 00:02:59,940
+que vous verrez dans ce MOOC.
+
+54
+00:02:59,940 --> 00:03:03,459
+Les opérateurs arithmétiques sur les entiers
+sont écrits comme d'habitude.
+
+55
+00:03:03,459 --> 00:03:08,879
+Et, bien sûr, tous les calculs sont faits
+modulo la taille des entiers.
+
+56
+00:03:09,400 --> 00:03:13,340
+Rappelez-vous simplement que la division entière
+est toujours la division entière,
+
+57
+00:03:13,340 --> 00:03:16,580
+ce qui signifie qu'elle vous donne un résultat entier.
+
+58
+00:03:16,580 --> 00:03:20,960
+Et le reste de la division entière
+s'écrit <u>mod</u>, pour modulo,
+
+59
+00:03:20,960 --> 00:03:23,280
+il est utilisé comme un opérateur infixe.
+
+60
+00:03:25,760 --> 00:03:28,780
+Maintenant, voici des expressions entières simples.
+
+61
+00:03:28,780 --> 00:03:31,349
+Dans le premier exemple, nous pouvons voir que
+
+62
+00:03:31,349 --> 00:03:36,009
+les priorités entre opérateurs sont
+comme vous pourriez les attendre. Bien entendu
+
+63
+00:03:36,009 --> 00:03:39,709
+la multiplication prend la priorité sur l'addition.
+
+64
+00:03:40,280 --> 00:03:42,160
+Le symbole <u>/</u> est la division.
+
+65
+00:03:42,170 --> 00:03:44,920
+Rappelez-vous juste que c'est une division entière,
+
+66
+00:03:44,920 --> 00:03:48,540
+ce qui signifie que le résultat
+de cette évaluation vous donne un nombre entier,
+
+67
+00:03:48,540 --> 00:03:52,580
+et bien sûr la valeur dans ce cas est <u>2</u>.
+
+68
+00:03:52,580 --> 00:03:56,220
+Enfin, <u>mod</u> est le reste de la division entière,
+
+69
+00:03:56,220 --> 00:03:59,100
+de sorte que nous obtiendrions, sur ceci en entrée,
+
+70
+00:03:59,110 --> 00:04:03,200
+un résultat qui est encore entier, à savoir <u>-2</u>.
+
+71
+00:04:05,300 --> 00:04:08,660
+Il y a aussi un type des booléens, qui s'écrit <u>bool</u>,
+
+72
+00:04:08,660 --> 00:04:12,000
+dont les valeurs sont bien sûr <u>true</u> et <u>false</u>.
+
+73
+00:04:12,010 --> 00:04:14,870
+Nous avons les opérateurs booléens habituels :
+
+74
+00:04:14,940 --> 00:04:16,920
+<u>&&</u> pour la conjonction,
+
+75
+00:04:16,920 --> 00:04:19,300
+<u>||</u> pour la disjonction,
+
+76
+00:04:19,310 --> 00:04:23,080
+et <u>not</u> pour la négation.
+
+77
+00:04:23,080 --> 00:04:26,800
+On a aussi les opérateurs de comparaison habituels
+
+78
+00:04:26,809 --> 00:04:29,050
+pour comparer les valeurs de n'importe quel type.
+
+79
+00:04:29,050 --> 00:04:33,490
+Et là encore cela vous donne toujours
+une valeur booléenne.
+
+80
+00:04:34,020 --> 00:04:35,780
+Certains des pièges possibles sont
+
+81
+00:04:35,789 --> 00:04:38,229
+la négation, qui s'écrit toujours <u>not</u>.
+
+82
+00:04:38,229 --> 00:04:42,391
+Le <u>!</u> existe en OCaml,
+
+83
+00:04:42,400 --> 00:04:44,800
+mais il est utilisé pour quelque chose de
+complètement différent,
+
+84
+00:04:44,800 --> 00:04:47,400
+comme vous le verrez au cours de la semaine 5.
+
+85
+00:04:47,400 --> 00:04:50,060
+S'il vous plaît écrivez la conjonction avec <u>&&</u>,
+
+86
+00:04:50,060 --> 00:04:55,080
+<u>&</u> existait dans le passé mais il n'existe plus.
+
+87
+00:04:55,080 --> 00:04:58,660
+Attention, le mot-clé <u>and</u> existe en OCaml,
+
+88
+00:04:58,669 --> 00:05:00,249
+mais il a un sens différent,
+
+89
+00:05:00,249 --> 00:05:03,569
+comme vous allez le voir dès cette semaine.
+
+90
+00:05:03,569 --> 00:05:05,869
+On peut comparer des valeurs de n'importe quel type.
+
+91
+00:05:05,869 --> 00:05:08,500
+Cependant, les deux valeurs que l'on compare
+
+92
+00:05:08,500 --> 00:05:11,920
+ensemble doivent toujours avoir le même type.
+
+93
+00:05:14,540 --> 00:05:17,939
+Ici, sur cette diapositive, nous avons
+quelques expressions booléennes simples.
+
+94
+00:05:17,939 --> 00:05:21,499
+Tout d'abord une conjonction entre <u>true</u> et <u>true</u>,
+
+95
+00:05:21,499 --> 00:05:23,740
+ce qui bien sûr nous donne le booléen <u>true</u>.
+
+96
+00:05:23,740 --> 00:05:28,300
+Ensuite, une disjonction entre <u>false</u> et <u>true</u>,
+
+97
+00:05:28,369 --> 00:05:31,129
+qui donne le booléen <u>true</u> à nouveau.
+
+98
+00:05:32,500 --> 00:05:36,180
+On a aussi des expressions booléennes imbriquées,
+
+99
+00:05:36,180 --> 00:05:38,569
+comme ici, où nous avons l'opérateur <u>not</u>
+
+100
+00:05:38,569 --> 00:05:42,549
+appliqué à la disjonction entre <u>false</u> et <u>true</u>.
+
+101
+00:05:42,560 --> 00:05:47,740
+Et bien sûr, le résultat dans ce cas est <u>false</u>.
+
+102
+00:05:47,740 --> 00:05:50,960
+Maintenant, voici des exemples de comparaisons.
+
+103
+00:05:50,969 --> 00:05:54,829
+Comme ici, nous avons une comparaison
+entre deux valeurs entières,
+
+104
+00:05:54,829 --> 00:05:57,309
+ce qui donne à nouveau une valeur booléenne.
+
+105
+00:05:57,309 --> 00:06:01,659
+SVP rappelez-vous que les comparaisons ne sont
+
+106
+00:06:01,659 --> 00:06:04,569
+autorisées qu'entre deux valeurs de même type
+
+107
+00:06:04,569 --> 00:06:07,680
+dans la même invocation d'un opérateur de comparaison.
+
+108
+00:06:07,680 --> 00:06:11,620
+Ce qui signifie que, par exemple,
+la comparaison d'un flottant avec une chaîne
+
+109
+00:06:11,620 --> 00:06:15,340
+est déjà rejetée par le compilateur au niveau du type,
+
+110
+00:06:15,349 --> 00:06:18,820
+et l'on obtient en fait une erreur de typage.
+
+111
+00:06:18,820 --> 00:06:23,060
+Cependant, quand on a plusieurs invocations d'un
+opérateur de comparaison
+
+112
+00:06:23,069 --> 00:06:27,249
+le type commun des arguments comparés peut être
+différent d'une invocation à l'autre.
+
+113
+00:06:27,249 --> 00:06:32,780
+Ainsi dans notre dernier exemple, on a ici une
+comparaison entre deux nombres en virgule flottante,
+
+114
+00:06:32,789 --> 00:06:36,610
+et ensuite une comparaison entre deux nombres entiers.
+
+115
+00:06:36,610 --> 00:06:38,619
+Et cela est bien sûr parfaitement correct
+
+116
+00:06:38,620 --> 00:06:40,360
+et nous donne la valeur <u>true</u>.
+
+117
+00:06:41,920 --> 00:06:44,700
+Pour en savoir plus sur les types de données de base,
+entiers et les booléens,
+
+118
+00:06:44,710 --> 00:06:47,389
+vous pouvez consultez le manuel OCaml,
+
+119
+00:06:47,389 --> 00:06:48,860
+et vous trouverez des informations complètes
+
+120
+00:06:48,860 --> 00:06:53,080
+dans la description du module <u>Pervasives</u>
+de la bibliothèque de base.
