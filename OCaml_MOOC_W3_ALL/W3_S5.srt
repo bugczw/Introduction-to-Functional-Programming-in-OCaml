@@ -1,0 +1,430 @@
+1
+00:00:00,070 --> 00:00:01,510
+Welcome back.
+
+2
+00:00:01,510 --> 00:00:07,900
+We will conclude this week with advanced topics
+about algebraic datatypes.
+
+3
+00:00:09,990 --> 00:00:18,369
+It might be surprising, but a sum type
+with only one constructor can be very helpful.
+
+4
+00:00:18,369 --> 00:00:24,199
+If you want to discriminate between two types
+that are structurally equivalent,
+
+5
+00:00:24,199 --> 00:00:30,300
+but you want to assign a different semantics
+to the two different types.
+
+6
+00:00:33,000 --> 00:00:39,400
+So, let us define a type for euros.
+
+7
+00:00:41,469 --> 00:00:45,829
+So you have a constructor <u>Euro</u>
+and a float,
+
+8
+00:00:45,829 --> 00:00:52,570
+representing the amount of euros
+you have in your pocket.
+
+9
+00:00:52,570 --> 00:00:57,480
+Let us define another type for dollars.
+
+10
+00:00:57,480 --> 00:01:03,660
+Of course, dollars and euros are not the same:
+there is a conversion between them,
+
+11
+00:01:03,660 --> 00:01:05,220
+that must be applied,
+
+12
+00:01:05,220 --> 00:01:12,740
+and you don't want to say
+that ten euros is the same as ten dollars.
+
+13
+00:01:12,740 --> 00:01:20,409
+In fact, the type-checker is able to help
+you to avoid confusing these two moneys.
+
+14
+00:01:20,409 --> 00:01:23,450
+So let's see why.
+
+15
+00:01:23,450 --> 00:01:31,240
+So here are four dollars, here are five euros,
+and if you try to compare them,
+
+16
+00:01:31,240 --> 00:01:35,979
+the type-checker says that you can not compare
+euros and dollars.
+
+17
+00:01:35,979 --> 00:01:42,119
+If you want to do so you have to first convert
+your dollars into euros,
+
+18
+00:01:42,119 --> 00:01:47,000
+and after that you can compare
+the euros that you obtained.
+
+19
+00:01:49,000 --> 00:01:57,619
+Sometimes, when you write a pattern matching,
+several branches really have exactly the same
+
+20
+00:01:57,619 --> 00:01:59,189
+code.
+
+21
+00:01:59,189 --> 00:02:03,829
+It's always a bad idea to duplicate code.
+
+22
+00:02:03,829 --> 00:02:12,170
+Fortunately, using what is called "or-patterns",
+you can factorize these branches into a unique
+
+23
+00:02:12,170 --> 00:02:14,970
+branch.
+
+24
+00:02:14,970 --> 00:02:17,860
+The syntax is the following one:
+
+25
+00:02:17,860 --> 00:02:27,110
+you first write your pattern, the first pattern,
+a pipe, and after that another pattern.
+
+26
+00:02:27,110 --> 00:02:37,700
+And it is really read like an observation of
+"the first pattern or the second pattern".
+
+27
+00:02:37,720 --> 00:02:47,800
+The only constraint is that the two patterns
+must contain the same identifiers.
+
+28
+00:02:47,870 --> 00:02:57,300
+So let us consider this function that removes
+the head of a list if it begins with zero or one.
+
+29
+00:02:57,310 --> 00:03:02,150
+Here you can notice that these two
+branches contain the same code,
+
+30
+00:03:02,150 --> 00:03:06,400
+which is to return <u>xs</u>.
+
+31
+00:03:06,400 --> 00:03:20,010
+Using an or-pattern you can actually
+factorize by saying that the two patterns,
+
+32
+00:03:20,010 --> 00:03:26,110
+this one and this one, share the same code
+for their branches.
+
+33
+00:03:26,110 --> 00:03:32,670
+So there is a unique branch
+with a or-pattern inside.
+
+34
+00:03:32,670 --> 00:03:41,790
+In fact, you can even use or-patterns
+deeply inside your patterns.
+
+35
+00:03:41,790 --> 00:03:47,810
+For instance, here you can factorize
+this part of the pattern,
+
+36
+00:03:47,810 --> 00:03:52,010
+which is common between two of your patterns,
+
+37
+00:03:52,010 --> 00:03:59,540
+and just say that the head can be zero or one.
+
+38
+00:03:59,540 --> 00:04:07,870
+Sometimes it is also very convenient to be
+able to name a matched component.
+
+39
+00:04:07,870 --> 00:04:10,990
+This is the role of what is called "as-patterns":
+
+40
+00:04:10,990 --> 00:04:17,540
+the pattern written like this:
+<u>some_pattern as x</u>,
+
+41
+00:04:17,540 --> 00:04:26,300
+is read like that: if the value can
+be observed using the pattern, name it <u>x</u>.
+
+42
+00:04:28,690 --> 00:04:34,870
+So imagine that we want to implement a function
+that duplicates the head of a list,
+
+43
+00:04:34,870 --> 00:04:38,710
+at the end of this list, if it (the head) exists.
+
+44
+00:04:38,710 --> 00:04:44,980
+In the case of an empty list, of course, there
+is no head so nothing to do.
+
+45
+00:04:44,980 --> 00:04:52,850
+Now imagine that you have a list
+that starts with <u>x</u>.
+
+46
+00:04:52,850 --> 00:04:57,310
+What you want to say is that
+you want to take that list,
+
+47
+00:04:57,310 --> 00:05:06,410
+and concatenate a list with only the head
+at the end of this list.
+
+48
+00:05:06,410 --> 00:05:11,240
+So you want to name the list that you have
+matched,
+
+49
+00:05:11,240 --> 00:05:14,630
+and this is exactly the role of <u>as l</u>.
+
+50
+00:05:14,630 --> 00:05:18,350
+So here you can reuse <u>l</u> which is the list
+that has
+
+51
+00:05:18,350 --> 00:05:25,470
+been matched, concatenated with <u>x</u>.
+
+52
+00:05:25,480 --> 00:05:28,830
+And you get a valid function.
+
+53
+00:05:30,400 --> 00:05:39,180
+There is also a notion of guard that can be
+attached to a branch.
+
+54
+00:05:39,190 --> 00:05:49,700
+A guard is a boolean expression that will
+be evaluated when we try to match a pattern.
+
+55
+00:05:49,730 --> 00:05:55,380
+If the guard is <u>true</u>,
+and of course the pattern matches the value,
+
+56
+00:05:55,380 --> 00:05:58,460
+then you will execute the branch.
+
+57
+00:05:58,460 --> 00:06:06,080
+If the value is matched by the pattern,
+but the guard is false,
+
+58
+00:06:06,080 --> 00:06:12,240
+you will not execute the branch,
+and you will go to the next branch.
+
+59
+00:06:12,240 --> 00:06:20,139
+To introduce a guard in a
+branch we use the keyword <u>when</u>.
+
+60
+00:06:20,139 --> 00:06:26,050
+So let us now implement a function that goes
+through a list,
+
+61
+00:06:26,050 --> 00:06:33,830
+and pushes the maximum of the list at the
+end of the list.
+
+62
+00:06:33,830 --> 00:06:38,780
+To do so we first have to notice that
+the empty list,
+
+63
+00:06:38,780 --> 00:06:44,900
+or the list that only contains one element,
+
+64
+00:06:44,900 --> 00:06:48,370
+are already valid outputs.
+
+65
+00:06:48,370 --> 00:06:54,900
+Now, imagine that you have a least two elements
+in the list.
+
+66
+00:06:54,900 --> 00:06:59,770
+Then you have two cases:
+the first one is the fact
+
+67
+00:06:59,770 --> 00:07:04,680
+that the first element
+is less than the second element,
+
+68
+00:07:04,680 --> 00:07:10,680
+in which case the second element might be
+the maximal element of the list,
+
+69
+00:07:10,680 --> 00:07:15,230
+so you will continue with it.
+
+70
+00:07:15,230 --> 00:07:19,490
+Otherwise you have to permute the two elements,
+
+71
+00:07:19,490 --> 00:07:24,169
+because <u>x</u> might be
+the maximal element of the list.
+
+72
+00:07:24,169 --> 00:07:32,639
+The role of these two branches is to discriminate
+between the previous two cases.
+
+73
+00:07:32,639 --> 00:07:39,870
+So, we can't only use the shape of the list,
+
+74
+00:07:39,870 --> 00:07:42,460
+because the shape of the list
+is the same in the two cases.
+
+75
+00:07:42,460 --> 00:07:50,990
+We have to had an extra check, an extra guard
+which is written here:
+
+76
+00:07:50,990 --> 00:07:56,889
+when <u>x</u> is less than <u>y</u>
+we are in the first case,
+
+77
+00:07:56,889 --> 00:07:59,600
+the case in which we can continue
+with the list,
+
+78
+00:07:59,600 --> 00:08:04,440
+because <u>x</u> is not
+the maximal element of the list,
+
+79
+00:08:04,440 --> 00:08:12,770
+and finally the last case is the one
+when you have to permute the two elements.
+
+80
+00:08:12,770 --> 00:08:27,650
+So, for instance, on the list <u>3;2;1</u>,
+this function pushes 3 at the end of the list.
+
+81
+00:08:27,650 --> 00:08:37,370
+So we have finished our first tour of the
+features of OCaml's type system.
+
+82
+00:08:37,370 --> 00:08:43,089
+In fact, there are many features
+that we did not show.
+
+83
+00:08:43,089 --> 00:08:51,089
+Objects: in fact OCaml is an
+object oriented programming language.
+
+84
+00:08:51,089 --> 00:08:58,000
+This is why it starts with a "O".
+
+85
+00:08:58,000 --> 00:09:09,200
+First-class modules are a way to define components
+that are different from objects but very useful too.
+
+86
+00:09:09,279 --> 00:09:18,380
+Polymorphic variants are a way to define
+sum types that are extensible.
+
+87
+00:09:18,380 --> 00:09:25,870
+And finally, generalized algebraic datatypes,
+are a generalization of algebraic datatypes,
+
+88
+00:09:25,870 --> 00:09:32,230
+that allows you to have a more precise typing
+of datatype constructors.
+
+89
+00:09:32,230 --> 00:09:41,010
+Still, even if you don't have all the features
+of the OCaml type system in your hand,
+
+90
+00:09:41,010 --> 00:09:45,779
+you can still write very interesting programs
+like higher-order functions.
+
+91
+00:09:45,860 --> 00:09:49,920
+That's the topic of the next week.
+

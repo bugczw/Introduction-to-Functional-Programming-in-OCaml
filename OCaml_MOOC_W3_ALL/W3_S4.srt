@@ -1,0 +1,440 @@
+1
+00:00:00,470 --> 00:00:02,480
+Welcome back.
+
+2
+00:00:02,480 --> 00:00:07,769
+We have seen the type constructor <u>list</u>,
+
+3
+00:00:07,769 --> 00:00:14,070
+which is parameterized by the type of the
+elements of the list.
+
+4
+00:00:14,070 --> 00:00:17,390
+In fact, this is very relevant,
+
+5
+00:00:17,390 --> 00:00:25,000
+because a lot of functions over list
+do not depend on the type of the elements.
+
+6
+00:00:25,039 --> 00:00:34,300
+Indeed, if you look at the module <u>List</u>,
+it only contains polymorphic functions.
+
+7
+00:00:34,340 --> 00:00:44,200
+So it means that the functions
+like length or reverse and so on,
+
+8
+00:00:44,240 --> 00:00:48,140
+are written once and for all.
+
+9
+00:00:48,140 --> 00:00:51,840
+This is maximizing code reuse:
+
+10
+00:00:51,840 --> 00:00:57,890
+we don't have to reprogram
+the length function of a list,
+
+11
+00:00:57,890 --> 00:01:03,210
+for each possible type of element of the list.
+
+12
+00:01:03,210 --> 00:01:10,900
+So it saves us a lot of time,
+and it increases our productivity.
+
+13
+00:01:10,900 --> 00:01:19,170
+In fact, the programmer can define her own
+parameterized types
+
+14
+00:01:19,170 --> 00:01:24,800
+and that's the topic of this sequence.
+
+15
+00:01:24,800 --> 00:01:31,200
+There is an example of a parameterized type
+with only one parameter.
+
+16
+00:01:31,240 --> 00:01:36,500
+And a value of this type
+represents a value which is optionnal.
+
+17
+00:01:36,540 --> 00:01:42,049
+When you don't want to give
+a value of type alpha,
+
+18
+00:01:42,049 --> 00:01:45,580
+you can use the constructor <u>None</u>.
+
+19
+00:01:45,580 --> 00:01:48,310
+And when you want to provide this value,
+
+20
+00:01:48,310 --> 00:01:52,220
+you can use the constructor <u>Some</u>.
+
+21
+00:01:52,220 --> 00:01:59,700
+This type is very useful in programming,
+so it is predefined in OCaml.
+
+22
+00:01:59,799 --> 00:02:04,820
+As you can see, you can apply <u>Some</u>,
+
+23
+00:02:04,820 --> 00:02:08,310
+and the OCaml typechecker is able to infer
+
+24
+00:02:08,310 --> 00:02:16,420
+that as you apply it to <u>42</u>,
+<u>'a</u> is equal to <u>int</u>.
+
+25
+00:02:16,420 --> 00:02:18,220
+But when you use <u>None</u>,
+
+26
+00:02:18,220 --> 00:02:21,590
+in fact this value is polymorphic,
+
+27
+00:02:21,590 --> 00:02:29,650
+it has the type we want for <u>'a</u>.
+
+28
+00:02:29,650 --> 00:02:34,069
+Now here is another parameterized type
+
+29
+00:02:34,069 --> 00:02:38,780
+and this time it has two parameters,
+<u>'a</u> and <u>'b</u>.
+
+30
+00:02:38,780 --> 00:02:49,300
+And it represents a very common way
+to take the union of two arbitrary types.
+
+31
+00:02:49,370 --> 00:02:51,250
+We have two data constructors:
+
+32
+00:02:51,250 --> 00:02:56,330
+the first data constructor <u>Left</u> represents
+a value of the first type
+
+33
+00:02:56,330 --> 00:03:03,489
+and the data constructor <u>Right</u> represents
+a value of the second type.
+
+34
+00:03:03,489 --> 00:03:14,129
+Imagine that you have defined a type for squares,
+for circles
+
+35
+00:03:14,129 --> 00:03:20,410
+then you can join these two types into the
+type for shapes
+
+36
+00:03:20,410 --> 00:03:24,340
+which can be a square or a circle.
+
+37
+00:03:24,340 --> 00:03:36,819
+If I want to generate a shape that is a square
+I use Left
+
+38
+00:03:36,819 --> 00:03:46,269
+and if I want to generate another shape which
+is a circle I use Right.
+
+39
+00:03:46,269 --> 00:03:47,660
+Here is another example.
+
+40
+00:03:47,660 --> 00:03:52,660
+If we want to define a type
+for binary search trees
+
+41
+00:03:52,660 --> 00:04:00,700
+it will be parameterized by
+the type of the values
+
+42
+00:04:00,709 --> 00:04:06,010
+that are put on each node of the tree.
+
+43
+00:04:06,010 --> 00:04:09,000
+Again, we have two cases:
+
+44
+00:04:09,000 --> 00:04:12,550
+the case for an empty tree
+
+45
+00:04:12,550 --> 00:04:24,050
+and a case for a binary node
+in the binary tree.
+
+46
+00:04:24,050 --> 00:04:27,790
+It is easy to implement an insert function.
+
+47
+00:04:27,790 --> 00:04:32,900
+In fact we already did,
+when we implemented a database
+
+48
+00:04:32,900 --> 00:04:37,720
+based on a tree-like representation.
+
+49
+00:04:37,720 --> 00:04:41,250
+But this time there is no noise,
+
+50
+00:04:41,250 --> 00:04:46,880
+that was about how you deal with the contact
+of the database, and so on.
+
+51
+00:04:46,880 --> 00:04:49,930
+What we have here is a generic code
+
+52
+00:04:49,930 --> 00:04:57,419
+that will work for any binary search tree.
+
+53
+00:04:57,419 --> 00:05:01,520
+And as there is no noise about the application
+
+54
+00:05:01,520 --> 00:05:03,400
+which is to implement the database
+
+55
+00:05:03,400 --> 00:05:09,870
+we can focus on the implementation
+of the data structure:
+
+56
+00:05:09,870 --> 00:05:11,940
+binary search tree.
+
+57
+00:05:11,940 --> 00:05:18,440
+And so we were able to implement
+the <u>delete</u> function,
+
+58
+00:05:18,440 --> 00:05:22,979
+I won't give the details about this implementation.
+
+59
+00:05:22,979 --> 00:05:31,419
+And after that we can reuse this implementation,
+
+60
+00:05:31,419 --> 00:05:35,680
+to define the type for databases,
+
+61
+00:05:35,680 --> 00:05:39,820
+as an instantiation of binary search trees,
+
+62
+00:05:39,820 --> 00:05:48,509
+where the type for the value on each node
+is a contact.
+
+63
+00:05:48,509 --> 00:05:57,800
+The syntax to declare a paramaterized type
+has the following form:
+
+64
+00:05:57,800 --> 00:06:01,590
+You first write the type keyword
+
+65
+00:06:01,590 --> 00:06:04,600
+and then between parenthesis
+
+66
+00:06:04,600 --> 00:06:07,710
+and separated by commas,
+
+67
+00:06:07,710 --> 00:06:10,410
+you write the type parameters
+
+68
+00:06:10,410 --> 00:06:15,000
+that you want to introduce in your type definition.
+
+69
+00:06:15,000 --> 00:06:18,169
+After that, as usual,
+
+70
+00:06:18,169 --> 00:06:22,509
+you write the type identifier you want to
+introduce,
+
+71
+00:06:22,509 --> 00:06:26,320
+an equal sign, and the type definition.
+
+72
+00:06:26,320 --> 00:06:33,800
+The type variables <u>'a1</u>...<u> 'aN</u>
+
+73
+00:06:33,800 --> 00:06:36,770
+represent unknown types
+
+74
+00:06:36,770 --> 00:06:43,180
+which are the type parameters
+of your data structure
+
+75
+00:06:43,180 --> 00:06:47,300
+so they can appear
+in the definition of the type.
+
+76
+00:06:47,300 --> 00:06:54,550
+Now, if you want to use a specific instantiation,
+
+77
+00:06:54,550 --> 00:07:03,700
+a specific case of your parameterized type
+for some values of the type parameters.
+
+78
+00:07:03,710 --> 00:07:08,729
+You just have to write between parentheses
+
+79
+00:07:08,729 --> 00:07:13,960
+the values of the type you want to assign to
+each type parameters
+
+80
+00:07:13,960 --> 00:07:16,509
+separated by commas
+
+81
+00:07:16,509 --> 00:07:20,400
+and after that the name of the type identifier
+
+82
+00:07:20,400 --> 00:07:23,930
+of your parameterized type.
+
+83
+00:07:23,930 --> 00:07:26,750
+Now what kind of programming errors
+you can do
+
+84
+00:07:26,750 --> 00:07:30,400
+when you use or define parameterized types?
+
+85
+00:07:30,400 --> 00:07:33,240
+The first thing you can do
+
+86
+00:07:33,240 --> 00:07:41,690
+is to not respect the arity of the type constructor.
+
+87
+00:07:41,690 --> 00:07:46,860
+And also you can, well,
+
+88
+00:07:46,860 --> 00:07:51,349
+use unbound type variables in your definition.
+
+89
+00:07:52,300 --> 00:07:57,639
+So, imagine that we have a type
+
+90
+00:07:57,639 --> 00:08:04,110
+parameterized by two parameters
+like this one
+
+91
+00:08:04,110 --> 00:08:08,169
+and we instantiate it by passing three types
+
+92
+00:08:08,169 --> 00:08:10,910
+to this type constructor.
+
+93
+00:08:10,910 --> 00:08:12,599
+Then we get an error
+
+94
+00:08:12,599 --> 00:08:14,660
+because of course the type constructor
+
+95
+00:08:14,660 --> 00:08:18,990
+is expecting two arguments and not three.
+
+96
+00:08:20,200 --> 00:08:22,900
+So, of course you have to be careful
+
+97
+00:08:22,900 --> 00:08:26,770
+not to use type parameters, type variables,
+
+98
+00:08:26,770 --> 00:08:31,720
+that you don't have declared as a type parameter.
+
+99
+00:08:31,720 --> 00:08:32,519
+So here,
+
+100
+00:08:32,519 --> 00:08:34,610
+<u>'b</u> has not been declared
+
+101
+00:08:34,610 --> 00:08:41,049
+and of course the type checker is unhappy.
+

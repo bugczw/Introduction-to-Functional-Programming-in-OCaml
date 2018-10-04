@@ -1,0 +1,656 @@
+1
+00:00:00,490 --> 00:00:01,420
+Re-bonjour !
+
+2
+00:00:01,420 --> 00:00:10,919
+Cette séquence porte sur la construction
+et l'observation des n-uplets.
+
+3
+00:00:10,919 --> 00:00:15,709
+Certaines valeurs sont naturellement faites
+de plusieurs autres valeurs.
+
+4
+00:00:15,709 --> 00:00:20,949
+Par exemple, si on veut représenter un individu,
+
+5
+00:00:20,949 --> 00:00:27,779
+il est composé d'un nom, d'un prénom,
+et d'un numéro de sécurité sociale.
+
+6
+00:00:27,779 --> 00:00:31,869
+Pour représenter un point en deux dimensions,
+
+7
+00:00:31,869 --> 00:00:35,570
+on a besoin d'une abscisse et d'une ordonnée.
+
+8
+00:00:35,570 --> 00:00:41,170
+Comment pouvons-nous construire et observer
+ce genre de valeurs dans OCaml?
+
+9
+00:00:43,260 --> 00:00:49,800
+On va définir en OCaml l'origine du plan
+comme un point à deux dimensions.
+
+10
+00:00:49,800 --> 00:00:57,540
+Pour représenter un point à deux dimensions,
+nous avons besoin d'un n-uplet, et ici les
+
+11
+00:00:57,540 --> 00:01:02,780
+deux composantes du n-uplet sont égales à 0.
+
+12
+00:01:02,780 --> 00:01:04,649
+Cela s'écrit comme ça :
+
+13
+00:01:04,649 --> 00:01:08,560
+on ouvre d'abord une parenthèse, suivie de 0,
+
+14
+00:01:08,560 --> 00:01:11,899
+une virgule pour séparer les composantes
+du n-uplet,
+
+15
+00:01:11,899 --> 00:01:15,280
+juste après, la deuxième composante du n-uplet,
+et enfin
+
+16
+00:01:15,280 --> 00:01:20,820
+on ferme la parenthèse ouverte.
+
+17
+00:01:20,820 --> 00:01:26,530
+Vous pouvez remarquer que le toplevel déduit
+le type de cette expression, soit :
+
+18
+00:01:26,530 --> 00:01:29,270
+un n-uplet de taille deux -- un couple.
+
+19
+00:01:29,270 --> 00:01:34,390
+Le premier élément est de type <u>int</u>, et
+le deuxième élément est de type <u>int</u>.
+
+20
+00:01:34,390 --> 00:01:40,979
+Et bien sûr, on peut faire cela pour plein
+d'entiers de valeurs différentes.
+
+22
+00:01:41,829 --> 00:01:48,511
+Le même exemple peut s'écrire en introduisant
+
+23
+00:01:48,520 --> 00:01:55,299
+préalablement un identificateur de type pour
+représenter le type des points bidimensionnels.
+
+24
+00:01:55,299 --> 00:01:58,880
+Nous allons donc utiliser ce que nous avons
+appris dans la séquence précédente
+
+25
+00:01:58,880 --> 00:02:03,789
+en introduisant un identificateur <u>point2D</u>.
+
+26
+00:02:03,789 --> 00:02:06,520
+Et <u>point2D</u> peut être utilisé pour
+
+27
+00:02:06,520 --> 00:02:16,580
+contraindre le type de l'identificateur de
+l'origine à être de type <u>point2D</u>.
+
+28
+00:02:20,360 --> 00:02:22,280
+Maintenant que nous avons vu plusieurs exemples,
+
+29
+00:02:22,290 --> 00:02:26,720
+Passons en revue les règles générales de syntaxe.
+
+30
+00:02:26,720 --> 00:02:28,640
+Au niveau des types,
+
+31
+00:02:28,650 --> 00:02:33,400
+on peut composer deux types pour former un
+type de n-uplets
+
+32
+00:02:33,400 --> 00:02:37,320
+en utilisant l'opérateur <u>*</u>.
+
+33
+00:02:37,320 --> 00:02:39,800
+Au niveau des expressions,
+
+34
+00:02:39,810 --> 00:02:42,850
+si on veut construire un n-uplet,
+
+35
+00:02:42,850 --> 00:02:45,850
+on doit juste séparer les expressions
+
+36
+00:02:45,850 --> 00:02:51,640
+--- qui construisent les différentes composantes
+de ce n-uplet ---
+
+37
+00:02:51,640 --> 00:02:54,030
+par des virgules.
+
+38
+00:02:54,030 --> 00:02:56,850
+Nous savons donc comment construire un n-uplet.
+
+39
+00:02:56,850 --> 00:02:58,810
+Mais comment pouvons-nous l'observer?
+
+40
+00:02:58,810 --> 00:03:02,270
+L'observation d'un n-uplet,
+
+41
+00:03:02,270 --> 00:03:07,230
+-- et en fait, de toutes les données structurées
+en OCaml --
+
+42
+00:03:07,230 --> 00:03:08,350
+est basée sur le <i>filtrage (pattern-matching)</i>.
+
+43
+00:03:08,350 --> 00:03:15,750
+Un motif de filtrage décrit comment les
+valeurs sont observées par le programme.
+
+44
+00:03:15,750 --> 00:03:23,930
+Les motifs apparaissent dans les liaisons <u>let</u>
+et les arguments des fonctions.
+
+45
+00:03:23,930 --> 00:03:30,230
+En fait, nous avons déjà vu
+la forme la plus simple d'un motif :
+
+46
+00:03:30,230 --> 00:03:32,560
+les identificateurs.
+
+47
+00:03:32,560 --> 00:03:39,480
+Lorsqu'on a une expression de la forme:
+<u>let x = 6 * 3</u>
+
+48
+00:03:39,480 --> 00:03:42,130
+on peut le lire ainsi :
+
+49
+00:03:42,130 --> 00:03:53,120
+"J'observe la valeur de l'expression <u>6 * 3</u>
+en la nommant <u>x</u>"
+
+51
+00:03:53,120 --> 00:03:56,900
+Il y a une autre forme de motif
+qui est très simple, et
+
+52
+00:03:56,900 --> 00:04:01,560
+qui est utilisée pour dire que l'on veut juste
+ignorer certains composants.
+
+53
+00:04:01,560 --> 00:04:08,090
+C'est appelé un «joker» et cela s'écrit
+en utilisant le caractère de soulignement.
+
+54
+00:04:08,090 --> 00:04:10,850
+Ainsi, lorsqu'on a l'expression suivante,
+
+55
+00:04:10,850 --> 00:04:17,280
+on peut la lire :
+"j'ignore la valeur de <u>6 * 3</u>".
+
+56
+00:04:17,280 --> 00:04:23,219
+Afin d'observer
+les différents composants d'un n-uplet,
+
+57
+00:04:23,219 --> 00:04:31,749
+il faut composer les motifs de ces composants
+en les séparant par des virgules.
+
+58
+00:04:31,749 --> 00:04:36,300
+Par exemple, l'expression suivante est lue comme:
+
+59
+00:04:36,300 --> 00:04:45,990
+"J'observe la première composante de
+ce n-uplet en la nommant <u>x</u>, et"
+
+60
+00:04:45,990 --> 00:04:50,819
+"j'ignore la deuxième composante de ce n-uplet."
+
+62
+00:04:52,449 --> 00:04:56,240
+Définissons un n-uplet
+
+63
+00:04:56,240 --> 00:04:59,740
+qui est un couple de deux entiers.
+
+64
+00:04:59,740 --> 00:05:07,259
+Si je veux
+nommer le premier composant de ce couple, et
+
+66
+00:05:07,259 --> 00:05:09,939
+ignorer le deuxième,
+
+67
+00:05:09,939 --> 00:05:12,389
+j'utilise juste le motif qui
+
+68
+00:05:12,389 --> 00:05:20,749
+débute par un identificateur et
+qui est suivi par un joker.
+
+69
+00:05:20,749 --> 00:05:27,680
+On voit que le toplevel a
+nommé seulement le premier composant <u>x</u>
+
+70
+00:05:27,680 --> 00:05:31,779
+--- qui est bien égal à <u>18</u> ---
+
+71
+00:05:31,779 --> 00:05:40,340
+Ce motif peut également être utilisé
+comme argument d'une fonction.
+
+72
+00:05:40,340 --> 00:05:42,099
+---simplement comme ça---
+
+73
+00:05:42,099 --> 00:05:50,279
+Voici une fonction générale qui renvoie toujours
+la première composante d'un couple quelconque.
+
+74
+00:05:50,279 --> 00:05:56,449
+La deuxième fonction renvoie
+la seconde composante d'un couple quelconque.
+
+76
+00:05:57,509 --> 00:06:03,539
+Passons en revue
+la syntaxe générale des motifs pour les n-uplets.
+
+77
+00:06:03,539 --> 00:06:07,259
+On doit juste écrire un motif
+pour chaque composante,
+
+78
+00:06:07,259 --> 00:06:11,289
+et les séparer par des virgules.
+
+79
+00:06:11,289 --> 00:06:12,779
+La seule contrainte est :
+
+80
+00:06:12,779 --> 00:06:15,749
+le nombre de sous-motifs doit être égal
+
+81
+00:06:15,749 --> 00:06:22,540
+au nombre de composants du n-uplet
+que l'on filtre.
+
+82
+00:06:22,540 --> 00:06:32,620
+Aussi, on doit s'assurer qu'un identificateur
+est utilisé une seule fois dans un motif.
+
+83
+00:06:32,620 --> 00:06:38,479
+Dans la machine, un n-uplet est représenté
+par un bloc alloué sur le tas.
+
+84
+00:06:38,479 --> 00:06:47,559
+Cela signifie que vous avez un bloc dans la
+mémoire avec plusieurs cellules à l'intérieur, et
+
+85
+00:06:47,559 --> 00:06:50,569
+il y a une cellule par composant.
+
+86
+00:06:50,569 --> 00:06:55,889
+Par exemple, si on a un n-uplet <u>p</u>
+contenant <u>1</u>, <u>2</u> et <u>3</u>,
+
+87
+00:06:55,889 --> 00:06:59,699
+alors on a un bloc avec trois cellules.
+
+88
+00:06:59,699 --> 00:07:01,089
+Le premier contient <u>1</u>,
+
+89
+00:07:01,089 --> 00:07:03,229
+le second contient <u>2</u>, et
+
+90
+00:07:03,229 --> 00:07:05,999
+le troisième contient <u>3</u>.
+
+91
+00:07:05,999 --> 00:07:13,879
+Maintenant, si vous avez un identificateur <u>p</u>,
+
+92
+00:07:13,879 --> 00:07:17,279
+qui représente la valeur d'un n-uplet,
+
+93
+00:07:17,279 --> 00:07:22,449
+en interne il est représenté comme un pointeur
+vers la mémoire.
+
+94
+00:07:22,449 --> 00:07:30,150
+Ensuite, si on définit par exemple <u>q</u>,
+dont la première composante est <u>p</u>,
+
+95
+00:07:30,150 --> 00:07:34,749
+cela signifie que, dans la mémoire, la première
+cellule de ce couple
+
+96
+00:07:34,749 --> 00:07:42,719
+est un pointeur sur le premier bloc.
+
+97
+00:07:42,719 --> 00:07:46,789
+Les pointeurs peuvent être partagés.
+
+98
+00:07:46,789 --> 00:07:53,789
+Cela signifie que si on remplace
+le <u>0</u> en seconde composante de <u>q</u> par <u>p</u>,
+
+99
+00:07:53,789 --> 00:07:57,680
+on aura deux pointeurs dans ce couple, avec
+
+100
+00:07:57,680 --> 00:08:04,129
+le second qui pointe vers le même bloc
+que le premier.
+
+101
+00:08:04,129 --> 00:08:08,759
+Parlons maintenant des égalités.
+
+102
+00:08:08,759 --> 00:08:13,119
+En fait en OCaml, il y a deux sortes d'égalités.
+
+103
+00:08:13,119 --> 00:08:20,539
+La première est structurelle, c'est celle que
+vous avez déjà vue les semaines précédentes.
+
+104
+00:08:20,540 --> 00:08:28,060
+Deux valeurs sont structurellement égales
+si elles ont le même contenu.
+
+105
+00:08:28,060 --> 00:08:36,780
+L'opérateur <u>==</u> calcule
+ce qu'on appelle l'égalité physique.
+
+106
+00:08:36,789 --> 00:08:46,220
+Deux valeurs sont physiquement égales si elles
+sont stockées au même endroit dans la mémoire.
+
+107
+00:08:46,220 --> 00:08:51,500
+Cela veut dire que les deux pointeurs sont égaux.
+
+109
+00:08:53,130 --> 00:09:03,750
+Définissons deux couples <u>x</u> et <u>y</u>, et
+
+110
+00:09:03,750 --> 00:09:08,500
+un identifiant <u>z</u> qui est égal à <u>x</u>.
+
+111
+00:09:08,500 --> 00:09:12,329
+Qu'est-ce que cela nous donne ?
+
+112
+00:09:12,329 --> 00:09:15,079
+La première chose à remarquer est :
+
+113
+00:09:15,079 --> 00:09:18,649
+si on compare le contenu des deux couples,
+
+114
+00:09:18,649 --> 00:09:21,470
+ils sont égaux.
+
+115
+00:09:21,470 --> 00:09:30,880
+Maintenant, si on utilise l'égalité physique
+pour comparer les deux couples <u>x</u> et <u>y</u>.
+
+116
+00:09:30,880 --> 00:09:33,670
+Alors ils ne sont pas égaux,
+
+117
+00:09:33,670 --> 00:09:38,560
+parce que nous avons alloué deux blocs
+différents en mémoire,
+
+118
+00:09:38,560 --> 00:09:45,000
+donc les adresses de ces deux blocs sont
+différentes.
+
+119
+00:09:45,000 --> 00:09:56,120
+Lorsqu'on a écrit que <u>z</u> est égal à <u>x</u>, on a
+en fait partagé les mêmes pointeurs.
+
+120
+00:09:56,130 --> 00:10:03,449
+La valeur attribuée à l'identificateur <u>z</u>,
+est le même pointeur que celui qu'on a pour <u>x</u>.
+
+121
+00:10:03,449 --> 00:10:08,040
+Donc, <u>x</u> est physiquement égal à <u>z</u>.
+
+123
+00:10:09,339 --> 00:10:14,920
+Maintenant, quel genre d'erreur de programmation
+peut-on faire quand on écrit des motifs.
+
+124
+00:10:14,920 --> 00:10:21,440
+La première est d'utiliser
+trop ou pas assez de sous-motifs
+
+125
+00:10:21,440 --> 00:10:28,269
+par rappport au nombre de composants
+du n-uplet en cours d'analyse.
+
+126
+00:10:28,269 --> 00:10:35,920
+Comme dit auparavant, on ne peut utiliser plusieurs
+fois le même identificateur dans un motif.
+
+127
+00:10:35,920 --> 00:10:41,089
+Ceci est appelé un motif non linéaire.
+
+128
+00:10:41,089 --> 00:10:45,870
+Ce qui est bien est que le compilateur
+repère ce genre d'erreur pour nous,
+
+129
+00:10:45,870 --> 00:10:47,740
+au moment de la compilation.
+
+130
+00:10:47,740 --> 00:10:51,870
+Donc, on a la garantie qu'au cours de l'exécution,
+
+131
+00:10:51,870 --> 00:10:57,290
+le programme n'aura pas ce genre de
+problèmes.
+
+133
+00:10:59,329 --> 00:11:05,769
+Donc, si on a écrit un motif,
+qui attend deux composants, et
+
+134
+00:11:05,769 --> 00:11:13,250
+que l'on essaye d'observer un n-uplet avec
+trois composants, alors
+
+135
+00:11:13,250 --> 00:11:22,580
+bien entendu il n'est pas valide, et
+le compilateur va être capable de nous avertir :
+
+136
+00:11:22,580 --> 00:11:30,180
+« Les deux types, du motif et
+de l'expression, sont incompatibles »
+
+137
+00:11:30,180 --> 00:11:35,480
+Vous ne pouvez pas nommer deux composants avec
+le même nom
+
+138
+00:11:35,480 --> 00:11:36,779
+parce que cela n'a pas de sens.
+
+139
+00:11:36,779 --> 00:11:40,550
+encore une fois, le compilateur est en mesure
+de détecter ce
+
+140
+00:11:40,550 --> 00:11:45,430
+genre d'erreurs et de produire une erreur de type.
+
+142
+00:11:46,959 --> 00:11:49,819
+Il y a un autre genre d'erreur de programmation
+
+143
+00:11:49,819 --> 00:11:54,500
+que l'on peut faire lorsqu'on utilise les
+motifs de n-uplet.
+
+144
+00:11:54,500 --> 00:11:59,019
+Et ce genre d'erreur ne peut être décelé
+par le compilateur
+
+145
+00:11:59,019 --> 00:12:04,149
+parce que c'est un problème plus sémantique.
+
+146
+00:12:04,149 --> 00:12:09,420
+En effet utiliser un indice dans une définition
+peut être source d'erreurs.
+
+148
+00:12:11,769 --> 00:12:18,769
+La définition suivante de l'abscisse est
+bien typée, et
+
+149
+00:12:18,769 --> 00:12:23,920
+cette définition de l'ordonnée est également bien
+typée.
+
+150
+00:12:23,920 --> 00:12:27,800
+Sauf qu'il y a une erreur,
+--- une erreur sémantique --'
+
+151
+00:12:27,800 --> 00:12:33,839
+parce que l'abscisse devrait être ici <u>x</u> et
+
+152
+00:12:33,839 --> 00:12:36,050
+l'ordonnée devrait être là <u>y</u>.
+
+153
+00:12:36,050 --> 00:12:42,800
+Mais le compilateur est incapable de comprendre
+que vous avez fait ce genre d'erreur.
+
+155
+00:12:44,399 --> 00:12:47,620
+Heureusement, nous verrons qu'une
+autre sorte de types
+
+156
+00:12:47,620 --> 00:12:51,940
+nous aidera à éviter ce genre de
+problème sémantique.

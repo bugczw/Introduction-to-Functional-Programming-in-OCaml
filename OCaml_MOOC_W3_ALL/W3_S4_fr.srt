@@ -1,0 +1,443 @@
+1
+00:00:00,470 --> 00:00:02,480
+Re-bonjour.
+
+2
+00:00:02,480 --> 00:00:07,769
+Nous avons vu le constructeur de type [list],
+
+3
+00:00:07,769 --> 00:00:14,070
+qui est paramétré par le type des
+éléments de la liste.
+
+4
+00:00:14,070 --> 00:00:17,390
+En fait, c'est très pertinent,
+
+5
+00:00:17,390 --> 00:00:25,000
+parce que beaucoup de fonctions sur les listes
+ne dépendent pas du type d'éléments.
+
+6
+00:00:25,039 --> 00:00:34,300
+Et en effet, si vous regardez le module [list],
+il ne contient que des fonctions polymorphes.
+
+7
+00:00:34,340 --> 00:00:44,200
+Donc, cela signifie que les fonctions
+comme la longueur ou le renversement et ainsi de suite,
+
+8
+00:00:44,240 --> 00:00:48,140
+sont écrites une fois pour toutes.
+
+9
+00:00:48,140 --> 00:00:51,840
+Cela maximise la réutilisation de code :
+
+10
+00:00:51,840 --> 00:00:57,890
+pas besoin de reprogrammer
+la fonction longueur d'une liste,
+
+11
+00:00:57,890 --> 00:01:03,210
+pour chaque type possible d'élément de la liste.
+
+12
+00:01:03,210 --> 00:01:10,900
+Donc, cela fait gagner beaucoup de temps,
+et augmente notre productivité.
+
+13
+00:01:10,900 --> 00:01:19,170
+En fait, le programmeur peut définir son propre
+types paramétré
+
+14
+00:01:19,170 --> 00:01:24,800
+et c'est le sujet de cette séquence.
+
+15
+00:01:24,800 --> 00:01:31,200
+Voici un exemple d'un type paramétré
+avec un seul paramètre.
+
+16
+00:01:31,240 --> 00:01:36,500
+Et une valeur de ce type
+représente une valeur qui est facultative.
+
+17
+00:01:36,540 --> 00:01:42,049
+Lorsqu'on ne veut pas donner
+de valeur de type alpha,
+
+18
+00:01:42,049 --> 00:01:45,580
+on peut utiliser le constructeur [None].
+
+19
+00:01:45,580 --> 00:01:48,310
+Et lorsqu'on veut fournir cette valeur,
+
+20
+00:01:48,310 --> 00:01:52,220
+on peut utiliser le constructeur [Some].
+
+21
+00:01:52,220 --> 00:01:59,700
+Ce type est très utile en programmation,
+de sorte qu'il est prédéfini en OCaml.
+
+22
+00:01:59,799 --> 00:02:04,820
+Comme on peut le voir, on peut appliquer [Some],
+
+23
+00:02:04,820 --> 00:02:08,310
+et le vérificateur de type OCaml peut inférer
+
+24
+00:02:08,310 --> 00:02:16,420
+que comme on l'applique à [42],
+['a] est égal à [int].
+
+25
+00:02:16,420 --> 00:02:18,220
+Mais lorsqu'on utilise [None],
+
+26
+00:02:18,220 --> 00:02:21,590
+en fait, cette valeur est polymorphe,
+
+27
+00:02:21,590 --> 00:02:29,650
+elle a le type qu'on veut pour ['a].
+
+28
+00:02:29,650 --> 00:02:34,069
+Maintenant, voici un autre type paramétré
+
+29
+00:02:34,069 --> 00:02:38,780
+et cette fois-ci il a deux paramètres,
+['a] et ['b].
+
+30
+00:02:38,780 --> 00:02:49,300
+Et il représente un moyen très courant
+de prendre l'union de deux types arbitraires.
+
+31
+00:02:49,370 --> 00:02:51,250
+Nous avons deux constructeurs de données :
+
+32
+00:02:51,250 --> 00:02:56,330
+le constructeur d'abord de données [Left] représente
+une valeur du premier type
+
+33
+00:02:56,330 --> 00:03:03,489
+et le constructeur de données [Right] représente
+une valeur du second type.
+
+34
+00:03:03,489 --> 00:03:14,129
+Imaginez qu'on ait défini un type pour les carrés,
+un autre pour les cercles
+
+35
+00:03:14,129 --> 00:03:20,410
+alors on peut réunir ces deux types dans un
+seul type pour des formes
+
+36
+00:03:20,410 --> 00:03:24,340
+qui peuvent être un carré ou un cercle.
+
+37
+00:03:24,340 --> 00:03:36,819
+Si je veux générer une forme qui est un carré
+j'utilise [Left]
+
+38
+00:03:36,819 --> 00:03:46,269
+et si je veux générer une autre forme qui
+est un cercle j'utilise [Right].
+
+39
+00:03:46,269 --> 00:03:47,660
+Voici un autre exemple.
+
+40
+00:03:47,660 --> 00:03:52,660
+Si on veut définir un type
+pour les arbres binaires de recherche
+
+41
+00:03:52,660 --> 00:04:00,700
+il sera paramétré par
+le type des valeurs
+
+42
+00:04:00,709 --> 00:04:06,010
+qui sont mises sur chaque nœud de l'arbre.
+
+43
+00:04:06,010 --> 00:04:09,000
+Encore une fois, nous avons deux cas :
+
+44
+00:04:09,000 --> 00:04:12,550
+un cas pour un arbre vide
+
+45
+00:04:12,550 --> 00:04:24,050
+et un cas pour un nœud binaire
+dans l'arbre binaire.
+
+46
+00:04:24,050 --> 00:04:27,790
+Il est facile d'écrire une fonction d'insertion.
+
+47
+00:04:27,790 --> 00:04:32,900
+En fait, nous l'avons déjà fait,
+lorsque nous avons mis en place une base de données
+
+48
+00:04:32,900 --> 00:04:37,720
+basée sur une représentation arborescente.
+
+49
+00:04:37,720 --> 00:04:41,250
+Mais cette fois, il n'y a pas le bruit
+
+50
+00:04:41,250 --> 00:04:46,880
+qu'on avait sur comment s'occuper d'un contact
+de la base de données, et ainsi de suite.
+
+51
+00:04:46,880 --> 00:04:49,930
+Ce que nous avons ici est un code générique
+
+52
+00:04:49,930 --> 00:04:57,419
+qui va travailler pour un arbre de recherche binaire.
+
+53
+00:04:57,419 --> 00:05:01,520
+Et comme il n'y a pas de bruit à propos de l'application
+
+54
+00:05:01,520 --> 00:05:03,400
+qui est de réaliser la base de données
+
+55
+00:05:03,400 --> 00:05:09,870
+nous pouvons nous concentrer sur la mise en œuvre
+de la structure de données :
+
+56
+00:05:09,870 --> 00:05:11,940
+un arbre de recherche binaire.
+
+57
+00:05:11,940 --> 00:05:18,440
+Ainsi nous avons pu réaliser
+la fonction [delete].
+
+58
+00:05:18,440 --> 00:05:22,979
+Je ne vais pas entrer dans les détails
+de cette fonction.
+
+59
+00:05:22,979 --> 00:05:31,419
+après cela, nous pouvons réutiliser cette mise en œuvre,
+
+60
+00:05:31,419 --> 00:05:35,680
+pour définir le type de bases de données,
+
+61
+00:05:35,680 --> 00:05:39,820
+comme une instanciation des
+arbres binaires de recherche,
+
+62
+00:05:39,820 --> 00:05:48,509
+où le type de la valeur de chaque nœud
+est un contact.
+
+63
+00:05:48,509 --> 00:05:57,800
+La syntaxe pour déclarer un type paramétré
+a la forme suivante :
+
+64
+00:05:57,800 --> 00:06:01,590
+On écrit d'abord le mot-clé [type]
+
+65
+00:06:01,590 --> 00:06:04,600
+puis entre parenthèses
+
+66
+00:06:04,600 --> 00:06:07,710
+et séparés par des virgules,
+
+67
+00:06:07,710 --> 00:06:10,410
+on écrit les paramètres de type
+
+68
+00:06:10,410 --> 00:06:15,000
+que l'on veut introduire dans la définition de type.
+
+69
+00:06:15,000 --> 00:06:18,169
+Après cela, comme d'habitude,
+
+70
+00:06:18,169 --> 00:06:22,509
+on écrit l'identificateur du type que l'on souhaite
+introduire,
+
+71
+00:06:22,509 --> 00:06:26,320
+un signe [=], et la définition du type.
+
+72
+00:06:26,320 --> 00:06:33,800
+Les variables de type ['a1] ... ['aN]
+
+73
+00:06:33,800 --> 00:06:36,770
+représentent des types inconnus
+
+74
+00:06:36,770 --> 00:06:43,180
+qui sont les paramètres de type
+de notre structure de données
+
+75
+00:06:43,180 --> 00:06:47,300
+de sorte qu'ils peuvent apparaître
+dans la définition du type.
+
+76
+00:06:47,300 --> 00:06:54,550
+Maintenant, si l'on veut utiliser une
+instanciation spécifique,
+
+77
+00:06:54,550 --> 00:07:03,700
+un cas spécifique de notre type paramétré
+pour certaines valeurs des paramètres de type,
+
+78
+00:07:03,710 --> 00:07:08,729
+on doit juste écrire entre parenthèses
+
+79
+00:07:08,729 --> 00:07:13,960
+les valeurs du type que l'on souhaite attribuer à
+chacun des paramètres de type
+
+80
+00:07:13,960 --> 00:07:16,509
+séparées par des virgules
+
+81
+00:07:16,509 --> 00:07:20,400
+et après cela le nom de l'identificateur de type
+
+82
+00:07:20,400 --> 00:07:23,930
+de notre type paramétré.
+
+83
+00:07:23,930 --> 00:07:26,750
+Maintenant, quel genre d'erreurs de programmation
+peut-on faire
+
+84
+00:07:26,750 --> 00:07:30,400
+lorsqu'on utilise ou lorsqu'on définit des types paramétrés ?
+
+85
+00:07:30,400 --> 00:07:33,240
+La première chose que l'on peut faire
+
+86
+00:07:33,240 --> 00:07:41,690
+est de ne pas respecter l'arité du constructeur de type.
+
+87
+00:07:41,690 --> 00:07:46,860
+Et aussi, on peut, eh bien,
+
+88
+00:07:46,860 --> 00:07:51,349
+utiliser dans une définition des variables de type
+non liées.
+
+89
+00:07:52,300 --> 00:07:57,639
+Alors, imaginez que nous ayons un type
+
+90
+00:07:57,639 --> 00:08:04,110
+paramétré par deux paramètres comme celui-ci
+
+91
+00:08:04,110 --> 00:08:08,169
+et que nous l'instancions en passant trois types
+
+92
+00:08:08,169 --> 00:08:10,910
+au constructeur de type.
+
+93
+00:08:10,910 --> 00:08:12,599
+Alors nous obtenons une erreur
+
+94
+00:08:12,599 --> 00:08:14,660
+parce que bien sûr le constructeur de type
+
+95
+00:08:14,660 --> 00:08:18,990
+attend deux arguments et non pas trois.
+
+96
+00:08:20,200 --> 00:08:22,900
+Bien sûr, vous devez aussi faire attention à
+
+97
+00:08:22,900 --> 00:08:26,770
+ne pas utiliser de paramètres de type,
+ou de variables de type,
+
+98
+00:08:26,770 --> 00:08:31,720
+que vous n'avez pas déclarés comme paramètre de type.
+
+99
+00:08:31,720 --> 00:08:32,519
+Ainsi ici,
+
+100
+00:08:32,519 --> 00:08:34,610
+['b] n'a pas été déclaré
+
+101
+00:08:34,610 --> 00:08:41,049
+et bien sûr le vérificateur de type n'est pas content.

@@ -1,0 +1,547 @@
+1
+00:00:00,080 --> 00:00:01,080
+Re-bonjour !
+
+2
+00:00:01,080 --> 00:00:04,259
+Dans la séquence précédente, nous avons vu que
+
+3
+00:00:04,259 --> 00:00:10,830
+le rôle de chaque composant d'un n-uplet
+est déterminé par sa position.
+
+4
+00:00:10,830 --> 00:00:18,890
+Mais nous avons vu aussi qu'il est facile d'utiliser
+un indice incorrect.
+
+5
+00:00:18,890 --> 00:00:23,849
+Peut-être que si nous pouvions nommer chaque composant,
+
+6
+00:00:23,849 --> 00:00:28,200
+cela nous aiderait à éviter ce genre
+d'erreurs de programmation.
+
+7
+00:00:30,800 --> 00:00:42,780
+Pour cela, on peut définir un type enregistrement avec
+des accolades et une liste de déclarations de champs.
+
+8
+00:00:42,780 --> 00:00:49,060
+Ici, je définis un champ nommé <u>x</u> de type <u>int</u>,
+
+9
+00:00:49,060 --> 00:00:56,740
+et un autre champ <u>y</u> de type <u>int</u>.
+
+10
+00:00:56,740 --> 00:01:00,410
+Cette définition de type est acceptée par
+le compilateur.
+
+11
+00:01:00,410 --> 00:01:02,890
+Et maintenant, si je veux représenter le point origine,
+
+12
+00:01:02,890 --> 00:01:11,050
+J'utilise des accolades, puis je dois donner
+la valeur pour chaque champ.
+
+13
+00:01:11,050 --> 00:01:17,150
+Ici, je dis que <u>x</u> est égal à <u>0</u>, et
+que <u>y</u> est égal à <u>0</u>.
+
+14
+00:01:17,150 --> 00:01:20,430
+Et OCaml est en mesure de conclure que
+
+15
+00:01:20,430 --> 00:01:25,760
+cette définition d'enregistrement a en fait
+le type <u>point2d</u>.
+
+16
+00:01:27,800 --> 00:01:33,400
+Il est facile de définir une fonction de conversion
+de <u>pair</u> vers <u>point2d</u>.
+
+17
+00:01:33,400 --> 00:01:39,750
+Mais ici, on peut remarquer qu'au lieu d'écrire
+que <u>x</u> est égal à <u>x</u>,
+
+18
+00:01:39,750 --> 00:01:43,340
+on peut simplement écrire <u>x</u>.
+
+19
+00:01:43,340 --> 00:01:53,700
+On peut utiliser une définition plus courte
+pour les champs.
+
+20
+00:01:55,760 --> 00:01:59,220
+Ainsi, je peux définir deux points.
+
+21
+00:01:59,220 --> 00:02:05,520
+Et maintenant un autre type d'enregistrement
+pour une <u>box</u>,
+
+22
+00:02:05,520 --> 00:02:11,220
+qui utilise ma définition de type enregistrement
+pour <u>point</u>.
+
+23
+00:02:11,220 --> 00:02:12,200
+Voilà.
+
+24
+00:02:15,459 --> 00:02:20,660
+C'est accepté par OCaml sans difficulté.
+
+25
+00:02:20,660 --> 00:02:22,790
+Et je peux définir un <u>box</u>, dans lequel
+
+26
+00:02:22,790 --> 00:02:26,600
+le coin supérieur gauche
+est égal à mon premier point <u>a</u>
+
+27
+00:02:26,600 --> 00:02:29,200
+et le coin inférieur droit
+égal à <u>b</u>.
+
+28
+00:02:33,510 --> 00:02:39,600
+Enfin, imaginons que l'on veuille
+l'abscisse minimale
+
+29
+00:02:39,600 --> 00:02:42,840
+des deux points de ma boîte.
+
+30
+00:02:42,840 --> 00:02:49,280
+On va la trouver dans
+le coin supérieur gauche de la boîte.
+
+31
+00:02:49,280 --> 00:02:54,690
+Donc ici, j'écris un motif, qui va observer
+
+32
+00:02:54,690 --> 00:02:58,810
+la valeur de ce coin supérieur gauche.
+
+33
+00:02:58,810 --> 00:03:03,300
+Et pour observer cette valeur,
+j'utilise un autre motif,
+
+34
+00:03:03,300 --> 00:03:10,340
+ce sera juste «x», le nom du champ <u>x</u>.
+
+35
+00:03:10,340 --> 00:03:14,450
+Et je veux juste
+renvoyer la valeur de ce champ.
+
+36
+00:03:14,450 --> 00:03:15,400
+Voilà.
+
+37
+00:03:17,000 --> 00:03:17,600
+Comme ça.
+
+38
+00:03:17,600 --> 00:03:24,600
+Cette définition est acceptée par OCaml,
+et elle a pour type <u>box -> int</u>.
+
+39
+00:03:27,170 --> 00:03:34,590
+Donc, après avoir vu plusieurs exemples de
+construction d'enregistrement et d'observation,
+
+40
+00:03:34,590 --> 00:03:39,629
+Passons en revue les règles générales
+d'utilisation.
+
+41
+00:03:39,629 --> 00:03:44,590
+La première chose est qu'en échange
+de ces contrôles supplémentaires
+
+42
+00:03:44,590 --> 00:03:50,860
+que le compilateur fait,
+on doit déclarer les types d'enregistrement.
+
+43
+00:03:50,860 --> 00:03:55,220
+Alors que ce n'est pas nécessaire
+lorsqu'on utilise les types n-uplet.
+
+44
+00:03:55,220 --> 00:04:00,800
+La syntaxe pour déclarer un type
+d'enregistrement est la suivante.
+
+45
+00:04:00,800 --> 00:04:06,209
+On utilise d'abord le mot-clé <u>type</u>.
+Ensuite, le nom de notre identifiant de type.
+
+46
+00:04:06,209 --> 00:04:12,349
+Et après cela, entre deux accolades <u>{ ... }</u>,
+on doit énumérer
+
+47
+00:04:12,349 --> 00:04:19,180
+les différents noms de champs,
+et les types de ces champs.
+
+48
+00:04:19,180 --> 00:04:27,159
+Une contrainte est que tous les noms de champs
+doivent être distincts.
+
+49
+00:04:27,159 --> 00:04:30,990
+Et aussi, il vaut mieux,
+et nous reviendrons sur ce point,
+
+50
+00:04:30,990 --> 00:04:40,189
+utiliser pour les champs des noms qui ne sont
+pas utilisés dans d'autres types d'enregistrement.
+
+51
+00:04:40,189 --> 00:04:44,650
+Maintenant, au niveau des expressions,
+on peut construire un enregistrement,
+
+52
+00:04:44,650 --> 00:04:47,200
+en utilisant, à nouveau, des accolades,
+
+53
+00:04:47,200 --> 00:04:54,319
+mais cette fois, il faudra définir chaque champ
+en utilisant le signe <u>=</u>.
+
+54
+00:04:54,319 --> 00:05:00,999
+À gauche de ce signe <u>=</u>,
+on aura le nom du champ
+
+55
+00:05:00,999 --> 00:05:08,169
+et à droite du signe <u>=</u>,
+on aura la définition de ce champ
+
+56
+00:05:08,169 --> 00:05:10,500
+au moyen d'une expression.
+
+57
+00:05:10,500 --> 00:05:15,279
+Maintenant, si on veut observer
+un champ particulier d'un enregistrement,
+
+58
+00:05:15,279 --> 00:05:17,169
+on peut utiliser une notation pointée.
+
+59
+00:05:17,169 --> 00:05:21,800
+Donc, on écrit l'expression qui s'évalue
+en un enregistrement, un point, et ensuite
+
+60
+00:05:21,800 --> 00:05:26,029
+le nom du champ que l'on veut observer.
+
+61
+00:05:26,029 --> 00:05:30,389
+Si on veut observer plusieurs champs
+d'un enregistrement,
+
+62
+00:05:30,389 --> 00:05:32,529
+on peut utiliser un motif d'enregistrement.
+
+63
+00:05:32,529 --> 00:05:39,819
+Et dans ce modèle d'enregistrement,
+
+64
+00:05:39,819 --> 00:05:43,270
+on énumère tous les champs que l'on veut observer,
+
+65
+00:05:43,270 --> 00:05:48,259
+et pour chaque champ, on doit spécifier,
+juste après le signe <u>=</u>,
+
+66
+00:05:48,259 --> 00:05:55,059
+le motif qui est utilisé pour
+observer ce champ particulier.
+
+67
+00:05:55,059 --> 00:05:59,199
+Ce qui est agréable est le fait qu'on
+n'est pas obligé d'énumérer
+
+68
+00:05:59,199 --> 00:06:02,520
+tous les champs de l'enregistrement
+que l'on analyse.
+
+69
+00:06:02,520 --> 00:06:07,550
+On doit juste indiquer
+les champs que l'on désire observer.
+
+70
+00:06:07,550 --> 00:06:14,990
+Dans la machine, un enregistrement est représenté
+par un bloc alloué sur le tas,
+
+71
+00:06:14,990 --> 00:06:17,960
+exactement comme un n-uplet.
+
+72
+00:06:17,960 --> 00:06:24,339
+Maintenant, quelles erreurs peut-on faire
+lorsqu'on manipule des enregistrements ?
+
+73
+00:06:24,339 --> 00:06:30,300
+La première est une faute de frappe dans
+le nom du champ que
+
+74
+00:06:30,300 --> 00:06:32,949
+l'on définit ou que l'on observe.
+
+75
+00:06:32,949 --> 00:06:39,000
+Dans ce cas, le compilateur est en mesure de
+la détecter, au moment de la compilation.
+
+77
+00:06:41,849 --> 00:06:47,259
+Ainsi, imaginez que vous ayez défini
+ce type de points 2D.
+
+78
+00:06:47,259 --> 00:06:55,599
+Si vous essayez de définir un point, mais que
+cette fois vous faites une faute de frappe.
+
+79
+00:06:55,599 --> 00:06:58,589
+en changeant <u>y</u> en <u>z</u>.
+
+80
+00:06:58,589 --> 00:07:00,179
+alors c'est invalide.
+
+81
+00:07:00,179 --> 00:07:04,199
+Et OCaml est capable de comprendre que
+ce nom de champ d'enregistrement
+
+82
+00:07:04,199 --> 00:07:10,000
+n'est dans aucun type d'enregistrement,
+il va donc rejeter cette définition.
+
+83
+00:07:12,349 --> 00:07:17,169
+Imaginez que vous ayez votre
+définition de point 2D,
+
+84
+00:07:17,169 --> 00:07:22,569
+et que vous ayez oublié de donner
+la valeur pour le champ <u>y</u>.
+
+85
+00:07:22,569 --> 00:07:29,319
+Cette fois OCaml est capable de
+vous signaler ce problème
+
+86
+00:07:29,319 --> 00:07:33,800
+en voyant que vous avez un champ manquant.
+
+87
+00:07:36,029 --> 00:07:39,449
+Un autre type d'erreur de programmation,
+qui est très courant, est :
+
+88
+00:07:39,449 --> 00:07:44,379
+lorsqu'on affecte une définition à un champ
+
+89
+00:07:44,379 --> 00:07:51,669
+avec une expression qui n'a pas le même type que
+le type qui a été déclaré pour ce champ.
+
+90
+00:07:51,669 --> 00:07:56,000
+Alors à nouveau, le compilateur
+sera capable de détecter ce genre d'erreur.
+
+91
+00:07:58,309 --> 00:08:01,400
+Donc, imaginez que vous ayez défini
+un type d'enregistrement pour une <u>personne</u>
+
+92
+00:08:01,449 --> 00:08:07,349
+dans lequel vous avez un <u>nom</u> de type <u>string</u>
+et un <u>age</u> de type <u>int</u>
+
+93
+00:08:07,349 --> 00:08:10,399
+bien sûr, cette définition d'enregistrement
+est fausse !
+
+94
+00:08:10,399 --> 00:08:15,699
+Parce que, pour <u>age</u>,
+on a utilisé un <u>string</u> au lieu d'un <u>int</u>.
+
+95
+00:08:15,699 --> 00:08:20,000
+Là encore, OCaml est capable de détecter l'erreur
+au cours de la vérification de types.
+
+96
+00:08:22,200 --> 00:08:27,659
+Pour finir, permettez-moi de revenir sur
+une remarque précédente à propos
+
+97
+00:08:27,659 --> 00:08:34,810
+du partage, ou non, des noms de champ
+entre plusieurs types d'enregistrement.
+
+98
+00:08:34,810 --> 00:08:37,030
+Dans les versions récentes du compilateur OCaml,
+
+99
+00:08:37,030 --> 00:08:43,830
+celui-ci fait de son mieux pour lever
+les ambiguïtés sur l'utilisation des étiquettes.
+
+100
+00:08:43,830 --> 00:08:50,200
+Mais parfois, on peut faire une erreur,
+parce que l'ambiguïté n'est pas intentionnelle.
+
+101
+00:08:52,800 --> 00:08:59,810
+Ainsi, définissons deux types
+d'enregistrement <u>a</u> et <u>b</u>.
+
+102
+00:08:59,810 --> 00:09:08,890
+Vous pouvez remarquer que les champs
+de ces deux enregistrements sont disjoints.
+
+103
+00:09:08,890 --> 00:09:10,590
+Cela rend l'inférence facile.
+
+104
+00:09:10,590 --> 00:09:16,950
+Ayant utilisé <u>x</u> et <u>b</u>
+avec le type <u>int</u>,
+
+105
+00:09:16,950 --> 00:09:22,270
+il est facile pour le vérificateur de type
+d'inférer que cet enregistrement a le type <u>a</u>.
+
+107
+00:09:22,270 --> 00:09:30,770
+Maintenant, imaginez que l'on a un type <u>t</u>
+dont le type est
+
+108
+00:09:30,770 --> 00:09:35,310
+celui d'un enregistrement ayant un seul champ
+de type <u>bool</u>.
+
+109
+00:09:35,310 --> 00:09:42,010
+Si on dit ensuite que l'on a un enregistrement
+avec un seul champ <u>x</u> de type <u>bool</u>,
+
+110
+00:09:42,010 --> 00:09:47,560
+alors OCaml fait de son mieux,
+et est en mesure de conclure que
+
+111
+00:09:47,560 --> 00:09:52,000
+ce document n'a pas le type <u>a</u>
+avec un champ manquant,
+
+112
+00:09:52,000 --> 00:09:57,000
+mais le type <u>t</u> avec le bon champ.
+
+113
+00:09:57,000 --> 00:10:02,460
+Mais maintenant, si on définit un autre type <u>u</u>
+avec un champ <u>x</u> de type <u>int</u>
+
+114
+00:10:02,460 --> 00:10:07,510
+et qu'on essaye de vérifier la même expression,
+
+115
+00:10:07,510 --> 00:10:11,040
+alors OCaml rejettera le programme.
+
+116
+00:10:11,040 --> 00:10:19,310
+Parce que l'on a un seul champ, et
+que ce champ n'a pas le bon type
+
+117
+00:10:19,310 --> 00:10:25,540
+par rapport à la dernière définition
+d'un enregistrement avec un seul champ <u>x</u>.
+
+118
+00:10:25,540 --> 00:10:27,610
+Donc, c'est assez complexe.
+
+119
+00:10:27,610 --> 00:10:34,500
+Et un bon conseil à suivre est simplement d'éviter de
+réutiliser les noms de champs entre enregistrements.

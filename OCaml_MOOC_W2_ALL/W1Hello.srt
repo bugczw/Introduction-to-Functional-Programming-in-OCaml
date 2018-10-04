@@ -1,0 +1,251 @@
+1
+00:00:02,960 --> 00:00:07,430
+Welcome, we are OCamlPro,
+the leading company in OCaml development.
+
+2
+00:00:07,430 --> 00:00:09,520
+We are very proud and excited,
+
+3
+00:00:09,520 --> 00:00:12,260
+to be part of the design team of this MOOC.
+
+4
+00:00:12,260 --> 00:00:15,040
+At OCamlPro, we all come
+from the research world.
+
+5
+00:00:15,040 --> 00:00:18,000
+We participate in several R&D projects,
+
+6
+00:00:18,000 --> 00:00:20,520
+with industrial and academic partners.
+
+7
+00:00:20,520 --> 00:00:22,939
+And we edit software
+at the state of the art
+
+8
+00:00:22,939 --> 00:00:24,220
+of academic research.
+
+9
+00:00:24,220 --> 00:00:27,369
+We designed the platform that
+you will use for you exercises.
+
+10
+00:00:27,369 --> 00:00:30,090
+It features a code editor
+that checks your syntax,
+
+11
+00:00:30,090 --> 00:00:31,160
+points out your errors,
+
+12
+00:00:31,160 --> 00:00:33,110
+and automatically formats your code.
+
+13
+00:00:33,110 --> 00:00:34,710
+You can try your code on the fly
+
+14
+00:00:34,710 --> 00:00:37,160
+in the interactive OCaml interpreter.
+
+15
+00:00:37,160 --> 00:00:38,350
+Nothing needs to be installed
+
+16
+00:00:38,350 --> 00:00:40,230
+to enjoy learning OCaml.
+
+17
+00:00:40,230 --> 00:00:42,000
+Enjoy, as much as we did!
+
+18
+00:00:44,000 --> 00:00:45,410
+My name is Fabrice Le Fessant,
+
+19
+00:00:45,410 --> 00:00:46,750
+I am a researcher at INRIA,
+
+20
+00:00:46,750 --> 00:00:50,679
+I've been working with OCaml
+for the last twenty years.
+
+21
+00:00:50,679 --> 00:00:53,829
+I decided at some point to create
+the OCamlPro company.
+
+22
+00:00:53,829 --> 00:00:54,879
+I'm Mohamed,
+
+23
+00:00:54,879 --> 00:00:59,359
+At OCamlPro, I'm working on a software
+that is called AltErgo,
+
+24
+00:00:59,359 --> 00:01:01,989
+that takes as input mathematical formulas,
+
+25
+00:01:01,989 --> 00:01:06,950
+and tries to prove
+whether they are valid or not.
+
+26
+00:01:06,950 --> 00:01:07,299
+I am Thomas,
+
+27
+00:01:07,299 --> 00:01:09,829
+I work at OCamlPro as a PhD student,
+
+28
+00:01:09,829 --> 00:01:14,049
+the purpose of my job is to evaluate the potenial
+
+29
+00:01:14,049 --> 00:01:18,280
+uncaught exception of an OCaml program.
+
+30
+00:01:18,280 --> 00:01:19,960
+I'm Louis Gesbert,
+
+31
+00:01:19,960 --> 00:01:24,210
+my main project is the OCamlPachage Manager
+(OPAM),
+
+32
+00:01:24,210 --> 00:01:26,880
+which is probably the first thing
+you will install,
+
+33
+00:01:26,880 --> 00:01:29,869
+if you want to try OCaml on your own.
+
+34
+00:01:29,869 --> 00:01:30,810
+My name is Pierrick,
+
+35
+00:01:30,810 --> 00:01:34,369
+and I'm a PhD student at OCamlPro.
+
+36
+00:01:34,369 --> 00:01:37,079
+My job is to improve the safety
+
+37
+00:01:37,079 --> 00:01:39,930
+and the correctness of the OCaml compiler.
+
+38
+00:01:39,930 --> 00:01:45,250
+Yes! It's a lot of fun to work
+with the OCamlPro engineers!
+
+39
+00:01:45,250 --> 00:01:47,430
+They are all working on different subjects,
+
+40
+00:01:47,430 --> 00:01:48,680
+state of the art research,
+
+41
+00:01:48,680 --> 00:01:50,899
+different application domains.
+
+42
+00:01:50,899 --> 00:01:54,000
+It's a lot of fun to work with OCaml.
+
+43
+00:01:54,000 --> 00:02:00,229
+The language is cool, plus, you always get
+to work on interesting problems
+
+44
+00:02:00,229 --> 00:02:02,450
+when you work on OCaml.
+
+45
+00:02:02,450 --> 00:02:05,770
+I think OCaml is a really cool language,
+
+46
+00:02:05,770 --> 00:02:09,840
+what I like about it is
+especially the pattern matching,
+
+47
+00:02:09,840 --> 00:02:14,010
+which solves many, many problems.
+
+48
+00:02:14,010 --> 00:02:15,330
+And the type system.
+
+49
+00:02:15,330 --> 00:02:19,290
+Even if it is sometimes a bit annoying
+to write a program,
+
+50
+00:02:19,290 --> 00:02:23,690
+because the compiler says:
+"Oh no! you can't do that!"
+
+51
+00:02:23,690 --> 00:02:25,090
+But... he is always right!
+
+52
+00:02:25,090 --> 00:02:27,730
+I really like OCaml because i know that
+
+53
+00:02:27,730 --> 00:02:29,590
+when I program in OCaml,
+
+54
+00:02:29,590 --> 00:02:34,260
+there is a range of errors
+that I will not have in my code
+
+55
+00:02:34,260 --> 00:02:38,260
+such as null pointer exceptions
+or implicit type casts.
+
+56
+00:02:38,260 --> 00:02:41,510
+I think I would be sad
+if had to switch to another language.
+
+57
+00:02:41,510 --> 00:02:45,800
+I really like programming in OCaml everyday.
+
+58
+00:02:45,800 --> 00:02:53,300
+Welcome to OCaml!
+

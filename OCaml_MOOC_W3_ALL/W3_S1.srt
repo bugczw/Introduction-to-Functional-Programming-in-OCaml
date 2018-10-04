@@ -1,0 +1,392 @@
+1
+00:00:00,459 --> 00:00:01,679
+Welcome back
+
+2
+00:00:03,129 --> 00:00:10,509
+In computer science many data structures like
+lists or trees have an unbounded depth.
+
+3
+00:00:11,830 --> 00:00:19,169
+But for the moment we are unable to define
+such data structures because we only have
+
+4
+00:00:19,169 --> 00:00:23,460
+seen flat data types.
+
+5
+00:00:23,460 --> 00:00:26,229
+So let's try to do it informally.
+
+6
+00:00:26,229 --> 00:00:33,989
+On the paper we would write that a list of
+integers for instance is an empty list or
+
+7
+00:00:34,969 --> 00:00:38,509
+an integer followed by the rest of the list.
+
+8
+00:00:39,780 --> 00:00:47,629
+This looks like exactly like a sum types and
+what you just have to realize is the fact
+
+9
+00:00:47,629 --> 00:00:51,760
+that the rest of the list is also a list.
+
+10
+00:00:51,760 --> 00:00:57,980
+So you just have to reuse the name of the
+type that you are defining inside the definition
+
+11
+00:00:57,980 --> 00:00:59,739
+of this type.
+
+12
+00:00:59,739 --> 00:01:05,000
+So we will be able to define deep data structures
+using recursive type.
+
+13
+00:01:07,340 --> 00:01:14,840
+So for instance if we want to define an algebraic
+data type corresponding to integer list
+
+14
+00:01:16,760 --> 00:01:20,120
+we need two cases : the first one is the empty
+list
+
+15
+00:01:21,360 --> 00:01:31,780
+and the second one says that a list which
+is not empty first comes with an integer
+
+16
+00:01:32,680 --> 00:01:38,000
+which is followed by an integer list.
+
+17
+00:01:38,000 --> 00:01:48,000
+So we are reusing the name of the type that
+we are defining : this is a recursive type.
+
+18
+00:01:50,000 --> 00:02:00,710
+If we consider this definition of a list then
+if we write something like <u>SomeElement 1</u>,
+
+19
+00:02:00,710 --> 00:02:05,090
+<u>SomeElement 3</u> followed by <u>EmptyList</u>
+
+20
+00:02:05,090 --> 00:02:12,260
+Then in fact in the machine the representation
+of this value is exactly a linked list
+
+21
+00:02:12,260 --> 00:02:16,820
+like the one that you can find in any textbooks
+about data structures.
+
+22
+00:02:18,050 --> 00:02:23,310
+So a sum type can refer to its self into it
+own definition
+
+23
+00:02:24,740 --> 00:02:27,560
+and such a sum type is therefor recursive.
+
+24
+00:02:28,720 --> 00:02:36,600
+Functions over a recursive type are often
+defined by case analysis and recursion.
+
+25
+00:02:38,640 --> 00:02:48,900
+So let us consider the type for list of integer
+and now imagine that we want to compute the
+
+26
+00:02:48,900 --> 00:02:50,010
+length of a list.
+
+27
+00:02:50,010 --> 00:02:57,850
+We have a base case which correspond to the
+empty list in that case an empty list have
+
+28
+00:02:57,850 --> 00:03:00,080
+a length which is equal to 0
+
+29
+00:03:00,080 --> 00:03:01,740
+so we just return 0.
+
+30
+00:03:02,700 --> 00:03:06,840
+Now imagine that we have a list that have
+an element.
+
+31
+00:03:08,020 --> 00:03:17,560
+And this element is followed by a sublist
+then to compute the length of this list
+
+32
+00:03:17,560 --> 00:03:23,720
+we just have to compute the length of the sublist
+<u>l</u> and increment it.
+
+33
+00:03:25,840 --> 00:03:30,500
+In the end what we get is a function from
+<u>int list</u> to <u>int</u>.
+
+34
+00:03:32,910 --> 00:03:39,950
+Actually lists are so important in functional
+programming that there exist a predefined
+
+35
+00:03:39,950 --> 00:03:41,170
+type for list.
+
+36
+00:03:43,020 --> 00:03:49,870
+It is written <u>t list</u> where <u>t</u> is the type
+of the elements of the list.
+
+37
+00:03:49,870 --> 00:03:53,870
+The empty list is return using two brackets
+like this.
+
+38
+00:03:56,500 --> 00:04:02,520
+And in fact it's just a special syntax to
+represent the tag for the empty list.
+
+39
+00:04:03,760 --> 00:04:12,920
+If you want an integer <u>i</u> to be followed
+by the rest of the list <u>r</u> then you just
+
+40
+00:04:12,930 --> 00:04:16,590
+have to write <u>i  ::  r</u>
+
+41
+00:04:17,359 --> 00:04:25,599
+and in that case <u>::</u> is just a special syntax
+for the constructor <u>SomeElement</u> that we
+
+42
+00:04:25,599 --> 00:04:27,139
+had in the previous definition.
+
+43
+00:04:28,240 --> 00:04:34,300
+Finally there exist a syntax to define a list
+by enumeration of its elements.
+
+44
+00:04:35,550 --> 00:04:43,180
+You just have to write between brackets the
+expressions corresponding to the elements
+
+45
+00:04:43,180 --> 00:04:47,000
+of the list separated by <u> ; </u>.
+
+46
+00:04:49,550 --> 00:04:58,639
+So as there is a predefined type for list
+in OCaml we don't have to declare a list of integer
+
+47
+00:04:59,080 --> 00:05:06,040
+and we can define the length of the list by
+using the notation for the empty list
+
+48
+00:05:06,560 --> 00:05:07,760
+with the two brackets
+
+49
+00:05:08,460 --> 00:05:19,880
+and the notation for a list where <u>x</u> starts
+the list and is followed by <u>xs</u> using the <u> :: </u>.
+
+50
+00:05:22,550 --> 00:05:32,730
+This one is accepted and here we see that
+OCaml as inferred that the input of this function
+
+51
+00:05:32,800 --> 00:05:37,160
+is the standard list type.
+
+52
+00:05:39,699 --> 00:05:49,239
+Now we can compute the length of a list composed
+of the integer <u>1</u>, <u>2</u>, <u>3</u> and it is indeed equal to 3.
+
+53
+00:05:52,300 --> 00:05:57,960
+Imagine now that we want to define a function
+that takes a list and reverses it.
+
+54
+00:05:58,969 --> 00:06:06,999
+Again we can reason inductively by just considering
+the base case : the empty list and in that
+
+55
+00:06:06,999 --> 00:06:11,239
+case reversing the empty list is the empty
+list.
+
+56
+00:06:13,400 --> 00:06:20,660
+And so in the second case we have a list <u>x</u>
+followed by <u>xs</u>
+
+57
+00:06:22,040 --> 00:06:31,540
+and what we want to do is first to reverse
+the rest of the list and concatenate the head
+
+58
+00:06:31,800 --> 00:06:35,360
+of the list at the end of the reversed list.
+
+59
+00:06:37,590 --> 00:06:44,990
+To do so we use this <u>@</u> operator which is
+predefined in OCaml.
+
+60
+00:06:46,580 --> 00:06:55,780
+What we get in the end is a function from
+<u>list</u> to <u>list</u> and indeed it is reversing the input list.
+
+61
+00:06:59,349 --> 00:07:03,400
+So let's comeback to this reversal of a list.
+
+62
+00:07:04,500 --> 00:07:09,700
+We iterate over the list and for each element
+
+63
+00:07:10,479 --> 00:07:12,919
+we concatenate two lists.
+
+64
+00:07:14,040 --> 00:07:18,940
+And the cost of this concatenation is linear
+in the size of the first list.
+
+65
+00:07:19,849 --> 00:07:23,139
+So what we get in the end is a quadratic algorithm.
+
+66
+00:07:24,180 --> 00:07:31,060
+This is a bit costly, we want to throw away
+costly function.
+
+67
+00:07:32,440 --> 00:07:40,740
+Here is another way to implement a reversal
+which is based on a technique called accumulation
+
+68
+00:07:41,930 --> 00:07:44,990
+passing style in functional programming.
+
+69
+00:07:46,320 --> 00:07:52,800
+The idea is that we had an extra argument
+that will contain the final result of the computation.
+
+70
+00:07:53,740 --> 00:08:04,550
+So here I call it <u>accu</u>. When we have finished
+traversing the list, so when we have an empty
+
+71
+00:08:04,550 --> 00:08:09,250
+list we will return the final result <u>accu</u>.
+
+72
+00:08:11,710 --> 00:08:20,350
+And when we have a non empty list with <u>x</u>
+as its head we will push that element
+
+73
+00:08:21,259 --> 00:08:30,959
+at the top of the list accu and do a recurcive call
+to the rest of the list.
+
+74
+00:08:33,700 --> 00:08:41,530
+In fact this is the way to reverse a list
+which has the advantage of being linear in
+
+75
+00:08:41,530 --> 00:08:46,660
+the size of the list because we traverse the
+input list
+
+76
+00:08:46,660 --> 00:08:57,570
+and at each step we only do a constant-time
+operation which is the fact that we construct
+
+77
+00:08:57,570 --> 00:09:01,950
+a list with <u>x :: accu</u>.
+
+78
+00:09:05,100 --> 00:09:16,750
+We can check that if we start with the empty
+list for <u>accu</u> at the end we obtain a reversing
+
+79
+00:09:16,750 --> 00:09:20,500
+function from <u>list</u> to <u>list</u> and it is working.
+
+80
+00:09:22,950 --> 00:09:30,700
+Of course you don't have to always have only
+two cases when you define a function by recursion
+
+81
+00:09:30,700 --> 00:09:32,060
+of a list.
+
+82
+00:09:32,060 --> 00:09:39,800
+Sometimes as in the examples you have already
+seen in the first week we can have several cases.
+
+83
+00:09:39,880 --> 00:09:46,190
+For instance here, the case for the empty
+list, the case for a list that only contains
+
+84
+00:09:46,190 --> 00:09:53,400
+one element and the case for list with more
+than two elements.
+

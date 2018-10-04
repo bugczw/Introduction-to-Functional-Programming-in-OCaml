@@ -1,0 +1,462 @@
+1
+00:00:00,539 --> 00:00:02,600
+Welcome back!
+
+2
+00:00:02,600 --> 00:00:07,500
+We have just seen that
+tuples and records are very nice, but
+
+3
+00:00:07,500 --> 00:00:12,160
+they suffer from a major drawback:
+
+4
+00:00:12,160 --> 00:00:17,849
+their size must be statically bounded.
+
+5
+00:00:17,849 --> 00:00:19,929
+And sometimes, when you program,
+
+6
+00:00:19,929 --> 00:00:24,980
+you cannot predict how much data
+you will have to process.
+
+7
+00:00:24,980 --> 00:00:28,250
+That's exactly what arrays are good for.
+
+8
+00:00:28,250 --> 00:00:33,190
+You can define their size dynamically.
+
+9
+00:00:33,190 --> 00:00:38,390
+In exchange for this new feature,
+
+10
+00:00:38,390 --> 00:00:44,600
+all the elements of an array must have the same type.
+
+11
+00:00:44,600 --> 00:00:51,460
+This is the opposite to tuples and records,
+in which subcomponents can have distinct types.
+
+12
+00:00:53,980 --> 00:00:58,520
+So, here is how you define an array,
+
+13
+00:00:58,530 --> 00:01:01,590
+whose size is statically known.
+
+14
+00:01:01,590 --> 00:01:09,820
+It has three elements 1, 2 and 3.
+
+15
+00:01:09,820 --> 00:01:14,260
+So you can notice that OCaml is able to infer that
+
+16
+00:01:14,260 --> 00:01:20,480
+the type of this expression is indeed
+an array containing integers.
+
+17
+00:01:22,890 --> 00:01:26,340
+So let us define a function that takes an <u>x</u>, and
+
+18
+00:01:26,340 --> 00:01:31,920
+returns <u>x</u> multiplied by <u>x</u>.
+
+19
+00:01:31,920 --> 00:01:38,770
+We can use this function
+to initialize an array of size <u>n</u>
+
+20
+00:01:38,770 --> 00:01:48,830
+with the property that at index
+number <u>i</u>, we will see <u>i</u> multiplied by <u>i</u>.
+
+21
+00:01:48,830 --> 00:01:56,729
+So we can define such a function,
+and then apply it to <u>5</u>, to see that
+
+22
+00:01:57,729 --> 00:02:01,270
+we have the first five squares.
+
+23
+00:02:01,270 --> 00:02:12,250
+We can also apply it to many different values
+to get different arrays of different sizes.
+
+24
+00:02:14,629 --> 00:02:18,069
+So to sum up what we have just seen.
+
+25
+00:02:18,069 --> 00:02:22,209
+There is a type for arrays whose elements
+have a given type.
+
+26
+00:02:22,209 --> 00:02:26,609
+And it is written <u>some_type array</u>.
+
+27
+00:02:26,609 --> 00:02:30,560
+The type <u>array</u> is predefined in OCaml.
+
+28
+00:02:30,560 --> 00:02:33,769
+And there exists a module in the standard
+library that
+
+29
+00:02:33,769 --> 00:02:39,169
+will provide you with several functions over arrays.
+
+30
+00:02:39,169 --> 00:02:45,779
+So this syntax is good for small arrays
+whose size is known at compile time.
+
+31
+00:02:45,779 --> 00:02:52,249
+But now, if you don't know the size,
+and have to compute it,
+
+32
+00:02:52,249 --> 00:02:55,900
+you can use a function named <u>Array.make</u>,
+
+33
+00:02:55,900 --> 00:03:01,139
+that will expect an integer
+representing the size of the array
+
+34
+00:03:01,139 --> 00:03:06,799
+and a value that will be used to initialize
+each component of this array.
+
+35
+00:03:06,809 --> 00:03:13,320
+There is another function to initialize arrays
+which is very interesting.
+
+36
+00:03:13,320 --> 00:03:16,300
+It is called <u>Array.init</u>.
+
+37
+00:03:16,300 --> 00:03:22,400
+It also expects an integer that represents
+the size of the array you want to create, but also
+
+38
+00:03:22,409 --> 00:03:29,540
+a function that will be used to initialize
+each component of the array.
+
+39
+00:03:29,540 --> 00:03:36,260
+This initialization function is given the
+index of the component, and in exchange
+
+40
+00:03:36,269 --> 00:03:41,719
+it must return the value of the component
+that may depend, of course, on this index.
+
+41
+00:03:41,719 --> 00:03:47,480
+A very useful function is
+the <u>Array.length</u> function, that
+
+42
+00:03:47,480 --> 00:03:52,189
+returns the size of an array.
+
+43
+00:03:52,189 --> 00:03:56,089
+Now if you want to observe a particular
+component of an array,
+
+44
+00:03:56,089 --> 00:03:58,120
+You can do it using an index.
+
+45
+00:03:58,120 --> 00:04:04,180
+An integer that represents the position of
+this component in the array.
+
+46
+00:04:04,180 --> 00:04:08,219
+To do so, you write your expression
+that represents the array,
+
+47
+00:04:08,219 --> 00:04:11,870
+a dot, an open parenthesis,
+
+48
+00:04:11,870 --> 00:04:16,250
+then an expression that evaluates into an integer
+that represents the index, and finally
+
+49
+00:04:16,250 --> 00:04:19,540
+a closing parenthesis.
+
+50
+00:04:19,540 --> 00:04:21,800
+You have to be careful, because
+
+51
+00:04:21,800 --> 00:04:29,900
+the index of an array must be taken
+between <u>0</u> and the size of this array minus one.
+
+52
+00:04:29,910 --> 00:04:36,530
+So now, if you want to observe
+several components of an array at the same time,
+
+53
+00:04:36,530 --> 00:04:38,040
+you can use array patterns.
+
+54
+00:04:38,040 --> 00:04:43,560
+Again, you use the same syntax as with expressions.
+
+55
+00:04:43,560 --> 00:04:46,950
+Except that you replace expressions by patterns.
+
+56
+00:04:46,950 --> 00:04:55,170
+We will see that array patterns
+are not very convenient when you program.
+
+57
+00:04:55,170 --> 00:04:59,580
+So let us define a function that
+takes an array as input,
+
+58
+00:04:59,580 --> 00:05:02,380
+and returns an array of size two,
+
+59
+00:05:02,380 --> 00:05:12,000
+containing the second cell of the input array as the first cell,
+
+60
+00:05:12,000 --> 00:05:15,200
+---so it is cell number one---
+
+61
+00:05:15,200 --> 00:05:19,210
+and in the second cell of the output array,
+
+62
+00:05:19,210 --> 00:05:25,410
+we will put the contents of
+the first cell of the input array,
+
+63
+00:05:25,410 --> 00:05:28,310
+so, the cell number <u>0</u>.
+
+64
+00:05:28,310 --> 00:05:34,520
+So the type of this function is  <u>array</u> to <u>array</u>, and
+
+65
+00:05:34,520 --> 00:05:39,840
+it is polymorphic with respect to
+the type of the elements of the array.
+
+66
+00:05:39,840 --> 00:05:43,920
+Now, we can check that it indeed works.
+
+67
+00:05:46,650 --> 00:05:56,150
+So let us try to use array patterns
+to define a function called swap.
+
+68
+00:05:56,150 --> 00:06:01,140
+This function takes an array of size two as an input,
+
+69
+00:06:01,140 --> 00:06:06,420
+and names the first cell <u>x</u> and
+the second cell <u>y</u>.
+
+70
+00:06:06,420 --> 00:06:11,500
+And it will return an array containing,
+
+71
+00:06:11,500 --> 00:06:17,140
+first the contents of <u>y</u>,
+and then the contents of <u>x</u>.
+
+72
+00:06:17,150 --> 00:06:21,580
+So let's see what
+the compiler is responding to that definition.
+
+73
+00:06:21,580 --> 00:06:29,700
+So, this definition is accepted
+but a warning is issued.
+
+74
+00:06:29,700 --> 00:06:32,780
+And it says that this pattern matching,
+
+75
+00:06:32,780 --> 00:06:38,780
+---so the way we have defined
+the observation of our input argument---
+
+76
+00:06:38,780 --> 00:06:39,890
+is not exhaustive.
+
+77
+00:06:39,890 --> 00:06:48,020
+Because, for instance,
+an empty array is not matched by this pattern
+
+78
+00:06:48,020 --> 00:06:54,870
+And even if my function is working
+on an array of size two,
+
+79
+00:06:54,870 --> 00:07:06,090
+it will crash if I give it, for instance,
+an array of size three.
+
+80
+00:07:06,090 --> 00:07:14,330
+So, array patterns are not very good,
+when you are using them as arguments of a function.
+
+81
+00:07:16,420 --> 00:07:18,880
+In the machine,
+
+82
+00:07:18,889 --> 00:07:24,610
+an array is represented exactly as a tuple,
+and exactly as a record.
+
+83
+00:07:24,610 --> 00:07:27,130
+By a heap allocated block.
+
+84
+00:07:27,130 --> 00:07:30,160
+Now what kind of programming errors you can
+do when you manipulate arrays.
+
+85
+00:07:33,120 --> 00:07:40,220
+Well the first one is to mix in the same array
+values of different types.
+
+86
+00:07:40,220 --> 00:07:45,000
+But fortunately, that kind of error is
+caught the type checker.
+
+87
+00:07:47,650 --> 00:07:55,110
+So if you try to put two values with
+different types in the same array,
+
+88
+00:07:55,110 --> 00:07:58,990
+you will get an error from the type checker.
+
+89
+00:07:58,990 --> 00:08:03,170
+Because it is expecting all the elements of an array
+to have the same type.
+
+90
+00:08:05,430 --> 00:08:08,669
+Another kind of programming error that is very common,
+
+91
+00:08:08,669 --> 00:08:13,419
+but is unfortunately not caught by the compiler
+
+92
+00:08:13,419 --> 00:08:19,040
+is an invalid access to a cell of the array.
+
+93
+00:08:19,040 --> 00:08:26,000
+Indeed, the compiler cannot predict if
+some expression will evaluate into
+
+94
+00:08:26,000 --> 00:08:31,030
+a valid index of the array.
+
+95
+00:08:31,030 --> 00:08:34,519
+So if you get a negative index,
+
+96
+00:08:34,519 --> 00:08:39,879
+or an index that is greater than
+the length of the array minus one,
+
+97
+00:08:39,879 --> 00:08:42,739
+then it will crash the program.
+
+98
+00:08:44,259 --> 00:08:49,939
+So, consider the definition
+of an array of size three.
+
+99
+00:08:49,939 --> 00:08:59,079
+If you try to access the cell number three,
+so just after the end of this array,
+
+100
+00:08:59,079 --> 00:09:00,589
+you will have a crash.
+
+101
+00:09:00,589 --> 00:09:07,939
+If you try to access a cell indexed by minus one,
+
+102
+00:09:07,939 --> 00:09:10,389
+again, you will get a crash.
+
+103
+00:09:10,389 --> 00:09:17,069
+And the compiler is unable to predict
+if you can do such a mistake.

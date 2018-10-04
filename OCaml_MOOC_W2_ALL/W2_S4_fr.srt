@@ -1,0 +1,645 @@
+1
+00:00:01,069 --> 00:00:03,429
+Donc, re-bonjour!
+
+2
+00:00:05,020 --> 00:00:08,800
+Dans les séquences précédentes,
+nous avons découvert plusieurs sortes de types :
+
+3
+00:00:08,809 --> 00:00:11,780
+les enregistrements, les n-uplets et les tableaux.
+
+4
+00:00:11,780 --> 00:00:16,140
+Pour mieux les comprendre, nous allons les
+utiliser ensemble dans un même programme.
+
+5
+00:00:16,960 --> 00:00:21,100
+Ce programme sera une base de données jouet.
+
+6
+00:00:21,100 --> 00:00:27,140
+Il gèrera une liste de contacts et
+répondra à trois types de requêtes:
+
+7
+00:00:27,140 --> 00:00:29,400
+l'insertion d'un contact ;
+
+8
+00:00:29,400 --> 00:00:31,820
+la suppression d'un contact ; et
+
+9
+00:00:31,820 --> 00:00:35,560
+une fonction de recherche dans la base de données.
+
+10
+00:00:37,070 --> 00:00:41,390
+Le type de la fonction
+<i>moteur-base-de-données</i> sera le suivant.
+
+11
+00:00:41,390 --> 00:00:44,670
+Elle prendra en entrée une base de données,
+une requête, et
+
+12
+00:00:44,670 --> 00:00:52,920
+retournera un triplet composé
+d'un statut, d'une base de données, et d'un contact.
+
+13
+00:00:52,930 --> 00:01:00,140
+Le statut sera <u>true</u>,
+si la requête s'est bien passée.
+
+14
+00:01:00,140 --> 00:01:08,980
+Le deuxième composant sera une nouvelle base de
+données, si on a inséré ou supprimé un contact.
+
+15
+00:01:08,990 --> 00:01:17,410
+Et enfin, si un contact a été trouvé,
+il sera la troisième composante de ce n-uplet.
+
+16
+00:01:20,180 --> 00:01:25,340
+On définit un type des numéros de téléphone, et un
+
+17
+00:01:25,340 --> 00:01:32,720
+autre type reliant un nom avec un numéro de téléphone.
+
+18
+00:01:32,720 --> 00:01:36,880
+Il est facile de définir un enregistrement bidon,
+
+19
+00:01:36,880 --> 00:01:43,520
+contenant un contact avec un nom vide
+et un numéro de téléphone valant juste <u>0</u>.
+
+20
+00:01:45,620 --> 00:01:49,340
+Ensuite, une base de données sera représentée par
+deux champs :
+
+21
+00:01:49,350 --> 00:01:52,270
+le premier représente le nombre de contacts,
+
+22
+00:01:52,270 --> 00:01:58,310
+et le second est un tableau qui contient les contacts.
+
+23
+00:01:58,310 --> 00:02:02,530
+Pour fabriquer une base de données,
+
+24
+00:02:02,530 --> 00:02:08,780
+on prend en argument le nombre maximum de contacts
+que l'on pourra stocker dans la base de données.
+
+25
+00:02:08,780 --> 00:02:13,500
+Au début, le nombre de contacts est <u>0</u>.
+
+26
+00:02:13,500 --> 00:02:18,460
+Ensuite on doit créer un tableau,
+
+27
+00:02:18,460 --> 00:02:25,360
+dont la taille est le nombre maximum de contacts
+de notre base de données, et, pour le moment,
+
+28
+00:02:25,360 --> 00:02:28,940
+dont tous les éléments sont égaux à <u>nobody</u>.
+
+29
+00:02:34,520 --> 00:02:41,400
+Une requête sera représentée par un code :
+un entier pour chaque type de requête,
+
+30
+00:02:41,410 --> 00:02:44,250
+et parfois, on devra donner un contact,
+
+31
+00:02:44,250 --> 00:02:46,530
+--- par exemple, pour une fonction de recherche ---
+
+32
+00:02:46,530 --> 00:02:50,570
+de sorte que nous avons aussi un champ pour
+représenter un contact.
+
+33
+00:02:53,320 --> 00:02:56,320
+Voici une fonction qui prend une base de données,
+un contact, et
+
+34
+00:02:56,330 --> 00:02:59,700
+cherche ce contact dans la base de données.
+
+35
+00:02:59,700 --> 00:03:06,450
+C'est assez simple,
+on doit juste traverser le tableau, et
+
+36
+00:03:06,450 --> 00:03:14,560
+si on trouve une cellule dont le nom est égal
+au nom du contact cherché,
+
+37
+00:03:14,560 --> 00:03:18,960
+alors on renvoie un triplet disant que :
+
+38
+00:03:18,960 --> 00:03:23,200
+la recherche a réussi ;
+
+39
+00:03:23,200 --> 00:03:26,960
+la base de données est renvoyée telle quelle, et
+
+40
+00:03:26,960 --> 00:03:30,820
+l'information importante, indiquant que
+le contact trouvé
+
+41
+00:03:30,820 --> 00:03:37,380
+se trouve à la position <u>idx</u>.
+
+42
+00:03:37,380 --> 00:03:43,840
+Sinon, il se peut que l'on soit à la fin de
+la base de données,
+
+43
+00:03:43,840 --> 00:03:49,720
+--- si l'indice est supérieur au nombre de contacts
+présents dans la base de données ---
+
+44
+00:03:49,720 --> 00:03:58,140
+ou peut-être, que l'on puisse aller à la position suivante,
+par appel récursif avec un indice incrémenté.
+
+45
+00:03:58,140 --> 00:04:00,960
+Maintenant, si on veut
+insérer un contact dans la base de données.
+
+46
+00:04:00,970 --> 00:04:06,350
+--- j'entre d'abord ceci dans le système ---
+
+47
+00:04:06,350 --> 00:04:14,740
+Si on veut insérer un nouveau contact dans
+la base de données, alors
+
+48
+00:04:14,740 --> 00:04:16,240
+il y a un premier cas :
+
+49
+00:04:16,250 --> 00:04:21,380
+On a atteint la limite des contacts
+qui peuvent être stockés dans la base de données,
+
+50
+00:04:21,380 --> 00:04:24,230
+--- ce qui signifie que le tableau est rempli ---
+
+51
+00:04:24,230 --> 00:04:30,640
+--- le nombre de contacts est égal à
+la longueur choisie ---
+
+52
+00:04:30,640 --> 00:04:37,480
+on produit alors une erreur
+en renvoyant un statut valant <u>false</u>.
+
+53
+00:04:37,480 --> 00:04:45,870
+Sinon, on doit d'abord chercher si le contact
+est déjà dans la base de données,
+
+54
+00:04:45,870 --> 00:04:50,920
+--- dans ce cas, on produit aussi une erreur ---
+
+55
+00:04:50,920 --> 00:04:56,010
+Enfin, --- si le contact ne se trouve pas
+dans la base de données ---
+
+56
+00:04:56,010 --> 00:05:05,410
+on crée une nouvelle base de données où les cellules
+sont définies en utilisant cette fonction <u>cells</u>.
+
+57
+00:05:05,410 --> 00:05:09,930
+Si l'indice est égal au nombre de contacts, alors
+
+58
+00:05:09,930 --> 00:05:13,870
+on va l'utiliser pour stocker
+notre (nouveau) contact,
+
+59
+00:05:13,870 --> 00:05:17,170
+et on retourne le contact que l'on veut insérer.
+
+60
+00:05:17,170 --> 00:05:22,420
+Sinon, on ne veut pas changer
+le contenu de la base de données initiale,
+
+61
+00:05:22,420 --> 00:05:29,410
+et on retourne la valeur actuelle du tableau
+à la position <u>i</u>.
+
+62
+00:05:29,410 --> 00:05:33,850
+Il faut créer une nouvelle base de données
+avec le nouveau contact inséré.
+
+63
+00:05:33,850 --> 00:05:38,150
+Le nombre de contacts est maintenant
+le nombre (précédent) de contacts plus 1.
+
+64
+00:05:38,150 --> 00:05:42,160
+Et le tableau des contacts est un nouveau tableau,
+
+65
+00:05:42,160 --> 00:05:49,390
+dont les cellules sont initialisées par
+la fonction <u>cells</u>.
+
+66
+00:05:49,390 --> 00:05:55,990
+Cette fois, le statut est <u>true</u>,
+la nouvelle base de données est <u>db</u>, et
+
+67
+00:05:55,990 --> 00:05:59,070
+comme contact, on peut par exemple
+renvoyer le contact qui vient d'être inséré.
+
+68
+00:06:05,110 --> 00:06:11,540
+On peut faire la même chose pour supprimer un contact.
+
+69
+00:06:11,540 --> 00:06:16,120
+On commmence par rechercher le contact.
+
+70
+00:06:16,120 --> 00:06:21,860
+S'il n'est pas dans la base de données,
+alors on renvoie une erreur.
+
+71
+00:06:21,860 --> 00:06:29,120
+Sinon, on doit juste
+recréer la même base de données,
+
+72
+00:06:29,120 --> 00:06:36,320
+sauf que maintenant, le nombre de contacts est
+le nombre (précédent) de contacts moins 1, et
+
+73
+00:06:36,320 --> 00:06:43,820
+le nouveau tableau est initialisé par la
+fonction <u>cells</u>, de sorte que :
+
+74
+00:06:43,820 --> 00:06:53,940
+pour la cellule correspondant
+au contact que l'on souhaite supprimer,
+
+75
+00:06:53,950 --> 00:07:01,240
+on renvoie <u>nobody</u> ;
+--- le moyen d'effacer cette cellule ---
+
+76
+00:07:01,240 --> 00:07:05,440
+et si le contact considéré n'est
+pas le contact que l'on souhaite supprimer,
+
+77
+00:07:05,450 --> 00:07:11,810
+on renvoie juste le même contact que celui qui
+se trouvait dans la base de données précédente.
+
+78
+00:07:14,530 --> 00:07:20,360
+On a ainsi mis en place les trois fonctionnalités
+désirées pour la base de données,
+
+79
+00:07:20,360 --> 00:07:24,400
+et on peut maintenant réaliser le moteur.
+
+80
+00:07:24,400 --> 00:07:30,419
+Cette fonction prend en entrée la base de données
+et la requête.
+
+81
+00:07:30,419 --> 00:07:33,659
+Selon la valeur de <u>code</u>,
+on fera :
+
+82
+00:07:33,660 --> 00:07:36,840
+une insertion si le code est égal à <u>0</u> ;
+
+83
+00:07:36,840 --> 00:07:39,480
+une suppression si le code est égal à <u>1</u>, et
+
+84
+00:07:39,480 --> 00:07:43,800
+si le code est égal à <u>2</u>,
+alors on fera une recherche, et
+
+85
+00:07:43,950 --> 00:07:50,790
+on utilisera le contexte qui est fourni
+comme argument pour exécuter la requête.
+
+86
+00:07:50,790 --> 00:07:54,810
+Sinon, il s'agit d'un code incorrect
+et on renvoie une erreur.
+
+87
+00:07:58,180 --> 00:08:02,860
+En somme, cette fonction est juste une façon
+de rassembler les trois fonctions
+
+88
+00:08:02,860 --> 00:08:05,669
+définies précédemment. Maintenant,
+
+89
+00:08:05,669 --> 00:08:09,150
+définissons une base de données de taille 5.
+
+90
+00:08:09,150 --> 00:08:13,690
+Nous pouvons ajouter un nouveau contact pour Luke,
+
+91
+00:08:13,690 --> 00:08:16,230
+un autre contact pour Darth Vader.
+
+92
+00:08:18,060 --> 00:08:22,600
+Nous pouvons chercher Luke,
+
+93
+00:08:22,600 --> 00:08:26,740
+et en effet il est trouvé.
+On peut trouver le contact ici.
+
+94
+00:08:29,860 --> 00:08:33,460
+On peut supprimer Luke de la base de données.
+
+95
+00:08:33,460 --> 00:08:37,680
+Et nous pouvons voir que la base de données
+ne contient plus que Darth Vader.
+
+96
+00:08:39,659 --> 00:08:45,839
+Et enfin, si on cherche encore Luke dans
+la base de données, on obtient une erreur.
+
+97
+00:08:45,839 --> 00:08:47,939
+Le statut est égal à <u>false</u>.
+
+98
+00:08:47,940 --> 00:08:51,080
+ce qui signifie qu'il y a une erreur.
+
+99
+00:08:53,100 --> 00:08:55,140
+Si nous comparons la mise en œuvre
+
+100
+00:08:55,140 --> 00:08:58,820
+que nous venons de faire pour
+notre moteur de base de données,
+
+101
+00:08:58,830 --> 00:09:01,580
+avec une réalisation impérative,
+
+102
+00:09:01,580 --> 00:09:08,020
+ce qui est clair est nous avons écrit un programme
+non destructif.
+
+103
+00:09:08,029 --> 00:09:15,330
+En effet, quand on revient au fonctionnement de
+ce moteur de base de données,
+
+104
+00:09:15,330 --> 00:09:23,190
+on peut remarquer qu'une nouvelle base de données est
+créée chaque fois qu'une requête est traitée.
+
+105
+00:09:23,190 --> 00:09:29,270
+Donc les versions précédentes de cette base sont
+toujours des valeurs valides disponibles dans OCaml.
+
+106
+00:09:29,270 --> 00:09:36,080
+En revanche, quand on fait un programme impératif,
+et qu'on applique une requête à une base de données,
+
+107
+00:09:36,080 --> 00:09:39,350
+celle-ci est modifiée en-place.
+
+108
+00:09:39,350 --> 00:09:47,680
+En fait, ce que nous avons programmé,
+est un moteur de base de données purement fonctionnel.
+
+109
+00:09:47,680 --> 00:09:51,570
+Alors maintenant, ce qui importe.
+
+110
+00:09:51,570 --> 00:09:59,780
+Pourquoi les effets de bord sont considérés comme
+dangereux en programmation purement fonctionnelle.
+
+111
+00:09:59,780 --> 00:10:05,760
+Eh bien, l'idée est que lorsqu'on programme
+effectivement dans un langage fonctionnel,
+
+112
+00:10:05,770 --> 00:10:11,640
+on essaye de produire des valeurs,
+au lieu de modifier la mémoire.
+
+113
+00:10:11,640 --> 00:10:16,170
+Ce qui est obtenu est quelque chose qui
+ne dépend pas de l'état du programme.
+
+114
+00:10:16,170 --> 00:10:20,320
+Mais seulement des arguments de la fonction.
+
+115
+00:10:20,320 --> 00:10:24,570
+Et c'est exactement ce qui se passe en mathématiques.
+
+116
+00:10:24,570 --> 00:10:31,670
+On peut appeler une fonction à plusieurs reprises, avec
+les mêmes entrées on obtiendra le même résultat.
+
+117
+00:10:31,670 --> 00:10:36,440
+Donc, il est plus facile de raisonner
+sur les programmes fonctionnels.
+
+118
+00:10:36,440 --> 00:10:44,890
+Et il est plus facile de les spécifier
+par des objets mathématiques.
+
+119
+00:10:44,890 --> 00:10:50,640
+Par exemple, une spécification valide
+de notre moteur est le fait que
+
+120
+00:10:50,640 --> 00:10:57,290
+si l'on insère un contact dans la base de données,
+et qu'on le supprime juste après,
+
+121
+00:10:57,290 --> 00:11:06,250
+on obtient alors une base de données qui est
+exactement la même qu'au départ.
+
+122
+00:11:06,250 --> 00:11:08,270
+Comme il ne dépend pas de l'état de la machine,
+
+123
+00:11:08,270 --> 00:11:11,890
+un programme fonctionnel peut être utilisé
+à tout moment.
+
+124
+00:11:11,890 --> 00:11:13,490
+Cela signifie qu'il est plus facile à composer.
+
+125
+00:11:13,490 --> 00:11:20,230
+Il peut être adapté à plus de contextes
+qu'un programme impératif.
+
+126
+00:11:20,230 --> 00:11:25,490
+Bien, maintenant quelles sont les faiblesses
+de notre mise en œuvre.
+
+127
+00:11:25,490 --> 00:11:35,050
+Eh bien, la spécification donnée à notre moteur
+n'est pas très satisfaisante. En effet,
+
+128
+00:11:35,050 --> 00:11:45,480
+les requêtes devraient renvoyer un contact pour les
+recherches et une base de données pour les insertions.
+
+129
+00:11:45,480 --> 00:11:51,660
+Mais le type donné au moteur oblige à n'utiliser qu'un
+seul type de résultat pour les requêtes.
+
+130
+00:11:51,660 --> 00:11:55,580
+Donc, on doit aussi renvoyer une base de données
+lors d'une requête de recherche, et
+
+131
+00:11:55,580 --> 00:11:59,620
+renvoyer un contact, lors d'une requête d'insertion.
+
+132
+00:11:59,620 --> 00:12:05,630
+Au lieu de cela, nous aimerions dire que
+le type du résultat pour le moteur est
+
+133
+00:12:05,630 --> 00:12:11,959
+soit un contact soit une nouvelle base de données.
+
+134
+00:12:11,959 --> 00:12:19,410
+Un autre problème est que lorsqu'on recrée
+une nouvelle base de données,
+
+135
+00:12:19,410 --> 00:12:22,830
+elle est dupliquée entièrement, même si
+
+136
+00:12:22,830 --> 00:12:33,260
+presque tout dans la base de données est identique
+à la précédente.
+
+137
+00:12:33,270 --> 00:12:36,860
+Nous aimerions utiliser une meilleure structure de
+données pour représenter la base de données,
+
+138
+00:12:36,860 --> 00:12:42,459
+afin de permettre davantage de partage entre
+les différentes versions de la base de données.
+
+139
+00:12:42,459 --> 00:12:46,980
+Les types de données algébriques à venir
+--- on les découvrira la semaine prochaine ---
+
+140
+00:12:46,980 --> 00:12:50,380
+seront une réponse élégante à tous ces problèmes.

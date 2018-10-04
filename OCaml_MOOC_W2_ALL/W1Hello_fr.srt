@@ -1,0 +1,248 @@
+1
+00:00:02,960 --> 00:00:07,430
+Bienvenue, nous sommes OCamlPro,
+la société leader dans le développement OCaml.
+
+2
+00:00:07,430 --> 00:00:09,520
+Nous sommes très fiers et enthousiastes,
+
+3
+00:00:09,520 --> 00:00:12,260
+de faire partie de l'équipe de conception de ce MOOC.
+
+4
+00:00:12,260 --> 00:00:15,040
+Au OCamlPro, nous venons tous
+du monde de la recherche.
+
+5
+00:00:15,040 --> 00:00:18,000
+Nous participons à plusieurs projets de R&D,
+
+6
+00:00:18,000 --> 00:00:20,520
+avec des partenaires industriels et académiques.
+
+7
+00:00:20,520 --> 00:00:22,939
+Et nous éditons des logiciels
+suivant l'état de l'art
+
+8
+00:00:22,939 --> 00:00:24,220
+de la recherche universitaire.
+
+9
+00:00:24,220 --> 00:00:27,369
+Nous avons conçu la plate-forme que
+vous allez utiliser pour les exercices.
+
+10
+00:00:27,369 --> 00:00:30,090
+Elle dispose d'un éditeur de code
+qui vérifie votre syntaxe,
+
+11
+00:00:30,090 --> 00:00:31,160
+souligne vos erreurs,
+
+12
+00:00:31,160 --> 00:00:33,110
+et indente automatiquement votre code.
+
+13
+00:00:33,110 --> 00:00:34,710
+Vous pouvez essayer votre code à la volée
+
+14
+00:00:34,710 --> 00:00:37,160
+dans le toplevel OCaml embarqué.
+
+15
+00:00:37,160 --> 00:00:38,350
+Vous n'avez rien à installer
+
+16
+00:00:38,350 --> 00:00:40,230
+pour vous amusez en apprenant OCaml.
+
+17
+00:00:40,230 --> 00:00:42,000
+Nous vous souhaitons autant de plaisir
+que nous en avions eu en apprenant OCaml.
+
+18
+00:00:44,000 --> 00:00:45,410
+Mon nom est Fabrice Le Fessant,
+
+19
+00:00:45,410 --> 00:00:46,750
+Je suis un chercheur à l'INRIA,
+
+20
+00:00:46,750 --> 00:00:50,679
+Je travaille avec OCaml depuis plus de vingt ans.
+
+21
+00:00:50,679 --> 00:00:53,829
+Un jour, j'ai décidé de créer la société OCamlPro.
+
+22
+00:00:53,829 --> 00:00:54,879
+Je suis Mohamed,
+
+23
+00:00:54,879 --> 00:00:59,359
+Pour OCamlPro, je travaille
+sur un logiciel que l'on appelle AltErgo,
+
+24
+00:00:59,359 --> 00:01:01,989
+qui prend en entrée des formules mathématiques,
+
+25
+00:01:01,989 --> 00:01:06,950
+et tente de prouver si elles sont valides ou non.
+
+26
+00:01:06,950 --> 00:01:07,299
+Je suis Thomas.
+
+27
+00:01:07,299 --> 00:01:09,829
+Je travaille comme doctorant chez OCamlPro.
+
+28
+00:01:09,829 --> 00:01:14,049
+Le but de mon travail est de détecter
+
+29
+00:01:14,049 --> 00:01:18,280
+les éventuelles exceptions non rattrapées
+d'un programme OCaml.
+
+30
+00:01:18,280 --> 00:01:19,960
+Je suis Louis Gesbert.
+
+31
+00:01:19,960 --> 00:01:24,210
+Mon principal projet est
+le gestionnaire paquet OPAM,
+
+32
+00:01:24,210 --> 00:01:26,880
+qui est probablement la première chose
+vous installerez
+
+33
+00:01:26,880 --> 00:01:29,869
+si vous voulez continuer avec OCaml.
+
+34
+00:01:29,869 --> 00:01:30,810
+Mon nom est Pierrick,
+
+35
+00:01:30,810 --> 00:01:34,369
+et je suis doctorant chez OCamlPro.
+
+36
+00:01:34,369 --> 00:01:37,079
+Mon travail consiste à améliorer la sécurité
+
+37
+00:01:37,079 --> 00:01:39,930
+et l'exactitude du compilateur OCaml.
+
+38
+00:01:39,930 --> 00:01:45,250
+Oui! Il y a beaucoup de plaisir à travailler
+avec les ingénieurs OCamlPro!
+
+39
+00:01:45,250 --> 00:01:47,430
+Ils travaillent tous sur différents sujets,
+
+40
+00:01:47,430 --> 00:01:48,680
+à la pointe de la recherche,
+
+41
+00:01:48,680 --> 00:01:50,899
+dans différents domaines d'application.
+
+42
+00:01:50,899 --> 00:01:54,000
+Il y a beaucoup de plaisir à travailler avec OCaml.
+
+43
+00:01:54,000 --> 00:02:00,229
+La langue est cool, et en prime, vous travaillez
+toujours sur les problèmes intéressants
+
+44
+00:02:00,229 --> 00:02:02,450
+lorsque vous travaillez sur OCaml.
+
+45
+00:02:02,450 --> 00:02:05,770
+Je pense que OCaml est un langage vraiment cool.
+
+46
+00:02:05,770 --> 00:02:09,840
+Ce qui me plaît en particulier,
+c'est le filtrage de motif,
+
+47
+00:02:09,840 --> 00:02:14,010
+qui résout beaucoup, beaucoup de problèmes.
+
+48
+00:02:14,010 --> 00:02:15,330
+Et le système de type.
+
+49
+00:02:15,330 --> 00:02:19,290
+Même s'il est parfois un peu contraignant
+
+50
+00:02:19,290 --> 00:02:23,690
+---parce que le compilateur dit:
+« Oh non ! Vous ne pouvez pas faire ça ! »---
+
+51
+00:02:23,690 --> 00:02:25,090
+Mais... il a toujours raison!
+
+52
+00:02:25,090 --> 00:02:27,730
+Je aime vraiment OCaml,
+
+53
+00:02:27,730 --> 00:02:29,590
+parce que je sais que quand je programme en OCaml,
+
+54
+00:02:29,590 --> 00:02:34,260
+il existe une gamme d'erreurs
+que je ne vais pas avoir dans mon code.
+
+55
+00:02:34,260 --> 00:02:38,260
+Comme les exceptions de pointeur NULL
+ou les conversions implicites de type.
+
+56
+00:02:38,260 --> 00:02:41,510
+Je pense que je serais triste
+si je dois passer à un autre langage.
+
+57
+00:02:41,510 --> 00:02:45,800
+Je aime vraiment programmer en OCaml chaque jour.
+
+58
+00:02:45,800 --> 00:02:53,300
+Bienvenue à OCaml!

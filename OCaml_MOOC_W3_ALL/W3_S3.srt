@@ -1,0 +1,439 @@
+1
+00:00:00,260 --> 00:00:05,269
+Welcome back to this new sequence.
+
+2
+00:00:05,269 --> 00:00:10,200
+During this sequence,
+we will implement a story generator.
+
+3
+00:00:10,200 --> 00:00:15,740
+You already have seen that types play
+a central part in OCaml programming.
+
+4
+00:00:15,740 --> 00:00:23,160
+And there is a very common motto
+among OCaml programmers, saying that
+
+5
+00:00:23,160 --> 00:00:31,500
+when you have written the right type declarations,
+then you are not too far from writing the right program.
+
+6
+00:00:31,570 --> 00:00:38,500
+And that's why we will follow
+that kind of programming method,
+
+7
+00:00:38,500 --> 00:00:44,100
+called the "typed-directed" programming method,
+to implement our story generator.
+
+8
+00:00:46,399 --> 00:00:52,579
+So let us now look at an implementation
+of a story generator.
+
+9
+00:00:54,900 --> 00:01:03,000
+What I want to illustrate in this demo
+is that you can first write
+
+10
+00:01:03,000 --> 00:01:08,280
+very specific type declarations in OCaml
+to specify your problem,
+
+11
+00:01:08,280 --> 00:01:14,180
+the structure of what you are trying to compute.
+
+12
+00:01:14,180 --> 00:01:19,500
+And after that you just have to follow the
+structure of these types
+
+13
+00:01:19,500 --> 00:01:26,810
+to find what kind of functions must be implemented.
+
+14
+00:01:26,810 --> 00:01:33,670
+I won't give all the details of this implementation,
+but you can find it online.
+
+15
+00:01:33,670 --> 00:01:38,200
+So let us start with the type declaration.
+
+16
+00:01:38,200 --> 00:01:43,650
+To implement a story generator, you have to
+understand what a story is.
+
+17
+00:01:44,600 --> 00:01:52,500
+We can say that a story is an initial context
+where the story begins.
+
+18
+00:01:54,000 --> 00:02:02,140
+In this context, there is a perturbation event,
+something that happens.
+
+19
+00:02:02,140 --> 00:02:09,090
+And these things generate an adventure,
+a list of events
+
+20
+00:02:09,090 --> 00:02:15,400
+that will get us to the conclusion of the
+story which is usually a context
+
+21
+00:02:15,400 --> 00:02:22,849
+in which the characters are happy.
+
+22
+00:02:22,849 --> 00:02:28,370
+So <u>context</u> is formed by a list of character.
+
+23
+00:02:28,370 --> 00:02:38,739
+And a <u>character</u> will be characterized by a
+<u>name</u>, a <u>state</u> and a <u>location</u>.
+
+24
+00:02:38,739 --> 00:02:46,590
+Now we again have to refine this definition
+by saying that an <u>event</u> may be
+
+25
+00:02:48,000 --> 00:02:52,529
+external, it can be done by the environment
+on the character.
+
+26
+00:02:52,529 --> 00:02:53,769
+Something happens
+
+27
+00:02:53,769 --> 00:03:04,870
+Or it can also be an action of the character
+on the context.
+
+28
+00:03:04,870 --> 00:03:10,749
+So now we have the general structure
+of a story,
+
+29
+00:03:10,749 --> 00:03:21,700
+and we can try to find nice examples of what,
+for instance, can be the <u>state</u> of a character.
+
+30
+00:03:21,749 --> 00:03:27,349
+A character can be <u>Happy</u> or <u>Hungry</u>
+in our case.
+
+31
+00:03:30,389 --> 00:03:39,150
+And in our story a character can do two things,
+it can eat or go to the restaurant.
+
+32
+00:03:40,100 --> 00:03:48,300
+It can also be located in two different places:
+an apartment or the restaurant.
+
+33
+00:03:48,349 --> 00:03:52,139
+And we are finished
+with the type declarations, and in fact,
+
+34
+00:03:52,139 --> 00:03:59,040
+that's a really important information
+for the development.
+
+35
+00:03:59,040 --> 00:04:04,000
+To understand that I will show you several
+functions that are directed
+
+36
+00:04:04,500 --> 00:04:07,909
+by the shape of this type declaration.
+
+37
+00:04:07,909 --> 00:04:14,090
+The first one is the function named <u>make_story</u>.
+
+38
+00:04:15,000 --> 00:04:17,320
+So here it is.
+
+39
+00:04:17,320 --> 00:04:22,080
+<u>make_story</u>, here, takes an initial context,
+
+40
+00:04:23,690 --> 00:04:28,130
+chooses randomly a perturbation,
+
+41
+00:04:28,750 --> 00:04:33,200
+something that happens in the initial context.
+
+42
+00:04:33,200 --> 00:04:42,090
+And after that, <u>make_story</u> tries to end
+the story by finding a sequence of events that
+
+43
+00:04:42,090 --> 00:04:48,100
+leads to a context which is happy.
+
+44
+00:04:48,100 --> 00:04:51,010
+In the end the story is:
+
+45
+00:04:51,010 --> 00:04:56,690
+the initial context, the perturbation,
+the adventure, and the conclusion,
+
+46
+00:04:56,690 --> 00:05:00,750
+which has been built by the previous two functions.
+
+47
+00:05:03,970 --> 00:05:07,310
+Now how do you end a story ?
+
+48
+00:05:07,310 --> 00:05:14,030
+It's a recursive function that recurses as
+long as the context is not happy.
+
+49
+00:05:14,030 --> 00:05:18,820
+So when it is happy you have finished and
+you can return the list of events
+
+50
+00:05:18,820 --> 00:05:23,480
+that you have accumulated along the recursion.
+
+51
+00:05:23,480 --> 00:05:28,100
+Otherwise you have to find something
+that can happen.
+
+52
+00:05:28,140 --> 00:05:29,840
+An event.
+
+53
+00:05:29,840 --> 00:05:39,700
+And this event leads to a new context
+on which we do a recursive call.
+
+54
+00:05:39,780 --> 00:05:44,300
+What does that mean to be a happy context ?
+
+55
+00:05:44,300 --> 00:05:48,400
+Well, we have the characters of our context,
+
+56
+00:05:48,400 --> 00:05:57,000
+and we will say that if all the characters are happy,
+then we are in a happy context.
+
+57
+00:05:57,090 --> 00:06:02,410
+So as you can see, and you can continue to analyze
+this program like that,
+
+58
+00:06:04,040 --> 00:06:10,920
+the functions are pretty simple because all
+the intelligence to solve this problem was
+
+59
+00:06:10,920 --> 00:06:12,400
+in the type declaration.
+
+60
+00:06:13,320 --> 00:06:18,000
+The only thing that you do when you implement
+a function is to follow the structure
+
+61
+00:06:18,000 --> 00:06:22,250
+of the types that you have defined.
+
+62
+00:06:22,250 --> 00:06:29,750
+So at the end, once you have been able to
+generate a story, you can tell it.
+
+63
+00:06:30,860 --> 00:06:42,100
+So again, by following the structure of the types, 
+you can write a function of the type <u>story -> string</u>.
+
+64
+00:06:42,120 --> 00:06:47,590
+This is for instance how you tell story, you
+start with "Once upon a time".
+
+65
+00:06:47,590 --> 00:06:50,810
+Then you tell what is the initial context.
+
+66
+00:06:50,810 --> 00:06:57,630
+You say that one day something wrong happened
+and you describe this event.
+
+67
+00:06:58,420 --> 00:07:02,060
+After that you tell the adventure of the story.
+
+68
+00:07:02,830 --> 00:07:07,790
+And you conclude by saying that
+"At the end, the peace was restored".
+
+69
+00:07:09,310 --> 00:07:11,210
+And you describe the final context.
+
+70
+00:07:11,850 --> 00:07:21,200
+So for instance, here is a story that is starting with
+Sophie, at the apartment, being happy,
+
+71
+00:07:21,200 --> 00:07:25,110
+and Socrate, at the apartment too, being happy.
+
+72
+00:07:27,790 --> 00:07:33,220
+So we just have seen that types are very convenient
+to direct the programmer
+
+73
+00:07:33,220 --> 00:07:36,960
+into what must be implemented and when.
+
+74
+00:07:36,960 --> 00:07:42,180
+But for the moment, we must admit
+that our stories are a bit boring.
+
+75
+00:07:43,310 --> 00:07:51,530
+We want to adjust some type declarations
+in order to improve the quality of these stories.
+
+76
+00:07:51,530 --> 00:07:59,460
+What we will see is the fact that the type checker
+is able to assist us by pinpointing
+
+77
+00:07:59,460 --> 00:08:03,110
+what part of the code must be updated
+
+78
+00:08:03,110 --> 00:08:09,770
+So now we will assume that our characters
+are zombies and the restaurant can be closed.
+
+79
+00:08:12,950 --> 00:08:18,420
+So now if we want to generate
+more interesting stories
+
+80
+00:08:18,420 --> 00:08:23,000
+we may want to assume that
+our characters are zombies
+
+81
+00:08:23,000 --> 00:08:31,000
+and so they are able to do an extra action,
+which is...
+
+82
+00:08:31,000 --> 00:08:33,870
+eating a human!
+
+83
+00:08:33,870 --> 00:08:39,850
+So we have to change the type that describes
+the possible actions for our characters
+
+84
+00:08:39,850 --> 00:08:48,570
+and this change, of course, has an impact
+on the functions that must be written.
+
+85
+00:08:49,960 --> 00:08:56,730
+The idea is that if I ask the type checker
+to now verify my program
+
+86
+00:08:56,730 --> 00:09:00,550
+it will pinpoint what functions should be updated.
+
+87
+00:09:01,200 --> 00:09:10,240
+Here for instance, I can read that a function
+is now not exhaustive
+
+88
+00:09:10,580 --> 00:09:16,240
+because I must deal with the case where the
+action is eating a human.
+
+89
+00:09:18,920 --> 00:09:23,900
+So another remark is how concise
+you can write your program.
+
+90
+00:09:25,690 --> 00:09:33,550
+In the first version of our story teller,
+we had to write 178 lines of code.
+
+91
+00:09:34,250 --> 00:09:42,690
+In fact, a skilled OCaml programmer would
+have written the same code in less lines.
+
+92
+00:09:44,770 --> 00:09:53,810
+And his secret is to replace that kind of
+function using a one-liner like this.
+
+93
+00:09:53,810 --> 00:10:01,130
+And the basic ingredient of this secret is
+to use higher-order functions.
+
+94
+00:10:01,130 --> 00:10:04,230
+Fortunately for you,
+this is the next week's topic.
+

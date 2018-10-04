@@ -1,0 +1,435 @@
+1
+00:00:07,759 --> 00:00:13,879
+Bonjour à tous, et bienvenue à cette nouvelle semaine
+sur la programmation fonctionnelle en OCaml
+
+2
+00:00:14,640 --> 00:00:19,380
+Dans les deux semaines suivantes,
+nous reviendrons sur les types,
+
+3
+00:00:19,500 --> 00:00:26,570
+et en particulier, comment structurer
+votre code et vos données en utilisant des types.
+
+4
+00:00:26,570 --> 00:00:31,760
+Cette semaine, nous allons d'abord apprendre
+à définir nos propres types.
+
+5
+00:00:31,780 --> 00:00:35,710
+Et pour cela, on aura besoin de plusieurs ingrédients :
+
+6
+00:00:35,710 --> 00:00:39,949
+les n-uplets, les records et les tableaux.
+
+7
+00:00:39,949 --> 00:00:44,670
+Pour finir, nous les utiliserons pour
+programmer une petite base de données typée.
+
+8
+00:00:44,670 --> 00:00:52,179
+Une utilisation primaire des types est de documenter
+le code, pour expliquer à un autre programmeur
+
+9
+00:00:52,179 --> 00:00:58,190
+comment utiliser les types primitifs pour coder
+une forme spécifique d'information.
+
+10
+00:00:58,190 --> 00:01:05,800
+Par exemple, on peut encoder un jour de la semaine
+en choisissant 0 pour représenter lundi
+
+11
+00:01:05,800 --> 00:01:10,310
+en choisissant 1 pour représenter mardi, etc.
+
+12
+00:01:10,310 --> 00:01:14,350
+On obtient au final un sous-ensemble de <u>int</u>.
+
+13
+00:01:14,350 --> 00:01:23,000
+Et on peut avoir envie de nommer ce sous-ensemble
+en utilisant un identificateur de type.
+
+14
+00:01:23,000 --> 00:01:34,390
+On peut ajouter un invariant informel indiquant qu'un
+entier <u>x</u> est un jour valide s'il est entre 0 et 6.
+
+15
+00:01:34,390 --> 00:01:46,000
+Ensuite, on peut utiliser cet identificateur de type
+dans le type d'une fonction travaillant sur des jours.
+
+16
+00:01:46,020 --> 00:01:53,460
+Ainsi, on peut documenter le fait que tous les entiers
+ne peuvent pas être utilisés en entrée de cette
+
+17
+00:01:53,460 --> 00:01:58,220
+fonction mais seulement ceux compris entre 0 et 6.
+
+18
+00:01:58,220 --> 00:02:02,940
+Voyons maintenant des exemples de définitions de type.
+
+19
+00:02:06,070 --> 00:02:13,700
+Prenons la définition d'un type pour la couleur.
+
+20
+00:02:13,700 --> 00:02:21,079
+Nous allons écrire cette définition, en disant
+qu'une couleur est représentée par un entier.
+
+21
+00:02:21,079 --> 00:02:28,030
+Et après ça, on peut déclarer
+rouge comme une couleur,
+
+22
+00:02:28,030 --> 00:02:36,800
+avec deux points <u>:</u>, puis le nom du type que nous
+voulons assigner à cet identificateur, qui est <u>color</u>.
+
+23
+00:02:36,879 --> 00:02:43,409
+Et donc, on peut simplement choisir 0,
+comme étant l'entier qui définit <u>rouge</u>.
+
+24
+00:02:43,409 --> 00:02:49,139
+Et bien sûr, on peut définir de nombreuses couleurs
+de cette façon.
+
+25
+00:02:49,139 --> 00:02:55,639
+Maintenant, définissons une autre abréviation de type
+pour les entiers positifs.
+
+26
+00:02:55,639 --> 00:03:03,019
+Nous recommençons à introduire un nom pour le type
+des entiers positifs,
+
+27
+00:03:03,019 --> 00:03:06,870
+et il sera égal aux entiers.
+
+28
+00:03:06,870 --> 00:03:11,070
+Celui que nous connaissons déjà.
+
+29
+00:03:15,269 --> 00:03:18,400
+Maintenant, imaginons que l'on souhaite réaliser
+la fonction <u>absolute</u>
+
+30
+00:03:18,400 --> 00:03:24,519
+qui transforme un entier positif ou négatif
+en un nombre entier positif.
+
+31
+00:03:24,519 --> 00:03:31,230
+On voudra peut-être documenter cela
+en disant que cela prend un argument qui est un <u>int</u>,
+
+32
+00:03:31,230 --> 00:03:33,930
+qui peut être positif ou négatif.
+
+33
+00:03:33,930 --> 00:03:42,840
+Et le fait qu'on doit renvoyer <u>-x</u> lorsque <u>x</u>
+est inférieur à 0, et <u>x</u> quand <u>x</u> est supérieur à 0,
+
+34
+00:03:42,840 --> 00:03:52,980
+indique que le résultat de cette expression
+est un nombre positif.
+
+35
+00:03:55,359 --> 00:03:59,189
+Donc, on a attribué un type à une sous-expression.
+
+36
+00:03:59,189 --> 00:04:06,400
+En fait, vous pouvez également attribuer un type
+au résultat d'une fonction,
+
+37
+00:04:06,400 --> 00:04:12,340
+en utilisant seulement deux points,
+puis le nom du type du résultat
+
+38
+00:04:12,340 --> 00:04:15,430
+juste avant le signe égal.
+
+39
+00:04:15,430 --> 00:04:21,210
+Et nous obtenons exactement la même réponse
+à partir du toplevel.
+
+40
+00:04:23,490 --> 00:04:28,780
+Maintenant que nous avons vu plusieurs exemples
+de types définis par l'utilisateur,
+
+41
+00:04:28,780 --> 00:04:32,980
+passons en revue la règle générale pour la syntaxe.
+
+42
+00:04:32,980 --> 00:04:40,380
+On doit d'abord utiliser le mot-clé <u>type</u>, suivi par
+l'identificateur de type que l'on a choisi.
+
+43
+00:04:40,380 --> 00:04:46,850
+Et puis, après le signe égal,
+on doit juste écrire la définition du type.
+
+44
+00:04:47,700 --> 00:04:58,280
+Nous disons que ce nouvel identificateur de type
+est un synonyme ou une abréviation de <u>some_type</u>.
+
+45
+00:04:58,280 --> 00:05:04,330
+L'identificateur doit
+commencer par une lettre minuscule.
+
+46
+00:05:04,330 --> 00:05:10,260
+Pour le moment, nous n'utiliserons que les types
+primitifs que nous connaissons pour <u>some_type</u> :
+
+47
+00:05:10,260 --> 00:05:16,030
+<u>int</u>, <u>bool</u>, <u>string</u>, <u>char</u> et <u>float</u>.
+
+48
+00:05:16,030 --> 00:05:20,980
+Mais nous allons bientôt découvrir
+plusieurs nouvelles constructions de type.
+
+49
+00:05:20,980 --> 00:05:29,130
+Un identificateur de type nouvellement introduit
+peut servir à contraindre une expression
+
+50
+00:05:29,130 --> 00:05:32,730
+ou une définition à être d'un certain type.
+
+51
+00:05:32,730 --> 00:05:36,200
+Ceci est appelé une annotation de type.
+
+52
+00:05:36,200 --> 00:05:40,370
+Pour annoter un identificateur avec un type,
+on utilise les deux points
+
+53
+00:05:40,370 --> 00:05:47,930
+et juste après les deux points on écrit le type
+que l'on souhaite attribuer à l'identificateur.
+
+54
+00:05:47,930 --> 00:05:52,330
+Si on souhaite annoter
+un argument de fonction avec un type
+
+55
+00:05:52,330 --> 00:06:00,920
+il suffit d'utiliser une parenthèse,
+le nom de l'argument, un deux-points,
+
+56
+00:06:00,920 --> 00:06:05,700
+et ensuite,
+le type que l'on souhaite utiliser pour <u>x</u>.
+
+57
+00:06:07,900 --> 00:06:13,300
+On peut également contraindre le type du résultat
+d'une fonction à l'aide de deux points,
+
+58
+00:06:13,300 --> 00:06:19,000
+et le type attendu de ce résultat
+juste avant le symbole d'égalité.
+
+59
+00:06:19,000 --> 00:06:25,020
+De façon générale, on peut contraindre le type de
+toute sous-expression d'un programme.
+
+60
+00:06:25,020 --> 00:06:33,840
+Pour cela, on met des parenthèses autour de cette
+expression, et juste avant la parenthèse fermante,
+
+61
+00:06:33,840 --> 00:06:40,020
+on ajoute deux points suivi du type
+voulu pour cette expression.
+
+62
+00:06:42,300 --> 00:06:47,050
+Vous devez comprendre qu'en OCaml,
+les types sont statiques,
+
+63
+00:06:47,050 --> 00:06:53,080
+ce qui signifie qu'ils n'ont aucun
+impact sur l'exécution du programme.
+
+64
+00:06:53,080 --> 00:07:02,900
+Cela signifie que, lorsque vous avez un type <u>t</u>
+qui est égal à <u>int</u>, et une <u>x</u> de type <u>t</u>,
+
+65
+00:07:02,900 --> 00:07:05,700
+alors ce <u>x</u> est également de type <u>int</u>, et
+
+66
+00:07:05,700 --> 00:07:15,520
+une valeur de type <u>t</u> est représentée exactement
+comme une valeur de type <u>int</u> en machine.
+
+67
+00:07:17,910 --> 00:07:24,949
+Quel genre d'erreur risque-t-on d'avoir lorsqu'on
+utilise ses propres définitions de type?
+
+68
+00:07:26,360 --> 00:07:32,800
+La première et la plus courante est
+lorsqu'on interagit avec le toplevel OCaml,
+
+69
+00:07:32,800 --> 00:07:39,190
+et qu'on a choisi le même identificateur de type
+pour plusieurs définitions.
+
+70
+00:07:39,190 --> 00:07:47,200
+Alors, des messages d'erreur très bizarres peuvent
+apparaître, comme dans les exemples suivants.
+
+71
+00:07:49,400 --> 00:07:54,650
+Définissons d'abord
+un type <u>t</u> qui est égal à <u>int</u>.
+
+72
+00:07:54,650 --> 00:08:03,490
+Et juste après, une définition pour un
+identificateur <u>x</u> de type <u>t</u> égal à 0.
+
+73
+00:08:03,490 --> 00:08:09,150
+Et maintenant, un type <u>t</u> qui est égal à <u>bool</u>.
+
+74
+00:08:09,150 --> 00:08:15,570
+Donc, j'ai réutilisé le même nom
+que celui de ma définition de type précédente.
+
+75
+00:08:15,570 --> 00:08:23,400
+Ce nom peut être utilisé dans la définition
+d'une fonction qui attend une valeur de type <u>t</u>.
+
+76
+00:08:23,460 --> 00:08:31,160
+Par exemple,
+pour appliquer la fonction <u>not</u> à cet argument.
+
+77
+00:08:33,829 --> 00:08:39,690
+Maintenant, si j'applique <u>f</u> à <u>x</u>
+alors bien sûr cela est invalide,
+
+78
+00:08:39,690 --> 00:08:47,130
+parce que ce <u>x</u> a bien le type <u>t</u> mais
+c'est une nouvelle version du type <u>t</u>,
+
+79
+00:08:47,130 --> 00:08:51,740
+tandis que <u>f</u> attend une valeur de la deuxième
+version du type <u>t</u>.
+
+80
+00:08:51,740 --> 00:09:00,000
+Effectivement, vous pouvez remarquer que OCaml
+indique le numéro de cette version
+
+81
+00:09:00,000 --> 00:09:06,740
+qu'il utilise en interne pour
+faire la distinction entre ces deux types.
+
+82
+00:09:06,740 --> 00:09:14,370
+Il y a une autre sorte d'erreur que l'on peut
+faire lorsqu'on utilise les synonymes de type.
+
+83
+00:09:14,370 --> 00:09:18,380
+C'est plus une erreur de sémantique.
+
+84
+00:09:18,380 --> 00:09:26,680
+Par exemple, si on a introduit un type
+pour les entiers positifs, comme ceci,
+
+85
+00:09:26,680 --> 00:09:32,900
+il faut comprendre que ce nom <u>positif</u>
+est seulement une documentation,
+
+86
+00:09:32,900 --> 00:09:43,000
+et rien ne garantit statiquement que les
+valeurs de ce type sont bien positives.
+
+87
+00:09:43,070 --> 00:09:47,690
+Par exemple, on peut parfaitement écrire
+la définition suivante
+
+88
+00:09:47,690 --> 00:09:55,110
+disant que <u>x</u>, égal à <u>-1</u>,
+est de type <u>positif</u>,
+
+89
+00:09:55,110 --> 00:10:02,170
+parce que <u>-1</u> est un <u>int</u>, cette définition
+est donc acceptée par le vérificateur de type.
+
+90
+00:10:02,170 --> 00:10:08,450
+Heureusement, le système de type OCaml
+nous aidera à définir des types plus précis,
+
+91
+00:10:08,450 --> 00:10:13,630
+afin de pouvoir
+capturer ce genre de propriété statique.

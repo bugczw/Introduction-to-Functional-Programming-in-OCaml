@@ -1,0 +1,433 @@
+1
+00:00:07,759 --> 00:00:13,879
+Hello everyone, and welcome  to this new week
+about functional programming in OCaml
+
+2
+00:00:14,640 --> 00:00:19,380
+In the following two weeks we will come back on types,
+
+3
+00:00:19,500 --> 00:00:26,570
+and in particular, how you can structure
+your code and your data using types
+
+4
+00:00:26,570 --> 00:00:31,760
+This week,
+we will first learn how to define our own types.
+
+5
+00:00:31,780 --> 00:00:35,710
+And to do so, we will need several ingredients.
+
+6
+00:00:35,710 --> 00:00:39,949
+Tuples, records, and arrays.
+
+7
+00:00:39,949 --> 00:00:44,670
+Finally,
+we will use them to program a small typed database.
+
+8
+00:00:44,670 --> 00:00:52,179
+A primary usage of types is to document your code,
+in order to explain to other programmer
+
+9
+00:00:52,179 --> 00:00:58,190
+how you use primitive types
+in order to encode some specific form of information.
+
+10
+00:00:58,190 --> 00:01:05,800
+For example, you may want to encode the day of the week by choosing zero to represent Monday,
+
+11
+00:01:05,800 --> 00:01:10,310
+by choosing one to represent Tuesday, and so on...
+
+12
+00:01:10,310 --> 00:01:14,350
+What you get in the end is a subset of <u>int</u>.
+
+13
+00:01:14,350 --> 00:01:23,000
+And maybe you want to "name"
+this subset using a type identifier.
+
+14
+00:01:23,000 --> 00:01:34,390
+So that, you can carry an informal invariant
+that an integer <u>x</u> is a valid day if it is between 0 and 6.
+
+15
+00:01:34,390 --> 00:01:46,000
+Then, you can use this type identifier in the type
+of a function that must work on the day of the week.
+
+16
+00:01:46,020 --> 00:01:53,460
+So you can document the fact that not every
+integer can be used as input of this function
+
+17
+00:01:53,460 --> 00:01:58,220
+but only integers between 0 and 6.
+
+18
+00:01:58,220 --> 00:02:02,940
+We will now see examples of type definitions.
+
+19
+00:02:06,070 --> 00:02:13,700
+Let us consider the definition of a type for color.
+
+20
+00:02:13,700 --> 00:02:21,079
+We will write this definition,
+saying that a color is represented by an integer.
+
+21
+00:02:21,079 --> 00:02:28,030
+And after that,
+we can declare the red to be a color,
+
+22
+00:02:28,030 --> 00:02:36,800
+by using the colon, followed by the name of the type
+we want to assign to this identifier, which is <u>color</u>.
+
+23
+00:02:36,879 --> 00:02:43,409
+And then, we can just choose 0,
+which is an integer to define <u>red</u>.
+
+24
+00:02:43,409 --> 00:02:49,139
+And of course,
+we can do that to define many colors.
+
+25
+00:02:49,139 --> 00:02:55,639
+Now, let us define another type abbreviation
+for positive integers.
+
+26
+00:02:55,639 --> 00:03:03,019
+Again,
+we introduce a name for the type of positive integers,
+
+27
+00:03:03,019 --> 00:03:06,870
+and it will be equal to integers.
+
+28
+00:03:06,870 --> 00:03:11,070
+The one that we already know.
+
+29
+00:03:15,269 --> 00:03:18,400
+Now imagine that you want to implement
+the <u>absolute</u> function
+
+30
+00:03:18,400 --> 00:03:24,519
+that turns a positive or negative integer
+into a positive integer.
+
+31
+00:03:24,519 --> 00:03:31,230
+You may want to document that fact
+by saying that it takes an argument which is an int,
+
+32
+00:03:31,230 --> 00:03:33,930
+which can be positive or negative.
+
+33
+00:03:33,930 --> 00:03:42,840
+And the fact that you return minus <u>x</u> when <u>x</u>
+is less than 0, and <u>x</u> when <u>x</u> is greater than 0,
+
+34
+00:03:42,840 --> 00:03:52,980
+means that
+the result of this expression is a positive number.
+
+35
+00:03:55,359 --> 00:03:59,189
+So we have assigned a type to a subexpression.
+
+36
+00:03:59,189 --> 00:04:06,400
+In fact you can also assign a type
+to the return of a function,
+
+37
+00:04:06,400 --> 00:04:12,340
+just by using colon,
+followed by the name of the returned type,
+
+38
+00:04:12,340 --> 00:04:15,430
+just before the equal sign.
+
+39
+00:04:15,430 --> 00:04:21,210
+And we get exactly the same answer
+from the toplevel.
+
+40
+00:04:23,490 --> 00:04:28,780
+Now that we have seen several examples
+of user defined type definitions,
+
+41
+00:04:28,780 --> 00:04:32,980
+let us review the general rule for the syntax.
+
+42
+00:04:32,980 --> 00:04:40,380
+You have to use first the keyword <u>type</u>,
+followed by a type identifier that you have chosen.
+
+43
+00:04:40,380 --> 00:04:46,850
+And then, after the equal sign,
+you just have to write the type definition.
+
+44
+00:04:47,700 --> 00:04:58,280
+So we say that this new type identifier is
+a synonym or an abbreviation for <u>some_type</u>.
+
+45
+00:04:58,280 --> 00:05:04,330
+The identifier must
+start with a lowercase letter.
+
+46
+00:05:04,330 --> 00:05:10,260
+For the moment, we will only use the primitive
+types that we know for <u>some_type</u>:
+
+47
+00:05:10,260 --> 00:05:16,030
+<u>int</u>, <u>bool</u>, <u>string</u>, <u>char</u> and <u>float</u>.
+
+48
+00:05:16,030 --> 00:05:20,980
+But we will discover
+several new type constructions soon.
+
+49
+00:05:20,980 --> 00:05:29,130
+After you have introduced a new type identifier
+you can use it to constrain an expression
+
+50
+00:05:29,130 --> 00:05:32,730
+or a definition to be of some type.
+
+51
+00:05:32,730 --> 00:05:36,200
+This is called a type annotation.
+
+52
+00:05:36,200 --> 00:05:40,370
+To annotate an identifier with a type,
+you use the colon
+
+53
+00:05:40,370 --> 00:05:47,930
+and just after the colon you write the type
+you want to assign to the identifier.
+
+54
+00:05:47,930 --> 00:05:52,330
+If you want to annotate
+a function argument with a type
+
+55
+00:05:52,330 --> 00:06:00,920
+you just use a parenthesis,
+the name of your argument, a colon,
+
+56
+00:06:00,920 --> 00:06:05,700
+and after that,
+the type you want to use for <u>x</u>.
+
+57
+00:06:07,900 --> 00:06:13,300
+You can also constrain the return type
+of a function by using a colon,
+
+58
+00:06:13,300 --> 00:06:19,000
+and the type of this return type
+just before the equal symbol.
+
+59
+00:06:19,000 --> 00:06:25,020
+In general, you can constraint the type of
+any subexpression of your program.
+
+60
+00:06:25,020 --> 00:06:33,840
+To do so, you use parenthesis around this expression,
+and just before the closing parenthesis,
+
+61
+00:06:33,840 --> 00:06:40,020
+you add a colon with the type
+that you want to ascribe to this expression.
+
+62
+00:06:42,300 --> 00:06:47,050
+You have to understand that in OCaml:
+types are static,
+
+63
+00:06:47,050 --> 00:06:53,080
+which means that they do not have
+an impact on the program execution.
+
+64
+00:06:53,080 --> 00:07:02,900
+This means that, when you have a type <u>t</u>
+which is equal to <u>int</u>, and an <u>x</u> of type <u>t</u>,
+
+65
+00:07:02,900 --> 00:07:05,700
+then this <u>x</u> is also of type <u>int</u>,
+
+66
+00:07:05,700 --> 00:07:15,520
+which means that a value of type <u>t</u> is represented
+exactly as a value of type <u>int</u> in the machine.
+
+67
+00:07:17,910 --> 00:07:24,949
+Now, what kind of programming error
+you can do when you use your own type definitions ?
+
+68
+00:07:26,360 --> 00:07:32,800
+The first and most common one is
+when you interact with the OCaml toplevel,
+
+69
+00:07:32,800 --> 00:07:39,190
+and you have chosen the same
+type identifier for several definitions.
+
+70
+00:07:39,190 --> 00:07:47,200
+In that case, we will see in the following
+examples that you can get very weird error messages.
+
+71
+00:07:49,400 --> 00:07:54,650
+Let us first define
+a type <u>t</u> which is equal to <u>int</u>.
+
+72
+00:07:54,650 --> 00:08:03,490
+And right after that, a definition
+for an identifier <u>x</u>of type <u>t</u> which is equal to zero.
+
+73
+00:08:03,490 --> 00:08:09,150
+And now, a type <u>t</u> which is equal to <u>bool</u>.
+
+74
+00:08:09,150 --> 00:08:15,570
+So I reused the same name
+as the one of my previous type definition.
+
+75
+00:08:15,570 --> 00:08:23,400
+This name can be used in the definition of
+a function that is expecting a value of type <u>t</u>.
+
+76
+00:08:23,460 --> 00:08:31,160
+For instance,
+to apply the <u>not</u> function to this argument.
+
+77
+00:08:33,829 --> 00:08:39,690
+Now, if I apply <u>f</u> to <u>x</u> then of course this is invalid,
+
+78
+00:08:39,690 --> 00:08:47,130
+because this <u>x</u> has indeed a type <u>t</u> but
+this is a further version of the type <u>t</u>,
+
+79
+00:08:47,130 --> 00:08:51,740
+while <u>f</u> is expecting a value of the second
+version of the type <u>t</u>.
+
+80
+00:08:51,740 --> 00:09:00,000
+Indeed, you can notice that OCaml
+shows you the number of this version
+
+81
+00:09:00,000 --> 00:09:06,740
+that it is using internally
+to distinguish between this two types.
+
+82
+00:09:06,740 --> 00:09:14,370
+There is another kind of error
+that you can do when you use type synonyms.
+
+83
+00:09:14,370 --> 00:09:18,380
+It's more a semantics error.
+
+84
+00:09:18,380 --> 00:09:26,680
+For instance, if you have introduced a type
+for positive integers, like this.
+
+85
+00:09:26,680 --> 00:09:32,900
+You have to understand that this name <u>positive</u>
+is only a documentation,
+
+86
+00:09:32,900 --> 00:09:43,000
+and you do not have the static guaranty that
+every value of this type is actually a positive integer.
+
+87
+00:09:43,070 --> 00:09:47,690
+For instance,
+you can perfectly write the following definition
+
+88
+00:09:47,690 --> 00:09:55,110
+saying that <u>x</u>, which is equal to
+minus one, has type <u>positive</u>.
+
+89
+00:09:55,110 --> 00:10:02,170
+Because minus one is an <u>int</u>,
+so this definition is accepted by the type checker.
+
+90
+00:10:02,170 --> 00:10:08,450
+Fortunately, the OCaml type system
+will help us define more precise types,
+
+91
+00:10:08,450 --> 00:10:13,630
+in order to be able to
+catch that kind of properties statically.
+

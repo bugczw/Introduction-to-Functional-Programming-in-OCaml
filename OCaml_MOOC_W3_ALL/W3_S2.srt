@@ -1,0 +1,357 @@
+1
+00:00:00,400 --> 00:00:01,449
+Welcome back
+
+2
+00:00:01,449 --> 00:00:09,000
+In this sequence we will see that not only
+recursive type can be used to define
+
+3
+00:00:09,000 --> 00:00:16,880
+list-like data structures but in fact they are
+general enough to define tree-like representation.
+
+4
+00:00:18,100 --> 00:00:23,920
+And to understand that we will comeback on
+our examples for databases.
+
+5
+00:00:25,009 --> 00:00:32,309
+So  the type for databases can be now the followings
+sum type.
+
+6
+00:00:33,200 --> 00:00:40,200
+A database can be empty in which case it
+has no contact.
+
+7
+00:00:40,200 --> 00:00:51,960
+Or can be a node that has a contact in the
+node and a left child database and a right
+
+8
+00:00:51,960 --> 00:00:54,280
+child database.
+
+9
+00:00:54,280 --> 00:01:01,860
+So this is really a tree like representation
+of a database but we will also enforce an
+
+10
+00:01:01,860 --> 00:01:04,800
+invariant in that data structure.
+
+11
+00:01:05,440 --> 00:01:13,950
+The fact that if you have some <u>DataNode</u> with
+a child <u>left</u>, a contact <u>c</u> and a right child
+
+12
+00:01:13,970 --> 00:01:24,130
+<u>right</u> it is well formed if every contact
+in <u>left</u> is lexicographically smaller than
+
+13
+00:01:24,130 --> 00:01:31,950
+<u>c</u> and every every contact in <u>right</u> is
+lexicographically greater than <u>c</u>.
+
+14
+00:01:31,950 --> 00:01:39,970
+So for instance this is an example of a representation
+of a database in the machine.
+
+15
+00:01:40,780 --> 00:01:48,040
+What you get is a root with a <u>DataNode</u> containing
+the contact <u>luke</u>.
+
+16
+00:01:48,840 --> 00:01:56,560
+On the left there is another <u>DataNode</u> that
+has no child but a contact named <u>leila</u>.
+
+17
+00:01:58,180 --> 00:02:05,340
+And on the right you another <u>DataNode</u> with
+no child but a contact named <u>yoda</u>.
+
+18
+00:02:07,100 --> 00:02:14,720
+And this value is indeed valid with respect
+to our invariant.
+
+19
+00:02:14,730 --> 00:02:19,859
+So let us comeback to our search function
+in the database.
+
+20
+00:02:19,859 --> 00:02:23,959
+It is now a tree traversal define by induction.
+
+21
+00:02:25,900 --> 00:02:32,739
+So in the case where <u>NoContact</u> is the database
+it means that the database is empty.
+
+22
+00:02:32,739 --> 00:02:34,800
+So we return an error.
+
+23
+00:02:35,100 --> 00:02:40,960
+Otherwise if the database is composed of a node
+then there are several cases.
+
+24
+00:02:42,499 --> 00:02:51,099
+If the contact on the node has the same name
+as the name you are looking for then you have found
+
+25
+00:02:51,099 --> 00:02:53,930
+the contact and you just have to return it.
+
+26
+00:02:53,930 --> 00:03:00,239
+If the name you are looking for is smaller
+than the name of the contact on the node then
+
+27
+00:03:00,860 --> 00:03:02,380
+you have to go on the left.
+
+28
+00:03:03,640 --> 00:03:11,559
+Otherwise if the name is greater than the
+name of the contact on the node you just have
+
+29
+00:03:11,559 --> 00:03:13,260
+to go on the right.
+
+30
+00:03:13,260 --> 00:03:21,100
+In the worst case this function is unable
+to find the contact you are looking for.
+
+31
+00:03:21,760 --> 00:03:26,800
+So it means it has to traverse all the tree
+from the root to the leafs.
+
+32
+00:03:28,389 --> 00:03:36,329
+So the number of nodes that we will cross
+along that path will be bounded by the height
+
+33
+00:03:36,329 --> 00:03:37,730
+of the tree.
+
+34
+00:03:37,730 --> 00:03:45,170
+In the opposite the array-base implementation
+that we have done last week
+
+35
+00:03:46,829 --> 00:03:50,709
+we had to traverse the entire database.
+
+36
+00:03:51,900 --> 00:03:56,440
+So it is unlikely that the height of the tree
+is equal to the number of contacts
+
+37
+00:03:56,959 --> 00:04:01,339
+otherwise this would mean that the tree degenerated
+into a list.
+
+38
+00:04:02,980 --> 00:04:09,140
+But in fact it is actually possible to enforce
+the invariant that the tree is balanced
+
+39
+00:04:09,940 --> 00:04:13,560
+and that the height is bound by the logarithm
+of the number of contacts.
+
+40
+00:04:14,820 --> 00:04:21,220
+So this lookup function can be made logarithmic
+in the size of the database
+
+41
+00:04:21,220 --> 00:04:26,320
+which is very efficient comparing to a linear
+complexity search.
+
+42
+00:04:27,289 --> 00:04:32,009
+So now let us comeback to the insertion of
+a contact inside the database.
+
+43
+00:04:33,140 --> 00:04:38,979
+Again this function will be tree traversal
+defined by recursion
+
+44
+00:04:38,979 --> 00:04:43,219
+and by case analysis over the shape of the
+tree
+
+45
+00:04:44,419 --> 00:04:48,430
+If the tree has no contact, if the database
+is empty
+
+46
+00:04:48,430 --> 00:04:53,400
+then we just have to return a new database
+
+47
+00:04:53,400 --> 00:05:02,139
+that only contains one node consisting of
+the contact with two empty children
+
+48
+00:05:02,139 --> 00:05:07,870
+If the database is a node with <u>contact'</u> as
+the root
+
+49
+00:05:07,870 --> 00:05:14,810
+we first compare the name of this contact
+with the name of the contact we are trying to insert
+
+50
+00:05:16,160 --> 00:05:20,080
+If they are equal then we have nothing to
+do we can return the tree as this.
+
+51
+00:05:21,939 --> 00:05:29,639
+If now the contact name is smaller that the contact
+on the node
+
+52
+00:05:30,520 --> 00:05:36,920
+then we know that we have to insert this contact
+on the left of the tree
+
+53
+00:05:38,100 --> 00:05:42,700
+and we can reuse the same tree on the right.
+
+54
+00:05:45,560 --> 00:05:54,180
+So we have the same tree on the initial database
+and on the output database.
+
+55
+00:05:55,800 --> 00:06:04,760
+Otherwise, if the contact name is greater than
+the contact on the root
+
+56
+00:06:05,720 --> 00:06:09,520
+then we have to insert the contact on the
+right
+
+57
+00:06:09,520 --> 00:06:22,420
+and again we are able to reuse the same subtree
+on the left than the one found in the input database.
+
+58
+00:06:24,069 --> 00:06:27,500
+Graphically we have got something like that.
+
+59
+00:06:29,710 --> 00:06:38,800
+From an input database, a new database in
+which you have inserted a new node <u>8</u>,
+
+60
+00:06:40,820 --> 00:06:48,940
+has only a new node for the path from the root to the new node.
+
+61
+00:06:51,420 --> 00:06:58,740
+And a lot of subtrees, here on the left subtrees,
+can be reuse
+
+62
+00:07:00,780 --> 00:07:03,000
+from the input database.
+
+63
+00:07:05,360 --> 00:07:12,940
+So comparing with the array-based implementation,
+this tree-like representation
+
+64
+00:07:12,949 --> 00:07:18,649
+enables more sharing between the different
+versions of our database.
+
+65
+00:07:21,240 --> 00:07:27,740
+So let's talk about removing an element of
+this tree-like representation for database.
+
+66
+00:07:29,740 --> 00:07:33,500
+So imagine that we remove the root of this
+tree.
+
+67
+00:07:34,800 --> 00:07:40,560
+Then we obtain two subtrees and in the end
+we have to merge
+
+68
+00:07:40,560 --> 00:07:49,200
+this two subtrees into one new tree but it
+is a bit complicated.
+
+69
+00:07:50,000 --> 00:07:55,439
+And we should be able to focus on this problem
+
+70
+00:07:55,439 --> 00:07:58,939
+which is a problem about tree
+
+71
+00:07:58,939 --> 00:08:03,259
+independently of the fact that it represents
+a database.
+
+72
+00:08:04,640 --> 00:08:10,879
+And we will do so by applying a separation of
+concerns principle
+
+73
+00:08:11,940 --> 00:08:17,120
+In order to implements this separation of
+concerns principle
+
+74
+00:08:17,120 --> 00:08:26,500
+we will have to use parameterized types that
+allows us to perform a modular development
+
+75
+00:08:27,200 --> 00:08:30,500
+and they will be presented in a future sequence.
+

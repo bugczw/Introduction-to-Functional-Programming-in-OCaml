@@ -1,0 +1,467 @@
+1
+00:00:00,539 --> 00:00:02,600
+Re-bonjour !
+
+2
+00:00:02,600 --> 00:00:074,500
+Nous venons de voir que les n-uplets et les
+enregistrements sont très bien, mais
+
+3
+00:00:07,500 --> 00:00:12,160
+ils souffrent d'un inconvénient majeur :
+
+4
+00:00:12,160 --> 00:00:17,849
+leur taille doit être majorée statiquement.
+
+5
+00:00:17,849 --> 00:00:19,929
+Et parfois, lorsque vous programmez,
+
+6
+00:00:19,929 --> 00:00:24,980
+vous ne pouvez pas prédire combien de données
+vous aurez à traiter.
+
+7
+00:00:24,980 --> 00:00:28,250
+C'est à cela que servent les tableaux.
+
+8
+00:00:28,250 --> 00:00:33,190
+On peut définir leur taille dynamiquement.
+
+9
+00:00:33,190 --> 00:00:38,390
+En échange de cette nouvelle caractéristique,
+
+10
+00:00:38,390 --> 00:00:44,600
+tous les éléments d'un tableau doivent
+être du même type, à la différence des
+
+11
+00:00:44,600 --> 00:00:51,460
+n-uplets et des enregistrements, où les sous-
+composants peuvent avoir des types différents.
+
+12
+00:00:53,980 --> 00:00:58,520
+Donc, voici comment définir un tableau,
+
+13
+00:00:58,530 --> 00:01:01,590
+dont la taille est statiquement connue.
+
+14
+00:01:01,590 --> 00:01:09,820
+Elle comporte trois éléments 1, 2 et 3.
+
+15
+00:01:09,820 --> 00:01:14,260
+Vous pouvez remarquez que OCaml est en mesure
+de conclure que
+
+16
+00:01:14,260 --> 00:01:20,480
+le type de cette expression est bien
+un tableau contenant des entiers.
+
+17
+00:01:22,890 --> 00:01:26,340
+Alors définissons une fonction qui prend un <u>x</u>, et
+
+18
+00:01:26,340 --> 00:01:31,920
+renvoie <u>x</u> multiplié par <u>x</u>.
+
+19
+00:01:31,920 --> 00:01:38,770
+Nous pouvons utiliser cette fonction
+pour créer un tableau de taille <u>n</u>
+
+20
+00:01:38,770 --> 00:01:48,830
+avec la propriété qu'à l'indice numéro <u>i</u>,
+on aura <u>i</u> multiplié par <u>i</u>.
+
+21
+00:01:48,830 --> 00:01:56,729
+On peut donc définir une telle fonction,
+ensuite l'appliquer à <u>5</u>, et voir que
+
+22
+00:01:57,729 --> 00:02:01,270
+nous avons les cinq premiers carrés.
+
+23
+00:02:01,270 --> 00:02:12,250
+On peut aussi l'appliquer à de nombreuses valeurs pour
+obtenir plein de tableaux de tailles différentes.
+
+24
+00:02:14,629 --> 00:02:18,069
+Donc, pour résumer ce que nous venons de voir.
+
+25
+00:02:18,069 --> 00:02:22,209
+Il y a un type pour les tableaux dont les éléments
+ont un type donné.
+
+26
+00:02:22,209 --> 00:02:26,609
+Et il s'écrit <u>un_certain_type array</u>.
+
+27
+00:02:26,609 --> 00:02:30,560
+Le type <u>array</u> est prédéfini en OCaml.
+
+28
+00:02:30,560 --> 00:02:33,769
+Et il existe un module dans la bibliothèque
+standard qui
+
+29
+00:02:33,769 --> 00:02:39,169
+fournit plusieurs fonctions sur les tableaux.
+
+30
+00:02:39,169 --> 00:02:45,779
+Cette syntaxe est bonne pour les petits tableaux
+dont la taille est connue au moment de la compilation.
+
+31
+00:02:45,779 --> 00:02:52,249
+Mais si on ne connaît pas la taille,
+et qu'on doit la calculer,
+
+32
+00:02:52,249 --> 00:02:55,900
+on peut utiliser une fonction nommée <u>Array.make</u>,
+
+33
+00:02:55,900 --> 00:03:01,139
+qui attend en entrée un nombre entier
+représentant la taille du tableau
+
+34
+00:03:01,139 --> 00:03:06,799
+et une valeur qui sera utilisée pour
+chaque composante de ce tableau.
+
+35
+00:03:06,809 --> 00:03:13,320
+Il y a une autre fonction pour fabriquer des tableaux
+qui est très intéressante.
+
+36
+00:03:13,320 --> 00:03:16,300
+Elle est appelée <u>Array.init</u>.
+
+37
+00:03:16,300 --> 00:03:22,400
+Elle attend aussi un entier qui représente la taille
+du tableau que l'on veut construire, et en plus
+
+38
+00:03:22,409 --> 00:03:29,540
+une fonction qui sera utilisée pour calculer
+chaque composant du tableau.
+
+39
+00:03:29,540 --> 00:03:36,260
+Cette fonction d'initialisation prend en entrée
+l'indice du composant, et en échange
+
+40
+00:03:36,269 --> 00:03:41,719
+elle doit renvoyer la valeur du composant
+qui peut dépendre, bien sûr, de cet indice.
+
+41
+00:03:41,719 --> 00:03:47,480
+Une fonction très utile est
+la fonction <u>Array.length</u>, qui
+
+42
+00:03:47,480 --> 00:03:52,189
+renvoie la taille d'un tableau.
+
+43
+00:03:52,189 --> 00:03:56,089
+Maintenant, si on veut observer un composant
+particulier d'un tableau,
+
+44
+00:03:56,089 --> 00:03:58,120
+on peut le faire en utilisant un indice,
+
+45
+00:03:58,120 --> 00:04:04,180
+un entier qui représente la position de
+ce composant dans le tableau.
+
+46
+00:04:04,180 --> 00:04:08,219
+Pour ce faire, on écrit l'expression
+qui représente la tableau,
+
+47
+00:04:08,219 --> 00:04:11,870
+un point, une parenthèse ouvrante,
+
+48
+00:04:11,870 --> 00:04:16,250
+puis une expression qui s'évalue en un entier
+qui représente l'indice, et enfin
+
+49
+00:04:16,250 --> 00:04:19,540
+une parenthèse fermante.
+
+50
+00:04:19,540 --> 00:04:21,800
+Il faut être prudent, parce que
+
+51
+00:04:21,800 --> 00:04:29,900
+l'indice d'un tableau doit être compris
+entre <u>0</u> et la taille de ce tableau moins 1.
+
+52
+00:04:29,910 --> 00:04:36,530
+Ensuite, si on veut observer
+plusieurs éléments d'un tableau en même temps,
+
+53
+00:04:36,530 --> 00:04:38,040
+on peut utiliser les motifs de tableau.
+
+54
+00:04:38,040 --> 00:04:43,560
+À nouveau, on utilise la même syntaxe que
+pour les expressions,
+
+55
+00:04:43,560 --> 00:04:46,950
+sauf qu'on remplace des expressions par des motifs.
+
+56
+00:04:46,950 --> 00:04:55,170
+On va voir que les motifs de tableau
+ne sont pas très pratiques en programmation.
+
+57
+00:04:55,170 --> 00:04:59,580
+Définissons une fonction qui
+prend un tableau en entrée,
+
+58
+00:04:59,580 --> 00:05:02,380
+et renvoie un tableau de taille 2,
+
+59
+00:05:02,380 --> 00:05:12,000
+contenant la deuxième cellule du tableau en entrée
+comme première cellule,
+
+60
+00:05:12,000 --> 00:05:15,200
+--- c'est donc la cellule numéro 1 ---
+
+61
+00:05:15,200 --> 00:05:19,210
+et dans la deuxième cellule du tableau en sortie,
+
+62
+00:05:19,210 --> 00:05:25,410
+nous allons mettre le contenu de
+la première cellule du tableau d'entrée,
+
+63
+00:05:25,410 --> 00:05:28,310
+c'est-à-dire, la cellule numéro <u>0</u>.
+
+64
+00:05:28,310 --> 00:05:34,520
+Ainsi, le type de cette fonction est
+<u>array</u> vers <u>array</u>, et
+
+65
+00:05:34,520 --> 00:05:39,840
+elle est polymorphe vis-à-vis du
+type des éléments du tableau.
+
+66
+00:05:39,840 --> 00:05:43,920
+On peut vérifier que cela fonctionne bien.
+
+67
+00:05:46,650 --> 00:05:56,150
+Essayons donc d'utiliser les motifs de tableau
+pour définir une fonction appelée <u>swap</u>.
+
+68
+00:05:56,150 --> 00:06:01,140
+Cette fonction prend un tableau de taille
+deux en entrée,
+
+69
+00:06:01,140 --> 00:06:06,420
+nomme la première cellule <u>x</u> et
+la seconde cellule <u>y</u>,
+
+70
+00:06:06,420 --> 00:06:11,500
+Et elle renvoie un tableau contenant,
+
+71
+00:06:11,500 --> 00:06:17,140
+d'abord le contenu de <u>y</u>,
+puis le contenu de <u>x</u>.
+
+72
+00:06:17,150 --> 00:06:21,580
+Voyons donc ce que
+le compilateur va répondre à cette définition.
+
+73
+00:06:21,580 --> 00:06:29,700
+Donc, cette définition est acceptée
+mais un avertissement est émis.
+
+74
+00:06:29,700 --> 00:06:32,780
+Et il est dit que ce motif de filtrage,
+
+75
+00:06:32,780 --> 00:06:38,780
+--- c-à-d. la façon dont nous avons défini
+l'observation de notre argument d'entrée ---
+
+76
+00:06:38,780 --> 00:06:39,890
+n'est pas exhaustive.
+
+77
+00:06:39,890 --> 00:06:48,020
+Par exemple, le tableau vide n'est pas couvert
+par ce motif.
+
+78
+00:06:48,020 --> 00:06:54,870
+Et même si ma fonction marche sur un tableau
+de taille 2,
+
+79
+00:06:54,870 --> 00:07:06,090
+elle se plantera si je lui donne, par exemple,
+un tableau de taille 3.
+
+80
+00:07:06,090 --> 00:07:14,330
+Ainsi, les motifs de tableau ne sont pas très bons,
+pour observer les éléments d'un tableau.
+
+81
+00:07:16,420 --> 00:07:18,880
+Dans la machine,
+
+82
+00:07:18,889 --> 00:07:24,610
+un tableau est représenté exactement comme un n-uplet,
+ou un enregistrement,
+
+83
+00:07:24,610 --> 00:07:27,130
+par un bloc alloué sur le tas.
+
+84
+00:07:27,130 --> 00:07:30,160
+Maintenant, quelles erreurs de programmation
+peut-on faire lorsqu'on manipule des tableaux ?
+
+85
+00:07:33,120 --> 00:07:40,220
+La première consiste à mélanger dans un même tableau
+des valeurs de différents types.
+
+86
+00:07:40,220 --> 00:07:45,000
+Mais heureusement, ce genre d'erreur est détecté
+par le vérificateur de type.
+
+87
+00:07:47,650 --> 00:07:55,110
+Donc, si on essaye de mettre deux valeurs avec des
+types différents dans le même tableau,
+
+88
+00:07:55,110 --> 00:07:58,990
+on obtient une erreur du vérificateur de type
+
+89
+00:07:58,990 --> 00:08:03,170
+parce qu'il attend que tous les éléments d'un tableau
+aient le même type.
+
+90
+00:08:05,430 --> 00:08:08,669
+Une autre sorte d'erreur de programmation très courante,
+
+91
+00:08:08,669 --> 00:08:13,419
+mais malheureusement non détectée par le compilateur
+
+92
+00:08:13,419 --> 00:08:19,040
+est un accès invalide à une cellule du tableau.
+
+93
+00:08:19,040 --> 00:08:26,000
+En effet, le compilateur ne peut pas prédire si
+une expression s'évaluera en
+
+94
+00:08:26,000 --> 00:08:31,030
+un indice valide du tableau.
+
+95
+00:08:31,030 --> 00:08:34,519
+Donc, si vous obtenez un indice négatif,
+
+96
+00:08:34,519 --> 00:08:39,879
+ou supérieur à la longueur du tableau moins 1,
+
+97
+00:08:39,879 --> 00:08:42,739
+cela va planter le programme.
+
+98
+00:08:44,259 --> 00:08:49,939
+Ainsi, considérons la définition
+d'une tableau de taille trois.
+
+99
+00:08:49,939 --> 00:08:59,079
+Si vous essayez d'accéder à cellule numéro 3,
+donc juste après la fin de ce tableau,
+
+100
+00:08:59,079 --> 00:09:00,589
+ça plante.
+
+101
+00:09:00,589 --> 00:09:07,939
+Si vous essayez d'accéder à une cellule d'indice -1,
+
+102
+00:09:07,939 --> 00:09:10,389
+ça plante encore.
+
+103
+00:09:10,389 --> 00:09:17,069
+Et le compilateur est incapable de prédire
+que vous pouvez faire ce genre d'erreur.

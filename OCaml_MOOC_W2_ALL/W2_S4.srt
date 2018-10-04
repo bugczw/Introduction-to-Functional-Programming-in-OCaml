@@ -1,0 +1,637 @@
+1
+00:00:01,069 --> 00:00:03,429
+So, welcome back!
+
+2
+00:00:05,020 --> 00:00:08,800
+In the previous sequences,
+we discovered several kinds of types:
+
+3
+00:00:08,809 --> 00:00:11,780
+records, tuples, and arrays.
+
+4
+00:00:11,780 --> 00:00:16,140
+To understand them better,
+we will use them together in a single program.
+
+5
+00:00:16,960 --> 00:00:21,100
+This program will be a toy database.
+
+6
+00:00:21,100 --> 00:00:27,140
+It will maintain a contact list and
+answer three kinds of queries :
+
+7
+00:00:27,140 --> 00:00:29,400
+the insertion of a contact;
+
+8
+00:00:29,400 --> 00:00:31,820
+the removal of a contact; and
+
+9
+00:00:31,820 --> 00:00:35,560
+a lookup function in the database.
+
+10
+00:00:37,070 --> 00:00:41,390
+So the type of the <i>database-engine</i> function,
+will be the following one.
+
+11
+00:00:41,390 --> 00:00:44,670
+It will take a database, a query, and
+
+12
+00:00:44,670 --> 00:00:52,920
+return a triple composed of
+a status, a database, and a contact.
+
+13
+00:00:52,930 --> 00:01:00,140
+So the status will be <u>true</u>,
+if the query went well.
+
+14
+00:01:00,140 --> 00:01:08,980
+The second component will be a new database,
+if we inserted or deleted some contact.
+
+15
+00:01:08,990 --> 00:01:17,410
+And finally, if a contact has been found,
+it will be the third component of this tuple.
+
+16
+00:01:20,180 --> 00:01:25,340
+So let us define a type for phone numbers, and
+
+17
+00:01:25,340 --> 00:01:32,720
+another type that will relate a name with a phone number.
+
+18
+00:01:32,720 --> 00:01:36,880
+It is easy to define a stupid record,
+
+19
+00:01:36,880 --> 00:01:43,520
+for a contact with an empty name
+and a phone number consisting only of <u>0</u>.
+
+20
+00:01:45,620 --> 00:01:49,340
+Then a database will be represented by
+two fields:
+
+21
+00:01:49,350 --> 00:01:52,270
+the first one represents the number of contacts,
+
+22
+00:01:52,270 --> 00:01:58,310
+and the second one is an array
+that contains the contacts.
+
+23
+00:01:58,310 --> 00:02:02,530
+If you want to make a database,
+
+24
+00:02:02,530 --> 00:02:08,780
+you take as argument the maximum number of contacts
+that you might store in the database.
+
+25
+00:02:08,780 --> 00:02:13,500
+At the beginning,
+the number of contacts is <u>0</u>.
+
+26
+00:02:13,500 --> 00:02:18,460
+And you have to initialize an array,
+
+27
+00:02:18,460 --> 00:02:25,360
+whose size is the maximum number of contacts
+of your database, and, for the moment,
+
+28
+00:02:25,360 --> 00:02:28,940
+all the elements are equal to <u>nobody</u>.
+
+29
+00:02:34,520 --> 00:02:41,400
+A query will be represented by a code:
+one integer for each kind of query,
+
+30
+00:02:41,410 --> 00:02:44,250
+and sometimes, you will need to give a contact,
+
+31
+00:02:44,250 --> 00:02:46,530
+---for instance, when you do a lookup function---
+
+32
+00:02:46,530 --> 00:02:50,570
+so we also have a field to represent a contact.
+
+33
+00:02:53,320 --> 00:02:56,320
+Here is a function that takes a database,
+a contact, and
+
+34
+00:02:56,330 --> 00:02:59,700
+looks for this contact in the database.
+
+35
+00:02:59,700 --> 00:03:06,450
+It is pretty simple,
+you just have to go through the array, and
+
+36
+00:03:06,450 --> 00:03:14,560
+if you find a cell whose name is equal to
+the name of the contact that you are looking for,
+
+37
+00:03:14,560 --> 00:03:18,960
+then you return a triple saying that:
+
+38
+00:03:18,960 --> 00:03:23,200
+the lookup was a success;
+
+39
+00:03:23,200 --> 00:03:26,960
+the database can be returned as is, and
+
+40
+00:03:26,960 --> 00:03:30,820
+the important information is
+the contact that you have found
+
+41
+00:03:30,820 --> 00:03:37,380
+which is located at position <u>idx</u>.
+
+42
+00:03:37,380 --> 00:03:43,840
+Otherwise, maybe you are at the end of your database,
+
+43
+00:03:43,840 --> 00:03:49,720
+---if your index is superior to the number of contacts
+that you have in your database---
+
+44
+00:03:49,720 --> 00:03:58,140
+or maybe, you can go to the next index,
+by doing a recursive call with an incremented index.
+
+45
+00:03:58,140 --> 00:04:00,960
+Now, if you want to
+insert a contact in the database.
+
+46
+00:04:00,970 --> 00:04:06,350
+---first, let me input his in the system---
+
+47
+00:04:06,350 --> 00:04:14,740
+If you want to
+insert a new contact in the database, then
+
+48
+00:04:14,740 --> 00:04:16,240
+there is a first case:
+
+49
+00:04:16,250 --> 00:04:21,380
+if you have reached the limit of contacts
+that can be stored in the database,
+
+50
+00:04:21,380 --> 00:04:24,230
+---that means that the array is full---
+
+51
+00:04:24,230 --> 00:04:30,640
+---the number of contacts is equal to
+the length of your array---
+
+52
+00:04:30,640 --> 00:04:37,480
+then you produce an error
+by retruning a status equals to <u>false</u>.
+
+53
+00:04:37,480 --> 00:04:45,870
+Otherwise, you have first to
+search if the contact is already in the database,
+
+54
+00:04:45,870 --> 00:04:50,920
+---in which case you also produce an error---
+
+55
+00:04:50,920 --> 00:04:56,010
+or finally,
+---if the contact is not in the database---
+
+56
+00:04:56,010 --> 00:05:05,410
+we create a new database in which
+the cells are defined using this function <u>cells</u>.
+
+57
+00:05:05,410 --> 00:05:09,930
+If the index is equal to the number of contacts, then
+
+58
+00:05:09,930 --> 00:05:13,870
+we want to use this index to store our (new) contact,
+
+59
+00:05:13,870 --> 00:05:17,170
+so we return the contact that we want to insert.
+
+60
+00:05:17,170 --> 00:05:22,420
+Otherwise, we don't want to change
+the contents of the initial database,
+
+61
+00:05:22,420 --> 00:05:29,410
+so we return the current value of the array at position <u>i</u>.
+
+62
+00:05:29,410 --> 00:05:33,850
+You have to create a new database
+with the new contact inserted.
+
+63
+00:05:33,850 --> 00:05:38,150
+The number on contacts is now
+the (old) number of contacts plus one.
+
+64
+00:05:38,150 --> 00:05:42,160
+And the array containing the contacts is a new array,
+
+65
+00:05:42,160 --> 00:05:49,390
+whose cells are initialized using the function <u>cells</u>.
+
+66
+00:05:49,390 --> 00:05:55,990
+And this time, the status is <u>true</u>,
+the new database is <u>db'</u>, and
+
+67
+00:05:55,990 --> 00:05:59,070
+as for the contact, you can for instance
+return the contact that you just inserted.
+
+68
+00:06:05,110 --> 00:06:11,540
+You can do the same to delete a contact.
+
+69
+00:06:11,540 --> 00:06:16,120
+You can just first search for the contact.
+
+70
+00:06:16,120 --> 00:06:21,860
+If it is not in the database, then you return an error.
+
+71
+00:06:21,860 --> 00:06:29,120
+Otherwise, you just have to
+recreate the same database,
+
+72
+00:06:29,120 --> 00:06:36,320
+except that now, the number of contacts is
+the (old) number of contacts minus one, and
+
+73
+00:06:36,320 --> 00:06:43,820
+the new array is initialized using a <u>cells</u> function, so that:
+
+74
+00:06:43,820 --> 00:06:53,940
+if you are defining the cell
+for the contact you want to delete,
+
+75
+00:06:53,950 --> 00:07:01,240
+then you return nobody;
+---the way to erase this cell---
+
+76
+00:07:01,240 --> 00:07:05,440
+if the contact you are considering is
+not the contact you want to remove,
+
+77
+00:07:05,450 --> 00:07:11,810
+you just return the same contact as the one
+you can find in the initial database.
+
+78
+00:07:14,530 --> 00:07:20,360
+So we have implemented our three features
+for the database,
+
+79
+00:07:20,360 --> 00:07:24,400
+and we can now implement the engine function.
+
+80
+00:07:24,400 --> 00:07:30,419
+It takes the database, and the query.
+
+81
+00:07:30,419 --> 00:07:33,659
+Depending on the value of the <u>code</u>,
+we will do:
+
+82
+00:07:33,660 --> 00:07:36,840
+an insertion if the code is equal to <u>0</u>;
+
+83
+00:07:36,840 --> 00:07:39,480
+a deletion if the code is equal to <u>1</u> and
+
+84
+00:07:39,480 --> 00:07:43,800
+if the code is equal to <u>2</u>,
+then we do a search, and
+
+85
+00:07:43,950 --> 00:07:50,790
+we use the context that is provided
+as argument to perform the query.
+
+86
+00:07:50,790 --> 00:07:54,810
+Otherwise, we have an invalid code,
+we return an error.
+
+87
+00:07:58,180 --> 00:08:02,860
+So this function is just a way
+to glue together the three functions
+
+88
+00:08:02,860 --> 00:08:05,669
+that we defined previously.
+
+89
+00:08:05,669 --> 00:08:09,150
+So let's now define a database of size five.
+
+90
+00:08:09,150 --> 00:08:13,690
+We can add a new contact for Luke,
+
+91
+00:08:13,690 --> 00:08:16,230
+another contact for Darth Vader.
+
+92
+00:08:18,060 --> 00:08:22,600
+We can search for Luke,
+
+93
+00:08:22,600 --> 00:08:26,740
+and indeed it is found.
+You can find the contact here.
+
+94
+00:08:29,860 --> 00:08:33,460
+You can remove Luke for the database.
+
+95
+00:08:33,460 --> 00:08:37,680
+And we can see, that
+now the database only contains Darth Vader.
+
+96
+00:08:39,659 --> 00:08:45,839
+And finally, if you look into the database
+again for Luke, you get an error.
+
+97
+00:08:45,839 --> 00:08:47,939
+The status is equal to <u>false</u>.
+
+98
+00:08:47,940 --> 00:08:51,080
+which means that there is an error.
+
+99
+00:08:53,100 --> 00:08:55,140
+If we compare the implementation,
+
+100
+00:08:55,140 --> 00:08:58,820
+---that we have just done for our database engine---
+
+101
+00:08:58,830 --> 00:09:01,580
+with an imperative one,
+
+102
+00:09:01,580 --> 00:09:08,020
+what is clear is the fact that
+we have written a non-destructive program.
+
+103
+00:09:08,029 --> 00:09:15,330
+Indeed, when we look back at the type of
+this database engine,
+
+104
+00:09:15,330 --> 00:09:23,190
+we can notice that a new database is created
+each time a query is processed.
+
+105
+00:09:23,190 --> 00:09:29,270
+So previous versions of this database
+are still available as valid values in OCaml.
+
+106
+00:09:29,270 --> 00:09:36,080
+In contrast, when you do an imperative program,
+and you apply a query to a database,
+
+107
+00:09:36,080 --> 00:09:39,350
+this modifies the database in place.
+
+108
+00:09:39,350 --> 00:09:47,680
+In fact, what we have programmed,
+is a purely functional database engine.
+
+109
+00:09:47,680 --> 00:09:51,570
+So now, what does it matter.
+
+110
+00:09:51,570 --> 00:09:59,780
+Why side effects are considered harmful
+to purely functional programmers.
+
+111
+00:09:59,780 --> 00:10:05,760
+Well, the idea is that when
+you do program in a functional language,
+
+112
+00:10:05,770 --> 00:10:11,640
+you try to produce values,
+instead of modifying the memory.
+
+113
+00:10:11,640 --> 00:10:16,170
+What you get is something that
+does not depend on the state of the program.
+
+114
+00:10:16,170 --> 00:10:20,320
+But only on the arguments of the function.
+
+115
+00:10:20,320 --> 00:10:24,570
+And this is exactly as in mathematics.
+
+116
+00:10:24,570 --> 00:10:31,670
+You can call a function several times,
+and on the same inputs, you will get the same output.
+
+117
+00:10:31,670 --> 00:10:36,440
+So it is easier to reason
+on functional programs.
+
+118
+00:10:36,440 --> 00:10:44,890
+And it is easier to specify them
+using mathematical objects.
+
+119
+00:10:44,890 --> 00:10:50,640
+For instance, a valid specification for
+our engine is the fact that
+
+120
+00:10:50,640 --> 00:10:57,290
+if you insert a contact in the database,
+and just after that you delete it,
+
+121
+00:10:57,290 --> 00:11:06,250
+Then you get a database which is
+exactly the same one that you gave initially.
+
+122
+00:11:06,250 --> 00:11:08,270
+As it does not depend on the state of the machine,
+
+123
+00:11:08,270 --> 00:11:11,890
+a functional program can be used anytime.
+
+124
+00:11:11,890 --> 00:11:13,490
+That mean that it is more composable.
+
+125
+00:11:13,490 --> 00:11:20,230
+It can be adapted to more contexts
+than an imperative one.
+
+126
+00:11:20,230 --> 00:11:25,490
+So now, what are the weaknesses
+of our implementation.
+
+127
+00:11:25,490 --> 00:11:35,050
+Well, the specification that
+we have assigned to our engine is not very satisfaying.
+
+128
+00:11:35,050 --> 00:11:45,480
+Indeed, search queries return a contact
+while insertion queries should return a database.
+
+129
+00:11:45,480 --> 00:11:51,660
+But the type that we have assign to the engine
+forces to use a single type of query results.
+
+130
+00:11:51,660 --> 00:11:55,580
+So you have to return a database
+when you do a search query, and
+
+131
+00:11:55,580 --> 00:11:59,620
+return a contact, when you do an insertion query.
+
+132
+00:11:59,620 --> 00:12:05,630
+Instead, we would like to say that
+the (return) type of the engine is
+
+133
+00:12:05,630 --> 00:12:11,959
+either a contact or a new database.
+
+134
+00:12:11,959 --> 00:12:19,410
+Another problem is the fact that
+when you recreate a new database,
+
+135
+00:12:19,410 --> 00:12:22,830
+the database is duplicated entirely, even if
+
+136
+00:12:22,830 --> 00:12:33,260
+almost everything in the database is
+the same as in the previous database.
+
+137
+00:12:33,270 --> 00:12:36,860
+We should use a better data structure
+to represent the database.
+
+138
+00:12:36,860 --> 00:12:42,459
+To enable more sharing between
+the different versions of the database.
+
+139
+00:12:42,459 --> 00:12:46,980
+The forthcoming algebraic data types
+---that we will discover next week---
+
+140
+00:12:46,980 --> 00:12:50,380
+will be an elegant answer to all these problems.
+

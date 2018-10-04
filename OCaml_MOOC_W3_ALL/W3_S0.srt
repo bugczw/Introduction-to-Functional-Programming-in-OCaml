@@ -1,0 +1,802 @@
+1
+00:00:08,139 --> 00:00:12,800
+Welcome back to this third week
+about functional programming and OCaml.
+
+2
+00:00:13,830 --> 00:00:22,810
+This week will be devoted to algebraic datatypes
+which are very important kinds of types
+
+3
+00:00:22,810 --> 00:00:25,080
+that you can use in OCaml.
+
+4
+00:00:25,080 --> 00:00:29,599
+To understand them, we will present them progressively
+
+5
+00:00:29,599 --> 00:00:36,030
+by first showing how you can tag values,
+how you can define recursive types
+
+6
+00:00:36,030 --> 00:00:44,739
+and using this two features, what kinds of
+tree-like data structures you can define.
+
+7
+00:00:44,739 --> 00:00:49,469
+Based on that, we'll define a story generator
+
+8
+00:00:49,469 --> 00:00:55,700
+just after that, I will show you how you can
+make an algebraic datatype polymorphic
+
+9
+00:00:55,719 --> 00:00:59,300
+and we will conclude with advanced topics.
+
+10
+00:00:59,820 --> 00:01:03,039
+Let us come back to our database example,
+
+11
+00:01:03,039 --> 00:01:11,060
+and more precisely on the type
+that we have assigned to the <u>engine</u> function
+
+12
+00:01:11,060 --> 00:01:19,500
+This type is not really satisfying, because,
+if you look at the return type of our engine,
+
+13
+00:01:19,500 --> 00:01:27,600
+it is a triple, but sometimes,
+some component of this triple is meaningless.
+
+14
+00:01:27,670 --> 00:01:40,300
+Indeed, when you have a query which is an insertion,
+only the database component is meaningful,
+
+15
+00:01:40,390 --> 00:01:48,479
+if you are looking for some contacts,
+only the second component is meaningful,
+
+16
+00:01:48,479 --> 00:01:56,579
+And if the status if false, then
+the two other components are meaningless.
+
+17
+00:01:56,579 --> 00:02:07,200
+So... can we fix that, and find a type that could
+capture this constraint in a better way ?
+
+18
+00:02:07,270 --> 00:02:12,500
+What we want to do is to change
+the type of the engine into something like that:
+
+19
+00:02:12,530 --> 00:02:20,300
+We have replaced the return type of the function
+with a new type named <u>query_result</u>.
+
+20
+00:02:20,940 --> 00:02:28,480
+And what we want is for a value of
+type <u>query_result</u> to be either an error,
+
+21
+00:02:28,480 --> 00:02:35,099
+or a new database,
+in case of an insertion or deletion query,
+
+22
+00:02:35,099 --> 00:02:44,200
+or a contact and its index, in case of
+a search query that was successful.
+
+23
+00:02:44,230 --> 00:02:48,300
+And in fact, in OCaml,
+you can just write a type declaration
+
+24
+00:02:48,300 --> 00:02:53,300
+that really mimics
+this informal description.
+
+25
+00:02:53,379 --> 00:03:00,150
+We define a type <u>query_result</u>
+using three cases:
+
+26
+00:03:00,150 --> 00:03:02,620
+The first one is <u>Error</u>,
+
+27
+00:03:02,620 --> 00:03:08,739
+The second one is a <u>NewDatabase</u>
+followed by a <u>database</u>,
+
+28
+00:03:08,739 --> 00:03:17,800
+And the third one is a <u>FoundContact</u> case
+followed by a <u>contact</u> and an integer.
+
+29
+00:03:18,000 --> 00:03:21,540
+What we have here is called a sum type.
+
+30
+00:03:21,540 --> 00:03:24,970
+It is a disjoint union of types.
+
+31
+00:03:24,970 --> 00:03:31,470
+It's a way to take several types,
+and to join them into one unique type.
+
+32
+00:03:31,470 --> 00:03:40,989
+But then you want to understand from where
+the different values of this type are coming.
+
+33
+00:03:40,989 --> 00:03:42,709
+And to do that, you use tags.
+
+34
+00:03:42,709 --> 00:03:48,220
+So a tag is an identifier that must start
+with an uppercase letter.
+
+35
+00:03:48,220 --> 00:03:57,650
+You have the fact that tag identifiers
+are unique and distinct in an algebraic datatype.
+
+36
+00:03:57,650 --> 00:04:05,360
+So a tag characterizes one specific type
+in this disjoint union of types.
+
+37
+00:04:05,360 --> 00:04:09,730
+Now, how can we construct and observe
+values of this type ?
+
+38
+00:04:09,730 --> 00:04:18,150
+Well, the first thing to know is the fact
+that tags are also called constructors.
+
+39
+00:04:18,150 --> 00:04:22,780
+So when you want to build a value of a sub-type,
+
+40
+00:04:22,780 --> 00:04:28,229
+what you have to do is to
+construct a value of that type
+
+41
+00:04:28,229 --> 00:04:35,070
+by applying a tag to the argument
+(the component of your value).
+
+42
+00:04:35,070 --> 00:04:40,909
+So, the tag will be a marker
+that will be used
+
+43
+00:04:40,909 --> 00:04:46,229
+to classify values
+during the execution of the program.
+
+44
+00:04:46,229 --> 00:04:57,110
+The syntax to mark -- or to "tag" -- a set of values
+is just the following one.
+
+45
+00:04:57,110 --> 00:05:01,599
+You first write the tag, and then,
+between parentheses
+
+46
+00:05:01,599 --> 00:05:06,039
+you write the different components
+that must be tagged,
+
+47
+00:05:06,039 --> 00:05:07,800
+separated by comas.
+
+48
+00:05:10,300 --> 00:05:21,360
+So, let us consider again the type for contacts
+which is defined like this.
+
+49
+00:05:21,360 --> 00:05:27,010
+And now, we can use a sum type
+to represent a <u>query</u>
+
+50
+00:05:27,010 --> 00:05:35,750
+using the three cases corresponding
+to the three kinds of queries.
+
+51
+00:05:35,750 --> 00:05:44,600
+We can introduce a contact named Luke,
+and using that contact,
+
+52
+00:05:44,600 --> 00:05:51,900
+it is now possible to construct a query
+-- a value of type <u>query</u> --
+
+53
+00:05:51,960 --> 00:05:59,710
+using the data constructor <u>Insert</u>
+followed by the contact,
+
+54
+00:05:59,710 --> 00:06:06,890
+as required by the declaration of this constructor.
+
+55
+00:06:06,890 --> 00:06:12,760
+So we get a <u>query</u>, which is type-checked
+
+56
+00:06:12,760 --> 00:06:18,490
+and it's exactly the same for the second query
+which is now a <u>Search</u>,
+
+57
+00:06:18,490 --> 00:06:25,010
+which is expecting a string,
+so we provide a string now.
+
+58
+00:06:25,010 --> 00:06:37,600
+And finally, you can also apply <u>Delete</u> on a contact
+to construct a query for deletion.
+
+59
+00:06:40,649 --> 00:06:44,200
+Here is another example of a sum type,
+
+60
+00:06:44,200 --> 00:06:49,310
+and this time it is composed of constructors
+with no argument at all.
+
+61
+00:06:49,310 --> 00:06:55,310
+So what we get is a definition of colors
+
+62
+00:06:55,310 --> 00:07:03,209
+using an enumeration of the colors
+that are allowed as a value of type <u>color</u>.
+
+63
+00:07:03,209 --> 00:07:10,870
+So here it is possible to define,
+for instance,
+
+64
+00:07:10,870 --> 00:07:16,060
+the color of Batman, which is <u>Black</u>
+
+65
+00:07:16,060 --> 00:07:24,020
+and the type is inferred, for this constructor,
+to be a <u>color</u>.
+
+66
+00:07:24,020 --> 00:07:33,219
+This is better than what we had
+when we encoded a color using an integer,
+
+67
+00:07:33,219 --> 00:07:39,409
+because now we know exactly
+that the only colors that are possible
+
+68
+00:07:39,409 --> 00:07:43,900
+are <u>Black</u>, <u>Gray</u> and <u>White</u>,
+and no other values.
+
+69
+00:07:45,950 --> 00:07:52,779
+So now, let's consider a type <u>t</u>,
+which is defined like an enumeration
+
+70
+00:07:52,779 --> 00:07:58,140
+using two tags <u>A</u> and <u>B</u>.
+
+71
+00:07:58,140 --> 00:08:02,589
+And let us assume that we have
+a variable <u>x</u>, of type <u>t</u>.
+
+72
+00:08:02,589 --> 00:08:08,200
+What you know is that
+if this variable has type <u>t</u>,
+
+73
+00:08:08,200 --> 00:08:13,200
+it means that when it has been created,
+
+74
+00:08:13,200 --> 00:08:19,969
+the programmer must have used
+one of the two constructors <u>A</u> and <u>B</u>.
+
+75
+00:08:19,969 --> 00:08:24,899
+This is a constraint,
+but in exchange for this constraint,
+
+76
+00:08:24,899 --> 00:08:35,120
+you get a very strong property:
+the fact that an <u>x</u> can be either an <u>A</u> or a <u>B</u>.
+
+77
+00:08:35,120 --> 00:08:41,930
+So you can write your computation
+based on that fact,
+
+78
+00:08:41,930 --> 00:08:47,370
+which means that if you want to write
+some computation that depends on <u>x</u>
+
+79
+00:08:47,370 --> 00:08:55,930
+then you must provide a case for <u>x = A</u>
+and a case for <u>x = B</u>.
+
+80
+00:08:55,930 --> 00:08:59,240
+And after that, you know that you have a computation
+
+81
+00:08:59,240 --> 00:09:05,460
+that will be able to respond to
+any observational value of type <u>t</u>.
+
+82
+00:09:05,460 --> 00:09:13,600
+We know now that when we observe
+a value of a sum type, several cases are possible.
+
+83
+00:09:13,630 --> 00:09:17,580
+So the programmer must provide an expression
+for each possible case.
+
+84
+00:09:17,580 --> 00:09:21,360
+A case will be described as usual by a pattern.
+
+85
+00:09:21,360 --> 00:09:23,270
+And the pattern will be of the following form:
+
+86
+00:09:23,270 --> 00:09:27,670
+You first write the tag, and after that,
+between parentheses,
+
+87
+00:09:27,670 --> 00:09:32,750
+you write the patterns for the different components,
+separated by comas.
+
+88
+00:09:32,750 --> 00:09:39,780
+A branch is composed of a pattern and an expression
+separated by an arrow,
+
+89
+00:09:39,780 --> 00:09:41,150
+just like that.
+
+90
+00:09:41,150 --> 00:09:45,140
+And finally,
+if you want to represent a case analysis,
+
+91
+00:09:45,140 --> 00:09:47,710
+you can use what is called a pattern matching,
+
+92
+00:09:47,710 --> 00:09:51,400
+which is a very, very important construction in OCaml,
+
+93
+00:09:51,400 --> 00:09:57,190
+and which makes programming in OCaml
+a very, very nice experience.
+
+94
+00:09:57,190 --> 00:10:02,570
+A pattern matching is a sequence of branches
+written just like that:
+
+95
+00:10:02,570 --> 00:10:05,540
+you just write the keyword <u>match</u>,
+
+96
+00:10:05,540 --> 00:10:12,300
+followed by some expression
+that will evaluate into a value of a sum type,
+
+97
+00:10:12,330 --> 00:10:15,620
+and after that, you write a sequence of branches.
+
+98
+00:10:15,620 --> 00:10:22,440
+There must be at least one branch
+in a pattern matching.
+
+99
+00:10:22,440 --> 00:10:26,340
+And here is how you evaluate a pattern matching
+in your head:
+
+100
+00:10:26,340 --> 00:10:29,550
+you just have to understand that the
+first thing to do
+
+101
+00:10:29,550 --> 00:10:36,130
+is to compute the value of <u>some_expression</u>,
+the expression you want to analyze.
+
+102
+00:10:36,130 --> 00:10:44,220
+And after that, you try to match this value
+with the pattern of the first branch.
+
+103
+00:10:44,220 --> 00:10:48,700
+If it matches, then you execute
+the expression of that branch.
+
+104
+00:10:48,700 --> 00:10:53,130
+Otherwise, if it does not,
+you try the next branch.
+
+105
+00:10:53,130 --> 00:10:57,150
+And so on, and so forth, until you find a match.
+
+106
+00:10:57,150 --> 00:11:01,440
+Here is an example of a pattern matching.
+
+107
+00:11:01,440 --> 00:11:14,900
+Our engine must classify the query, and,
+given the query, call the right function.
+
+108
+00:11:14,990 --> 00:11:19,250
+So what we do is a pattern matching
+over the query,
+
+109
+00:11:19,250 --> 00:11:22,480
+and we have a branch for each possible case:
+
+110
+00:11:22,480 --> 00:11:30,100
+one for the insertion query,
+and in that case we just call the <u>insert</u> function ;
+
+111
+00:11:30,110 --> 00:11:35,600
+one for the deletion query,
+and in that case we call the <u>delete</u> function ;
+
+112
+00:11:35,650 --> 00:11:45,300
+and finally, a last case for the search query,
+we just call the <u>search</u> function.
+
+113
+00:11:45,300 --> 00:11:54,780
+Many, many functions in OCaml start
+with a case analysis over one of their arguments.
+
+114
+00:11:54,780 --> 00:11:58,220
+So that kind of function can of course
+be written just like that:
+
+115
+00:11:58,220 --> 00:12:02,770
+you define a function <u>f</u>,
+with for instance an argument <u>x</u>,
+
+116
+00:12:02,770 --> 00:12:08,080
+and you pattern-match over <u>x</u>
+with your different branches.
+
+117
+00:12:08,080 --> 00:12:16,500
+But, in fact, this kind of functions is so common that there is a syntactic shortcut to define them.
+
+118
+00:12:16,540 --> 00:12:19,760
+It is written just like that:
+
+119
+00:12:19,760 --> 00:12:25,130
+as usual, use <u>let</u> to introduce your function identifier,
+
+120
+00:12:25,130 --> 00:12:36,800
+and just after <u>=</u> you use the keyword <u>function</u>
+followed by the different branches of your case analysis.
+
+121
+00:12:36,850 --> 00:12:46,200
+In our example of the <u>engine</u> function,
+it's just something like that.
+
+122
+00:12:46,230 --> 00:12:50,130
+Now, what is happening in the machine ?
+
+123
+00:12:50,130 --> 00:12:57,100
+Well, each tag in the machine is represented
+by a small machine integer.
+
+124
+00:12:57,100 --> 00:13:01,800
+So, when you have a value of a sum type, it is either:
+
+125
+00:13:01,800 --> 00:13:06,779
+a tag that is an integer,
+if there is no argument to the constructor,
+
+126
+00:13:06,779 --> 00:13:10,910
+if this is just like in an enumeration,
+
+127
+00:13:10,910 --> 00:13:21,500
+or, if the constructor has some arguments,
+it's a heap-allocated block starting with a tag.
+
+128
+00:13:21,520 --> 00:13:29,400
+So, when you do a pattern matching,
+the first thing to do a dynamic test on this tag.
+
+129
+00:13:29,420 --> 00:13:32,340
+And when you know what is a value
+of this tag, then
+
+130
+00:13:32,340 --> 00:13:39,340
+you can choose the right branch
+of your pattern matching.
+
+131
+00:13:39,340 --> 00:13:42,070
+Now what kind
+of programming errors do you do
+
+132
+00:13:42,070 --> 00:13:46,500
+when you manipulate algebraic datatypes
+and pattern-matching ?
+
+133
+00:13:46,500 --> 00:13:52,339
+The first thing you can do is
+to ill-type your pattern.
+
+134
+00:13:52,339 --> 00:13:56,560
+You can also miss some cases.
+
+135
+00:13:56,560 --> 00:14:00,880
+But the good news is the fact that
+these kinds of programming errors
+
+136
+00:14:00,880 --> 00:14:03,700
+are in fact caught by the type-checker.
+
+137
+00:14:05,990 --> 00:14:10,880
+So let us define a sum type
+with three cases:
+
+138
+00:14:10,880 --> 00:14:15,300
+The first one is <u>None</u>,
+and it expects no argument ;
+
+139
+00:14:15,300 --> 00:14:20,420
+<u>Single</u> expects one integer ;
+
+140
+00:14:20,420 --> 00:14:24,990
+And <u>Pair</u> expects two integers.
+
+141
+00:14:24,990 --> 00:14:29,100
+By the way, notice that
+the first pipe is optional
+
+142
+00:14:29,100 --> 00:14:34,600
+which is especially convenient when
+you write a type definition on one line
+
+143
+00:14:34,680 --> 00:14:44,350
+So, here is an invalid pattern matching.
+
+144
+00:14:44,350 --> 00:14:54,110
+Because here, this pattern
+applies <u>None</u> to one argument,
+
+145
+00:14:54,110 --> 00:14:56,910
+but it expects no argument.
+
+146
+00:14:56,910 --> 00:15:02,940
+In that case, the type checker is able
+to catch that error
+
+147
+00:15:02,940 --> 00:15:10,320
+and explains that <u>None</u>
+is applied to too many arguments.
+
+148
+00:15:10,320 --> 00:15:13,400
+Here is another example.
+
+149
+00:15:13,400 --> 00:15:18,720
+This time, <u>Single</u> is applied to <u>true</u>
+which is a boolean.
+
+150
+00:15:18,720 --> 00:15:23,750
+But in the declaration, we can read that
+<u>Single</u> is expecting an integer.
+
+151
+00:15:23,750 --> 00:15:31,540
+So again, we'll see that the type checker
+is able to find that mistake
+
+152
+00:15:31,540 --> 00:15:36,500
+and tells us that we are expecting
+an integer and not a boolean.
+
+153
+00:15:39,800 --> 00:15:41,820
+So let us come back
+to our type of colors
+
+154
+00:15:41,820 --> 00:15:45,710
+in which we have only three colors.
+
+155
+00:15:45,710 --> 00:15:48,900
+And imagine that we want to
+define a function that takes two colors,
+
+156
+00:15:48,900 --> 00:15:58,900
+and returns a boolean that is true
+if and only if <u>c2</u> is lighter than <u>c1</u>.
+
+157
+00:15:58,910 --> 00:16:02,029
+To define that function,
+we do a pattern matching over
+
+158
+00:16:02,029 --> 00:16:06,839
+a pair formed by these two colors.
+
+159
+00:16:06,839 --> 00:16:10,250
+The first three cases correspond to
+the fact that
+
+160
+00:16:10,250 --> 00:16:16,890
+we don't want to say that
+a color is lighter than itself.
+
+161
+00:16:16,890 --> 00:16:22,820
+This case corresponds to the fact that
+<u>Black</u> is darker than anything.
+
+162
+00:16:22,820 --> 00:16:29,820
+And that <u>White</u>, here,
+is lighter than anything.
+
+163
+00:16:29,820 --> 00:16:36,080
+Now, the last two cases correspond to
+the relation between
+
+164
+00:16:36,080 --> 00:16:40,029
+<u>Gray</u> and <u>White</u>,
+and <u>Gray</u> and <u>Black</u>.
+
+165
+00:16:40,029 --> 00:16:44,010
+Ah... Do I miss some cases ?
+
+166
+00:16:44,010 --> 00:16:48,080
+I don't really know,
+it's a very complex example
+
+167
+00:16:48,080 --> 00:16:50,870
+for me, at least.
+
+168
+00:16:50,870 --> 00:16:54,230
+So we'll use the type checker...
+
+169
+00:16:54,230 --> 00:16:57,000
+and, indeed, I missed a case,
+
+170
+00:16:57,000 --> 00:17:02,500
+which is the case where
+the first color is <u>White</u> and the second color is <u>Black.</u>
+

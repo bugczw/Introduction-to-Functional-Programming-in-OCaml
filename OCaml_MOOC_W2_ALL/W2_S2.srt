@@ -1,0 +1,536 @@
+1
+00:00:00,080 --> 00:00:01,080
+Welcome back!
+
+2
+00:00:01,080 --> 00:00:04,259
+In the previous sequence, we have seen that
+
+3
+00:00:04,259 --> 00:00:10,830
+the role of each component of a tuple
+is determined by its position.
+
+4
+00:00:10,830 --> 00:00:18,890
+But we have also seen that
+it is easy to use a wrong index.
+
+5
+00:00:18,890 --> 00:00:23,849
+Maybe if we could name each component,
+
+6
+00:00:23,849 --> 00:00:28,200
+it would help us avoid
+that kind of programming errors.
+
+7
+00:00:30,800 --> 00:00:42,780
+So, to define a record type
+we use braces and a list of field declarations.
+
+8
+00:00:42,780 --> 00:00:49,060
+So here, I define a field named <u>x</u> whose type is <u>int</u>,
+
+9
+00:00:49,060 --> 00:00:56,740
+and another field <u>y</u> whose type is <u>int</u>.
+
+10
+00:00:56,740 --> 00:01:00,410
+This type definition is accepted by the compiler.
+
+11
+00:01:00,410 --> 00:01:02,890
+And now if I want to represent the origin.
+
+12
+00:01:02,890 --> 00:01:11,050
+I use braces, and then
+I have to give the value for each field.
+
+13
+00:01:11,050 --> 00:01:17,150
+Here I say that <u>x</u> is equal to <u>0</u>, and
+that <u>y</u> is equal to <u>0</u>.
+
+14
+00:01:17,150 --> 00:01:20,430
+And OCaml is able to infer that
+
+15
+00:01:20,430 --> 00:01:25,760
+this definition of a record
+has actually the type <u>point2d</u>.
+
+16
+00:01:27,800 --> 00:01:33,400
+It is easy to define a conversion function
+from <u>pair</u> to <u>points</u>.
+
+17
+00:01:33,400 --> 00:01:39,750
+But here, you can notice that instead of
+writing that <u>x</u> is equal to <u>x</u>,
+
+18
+00:01:39,750 --> 00:01:43,340
+I can just write <u>x</u> here.
+
+19
+00:01:43,340 --> 00:01:53,700
+By a kind of puning,
+we can use a shorter definition for fields.
+
+20
+00:01:55,760 --> 00:01:59,220
+So I can define two points.
+
+21
+00:01:59,220 --> 00:02:05,520
+And now another record type for a <u>box</u>,
+
+22
+00:02:05,520 --> 00:02:11,220
+which will use my record type definition for <u>point</u>.
+
+23
+00:02:11,220 --> 00:02:12,200
+Like that.
+
+24
+00:02:15,459 --> 00:02:20,660
+It's easy to have this accepted by OCaml.
+
+25
+00:02:20,660 --> 00:02:22,790
+And I can define a <u>box</u>, in which
+
+26
+00:02:22,790 --> 00:02:26,600
+the left upper corner
+is equal to my first point <u>a</u>
+
+27
+00:02:26,600 --> 00:02:29,200
+and the right lower corner
+is equal to <u>b</u>.
+
+28
+00:02:33,510 --> 00:02:39,600
+Finally imagine that you want
+the minimal abscissa
+
+29
+00:02:39,600 --> 00:02:42,840
+of the two points of your box.
+
+30
+00:02:42,840 --> 00:02:49,280
+So, you will find it in
+the left upper corner of your box.
+
+31
+00:02:49,280 --> 00:02:54,690
+So here I write a pattern,
+which will observe
+
+32
+00:02:54,690 --> 00:02:58,810
+the value of this left upper corner.
+
+33
+00:02:58,810 --> 00:03:03,300
+And to observe this value,
+I use another pattern,
+
+34
+00:03:03,300 --> 00:03:10,340
+that will  just name the field <u>x</u> "x".
+
+35
+00:03:10,340 --> 00:03:14,450
+And I just want to
+return the value of that field.
+
+36
+00:03:14,450 --> 00:03:15,400
+Here.
+
+37
+00:03:17,000 --> 00:03:17,600
+Like that.
+
+38
+00:03:17,600 --> 00:03:24,600
+This definition is accepted by OCaml,
+and it has type <u>box -> int</u>.
+
+39
+00:03:27,170 --> 00:03:34,590
+So now that we have seen several examples
+of record construction and observation,
+
+40
+00:03:34,590 --> 00:03:39,629
+let us review the general rules to use them.
+
+41
+00:03:39,629 --> 00:03:44,590
+The first thing is the fact that
+in exchange for these extra checks
+
+42
+00:03:44,590 --> 00:03:50,860
+that the compiler is doing,
+you have to declare record types.
+
+43
+00:03:50,860 --> 00:03:55,220
+Whereas you don't have to do so
+when using tuple types.
+
+44
+00:03:55,220 --> 00:04:00,800
+The syntax to declare a record type is the following.
+
+45
+00:04:00,800 --> 00:04:06,209
+You first use the keyword <u>type</u>.
+Then the name of your type identifier.
+
+46
+00:04:06,209 --> 00:04:12,349
+And after that, between two braces <u>{ .. }</u>,
+you have to enumerate
+
+47
+00:04:12,349 --> 00:04:19,180
+the different names of your fields,
+and the types of these fields.
+
+48
+00:04:19,180 --> 00:04:27,159
+One constraint is the fact that
+all field names must be distinct.
+
+49
+00:04:27,159 --> 00:04:30,990
+And also, it is better,
+and we'll come back on that,
+
+50
+00:04:30,990 --> 00:04:40,189
+to use names for fields that are
+not used in other record types.
+
+51
+00:04:40,189 --> 00:04:44,650
+Now at the level of expressions,
+you can construct a record,
+
+52
+00:04:44,650 --> 00:04:47,200
+again, using braces,
+
+53
+00:04:47,200 --> 00:04:54,319
+but now you will have to define each field
+using the <u>=</u> sign.
+
+54
+00:04:54,319 --> 00:05:00,999
+And on the left of this <u>=</u> sign,
+you will have the name of the field
+
+55
+00:05:00,999 --> 00:05:08,169
+and at the right of the <u>=</u> sign,
+you will have the definition of this field
+
+56
+00:05:08,169 --> 00:05:10,500
+using some expression.
+
+57
+00:05:10,500 --> 00:05:15,279
+So now, if you want to observe
+a specific field of a record,
+
+58
+00:05:15,279 --> 00:05:17,169
+you can use a dot notation.
+
+59
+00:05:17,169 --> 00:05:21,800
+So you write the expression that evaluates
+into a record, a dot, and after that
+
+60
+00:05:21,800 --> 00:05:26,029
+the name of the field you want to observe.
+
+61
+00:05:26,029 --> 00:05:30,389
+If you want to observe several fields of a record,
+
+62
+00:05:30,389 --> 00:05:32,529
+you can use a record pattern.
+
+63
+00:05:32,529 --> 00:05:39,819
+And in this record pattern,
+
+64
+00:05:39,819 --> 00:05:43,270
+you will enumerate all the fields that
+you want to observe,
+
+65
+00:05:43,270 --> 00:05:48,259
+and for each field you have to specify,
+right after the <u>=</u> sign,
+
+66
+00:05:48,259 --> 00:05:55,059
+the pattern that is used to
+observe this particular field.
+
+67
+00:05:55,059 --> 00:05:59,199
+What is nice is the fact that
+you don't have to enumerate
+
+68
+00:05:59,199 --> 00:06:02,520
+all the fields of the record
+that you are analyzing.
+
+69
+00:06:02,520 --> 00:06:07,550
+You just have to mention
+the fields that you want to observe.
+
+70
+00:06:07,550 --> 00:06:14,990
+In the machine, a record is represented
+by a heap allocated block.
+
+71
+00:06:14,990 --> 00:06:17,960
+Exactly like a tuple.
+
+72
+00:06:17,960 --> 00:06:24,339
+Now, what kind of programming errors
+you can do when you are manipulating records.
+
+73
+00:06:24,339 --> 00:06:30,300
+The first one is a typo in the name of the field that
+
+74
+00:06:30,300 --> 00:06:32,949
+you are defining or observing.
+
+75
+00:06:32,949 --> 00:06:39,000
+In that case, the compiler is able to detect that,
+just at compile time.
+
+77
+00:06:41,849 --> 00:06:47,259
+So imagine that you have defined
+this type for 2D points.
+
+78
+00:06:47,259 --> 00:06:55,599
+And you try to define a point,
+but this time you made a typo.
+
+79
+00:06:55,599 --> 00:06:58,589
+And you changed <u>y</u> to <u>z</u>.
+
+80
+00:06:58,589 --> 00:07:00,179
+It's invalid.
+
+81
+00:07:00,179 --> 00:07:04,199
+And OCaml is able to understand that
+this record field name
+
+82
+00:07:04,199 --> 00:07:10,000
+is not in any record type,
+so it will reject this definition.
+
+83
+00:07:12,349 --> 00:07:17,169
+So imagine that you have your
+definition for 2D points,
+
+84
+00:07:17,169 --> 00:07:22,569
+and you have forgotten to give
+the value for the <u>y</u> field.
+
+85
+00:07:22,569 --> 00:07:29,319
+This time OCaml is able to
+point this problem to you
+
+86
+00:07:29,319 --> 00:07:33,800
+by seeing that you have indeed a missing field.
+
+87
+00:07:36,029 --> 00:07:39,449
+Another kind of programming error,
+that is very common, is:
+
+88
+00:07:39,449 --> 00:07:44,379
+when you assign a definition to a field
+
+89
+00:07:44,379 --> 00:07:51,669
+with an expression that has not the same type as
+the type that was declared for this field.
+
+90
+00:07:51,669 --> 00:07:56,000
+And again, the compiler
+is able to detect that kind of error.
+
+91
+00:07:58,309 --> 00:08:01,400
+So imagine that you defined
+a record type for a <u>person</u>
+
+92
+00:08:01,449 --> 00:08:07,349
+in which you have a <u>name</u> of type <u>string</u>
+and an <u>age</u> of type <u>int</u>
+
+93
+00:08:07,349 --> 00:08:10,399
+of course this definition of the record is wrong!
+
+94
+00:08:10,399 --> 00:08:15,699
+Because, for the <u>age</u>,
+you have used a <u>string</u> instead of an <u>int</u>.
+
+95
+00:08:15,699 --> 00:08:20,000
+Again, OCaml is able to detect that during typechecking.
+
+96
+00:08:22,200 --> 00:08:27,659
+Finally,
+let me come back on a remark that I've made about
+
+97
+00:08:27,659 --> 00:08:34,810
+how you can share, or not,
+the field names between several record types.
+
+98
+00:08:34,810 --> 00:08:37,030
+In modern versions of the OCaml compiler,
+
+99
+00:08:37,030 --> 00:08:43,830
+the compiler does its best to
+disambiguate the usage of labels.
+
+100
+00:08:43,830 --> 00:08:50,200
+But sometimes, you can do a mistake,
+because the ambiguity is not intended.
+
+101
+00:08:52,800 --> 00:08:59,810
+So, let us define two record types <u>a</u> and <u>b</u>.
+
+102
+00:08:59,810 --> 00:09:08,890
+And you can notice that the fields
+of these two records are disjoint.
+
+103
+00:09:08,890 --> 00:09:10,590
+That makes the inference easy.
+
+104
+00:09:10,590 --> 00:09:16,950
+The fact that you are using <u>x</u> and <u>b</u>
+with type <u>int</u>,
+
+105
+00:09:16,950 --> 00:09:22,270
+makes it easy for the type checker
+to infer that this record has type <u>a</u>.
+
+107
+00:09:22,270 --> 00:09:30,770
+So now, imagine that you have a type <u>t</u> whose type is
+
+108
+00:09:30,770 --> 00:09:35,310
+a record type with only one field of type <u>bool</u>.
+
+109
+00:09:35,310 --> 00:09:42,010
+If you say, now, that you have a record with
+only one field <u>x</u> of type <u>bool</u>.
+
+110
+00:09:42,010 --> 00:09:47,560
+Then, OCaml does its best, and is able to infer that
+
+111
+00:09:47,560 --> 00:09:52,000
+this record has not type <u>a</u> with a missing field,
+
+112
+00:09:52,000 --> 00:09:57,000
+but type <u>t</u> with the right field.
+
+113
+00:09:57,000 --> 00:10:02,460
+But now, if you define another type <u>u</u>
+with a field <u>x</u> of type <u>int</u>
+
+114
+00:10:02,460 --> 00:10:07,510
+and you try to check the same expression,
+
+115
+00:10:07,510 --> 00:10:11,040
+now OCaml will reject you program.
+
+116
+00:10:11,040 --> 00:10:19,310
+Because you only have one field, and
+this field does not have the right type
+
+117
+00:10:19,310 --> 00:10:25,540
+with respect to the last definition of
+a record with only one field <u>x</u>.
+
+118
+00:10:25,540 --> 00:10:27,610
+So it's rather complex.
+
+119
+00:10:27,610 --> 00:10:34,500
+And the good advice is simply
+not to share field names between records.
+

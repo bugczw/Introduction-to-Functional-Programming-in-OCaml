@@ -1,0 +1,637 @@
+1
+00:00:00,490 --> 00:00:01,420
+Welcome back!
+
+2
+00:00:01,420 --> 00:00:10,919
+This sequence is about how
+you can construct and observe tuples.
+
+3
+00:00:10,919 --> 00:00:15,709
+Some values are naturally made of several other values.
+
+4
+00:00:15,709 --> 00:00:20,949
+For example, if you want to represent a citizen,
+
+5
+00:00:20,949 --> 00:00:27,779
+it is composed of name, a first name,
+and a social security number.
+
+6
+00:00:27,779 --> 00:00:31,869
+If you want to represent a point in two dimensions,
+
+7
+00:00:31,869 --> 00:00:35,570
+then you need an abscissa and an ordinate.
+
+8
+00:00:35,570 --> 00:00:41,170
+How can we construct and observe
+such kind of values in OCaml?
+
+9
+00:00:43,260 --> 00:00:49,800
+Let us define the origin of the plan
+as a two dimensional point in OCaml.
+
+10
+00:00:49,800 --> 00:00:57,540
+To represent a two dimensional point,
+we want a tuple, and
+
+11
+00:00:57,540 --> 00:01:02,780
+the two components of this tuple will be equal to zero.
+
+12
+00:01:02,780 --> 00:01:04,649
+This is written like that:
+
+13
+00:01:04,649 --> 00:01:08,560
+you first open up a parenthesis, followed by zero;
+
+14
+00:01:08,560 --> 00:01:11,899
+a comma to separate the components of the tuple;
+
+15
+00:01:11,899 --> 00:01:15,280
+right after that, the second component of the tuple; and
+
+16
+00:01:15,280 --> 00:01:20,820
+finally you have to close the opened parenthesis.
+
+17
+00:01:20,820 --> 00:01:26,530
+You can notice that the toplevel inferred
+the type of this expression to be:
+
+18
+00:01:26,530 --> 00:01:29,270
+a tuple of size two.
+---So a pair---
+
+19
+00:01:29,270 --> 00:01:34,390
+The first component has type <u>int</u>, and
+the second component has type <u>int</u>.
+
+20
+00:01:34,390 --> 00:01:40,979
+And of course, you can do that
+for many different values of the integers.
+
+22
+00:01:41,829 --> 00:01:48,511
+So the same example can be written by first
+
+23
+00:01:48,520 --> 00:01:55,299
+introducing a type identifier
+to represent the type for two dimensional points.
+
+24
+00:01:55,299 --> 00:01:58,880
+So we will use what we have
+learned in the previous sequence
+
+25
+00:01:58,880 --> 00:02:03,789
+by introducing a <u>point2D</u> identifier.
+
+26
+00:02:03,789 --> 00:02:06,520
+And this <u>point2D</u> identifier can be used to
+
+27
+00:02:06,520 --> 00:02:16,580
+constraint the type of the origin identifier
+to be assigned the type <u>point2D</u>.
+
+28
+00:02:20,360 --> 00:02:22,280
+Now that we have seen several examples,
+
+29
+00:02:22,290 --> 00:02:26,720
+let us review the general syntax rules.
+
+30
+00:02:26,720 --> 00:02:28,640
+At the level of types,
+
+31
+00:02:28,650 --> 00:02:33,400
+you can compose two types to form a tuple type
+
+32
+00:02:33,400 --> 00:02:37,320
+by using the <u>*</u> operator.
+
+33
+00:02:37,320 --> 00:02:39,800
+At the level of the expressions,
+
+34
+00:02:39,810 --> 00:02:42,850
+if you want to construct a tuple,
+
+35
+00:02:42,850 --> 00:02:45,850
+you just have to separate the expressions
+
+36
+00:02:45,850 --> 00:02:51,640
+---that construct the different components
+of this tuple---
+
+37
+00:02:51,640 --> 00:02:54,030
+by commas.
+
+38
+00:02:54,030 --> 00:02:56,850
+So now we know how to construct a tuple.
+
+39
+00:02:56,850 --> 00:02:58,810
+But how can we observe it ?
+
+40
+00:02:58,810 --> 00:03:02,270
+Observation of a tuple,
+
+41
+00:03:02,270 --> 00:03:07,230
+---or in fact of any structured data in OCaml---
+
+42
+00:03:07,230 --> 00:03:08,350
+is based on <i>pattern-matching</i>.
+
+43
+00:03:08,350 --> 00:03:15,750
+A pattern describes :
+how values are observed by the program.
+
+44
+00:03:15,750 --> 00:03:23,930
+Patterns appear in <u>let</u>-bindings
+and in function arguments.
+
+45
+00:03:23,930 --> 00:03:30,230
+In fact, we already saw
+the simplest form of pattern:
+
+46
+00:03:30,230 --> 00:03:32,560
+identifiers.
+
+47
+00:03:32,560 --> 00:03:39,480
+When you have an expression of the form:
+<u>let x = 6 * 3 in x</u>
+
+48
+00:03:39,480 --> 00:03:42,130
+you can read it as:
+
+49
+00:03:42,130 --> 00:03:53,120
+"I observe the value of the expression <u>6 * 3</u>
+by naming it <u>x</u>"
+
+51
+00:03:53,120 --> 00:03:56,900
+There is another form of pattern
+which is very simple, and
+
+52
+00:03:56,900 --> 00:04:01,560
+which is used to say that
+you just want to ignore some components.
+
+53
+00:04:01,560 --> 00:04:08,090
+This is called a "wildcard pattern" and
+it is written using an underscore.
+
+54
+00:04:08,090 --> 00:04:10,850
+So when you have the following expression,
+
+55
+00:04:10,850 --> 00:04:17,280
+you can read it as:
+"I ignore the value of <u>6 * 3</u>".
+
+56
+00:04:17,280 --> 00:04:23,219
+In order to observe
+the different components of a tuple,
+
+57
+00:04:23,219 --> 00:04:31,749
+you have to compose the patterns
+for this components by separating with commas.
+
+58
+00:04:31,749 --> 00:04:36,300
+For instance, the following expression is read as:
+
+59
+00:04:36,300 --> 00:04:45,990
+"I observe the first component of
+this tuple and I name it <u>x</u>, and"
+
+60
+00:04:45,990 --> 00:04:50,819
+"I ignore the second component of this tuple."
+
+62
+00:04:52,449 --> 00:04:56,240
+So let us define a tuple
+
+63
+00:04:56,240 --> 00:04:59,740
+which is a pair of two integers.
+
+64
+00:04:59,740 --> 00:05:07,259
+If I want to
+name the first component of this pair, and to
+
+66
+00:05:07,259 --> 00:05:09,939
+ignore the second component of this pair,
+
+67
+00:05:09,939 --> 00:05:12,389
+I just use the pattern that
+
+68
+00:05:12,389 --> 00:05:20,749
+starts with an identifier pattern and
+that is followed by the wildcard pattern.
+
+69
+00:05:20,749 --> 00:05:27,680
+I see that the toplevel has
+only named the first component <u>x</u>.
+
+70
+00:05:27,680 --> 00:05:31,779
+---which is indeed equal to <u>18</u>---
+
+71
+00:05:31,779 --> 00:05:40,340
+This pattern can also be used
+as argument of a function.
+
+72
+00:05:40,340 --> 00:05:42,099
+---Just like that---
+
+73
+00:05:42,099 --> 00:05:50,279
+This is a general function that
+always return the first component of any pair.
+
+74
+00:05:50,279 --> 00:05:56,449
+The second function will return
+the second component of any pair.
+
+76
+00:05:57,509 --> 00:06:03,539
+So let us review
+the general syntax for tuple patterns.
+
+77
+00:06:03,539 --> 00:06:07,259
+You just have to write a pattern for each component,
+
+78
+00:06:07,259 --> 00:06:11,289
+and separate them using commas.
+
+79
+00:06:11,289 --> 00:06:12,779
+The only constraint is:
+
+80
+00:06:12,779 --> 00:06:15,749
+the number of subpatterns must be equal to
+
+81
+00:06:15,749 --> 00:06:22,540
+the number of components of the tuple
+you are pattern-matching.
+
+82
+00:06:22,540 --> 00:06:32,620
+And also, you have to make sure that
+an identifier is used only once in a pattern.
+
+83
+00:06:32,620 --> 00:06:38,479
+In the machine,
+a tuple is represented as a heap allocated block.
+
+84
+00:06:38,479 --> 00:06:47,559
+This means that you have a block in memory
+with several cells inside it, and
+
+85
+00:06:47,559 --> 00:06:50,569
+there is one cell per component.
+
+86
+00:06:50,569 --> 00:06:55,889
+For instance, if you have
+a tuple <u>p</u> with <u>1</u>, <u>2</u>, and <u>3</u> inside,
+
+87
+00:06:55,889 --> 00:06:59,699
+then you have a block with three cells.
+
+88
+00:06:59,699 --> 00:07:01,089
+The first one contains <u>1</u>,
+
+89
+00:07:01,089 --> 00:07:03,229
+the second one contains <u>2</u>, and
+
+90
+00:07:03,229 --> 00:07:05,999
+the third one contains <u>3</u>.
+
+91
+00:07:05,999 --> 00:07:13,879
+Now, if you have an identifier <u>p</u>,
+
+92
+00:07:13,879 --> 00:07:17,279
+which represents the value of a tuple,
+
+93
+00:07:17,279 --> 00:07:22,449
+internally it is represented as a pointer to the memory.
+
+94
+00:07:22,449 --> 00:07:30,150
+Then, if you define for instance <u>q</u>,
+whose first component is <u>p</u>,
+
+95
+00:07:30,150 --> 00:07:34,749
+it means that, in memory, the first cell of this pair
+
+96
+00:07:34,749 --> 00:07:42,719
+is a pointer to the first block.
+
+97
+00:07:42,719 --> 00:07:46,789
+Pointers can be shared.
+
+98
+00:07:46,789 --> 00:07:53,789
+It means that if you change
+the second component of <u>q</u> from <u>0</u> to <u>p</u>,
+
+99
+00:07:53,789 --> 00:07:57,680
+you will have two pointers in the pair, and
+
+100
+00:07:57,680 --> 00:08:04,129
+the second one points to
+the same block as the first one.
+
+101
+00:08:04,129 --> 00:08:08,759
+So now, let us talk about equalities.
+
+102
+00:08:08,759 --> 00:08:13,119
+In fact in OCaml, there are two kinds of equalities.
+
+103
+00:08:13,119 --> 00:08:20,539
+The first one is the structural one that
+you have already seen in previous weeks.
+
+104
+00:08:20,540 --> 00:08:28,060
+Two values are structurally equal
+if they have the same content.
+
+105
+00:08:28,060 --> 00:08:36,780
+The operator <u>==</u> implements
+what is called physical equality.
+
+106
+00:08:36,789 --> 00:08:46,220
+Two values are physically equal,
+if they are stored at the same place in memory.
+
+107
+00:08:46,220 --> 00:08:51,500
+It means that the two pointers are in fact equal.
+
+109
+00:08:53,130 --> 00:09:03,750
+Let us define two pairs <u>x</u> and <u>y</u>, and
+
+110
+00:09:03,750 --> 00:09:08,500
+an identifier <u>z</u> which is equal to <u>x</u>.
+
+111
+00:09:08,500 --> 00:09:12,329
+So, what do we have here ?
+
+112
+00:09:12,329 --> 00:09:15,079
+The first thing to notice is:
+
+113
+00:09:15,079 --> 00:09:18,649
+if you compare the contents of the two pairs,
+
+114
+00:09:18,649 --> 00:09:21,470
+they are equal.
+
+115
+00:09:21,470 --> 00:09:30,880
+But now, if you use the physical equality
+to compare the two pairs <u>x</u> and <u>y</u>.
+
+116
+00:09:30,880 --> 00:09:33,670
+This time, they are not equal,
+
+117
+00:09:33,670 --> 00:09:38,560
+because we have allocated two different blocks in memory.
+
+118
+00:09:38,560 --> 00:09:45,000
+So the addresses of this two blocks are different.
+
+119
+00:09:45,000 --> 00:09:56,120
+When we written that <u>z</u> is equal to <u>x</u>,
+in fact we shared the same pointers.
+
+120
+00:09:56,130 --> 00:10:03,449
+The value assigned to the identifier <u>z</u>,
+is the same pointer that you have for <u>x</u>.
+
+121
+00:10:03,449 --> 00:10:08,040
+So <u>x</u> is physically equal to <u>z</u>.
+
+123
+00:10:09,339 --> 00:10:14,920
+Now, what kind of programming errors
+can you do when you write patterns.
+
+124
+00:10:14,920 --> 00:10:21,440
+The first one is to use
+not enough or too much subpatterns
+
+125
+00:10:21,440 --> 00:10:28,269
+with respect to the number of components
+of the tuple that you are analyzing.
+
+126
+00:10:28,269 --> 00:10:35,920
+As already said, you cannot use several times
+the same identifier in a pattern.
+
+127
+00:10:35,920 --> 00:10:41,089
+This is called a non-linear pattern.
+
+128
+00:10:41,089 --> 00:10:45,870
+What is nice is that the compiler
+will caught that kind of error for you,
+
+129
+00:10:45,870 --> 00:10:47,740
+at compile time.
+
+130
+00:10:47,740 --> 00:10:51,870
+So you have the guarantee that during the execution,
+
+131
+00:10:51,870 --> 00:10:57,290
+the program will not fall into that kind of problems.
+
+133
+00:10:59,329 --> 00:11:05,769
+So if you write a pattern,
+which is expecting two components, and
+
+134
+00:11:05,769 --> 00:11:13,250
+you try to observe a tuple with three components, then
+
+135
+00:11:13,250 --> 00:11:22,580
+it is of course invalid, and
+the compiler is able to warn you:
+
+136
+00:11:22,580 --> 00:11:30,180
+« the two types, of the pattern and
+of the expression, are incompatible »
+
+137
+00:11:30,180 --> 00:11:35,480
+You cannot name two components with the same name
+
+138
+00:11:35,480 --> 00:11:36,779
+because it doesn't make sense.
+
+139
+00:11:36,779 --> 00:11:40,550
+And again, the compiler is able to detect that
+
+140
+00:11:40,550 --> 00:11:45,430
+kind of errors and produce a type error.
+
+142
+00:11:46,959 --> 00:11:49,819
+There is another kind of programming error that
+
+143
+00:11:49,819 --> 00:11:54,500
+you can do when you use patterns over tuple.
+
+144
+00:11:54,500 --> 00:11:59,019
+And that kind of error cannot be caught by the compiler
+
+145
+00:11:59,019 --> 00:12:04,149
+because it is a more semantic problem.
+
+146
+00:12:04,149 --> 00:12:09,420
+Indeed definition using an index can be error-prone.
+
+148
+00:12:11,769 --> 00:12:18,769
+The following definition of abscissa is well typed, and
+
+149
+00:12:18,769 --> 00:12:23,920
+this definition of ordinate is also well typed.
+
+150
+00:12:23,920 --> 00:12:27,800
+Except that there is an error,
+---a semantic error---
+
+151
+00:12:27,800 --> 00:12:33,839
+because the abscissa should be here <u>x</u> and
+
+152
+00:12:33,839 --> 00:12:36,050
+the ordinate should be here <u>y</u>.
+
+153
+00:12:36,050 --> 00:12:42,800
+But the compiler is not able to understand
+that you have made that kind of error.
+
+155
+00:12:44,399 --> 00:12:47,620
+Fortunately we will see that another kind of types
+
+156
+00:12:47,620 --> 00:12:51,940
+will help us avoid that kind of semantic problem.
+

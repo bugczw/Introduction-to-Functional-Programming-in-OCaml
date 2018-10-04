@@ -1,0 +1,798 @@
+1
+00:00:08,139 --> 00:00:12,800
+Bienvenue à cette troisième semaine
+sur la programmation fonctionnelle et OCaml.
+
+2
+00:00:13,830 --> 00:00:22,810
+Cette semaine sera consacrée aux types de données
+algébriques, un sorte de types très importante
+
+3
+00:00:22,810 --> 00:00:25,080
+que l'on peut utiliser en OCaml.
+
+4
+00:00:25,080 --> 00:00:29,599
+Pour les comprendre, on les présentera progressivement
+
+5
+00:00:29,599 --> 00:00:36,030
+en montrant d'abord comment marquer des valeurs,
+comment définir des types récursifs,
+
+6
+00:00:36,030 --> 00:00:44,739
+et grâce à ces deux possibilités, quel genre de
+structures de données arborescentes on peut définir.
+
+7
+00:00:44,739 --> 00:00:49,469
+On illustrera cela sur un générateur d'histoire.
+
+8
+00:00:49,469 --> 00:00:55,700
+Juste après, on verra comment rendre polymorphe
+un type de données algébrique
+
+9
+00:00:55,719 --> 00:00:59,300
+et on conclura avec des aspects avancés.
+
+10
+00:00:59,820 --> 00:01:03,039
+Revenons à notre exemple de base de données,
+
+11
+00:01:03,039 --> 00:01:11,060
+et plus précisément au type
+que nous avons attribué à la fonction [engine].
+
+12
+00:01:11,060 --> 00:01:19,500
+Ce type n'est pas vraiment satisfaisant, parce que,
+si vous regardez le type de retour de notre moteur,
+
+13
+00:01:19,500 --> 00:01:27,600
+c'est un triplet, mais parfois,
+certains de ses composants sont dénués de sens.
+
+14
+00:01:27,670 --> 00:01:40,300
+En effet, pour une requête d'insertion, seule la
+composante "base de données" est significative ;
+
+15
+00:01:40,390 --> 00:01:48,479
+pour la recherche de contacts,
+seul le second composant est significatif,
+
+16
+00:01:48,479 --> 00:01:56,579
+Et si le statut renvoyé est [false], alors
+les deux autres composants n'ont pas de sens.
+
+17
+00:01:56,579 --> 00:02:07,200
+Alors ... peut-on résoudre cela, et trouver un type
+capturant bien mieux cette situation ?
+
+18
+00:02:07,270 --> 00:02:12,500
+Ce que nous voulons faire c'est changer
+le type de [engine] en quelque chose comme ça :
+
+19
+00:02:12,530 --> 00:02:20,300
+On a remplacé le type du résultat de la fonction
+par un nouveau type nommé [query_result].
+
+20
+00:02:20,940 --> 00:02:28,480
+Et ce que nous voulons c'est une valeur de
+type [query_result] pouvant être soit une erreur,
+
+21
+00:02:28,480 --> 00:02:35,099
+soit une nouvelle base de données, dans le cas
+d'une requête d'insertion ou de suppression,
+
+22
+00:02:35,099 --> 00:02:44,200
+soit un contact et son index, dans le cas
+d'une requête de recherche réussie.
+
+23
+00:02:44,230 --> 00:02:48,300
+Et en fait, en OCaml,
+on peut simplement écrire une déclaration de type
+
+24
+00:02:48,300 --> 00:02:53,300
+qui illustre exactement cette description informelle.
+
+25
+00:02:53,379 --> 00:03:00,150
+Nous définissons un type [query_result]
+ayant trois cas :
+
+26
+00:03:00,150 --> 00:03:02,620
+Le premier est [Error],
+
+27
+00:03:02,620 --> 00:03:08,739
+Le second est un [NewDatabase]
+suivi d'une [database],
+
+28
+00:03:08,739 --> 00:03:17,800
+Et le troisième est un [FoundContact]
+suivi d'un [contact] et d'un entier.
+
+29
+00:03:18,000 --> 00:03:21,540
+Ce que nous avons ici est appelé un type somme.
+
+30
+00:03:21,540 --> 00:03:24,970
+C'est une union disjointe de types.
+
+31
+00:03:24,970 --> 00:03:31,470
+C'est une façon de prendre plusieurs types,
+et de les réunir en un type unique.
+
+32
+00:03:31,470 --> 00:03:40,989
+Mais alors, vous voulez comprendre d'où viennent
+les différentes valeurs de ce type.
+
+33
+00:03:40,989 --> 00:03:42,709
+Pour ce faire, on utilise des étiquettes.
+
+34
+00:03:42,709 --> 00:03:48,220
+Une étiquette est un identificateur qui doit commencer
+par une majuscule.
+
+35
+00:03:48,220 --> 00:03:57,650
+Les noms d'étiquettes sont uniques et distincts
+dans un type de données algébrique.
+
+36
+00:03:57,650 --> 00:04:05,360
+Donc, une étiquette caractérise un type spécifique
+dans cette union disjointe de types.
+
+37
+00:04:05,360 --> 00:04:09,730
+Maintenant, comment construire et reconnaître
+des valeurs de ce type ?
+
+38
+00:04:09,730 --> 00:04:18,150
+Eh bien, la première chose à savoir, c'est que
+les étiquettes sont aussi appelées des constructeurs.
+
+39
+00:04:18,150 --> 00:04:22,780
+Ainsi, pour construire une valeur d'un sous-type,
+
+40
+00:04:22,780 --> 00:04:28,229
+ce qu'on doit faire c'est
+construire une valeur de ce type
+
+41
+00:04:28,229 --> 00:04:35,070
+en appliquant une étiquette à l'argument
+(le composant de la valeur).
+
+42
+00:04:35,070 --> 00:04:40,909
+Ainsi, l'étiquette sera un marqueur
+qui sera utilisé
+
+43
+00:04:40,909 --> 00:04:46,229
+pour classifier les valeurs
+lors de l'exécution du programme.
+
+44
+00:04:46,229 --> 00:04:57,110
+La syntaxe pour marquer - ou étiqueter - un ensemble
+de valeurs est tout simplement la suivante.
+
+45
+00:04:57,110 --> 00:05:01,599
+On écrit d'abord l'étiquette, et ensuite,
+entre parenthèses
+
+46
+00:05:01,599 --> 00:05:06,039
+on écrit les différentes composantes
+qui doivent être étiquetées,
+
+47
+00:05:06,039 --> 00:05:07,800
+et séparées par des virgules.
+
+48
+00:05:10,300 --> 00:05:21,360
+Donc, revenons au type de contacts
+qui est défini ainsi.
+
+49
+00:05:21,360 --> 00:05:27,010
+Et maintenant, on peut utiliser un type somme
+pour représenter une [query]
+
+50
+00:05:27,010 --> 00:05:35,750
+en utilisant les trois cas correspondant
+aux trois sortes de requêtes.
+
+51
+00:05:35,750 --> 00:05:44,600
+On peut introduire un contact nommé Luke,
+et en utilisant ce contact,
+
+52
+00:05:44,600 --> 00:05:51,900
+on peut maintenant construire une requête
+- une valeur de type [query] -
+
+53
+00:05:51,960 --> 00:05:59,710
+en utilisant le constructeur de données [Insert]
+suivi du contact,
+
+54
+00:05:59,710 --> 00:06:06,890
+en respectant la déclaration de ce constructeur.
+
+55
+00:06:06,890 --> 00:06:12,760
+On obtient donc un [query], qui passe
+la vérification de type
+
+56
+00:06:12,760 --> 00:06:18,490
+et est exactement de même type que la deuxième requête
+s'appelant [Search],
+
+57
+00:06:18,490 --> 00:06:25,010
+et qui attend une chaîne,
+on fournit donc une chaîne ici.
+
+58
+00:06:25,010 --> 00:06:37,600
+Et enfin, on peut aussi appliquer [Delete] à un
+contact pour construire une requête de suppression.
+
+59
+00:06:40,649 --> 00:06:44,200
+Voici un autre exemple de type somme,
+
+60
+00:06:44,200 --> 00:06:49,310
+qui est cette fois composé de constructeurs
+sans argument.
+
+61
+00:06:49,310 --> 00:06:55,310
+Cela nous donne une définition des couleurs
+
+62
+00:06:55,310 --> 00:07:03,209
+en utilisant une énumération des couleurs
+qui sont admises comme valeurs de type [color].
+
+63
+00:07:03,209 --> 00:07:10,870
+Donc, il est ici possible de définir,
+par exemple,
+
+64
+00:07:10,870 --> 00:07:16,060
+la couleur de Batman, qui est [Black]
+
+65
+00:07:16,060 --> 00:07:24,020
+et OCaml infère que ce constructeur
+est de type [color].
+
+66
+00:07:24,020 --> 00:07:33,219
+C'est mieux que ce qu'on avait quand on codait
+une couleur par un entier,
+
+67
+00:07:33,219 --> 00:07:39,409
+car maintenant nous savons exactement
+que les seules couleurs possibles
+
+68
+00:07:39,409 --> 00:07:43,900
+sont [Black], [Gray] et [White],
+et rien d'autre.
+
+69
+00:07:45,950 --> 00:07:52,779
+Maintenant, examinons un type [t],
+qui est défini comme une énumération
+
+70
+00:07:52,779 --> 00:07:58,140
+avec deux étiquettes [A] et [B].
+
+71
+00:07:58,140 --> 00:08:02,589
+Et supposons que nous ayons
+une variable [x], de type [t].
+
+72
+00:08:02,589 --> 00:08:08,200
+Ce qu'on sait est que
+si cette variable est de type [t],
+
+73
+00:08:08,200 --> 00:08:13,200
+cela signifie que, quand elle a été créée,
+
+74
+00:08:13,200 --> 00:08:19,969
+le programmeur doit avoir utilisé à la base
+l'un des deux constructeurs [A] et [B].
+
+75
+00:08:19,969 --> 00:08:24,899
+C'est contraignant,
+mais en échange de cette contrainte,
+
+76
+00:08:24,899 --> 00:08:35,120
+on gagne une propriété très forte : le fait
+qu'un [x] ne peut être qu'un [A] ou qu'un [B].
+
+77
+00:08:35,120 --> 00:08:41,930
+Ainsi, vous pouvez écrire votre calcul
+sur la base de ce fait,
+
+78
+00:08:41,930 --> 00:08:47,370
+ce qui signifie que si vous voulez écrire un
+certain calcul qui dépend de [x]
+
+79
+00:08:47,370 --> 00:08:55,930
+alors vous devez fournir un cas pour [x = A]
+et un cas pour [x = B].
+
+80
+00:08:55,930 --> 00:08:59,240
+Et après cela, vous savez que vous avez un calcul
+
+81
+00:08:59,240 --> 00:09:05,460
+qui sera en mesure de répondre à
+toute valeur reconnue dans le type [t].
+
+82
+00:09:05,460 --> 00:09:13,600
+On sait maintenant que lorsqu'on observe une valeur
+d'un type somme, plusieurs cas sont possibles.
+
+83
+00:09:13,630 --> 00:09:17,580
+Le programmeur doit donc fournir une expression
+pour chaque cas possible.
+
+84
+00:09:17,580 --> 00:09:21,360
+Un cas sera décrit comme d'habitude par un motif.
+
+85
+00:09:21,360 --> 00:09:23,270
+Et le modèle sera de la forme suivante :
+
+86
+00:09:23,270 --> 00:09:27,670
+on écrit d'abord l'étiquette, puis,
+entre parenthèses,
+
+87
+00:09:27,670 --> 00:09:32,750
+on écrit les motifs pour les différents composants,
+séparés par des virgules.
+
+88
+00:09:32,750 --> 00:09:39,780
+Une branche est composée d'un motif et d'une expression
+séparés par une flèche,
+
+89
+00:09:39,780 --> 00:09:41,150
+juste comme cela.
+
+90
+00:09:41,150 --> 00:09:45,140
+Et enfin,
+si on veut représenter une analyse par cas,
+
+91
+00:09:45,140 --> 00:09:47,710
+on peut utiliser ce qu'on appelle un filtrage
+(<i>pattern matching</i>),
+
+92
+00:09:47,710 --> 00:09:51,400
+qui est une construction très,
+très importante en OCaml,
+
+93
+00:09:51,400 --> 00:09:57,190
+et grâce à laquelle la programmation
+devient très, très agréable.
+
+94
+00:09:57,190 --> 00:10:02,570
+Un filtrage est une séquence de branches
+écrites ainsi :
+
+95
+00:10:02,570 --> 00:10:05,540
+on écrit le mot-clé [match],
+
+96
+00:10:05,540 --> 00:10:12,300
+suivi d'une expression qui s'évaluera en
+une valeur dans un type somme,
+
+97
+00:10:12,330 --> 00:10:15,620
+et après, on écrit une séquence de branches.
+
+98
+00:10:15,620 --> 00:10:22,440
+Un filtrage doit comporter au moins une branche.
+
+99
+00:10:22,440 --> 00:10:26,340
+Voici comment calculer de tête un filtrage :
+
+100
+00:10:26,340 --> 00:10:29,550
+il faut juste comprendre que la première chose à faire
+
+101
+00:10:29,550 --> 00:10:36,130
+est de calculer la valeur de [some_expression],
+l'expression que l'on souhaite analyser.
+
+102
+00:10:36,130 --> 00:10:44,220
+Ensuite, on essaye de faire correspondre cette valeur
+avec le motif de la première branche.
+
+103
+00:10:44,220 --> 00:10:48,700
+Si elle correspond, alors on calcule
+l'expression de cette branche.
+
+104
+00:10:48,700 --> 00:10:53,130
+Sinon, si elle ne correspond pas,
+on essaye la branche suivante.
+
+105
+00:10:53,130 --> 00:10:57,150
+Et on continue, on continue, jusqu'à trouver
+une correspondance.
+
+106
+00:10:57,150 --> 00:11:01,440
+Voici un exemple de filtrage.
+
+107
+00:11:01,440 --> 00:11:14,900
+Notre moteur doit déterminer la requête et,
+selon la requête, calculer l'expression convenable.
+
+108
+00:11:14,990 --> 00:11:19,250
+Donc, on utilise un filtrage sur la requête,
+
+109
+00:11:19,250 --> 00:11:22,480
+et on a une branche pour chaque cas possible :
+
+110
+00:11:22,480 --> 00:11:30,100
+une pour la requête d'insertion, et dans ce cas
+il suffit d'utiliser la fonction [insert];
+
+111
+00:11:30,110 --> 00:11:35,600
+une pour la requête d'effacement,
+et dans ce cas on emploie la fonction [delete];
+
+112
+00:11:35,650 --> 00:11:45,300
+et enfin, un dernier cas pour la requête de recherche,
+on utilise la fonction [search].
+
+113
+00:11:45,300 --> 00:11:54,780
+Beaucoup, beaucoup de fonctions en OCaml débutent
+par une analyse de cas sur l'un de leurs arguments.
+
+114
+00:11:54,780 --> 00:11:58,220
+Ce genre de fonction peut donc s'écrire comme ça :
+
+115
+00:11:58,220 --> 00:12:02,770
+vous définissez une fonction [f],
+avec par exemple un argument [x],
+
+116
+00:12:02,770 --> 00:12:08,080
+et vous filtrez [x]
+selon différentes branches.
+
+117
+00:12:08,080 --> 00:12:16,500
+En fait, ce genre de fonctions est si courant qu'il y a
+un raccourci syntaxique pour les définir.
+
+118
+00:12:16,540 --> 00:12:19,760
+Il s'écrit comme ça :
+
+119
+00:12:19,760 --> 00:12:25,130
+comme d'habitude, on utilise [let] pour introduire
+l'identificateur de la fonction,
+
+120
+00:12:25,130 --> 00:12:36,800
+et juste après [=] on utilise le mot-clé [function]
+suivi des différentes branches de l'analyse de cas.
+
+121
+00:12:36,850 --> 00:12:46,200
+Dans notre exemple de la fonction [moteur],
+cela donne quelque chose comme ça.
+
+122
+00:12:46,230 --> 00:12:50,130
+Maintenant, que se passe-t-il dans la machine ?
+
+123
+00:12:50,130 --> 00:12:57,100
+Eh bien, chaque étiquette est représentée
+par un petit entier de la machine.
+
+124
+00:12:57,100 --> 00:13:01,800
+Donc, quand vous avez une valeur d'un type somme,
+il est soit :
+
+125
+00:13:01,800 --> 00:13:06,779
+une étiquette qui est un entier,
+s'il n'y a aucun argument pour le constructeur,
+
+126
+00:13:06,779 --> 00:13:10,910
+et c'est juste comme dans une énumération,
+
+127
+00:13:10,910 --> 00:13:21,500
+ou, si le constructeur a des arguments, c'est un bloc
+alloué sur le tas commençant par une étiquette.
+
+128
+00:13:21,520 --> 00:13:29,400
+Donc, lorsqu'un filtrage a lieu, il se produit
+d'abord un test dynamique sur cette étiquette.
+
+129
+00:13:29,420 --> 00:13:32,340
+Et quand cette étiquette est reconnue, alors
+
+130
+00:13:32,340 --> 00:13:39,340
+la branche convenable de filtrage peut être choisie.
+
+131
+00:13:39,340 --> 00:13:42,070
+Maintenant, quel genre d'erreurs
+de programmation fait-on
+
+132
+00:13:42,070 --> 00:13:46,500
+lorsqu'on manipule des types de données algébriques
+et le filtrage ?
+
+133
+00:13:46,500 --> 00:13:52,339
+La première chose qui peut arriver est
+d'avoir un motif mal typé.
+
+134
+00:13:52,339 --> 00:13:56,560
+On peut aussi oublier certains cas.
+
+135
+00:13:56,560 --> 00:14:00,880
+Mais la bonne nouvelle est que ces sortes
+d'erreurs de programmation
+
+136
+00:14:00,880 --> 00:14:03,700
+sont en fait détectées par le vérificateur de type.
+
+137
+00:14:05,990 --> 00:14:10,880
+Ainsi définissons un type somme
+avec trois cas:
+
+138
+00:14:10,880 --> 00:14:15,300
+Le premier est [None],
+et il n'attend aucun argument ;
+
+139
+00:14:15,300 --> 00:14:20,420
+[Single] attend un entier ;
+
+140
+00:14:20,420 --> 00:14:24,990
+et [Pair] attend deux entiers.
+
+141
+00:14:24,990 --> 00:14:29,100
+En passant, notez que
+le premier signe '|' est facultatif
+
+142
+00:14:29,100 --> 00:14:34,600
+ce qui est particulièrement pratique lorsqu'on
+écrit une définition de type sur une seule ligne.
+
+143
+00:14:34,680 --> 00:14:44,350
+Donc, voici un filtrage invalide.
+
+144
+00:14:44,350 --> 00:14:54,110
+Car ici, ce motif
+applique [None] à un argument,
+
+145
+00:14:54,110 --> 00:14:56,910
+alors qu'aucun n'est prévu.
+
+146
+00:14:56,910 --> 00:15:02,940
+Dans ce cas, le vérificateur de type est capable
+de déceler cette erreur
+
+147
+00:15:02,940 --> 00:15:10,320
+et d'indiquer que [None]
+est appliqué à trop d'arguments.
+
+148
+00:15:10,320 --> 00:15:13,400
+Voici un autre exemple.
+
+149
+00:15:13,400 --> 00:15:18,720
+Cette fois, [Single] est appliqué à [true]
+qui est un booléen.
+
+150
+00:15:18,720 --> 00:15:23,750
+Mais dans la déclaration, on peut lire que
+[Single] attend un entier.
+
+151
+00:15:23,750 --> 00:15:31,540
+Encore une fois, on voit que le vérificateur de type
+est en mesure de trouver cette erreur
+
+152
+00:15:31,540 --> 00:15:36,500
+et qu'il nous dit qu'on attend
+un entier et non un booléen.
+
+153
+00:15:39,800 --> 00:15:41,820
+Revenons à notre type des couleurs
+
+154
+00:15:41,820 --> 00:15:45,710
+dans lequel nous avons seulement trois couleurs.
+
+155
+00:15:45,710 --> 00:15:48,900
+Et imaginons que nous voulions
+définir une fonction qui prend deux couleurs,
+
+156
+00:15:48,900 --> 00:15:58,900
+et renvoie un booléen qui est vrai
+si et seulement si [c2] est plus clair que [c1].
+
+157
+00:15:58,910 --> 00:16:02,029
+Pour définir cette fonction,
+nous écrivons un filtrage sur
+
+158
+00:16:02,029 --> 00:16:06,839
+un couple formé de ces deux couleurs.
+
+159
+00:16:06,839 --> 00:16:10,250
+Les trois premiers cas correspondent au fait que
+
+160
+00:16:10,250 --> 00:16:16,890
+nous ne voulons pas dire qu'une couleur est plus
+claire qu'elle-même.
+
+161
+00:16:16,890 --> 00:16:22,820
+Ce cas correspond au fait que [Black] est plus sombre
+que toute autre couleur.
+
+162
+00:16:22,820 --> 00:16:29,820
+Et que [White], ici, est plus clair que toute
+autre couleur
+
+163
+00:16:29,820 --> 00:16:36,080
+Ensuite, les deux derniers cas correspondent aux
+relations entre
+
+164
+00:16:36,080 --> 00:16:40,029
+[Gray] et [White],
+et entre [Gray] et [Black].
+
+165
+00:16:40,029 --> 00:16:44,010
+Ah ... ai-je oublié des cas?
+
+166
+00:16:44,010 --> 00:16:48,080
+Je ne sais pas vraiment,
+c'est un exemple très complexe
+
+167
+00:16:48,080 --> 00:16:50,870
+en tout cas pour moi.
+
+168
+00:16:50,870 --> 00:16:54,230
+Donc, utilisons le vérificateur de type ...
+
+169
+00:16:54,230 --> 00:16:57,000
+et, en effet, j'ai raté un cas,
+
+170
+00:16:57,000 --> 00:17:02,500
+qui est celui où la première couleur est [White]
+et la deuxième [Black].

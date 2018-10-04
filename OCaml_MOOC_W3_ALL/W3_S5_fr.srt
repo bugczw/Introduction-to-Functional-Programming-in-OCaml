@@ -1,0 +1,426 @@
+1
+00:00:00,070 --> 00:00:01,510
+Re-bonjour.
+
+2
+00:00:01,510 --> 00:00:07,900
+Nous allons conclure cette semaine avec des sujets
+avancés sur les types de données algébriques.
+
+3
+00:00:09,990 --> 00:00:18,369
+Cela peut être surprenant, mais un type somme
+avec seulement un constructeur peut être très utile.
+
+4
+00:00:18,369 --> 00:00:24,199
+Si vous voulez faire la distinction entre deux types
+qui sont structurellement équivalents,
+
+5
+00:00:24,199 --> 00:00:30,300
+mais auxquels vous voulez assigner
+une sémantique différente.
+
+6
+00:00:33,000 --> 00:00:39,400
+Ainsi, définissons un type pour les euros.
+
+7
+00:00:41,469 --> 00:00:45,829
+Donc, on a un constructeur [Euro]
+et un flottant,
+
+8
+00:00:45,829 --> 00:00:52,570
+représentant la quantité d'euros
+qu'on a dans la poche.
+
+9
+00:00:52,570 --> 00:00:57,480
+On va définir un autre type pour les dollars.
+
+10
+00:00:57,480 --> 00:01:03,660
+Bien sûr, dollars et euros ne sont pas la même chose :
+il y a une conversion entre eux,
+
+11
+00:01:03,660 --> 00:01:05,220
+qui doit être appliquée,
+
+12
+00:01:05,220 --> 00:01:12,740
+et on ne veut pas dire que 10 euros
+c'est pareil que 10 dollars.
+
+13
+00:01:12,740 --> 00:01:20,409
+En fait, le vérificateur de type peut nous aider
+à éviter de confondre ces deux monnaies.
+
+14
+00:01:20,409 --> 00:01:23,450
+Voyons pourquoi.
+
+15
+00:01:23,450 --> 00:01:31,240
+Voici donc 4 dollars, voici 5 euros,
+et si vous essayez de les comparer,
+
+16
+00:01:31,240 --> 00:01:35,979
+le vérificateur de type dit que vous ne pouvez pas comparer
+des euros et des dollars.
+
+17
+00:01:35,979 --> 00:01:42,119
+Si vous voulez le faire, vous devez d'abord convertir
+vos dollars en euros,
+
+18
+00:01:42,119 --> 00:01:47,000
+et après cela vous pourrez comparer
+les euros que vous avez obtenus.
+
+19
+00:01:49,000 --> 00:01:57,619
+Parfois, lorsqu'on écrit un filtrage,
+plusieurs branches ont exactement le même
+
+20
+00:01:57,619 --> 00:01:59,189
+code.
+
+21
+00:01:59,189 --> 00:02:03,829
+C'est toujours une mauvaise idée de dupliquer du code.
+
+22
+00:02:03,829 --> 00:02:12,170
+Heureusement, en utilisant ce qu'on appelle des
+"motifs-ou", on peut factoriser ces branches en une
+
+23
+00:02:12,170 --> 00:02:14,970
+branche unique.
+
+24
+00:02:14,970 --> 00:02:17,860
+La syntaxe est la suivante :
+
+25
+00:02:17,860 --> 00:02:27,110
+on écrit d'abord le premier motif,
+une barre '|', et ensuite un autre motif.
+
+26
+00:02:27,110 --> 00:02:37,700
+Et cela se lit vraiment comme une observation de
+"le premier motif ou le deuxième motif".
+
+27
+00:02:37,720 --> 00:02:47,800
+La seule contrainte est que les deux motifs
+doivent contenir les mêmes identificateurs.
+
+28
+00:02:47,870 --> 00:02:57,300
+Considérons donc cette fonction qui supprime
+la tête d'une liste si elle commence avec 0 ou 1.
+
+29
+00:02:57,310 --> 00:03:02,150
+Ici vous pouvez remarquer que ces deux
+branches contiennent le même code,
+
+30
+00:03:02,150 --> 00:03:06,400
+qui consiste à retourner [xs].
+
+31
+00:03:06,400 --> 00:03:20,010
+Avec un motif-ou on peut effectivement
+factoriser en disant que les deux motifs,
+
+32
+00:03:20,010 --> 00:03:26,110
+celui-ci et celui-là, partagent le même code
+pour leurs branches.
+
+33
+00:03:26,110 --> 00:03:32,670
+Donc, il y a une branche unique,
+avec un motif-ou à l'intérieur.
+
+34
+00:03:32,670 --> 00:03:41,790
+En fait, on peut même utiliser des motifs-ou
+en profondeur à l'intérieur des motifs.
+
+35
+00:03:41,790 --> 00:03:47,810
+Par exemple, ici, on peut factoriser
+cette partie du motif,
+
+36
+00:03:47,810 --> 00:03:52,010
+qui est commune à deux de nos motifs,
+
+37
+00:03:52,010 --> 00:03:59,540
+et je dis juste que la tête peut être 0 ou 1.
+
+38
+00:03:59,540 --> 00:04:07,870
+Parfois, il est aussi très pratique de pouvoir
+nommer un composant reconnu.
+
+39
+00:04:07,870 --> 00:04:10,990
+Tel est le rôle de ce que l'on appelle un "as-pattern".
+
+40
+00:04:10,990 --> 00:04:17,540
+le motif s'écrit comme ceci :
+[some_pattern as x],
+
+41
+00:04:17,540 --> 00:04:26,300
+et se lit ainsi : si la valeur peut
+être reconnue en utilisant le motif, nommons la [x].
+
+42
+00:04:28,690 --> 00:04:34,870
+Ainsi, imaginons qu'on veuille réaliser une fonction
+qui duplique la tête d'une liste,
+
+43
+00:04:34,870 --> 00:04:38,710
+à la fin de cette liste, si cette tête existe.
+
+44
+00:04:38,710 --> 00:04:44,980
+Dans le cas d'une liste vide, bien sûr, il
+n'y a pas de tête donc il n'y a rien à mettre.
+
+45
+00:04:44,980 --> 00:04:52,850
+Maintenant, supposons qu'on ait une liste
+qui commence par [x].
+
+46
+00:04:52,850 --> 00:04:57,310
+Ce qu'on veut dire est qu'on
+veut prendre cette liste,
+
+47
+00:04:57,310 --> 00:05:06,410
+et concaténer une liste avec seulement la tête
+à la fin de cette liste.
+
+48
+00:05:06,410 --> 00:05:11,240
+Donc, on veut nommer la liste reconnue,
+
+49
+00:05:11,240 --> 00:05:14,630
+et cela est exactement le rôle de [as l].
+
+50
+00:05:14,630 --> 00:05:18,350
+Et là, on peut réutiliser [l] qui est la liste
+
+51
+00:05:18,350 --> 00:05:25,470
+reconnue, concaténée avec [x].
+
+52
+00:05:25,480 --> 00:05:28,830
+Et on obtient une fonction valide.
+
+53
+00:05:30,400 --> 00:05:39,180
+Il y a aussi une notion de garde pouvant être
+attachée à une branche.
+
+54
+00:05:39,190 --> 00:05:49,700
+Une garde est une expression booléenne qui sera évaluée
+quand on essaie de reconnaître un motif.
+
+55
+00:05:49,730 --> 00:05:55,380
+Si la garde est [true],
+et que bien sûr le motif filtre la valeur,
+
+56
+00:05:55,380 --> 00:05:58,460
+alors la branche sera évaluée.
+
+57
+00:05:58,460 --> 00:06:06,080
+Si la valeur est filtrée par le motif,
+mais que la garde est fausse,
+
+58
+00:06:06,080 --> 00:06:12,240
+la branche ne sera pas évaluée,
+et la branche suivante sera considérée.
+
+59
+00:06:12,240 --> 00:06:20,139
+Pour introduire une garde dans une branche,
+on utilise le mot clé [when].
+
+60
+00:06:20,139 --> 00:06:26,050
+Réalisons maintenant une fonction qui
+traverse une liste,
+
+61
+00:06:26,050 --> 00:06:33,830
+et pousse le maximum de la liste à la fin de la liste.
+
+62
+00:06:33,830 --> 00:06:38,780
+Pour ce faire, nous devons d'abord remarquer que
+la liste vide,
+
+63
+00:06:38,780 --> 00:06:44,900
+et la liste ne contenant qu'un seul élément,
+
+64
+00:06:44,900 --> 00:06:48,370
+sont déjà des résultats valides.
+
+65
+00:06:48,370 --> 00:06:54,900
+Supposons maintenant qu'on ait au moins deux éléments
+dans la liste.
+
+66
+00:06:54,900 --> 00:06:59,770
+Alors on a deux cas :
+le premier est celui
+
+67
+00:06:59,770 --> 00:07:04,680
+où le premier élément
+est inférieur au second élément,
+
+68
+00:07:04,680 --> 00:07:10,680
+auquel cas le deuxième élément peut être
+l'élément maximal de la liste,
+
+69
+00:07:10,680 --> 00:07:15,230
+de sorte qu'on va continuer avec lui.
+
+70
+00:07:15,230 --> 00:07:19,490
+Sinon, on doit permuter les deux éléments,
+
+71
+00:07:19,490 --> 00:07:24,169
+parce que [x] pourrait être
+l'élément maximal de la liste.
+
+72
+00:07:24,169 --> 00:07:32,639
+Le rôle de ces deux branches est de discriminer
+entre les deux cas précédents.
+
+73
+00:07:32,639 --> 00:07:39,870
+Donc, on ne peut pas utiliser uniquement
+la forme de la liste,
+
+74
+00:07:39,870 --> 00:07:42,460
+parce que la forme de la liste
+est la même dans les deux cas.
+
+75
+00:07:42,460 --> 00:07:50,990
+On doit introduire un contrôle supplémentaire,
+une protection supplémentaire, qui est écrite ici :
+
+76
+00:07:50,990 --> 00:07:56,889
+lorsque [x] est inférieur à [y]
+nous sommes dans le premier cas,
+
+77
+00:07:56,889 --> 00:07:59,600
+le cas dans lequel nous pouvons continuer
+avec la liste,
+
+78
+00:07:59,600 --> 00:08:04,440
+car [x] n'est pas l'élément maximal de la liste,
+
+79
+00:08:04,440 --> 00:08:12,770
+et enfin le dernier cas est celui où
+on doit permuter les deux éléments.
+
+80
+00:08:12,770 --> 00:08:27,650
+Ainsi, par exemple, sur la liste %[3; 2; 1%],
+cette fonction pousse 3 à la fin de la liste.
+
+81
+00:08:27,650 --> 00:08:37,370
+Donc, nous avons terminé notre premier tour des
+fonctionalités du système de type OCaml.
+
+82
+00:08:37,370 --> 00:08:43,089
+En fait, il existe de nombreuses fonctionnalités
+que nous n'avons pas montrées.
+
+83
+00:08:43,089 --> 00:08:51,089
+Les Objets : en fait, OCaml est un
+langage de programmation orienté objet.
+
+84
+00:08:51,089 --> 00:08:58,000
+Voilà pourquoi il commence par un "O".
+
+85
+00:08:58,000 --> 00:09:09,200
+Les Modules de première classe sont un moyen différent des
+objets de définir des composants, mais aussi très utile.
+
+86
+00:09:09,279 --> 00:09:18,380
+Les Variants polymorphes sont un moyen de définir des
+types somme qui sont extensibles.
+
+87
+00:09:18,380 --> 00:09:25,870
+Enfin, on a les Types de Données Algébriques
+Généralisés,
+
+88
+00:09:25,870 --> 00:09:32,230
+qui permettent d'avoir un typage plus précis
+des constructeurs de types de données.
+
+89
+00:09:32,230 --> 00:09:41,010
+Pourtant, même si vous ne disposez pas de toutes les
+fonctionnalités du système de type OCaml,
+
+90
+00:09:41,010 --> 00:09:45,779
+vous pouvez déjà écrire des programmes très
+intéressants, comme des fonctions d'ordre supérieur.
+
+91
+00:09:45,860 --> 00:09:49,920
+Ce sera le sujet de la semaine prochaine.

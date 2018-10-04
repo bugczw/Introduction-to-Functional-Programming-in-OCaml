@@ -1,4 +1,5 @@
-## The content of this course includes:  
+## The content of this course includes:
+
 0. _Week 0:Introduction and overview:_
     * S0: Introduction to the course
     * S1: Functional Programming:history and motivation
@@ -16,3 +17,13 @@
 	* S3: Definitions
 	* S4: Functions
 	* S5: Recursion
+	
+	
+2. _Week 2: Basic data structures:_	
+    * S0: User-defined types
+	* S1: Tuples
+	* S2: Records
+	* S3: Arrays
+	* S4: Case study: A small typed database
+
+	
