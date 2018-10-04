@@ -1,5 +1,4 @@
-## The content of this course includes:
-
+## The content of this course includes:  
 0. _Week 0:Introduction and overview:_
     * S0: Introduction to the course
     * S1: Functional Programming:history and motivation
@@ -19,11 +18,18 @@
 	* S5: Recursion
 	
 	
-2. _Week 2: Basic data structures:_	
+2. _Week 2: Bascic data structures :_	
     * S0: User-defined types
-	* S1: Tuples
-	* S2: Records
+	* S1: Tuples 
+	* S2: Records 
 	* S3: Arrays
 	* S4: Case study: A small typed database
-
 	
+	
+3. _Week 3: More advanced data structures:_	
+    * S0: Tagged values
+	* S1: Recursive typess
+	* S2: Tree-like values 
+	* S3: Case study: a story teller
+	* S4: Polymorphic algebraic datatypes 
+	* S5: Advanced topics
