@@ -1,0 +1,388 @@
+1
+00:00:00,220 --> 00:00:05,480
+Dans cette séquence, nous allons voir nos premières
+structures de données mutables que sont les tableaux.
+
+2
+00:00:05,480 --> 00:00:12,670
+Nous avons rencontré les tableaux plus tôt
+dans ce cours, en semaine 2, séquence 3.
+
+3
+00:00:12,670 --> 00:00:15,480
+Il s'agit d'une structure de données très
+intéressante, puisque grâce à sa taille fixe,
+
+4
+00:00:15,480 --> 00:00:19,410
+elle nous permet un accès direct aux éléments
+en temps constant
+
+5
+00:00:19,410 --> 00:00:24,980
+et est ainsi particulièrement bien adaptée
+à une utilisation dans des constructions de boucles comme
+
+6
+00:00:24,980 --> 00:00:26,269
+celles que nous venons juste de voir.
+
+7
+00:00:26,269 --> 00:00:29,810
+Rafraîchissons notre mémoire avec un exercice simple :
+
+8
+00:00:29,810 --> 00:00:36,110
+écrivons du code qui utilise un tableau pour
+trouver tous les entiers qui sont des cubes
+
+9
+00:00:36,110 --> 00:00:39,090
+et aussi des carrés.
+
+10
+00:00:39,090 --> 00:00:43,340
+Calculons donc ces nombres cubes qui sont
+également des carrés.
+
+11
+00:00:43,340 --> 00:00:46,629
+Tout d'abord, on définit une fonction <u>cubes</u>
+de <u>n</u>
+
+12
+00:00:46,629 --> 00:00:51,070
+qui crée un tableau initialisé avec les cubes
+de chacun des indices.
+
+13
+00:00:51,070 --> 00:01:00,840
+OK, on définit ensuite notre petite fonction
+qui calcule la racine carrée d'un entier
+
+14
+00:01:00,840 --> 00:01:05,339
+et une fonction qui vérifie si un entier
+est en fait un carré.
+
+15
+00:01:05,339 --> 00:01:06,979
+Une fois que nous avons tout cela,
+
+16
+00:01:06,979 --> 00:01:15,100
+alors calculer tous les cubes qui sont aussi
+des carrés jusqu'à <u>n</u> n'est pas très difficile,
+
+17
+00:01:15,100 --> 00:01:22,310
+c'est cette fonction que nous avons ici : voyez,
+basiquement on crée les cubes de tous les
+
+18
+00:01:22,310 --> 00:01:24,330
+<u>n<u> premiers entiers,
+
+19
+00:01:24,330 --> 00:01:28,930
+puis on itère dessus à l'aide d'une boucle for,
+comme nous l'avons appris,
+
+20
+00:01:28,930 --> 00:01:38,079
+et si l'on trouve un élément ici, qui est le cube
+d'un indice et qui se trouve être aussi un carré, on
+
+21
+00:01:38,079 --> 00:01:39,360
+l'affiche, et voilà c 'est tout.
+
+22
+00:01:39,360 --> 00:01:50,590
+OK, donc on peut tester cela avec 100, et donc vous voyez
+ces entiers qui sont tous les nombres cubes, étant également des
+
+23
+00:01:50,590 --> 00:01:53,840
+carrés d'entiers, jusqu'à 100.
+
+24
+00:01:53,840 --> 00:02:00,229
+Maintenant, la bonne nouvelle pour certains d'entre nous est que
+les tableaux OCaml sont réellement des tableaux :
+
+25
+00:02:00,229 --> 00:02:03,930
+non seulement ils peuvent être utilisés comme dans
+l'exemple précédent,
+
+26
+00:02:03,930 --> 00:02:07,380
+mais ils peuvent aussi être modifiés en place.
+
+27
+00:02:07,380 --> 00:02:10,849
+Pour ce faire, on utilise l'opérateur spécial que
+l'on appelle l'opérateur de mise à jour,
+
+28
+00:02:10,849 --> 00:02:14,110
+cette flèche arrière ici,
+
+29
+00:02:14,110 --> 00:02:16,640
+et oui après avoir effectué une mise à jour,
+
+30
+00:02:16,640 --> 00:02:20,670
+l'ancienne valeur est réellement perdue, comme vous
+pouvez le voir sur l'exemple suivant.
+
+31
+00:02:20,670 --> 00:02:27,330
+OK, définissons encore un tableau, de 5
+éléments, comme celui-ci.
+
+32
+00:02:27,330 --> 00:02:31,980
+Bien sûr, on peut accéder aux éléments d'un
+tableau
+
+33
+00:02:31,980 --> 00:02:35,810
+mais maintenant nous avons découvert que nous
+avons ce nouvel opérateur,
+
+34
+00:02:35,810 --> 00:02:38,280
+cette flèche arrière,
+
+35
+00:02:38,280 --> 00:02:42,379
+et on peut utiliser cet opérateur de mise à jour
+pour dire que nous voulons modifier le contenu de
+
+36
+00:02:42,379 --> 00:02:45,230
+la première cellule du tableau,
+
+37
+00:02:45,230 --> 00:02:48,790
+et nous changeons son contenu en insérant 100 dans
+celui-ci.
+
+38
+00:02:48,790 --> 00:02:54,140
+Comme vous pouvez le voir ici, le résultat de l'opération
+est de type <u>unit</u>.
+
+39
+00:02:54,140 --> 00:02:58,780
+Mais il y a eu quelque chose de fait sous la forme
+d'un effet de bord.
+
+40
+00:02:58,780 --> 00:03:04,010
+En effet, si vous regardez à nouveau le contenu de
+la première cellule du tableau
+
+41
+00:03:04,010 --> 00:03:07,540
+maintenant il y a 100 et non plus 0 comme avant.
+
+42
+00:03:07,540 --> 00:03:12,420
+Et naturellement, si vous regardez le tableau en entier
+vous pouvez voir qu'il a été modifié.
+
+43
+00:03:12,420 --> 00:03:13,920
+C'est toujours le même tableau que précédemment,
+
+44
+00:03:13,920 --> 00:03:18,470
+on n'a pas créé de copie du tableau pour faire
+la modification quelque part,
+
+45
+00:03:18,470 --> 00:03:20,599
+c'est bien le même tableau, mais il a été modifié
+en place.
+
+46
+00:03:20,599 --> 00:03:27,200
+Bien, maintenant que nous avons vu qu'on peut mettre
+à jour le contenu d'un tableau comme on le souhaite,
+
+47
+00:03:27,200 --> 00:03:35,970
+il devient facile d'écrire des opérations dans le style
+impératif classique auquel nous ont habitué les autres langages,
+
+48
+00:03:35,970 --> 00:03:41,959
+comme par exemple si l'on décide de prendre un
+tableau et d'effectuer une rotation de son contenu vers la
+
+49
+00:03:41,959 --> 00:03:42,040
+gauche.
+
+50
+00:03:42,040 --> 00:03:46,780
+C'est la fonction <u>rotate</u> que nous allons définir
+ici qui, comme vous le voyez,
+
+51
+00:03:46,780 --> 00:03:50,709
+prend un tableau <u>a</u>,
+
+52
+00:03:50,709 --> 00:03:55,439
+calcule la longeur de ce tableau en appelant
+la fonction <u>Array.length</u>,
+
+53
+00:03:55,439 --> 00:03:58,530
+sauvegarde la valeur la plus à gauche,
+
+54
+00:03:58,530 --> 00:03:59,909
+celle en position 0,
+
+55
+00:03:59,909 --> 00:04:01,480
+parce qu'elle va être écrasée,
+
+56
+00:04:01,480 --> 00:04:08,409
+puis à l'aide d'une boucle for, on
+décale toutes les valeurs vers la gauche d'une
+
+57
+00:04:08,409 --> 00:04:13,760
+position et enfin on restaure la dernière
+position avec la valeur de la première cellule.
+
+58
+00:04:13,760 --> 00:04:23,889
+OK, on peut donc passer cela au compilateur,
+qui est très content que nous ayons défini une nouvelle
+
+59
+00:04:23,889 --> 00:04:24,440
+fonction nommée <u>rotate</u>,
+
+60
+00:04:24,440 --> 00:04:28,490
+qui prend un tableau qui est tableau polymorphe,
+
+61
+00:04:28,490 --> 00:04:30,389
+peu importe ce que sont ses éléments,
+
+62
+00:04:30,389 --> 00:04:34,930
+et retourne le type <u>unit</u> parce que bien sûr,
+il n'y a aucun résultat à retourner ;
+
+63
+00:04:34,930 --> 00:04:39,180
+la seule chose faite est de modifier
+en place le contenu du tableau qui a été
+
+64
+00:04:39,180 --> 00:04:41,330
+passé en argument.
+
+65
+00:04:41,330 --> 00:04:44,800
+Essayons cette fonction.
+
+66
+00:04:44,800 --> 00:04:49,590
+Il y a une manière pratique, en utilisant <u>Array.init</u>,
+de créer un tableau avec tous les éléments de
+
+67
+00:04:49,590 --> 00:04:50,699
+0 à 9.
+
+68
+00:04:50,699 --> 00:04:59,530
+Vous voyez, maintenant nous pouvons décider de rotationner
+le tableau une fois.
+
+69
+00:04:59,530 --> 00:05:05,979
+Et dès que la rotation a été faite, bien sûr
+nous pouvons constater que tout a bien été décalé vers
+
+70
+00:05:05,979 --> 00:05:08,009
+la gauche d'une position.
+
+71
+00:05:08,009 --> 00:05:14,639
+On peut le rotationner encore, et il continue de se décaler.
+
+72
+00:05:14,639 --> 00:05:16,500
+Vous pouvez jouer à ce jeu tant que vous le souhaitez.
+
+73
+00:05:16,500 --> 00:05:22,110
+Voilà, c'était un exemple très simple montrant
+comment vous pouvez utiliser les tableaux en OCaml,
+
+74
+00:05:22,110 --> 00:05:25,539
+exactement de la même manière que vous le feriez dans
+d'autres langages de programmation.
+
+75
+00:05:25,539 --> 00:05:30,490
+Quelques mots sur cet opérateur de mise à jour.
+
+76
+00:05:30,490 --> 00:05:35,370
+Il est utilisé en général pour modifier en place,
+donc lorsque vous voyez une expression <u>e1</u>,
+
+77
+00:05:35,370 --> 00:05:37,690
+suivi de l'opérateur de mise à jour, puis de <u>e2</u>,
+
+78
+00:05:37,690 --> 00:05:42,750
+il est attendu que l'expression <u>e1</u> désigne
+une valeur mutable et elle est évaluée.
+
+79
+00:05:42,750 --> 00:05:46,289
+Le vérificateur de types s'assure en fait que <u>e1</u>
+est une valeur mutable.
+
+80
+00:05:46,289 --> 00:05:53,699
+Et cette valeur mutable est modifiée en place
+la nouvelle valeur étant le résultat de l'évaluation
+
+81
+00:05:53,699 --> 00:05:54,800
+de <u>e2</u>.
+
+82
+00:05:54,800 --> 00:06:00,970
+Le type de toute l'opération est simplement
+<u>unit</u>.
+
+83
+00:06:00,970 --> 00:06:07,410
+En résumé, nous avons vu que le type de données des tableaux
+que nous avons beaucoup utilisé jusqu'alors, est en fait mutable
+
+84
+00:06:07,410 --> 00:06:14,600
+et que l'opérateur de mise à jour est utilisé pour modifier
+en place les cellules des tableaux.

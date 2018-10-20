@@ -1,0 +1,813 @@
+1
+00:00:00,140 --> 00:00:06,350
+In this sequence, we will look at folding
+a binary operator over lists
+
+2
+00:00:06,350 --> 00:00:11,660
+So in the previous sequence I have explained
+to you how we can use a function defined in
+
+3
+00:00:11,660 --> 00:00:16,980
+the <u>List</u> standard library to map any unary
+function over a list.
+
+4
+00:00:16,980 --> 00:00:19,460
+Then mapping a unary function over a list
+
+5
+00:00:19,460 --> 00:00:23,400
+in fact, all the elements of the list are
+considered in isolation
+
+6
+00:00:23,400 --> 00:00:29,140
+which by the way means this is an operation
+which is very easy to parallelize
+
+7
+00:00:29,140 --> 00:00:34,710
+and to execute it on several machines independently
+until we combine the results.
+
+8
+00:00:34,710 --> 00:00:40,090
+Now, while mapping applies a unary function
+to all elements of a list,
+
+9
+00:00:40,090 --> 00:00:43,530
+folding combines them using a binary operator.
+
+10
+00:00:43,530 --> 00:00:49,329
+However, things become a little bit more complicated
+when using a binary operator
+
+11
+00:00:49,329 --> 00:00:55,410
+since now, there are in fact two fundamentally
+different ways of folding a binary operator
+
+12
+00:00:55,410 --> 00:00:56,739
+over a list.
+
+13
+00:00:56,739 --> 00:00:59,660
+One is called <u>fold_left</u>, the other one is <u>fold_right</u>
+
+14
+00:00:59,660 --> 00:01:03,579
+as we will see now on the next slides.
+
+15
+00:01:03,579 --> 00:01:07,909
+Let's first start with the <u>List.fold_right</u>
+operation.
+
+16
+00:01:07,909 --> 00:01:12,119
+What this operation does is best explained
+by the diagram which you see on the bottom
+
+17
+00:01:12,119 --> 00:01:12,840
+of the slide.
+
+18
+00:01:12,840 --> 00:01:19,939
+In fact, here, we use binary function <u>f</u>
+which we apply in an order which one might
+
+19
+00:01:19,939 --> 00:01:25,450
+think naively of being the natural order of
+function application.
+
+20
+00:01:25,450 --> 00:01:31,509
+Since <u>f</u> would be first applied to the first
+argument of the list, and then to the folding
+
+21
+00:01:31,509 --> 00:01:34,570
+of the rest of the list.
+
+22
+00:01:34,570 --> 00:01:39,759
+This is called <u>fold_right</u> because you can
+imagine this function application as barely
+
+23
+00:01:39,759 --> 00:01:41,799
+a computation tree
+
+24
+00:01:41,799 --> 00:01:45,240
+which hangs down on the right side of the
+slide.
+
+25
+00:01:45,240 --> 00:01:48,170
+Now, what would be the type of this function?
+
+26
+00:01:48,170 --> 00:01:55,070
+Well, the alphas would be the element type
+of our list, and the betas would be the result
+
+27
+00:01:55,070 --> 00:01:57,579
+type of function <u>f</u>
+
+28
+00:01:57,579 --> 00:02:03,570
+which means that <u>fold_right</u> would take as
+first argument the binary function which would
+
+29
+00:02:03,570 --> 00:02:04,810
+be of type <u>'a</u>,
+
+30
+00:02:04,810 --> 00:02:06,520
+an element of the list,
+
+31
+00:02:06,520 --> 00:02:11,489
+<u>'b</u>, something which is returned from <u>f</u>
+itself and gives the result <u>'b</u>
+
+32
+00:02:11,489 --> 00:02:13,860
+so this would be the functional type;
+
+33
+00:02:13,860 --> 00:02:16,099
+this would be applied to an <u>'a list</u>
+
+34
+00:02:16,099 --> 00:02:19,260
+and finally, we need also some value which
+is used at the end,
+
+35
+00:02:19,260 --> 00:02:24,430
+which is always necessary since our folding operation
+might be applied to an empty list
+
+36
+00:02:24,430 --> 00:02:29,440
+and what we provide at the end is the result which is returned in case
+of an application to the empty list.
+
+37
+00:02:29,440 --> 00:02:37,620
+So finally we have a constant, which is supplied and which is
+used as the last argument of the application
+
+38
+00:02:37,620 --> 00:02:39,000
+of <u>f</u>.
+
+39
+00:02:39,000 --> 00:02:47,450
+So, to understand <u>fold_right</u>, just keep this
+picture in mind to explain what this operation
+
+40
+00:02:47,450 --> 00:02:50,420
+does.
+
+41
+00:02:50,420 --> 00:02:57,120
+Now let's try out our definition of the function
+<u>fold_right</u> which I have repeated here
+
+42
+00:02:57,120 --> 00:03:01,799
+and as you can see the type of this function
+is precisely the same as I have explained to
+
+43
+00:03:01,799 --> 00:03:03,549
+you on the previous slide.
+
+44
+00:03:03,549 --> 00:03:09,769
+Now, we can use this <u>fold_right</u> function and
+apply it to some interesting function and
+
+45
+00:03:09,769 --> 00:03:11,280
+list and see what it gives.
+
+46
+00:03:11,280 --> 00:03:17,390
+So here we have for instance <u>fold_right</u> applied
+to a first function which is just the cons
+
+47
+00:03:17,390 --> 00:03:19,140
+operation on lists,
+
+48
+00:03:19,140 --> 00:03:21,090
+an integer list and an empty list.
+
+49
+00:03:21,090 --> 00:03:26,230
+And what you obtain, in this case, is in fact
+precisely the same list.
+
+50
+00:03:26,230 --> 00:03:31,909
+Now to understand, why this is the case, please
+go back to the previous slide and have a look
+
+51
+00:03:31,909 --> 00:03:32,950
+at the picture
+
+52
+00:03:32,950 --> 00:03:38,000
+which I have given to you which explains in
+which order the function <u>f</u> is applied to
+
+53
+00:03:38,000 --> 00:03:38,480
+the list
+
+54
+00:03:38,480 --> 00:03:42,870
+and then you look at this picture, you will
+understand why you obtain precisely the same
+
+55
+00:03:42,870 --> 00:03:45,830
+result for this application.
+
+56
+00:03:45,830 --> 00:03:52,810
+Maybe a more interesting application of <u>List.fold_right</u>
+is now folding the <u>(+)</u> operation over a list.
+
+57
+00:03:52,810 --> 00:03:57,340
+You would expect this to compute the sum of
+the list.
+
+58
+00:03:57,340 --> 00:04:01,049
+The last argument that we have to provide
+is the argument which corresponds to the case
+
+59
+00:04:01,049 --> 00:04:02,459
+of an empty list
+
+60
+00:04:02,459 --> 00:04:05,349
+and the sum of an empty list of course should
+be zero,
+
+61
+00:04:05,349 --> 00:04:09,849
+and this is why we have to give here as last argument
+the value of zero.
+
+62
+00:04:09,849 --> 00:04:16,110
+So if we do this application, we obtain indeed
+in our case here the sum of the list <u>[1; 2; 3; 4]</u>.
+
+63
+00:04:16,110 --> 00:04:16,980
+ 
+
+64
+00:04:16,980 --> 00:04:20,670
+The same for the multiplication, so in case
+of multiplication,
+
+65
+00:04:20,670 --> 00:04:26,110
+what we should obtain for an empty list is
+of course the value of one
+
+66
+00:04:26,110 --> 00:04:33,350
+and this is why we have to give one here as the
+third argument to this application of <u>fold_right</u>,
+
+67
+00:04:33,350 --> 00:04:38,540
+and this allows us to compute here the full
+product of all the elements of the list <u>[1; 2; 3; 4]</u>
+
+68
+00:04:38,540 --> 00:04:41,540
+which is 24.
+
+69
+00:04:41,540 --> 00:04:45,790
+To generalize on the first application of
+<u>fold_right</u>, which I have shown to you,
+
+70
+00:04:45,790 --> 00:04:51,780
+we can now even define the concatenation operation
+by using <u>fold_right</u>.
+
+71
+00:04:51,780 --> 00:04:56,350
+Since all we have to change for suspect to
+the third application of <u>fold_right</u> is now
+
+72
+00:04:56,350 --> 00:05:02,600
+to replace in fact the third argument, which
+was the empty list before, by the list which
+
+73
+00:05:02,600 --> 00:05:06,800
+is appended to the right of the first list.
+
+74
+00:05:06,800 --> 00:05:14,290
+So if we pass this application now to the
+toplevel, we see first that the type of this
+
+75
+00:05:14,290 --> 00:05:17,390
+is what we should expect of the concatenation
+operation,
+
+76
+00:05:17,390 --> 00:05:24,030
+and if we apply this operation now to two
+lists, we see in fact that what we obtain
+
+77
+00:05:24,030 --> 00:05:29,150
+is precisely what we have expected.
+
+78
+00:05:29,150 --> 00:05:33,410
+In contrast to the folding right operation,
+the folding left operation has a completely
+
+79
+00:05:33,410 --> 00:05:35,780
+different shape of its computation tree.
+
+80
+00:05:35,780 --> 00:05:38,650
+In fact, as its name indicates, it tanks now
+to the left.
+
+81
+00:05:38,650 --> 00:05:41,970
+Now, let us understand what the type of this
+function is
+
+82
+00:05:41,970 --> 00:05:46,180
+now, <u>'b</u> would be the type of the elements
+of the list
+
+83
+00:05:46,180 --> 00:05:51,430
+and <u>'a</u> would be the type of the result
+of the function <u>f</u>.
+
+84
+00:05:51,430 --> 00:05:52,850
+As a consequence, what do we get?
+
+85
+00:05:52,850 --> 00:06:00,190
+Well, our function itself would first be applied
+to an argument which is of the same type as
+
+86
+00:06:00,190 --> 00:06:02,670
+the result of <u>f</u>, that is <u>'a</u>,
+
+87
+00:06:02,670 --> 00:06:04,760
+then to an element of the list which is <u>'b</u>
+
+88
+00:06:04,760 --> 00:06:06,570
+and of course it would return an <u>'a</u>.
+
+89
+00:06:06,570 --> 00:06:12,790
+So we have for the function argument a type
+<u>'a -> 'b -> 'a</u>,
+
+90
+00:06:12,790 --> 00:06:18,450
+then we have a type <u>'a</u> for the constant
+which is used in case of the empty list
+
+91
+00:06:18,450 --> 00:06:25,980
+and finally we have the list argument which
+of course has to be of type <u>'b list</u>.
+
+92
+00:06:25,980 --> 00:06:29,200
+Now let's have a look at the <u>fold_left</u> operation
+
+93
+00:06:29,200 --> 00:06:35,810
+which I have repeated here, so we see in the
+toplevel that the type is precisely what I
+
+94
+00:06:35,810 --> 00:06:38,030
+have explained to you in the previous slide.
+
+95
+00:06:38,030 --> 00:06:42,900
+Now, let's apply this <u>fold_left</u> operation
+to some arguments.
+
+96
+00:06:42,900 --> 00:06:49,070
+So, here we now calculate the sum of a list,
+but now using <u>fold_left</u> instead of <u>fold_right</u>
+
+97
+00:06:49,070 --> 00:06:52,040
+and we notice now that the order of arguments
+is now different.
+
+98
+00:06:52,040 --> 00:06:56,170
+This is in fact in order to resemble the
+computation trees which I have shown to you
+
+99
+00:06:56,170 --> 00:07:00,500
+on the previous slides for <u>fold_right</u> and for
+<u>fold_left</u>.
+
+100
+00:07:00,500 --> 00:07:02,830
+So for <u>fold_left</u> it has to be in this sens:
+
+101
+00:07:02,830 --> 00:07:04,680
+first the binary operation
+
+102
+00:07:04,680 --> 00:07:07,150
+then the value which corresponds to the result
+on the empty list
+
+103
+00:07:07,150 --> 00:07:08,380
+and finally the list.
+
+104
+00:07:08,380 --> 00:07:13,650
+So, when we pass this to the toplevel, we
+obtain again the sum of the elements of the
+
+105
+00:07:13,650 --> 00:07:15,390
+list <u>[1; 2; 3; 4]</u>.
+
+106
+00:07:15,390 --> 00:07:24,030
+Due to the fact that the <u>fold_left</u> operation
+now applies, that it folds the binary operation
+
+107
+00:07:24,030 --> 00:07:26,930
+in a different order over the list
+
+108
+00:07:26,930 --> 00:07:32,250
+compared to the <u>fold_right</u> operation, we
+can now, in fact, use the <u>fold_left</u> operation
+
+109
+00:07:32,250 --> 00:07:33,160
+in order to define
+
+110
+00:07:33,160 --> 00:07:35,220
+the reversal of a list.
+
+111
+00:07:35,220 --> 00:07:43,770
+Now, to do this, we would pass the function
+which takes the previous result <u>x</u>, an element
+
+112
+00:07:43,770 --> 00:07:44,570
+<u>y</u>
+
+113
+00:07:44,570 --> 00:07:49,410
+and which returns the list with <u>y</u> put at
+the head of <u>x</u>.
+
+114
+00:07:49,410 --> 00:07:51,780
+To understand how this works
+
+115
+00:07:51,780 --> 00:07:54,590
+again, please go back to the previous slide,
+
+116
+00:07:54,590 --> 00:07:57,190
+have a look at the diagram which I have shown
+to you
+
+117
+00:07:57,190 --> 00:08:01,530
+and which explains the order in which the
+operations are applied.
+
+118
+00:08:01,530 --> 00:08:08,160
+So, we might define the reverse operation
+on lists now, in this way
+
+119
+00:08:08,160 --> 00:08:13,720
+and we can see already that the list is indeed
+an <u>'a list -> 'a list</u>,
+
+120
+00:08:13,720 --> 00:08:18,240
+and if we apply more this function to a given
+integer list
+
+121
+00:08:18,240 --> 00:08:23,160
+we see in fact that it does indeed reverse
+the order of the list.
+
+122
+00:08:23,160 --> 00:08:31,440
+Now, let's see how we can use the folding
+operation in order to define for instance
+
+123
+00:08:31,440 --> 00:08:34,200
+the operation of inner-product of two integer
+vectors.
+
+124
+00:08:34,200 --> 00:08:39,560
+So, this equation reminds to you what the
+inner-product of two vectors is.
+
+125
+00:08:39,560 --> 00:08:44,640
+And in order to compute such an inner-product
+
+126
+00:08:44,640 --> 00:08:50,310
+what we have to do is first of all we compute
+the pairwise product of the elements of two
+
+127
+00:08:50,310 --> 00:08:54,580
+lists which would yield a list of integer
+values
+
+128
+00:08:54,580 --> 00:08:59,490
+which finally have to be summed up in order
+to obtain the result.
+
+129
+00:08:59,490 --> 00:09:06,490
+Now, finally, we can put together the math
+operations which we have seen
+
+130
+00:09:06,490 --> 00:09:11,060
+and the folding operation to define in a very
+elegant and concise way
+
+131
+00:09:11,060 --> 00:09:16,880
+the operation of calculating an inner-product
+of integer vectors.
+
+132
+00:09:16,880 --> 00:09:22,840
+To calculate the inner-product of two integer
+values, we would first use the <u>List.map2</u>
+
+133
+00:09:22,840 --> 00:09:30,260
+operation in order to do a pairwise multiplication
+of the corresponding elements of the two vectors,
+
+134
+00:09:30,260 --> 00:09:36,560
+and then sum up the result using the <u>List.fold_left</u>
+operation as we have seen in the previous
+
+135
+00:09:36,560 --> 00:09:38,140
+examples.
+
+136
+00:09:38,140 --> 00:09:43,110
+This gives us a definition of the function
+inner-product of two vectors which is written
+
+137
+00:09:43,110 --> 00:09:44,620
+here
+
+138
+00:09:44,620 --> 00:09:49,750
+and you see indeed that this is a function
+that takes two integer lists and returns an
+
+139
+00:09:49,750 --> 00:09:49,980
+integer list.
+
+140
+00:09:49,980 --> 00:09:56,260
+So, let's apply now this function to these
+two vectors
+
+141
+00:09:56,260 --> 00:10:03,140
+and we obtain indeed a result of 44, and you
+can verify very easily that this is precisely
+
+142
+00:10:03,140 --> 00:10:07,530
+the result that we should expect.
+
+143
+00:10:07,530 --> 00:10:11,080
+So finally, we have a fourth different application
+of folding,
+
+144
+00:10:11,080 --> 00:10:14,840
+where we have now a different maybe a little
+bit more interesting function
+
+145
+00:10:14,840 --> 00:10:16,990
+which we pass as function argument
+
+146
+00:10:16,990 --> 00:10:22,880
+the idea here is now that we would like to
+count the number of elements which satisfy
+
+147
+00:10:22,880 --> 00:10:25,010
+a certain criterium.
+
+148
+00:10:25,010 --> 00:10:31,010
+And the idea is now that we make the criterium
+a parameter of this function which of course
+
+149
+00:10:31,010 --> 00:10:33,090
+would be a functional parameter.
+
+150
+00:10:33,090 --> 00:10:36,310
+So we obtain a function that is called <u>countif</u>,
+
+151
+00:10:36,310 --> 00:10:40,940
+<u>p</u> would be the criterium that is a function <u>'a -> bool</u>,
+
+152
+00:10:40,940 --> 00:10:46,890
+and <u>l</u> would be a list of elements of which
+we would like to count the elements satisfying
+
+153
+00:10:46,890 --> 00:10:47,470
+<u>p</u>.
+
+154
+00:10:47,470 --> 00:10:51,260
+Now, we can do this using the <u>fold_left</u>
+operation
+
+155
+00:10:51,260 --> 00:10:57,670
+since the function that we fold now over the
+list is the function which takes what we have
+
+156
+00:10:57,670 --> 00:10:58,580
+counted so far
+
+157
+00:10:58,580 --> 00:11:00,690
+and the next element of the list
+
+158
+00:11:00,690 --> 00:11:04,400
+and if the element of the list satisfies the
+criterium <u>p</u>
+
+159
+00:11:04,400 --> 00:11:07,440
+then returns the counter by one
+
+160
+00:11:07,440 --> 00:11:10,900
+otherwise returns the counter itself.
+
+161
+00:11:10,900 --> 00:11:14,900
+In case of an empty list, of course, we would
+count zero elements.
+
+162
+00:11:14,900 --> 00:11:21,270
+So, the type of this function would be of
+course,
+
+163
+00:11:21,270 --> 00:11:25,610
+well, we have a first argument which is the
+criterium that is function <u>'a -> bool</u>
+
+164
+00:11:25,610 --> 00:11:27,730
+then we take an <u>'a list</u>
+
+165
+00:11:27,730 --> 00:11:30,930
+and return an integer value as the result.
+
+166
+00:11:30,930 --> 00:11:31,540
+For instance,
+
+167
+00:11:31,540 --> 00:11:36,580
+let's apply this function <u>countif</u> to the
+function which uses the criterium of being
+
+168
+00:11:36,580 --> 00:11:37,910
+a positive value
+
+169
+00:11:37,910 --> 00:11:43,810
+applied to a mix list of positive and negative
+integer values
+
+170
+00:11:43,810 --> 00:11:46,060
+and when we calculate this application
+
+171
+00:11:46,060 --> 00:11:51,790
+we find indeed that there are precisely
+two values in this list which are strictly
+
+172
+00:11:51,790 --> 00:11:54,380
+positive.
+
+173
+00:11:54,380 --> 00:11:59,130
+As always, you can learn much more about lists
+and higher-order functions which are defined
+
+174
+00:11:59,130 --> 00:12:00,650
+in this module
+
+175
+00:12:00,650 --> 00:12:03,490
+in the OCaml manual, just look into the standard
+library
+
+176
+00:12:03,490 --> 00:12:09,440
+where you will find the description of the
+module <u>List</u>.
+

@@ -1,0 +1,714 @@
+1
+00:00:00,229 --> 00:00:03,230
+Bonjour, dans cette séquence et la suivante,
+
+2
+00:00:03,230 --> 00:00:08,280
+on va voir comment les fonctions,
+en tant que valeurs de première classe,
+
+3
+00:00:08,280 --> 00:00:15,429
+peuvent nous aider à écrire des programmes très jolis
+et très concis travaillant sur des listes.
+
+4
+00:00:15,429 --> 00:00:18,099
+D'abord un mot sur la bibliothèque <u>List</u>.
+
+5
+00:00:18,099 --> 00:00:24,650
+Le module bibliothèque <u>List</u> contient de nombreuses
+fonctions utiles pour travailler sur les listes.
+
+6
+00:00:24,650 --> 00:00:29,470
+Il y a deux façons d'utiliser les fonctions que
+l'on peut trouver dans ce module :
+
+7
+00:00:29,470 --> 00:00:35,770
+soit on peut ouvrir le module, en utilisant la
+notation <u>open</u>, puis le nom du
+
+8
+00:00:35,770 --> 00:00:36,149
+module,
+
+9
+00:00:36,149 --> 00:00:37,149
+qui est juste <u>List</u>.
+
+10
+00:00:37,149 --> 00:00:40,730
+Après cela, on peut utiliser les fonctions exactement
+comme n'importe quelle autre fonction.
+
+11
+00:00:40,730 --> 00:00:44,350
+Ou bien on peut utiliser la notation pointée
+
+12
+00:00:44,350 --> 00:00:48,879
+qui met toujours le nom du module en
+préfixe devant la fonction.
+
+13
+00:00:48,879 --> 00:00:52,350
+Nous reviendrons sur les modules dans la toute dernière
+semaine,
+
+14
+00:00:52,350 --> 00:00:55,710
+mais en attendant, je pense que vous savez tout ce qui
+est nécessaire
+
+15
+00:00:55,710 --> 00:01:00,199
+sur l'utilisation du module <u>List</u> pour travailler
+sur les listes.
+
+16
+00:01:00,199 --> 00:01:02,519
+Puisque les listes sont elles-mêmes un type polymorphe,
+
+17
+00:01:02,519 --> 00:01:04,300
+comme on l'a appris en semaine 3,
+
+18
+00:01:04,300 --> 00:01:09,360
+les fonctions travaillant sur les listes doivent bien
+évidemment être polymorphes aussi,
+
+19
+00:01:09,360 --> 00:01:14,410
+afin de rester général.
+
+20
+00:01:14,410 --> 00:01:17,400
+On a donc ici la définition de la fonction <u>map</u>,
+
+21
+00:01:17,400 --> 00:01:21,590
+qui en réalité est déjà définie dans la
+bibliothèque standard de OCaml,
+
+22
+00:01:21,590 --> 00:01:24,080
+ici on a juste répété sa définition.
+
+23
+00:01:24,080 --> 00:01:29,960
+Donc, cette fonction prend en premier argument une
+fonction, et comme second argument une liste,
+
+24
+00:01:29,960 --> 00:01:36,570
+et renvoie le résultat de l'application de la fonction
+à chacun des éléments de la liste.
+
+25
+00:01:36,570 --> 00:01:39,320
+Et c'est bien sûr une simple récursion sur
+la forme de la liste :
+
+26
+00:01:39,320 --> 00:01:42,270
+Si la liste est vide, on renvoie la liste vide,
+
+27
+00:01:42,270 --> 00:01:46,290
+sinon, on applique la fonction à la
+tête de la liste,
+
+28
+00:01:46,290 --> 00:01:51,530
+et on fait un appel récursif de la fonction <u>map</u>
+au reste de la liste.
+
+29
+00:01:51,530 --> 00:01:58,000
+Ainsi le type est comme prévu, on a en argument une
+fonction et une <u>'a list</u>, et le résultat sera une
+
+30
+00:01:58,000 --> 00:01:58,830
+<u>b 'list</u>.
+
+31
+00:01:58,830 --> 00:02:01,560
+Par exemple, on peut prendre notre fonction <u>map</u>,
+
+32
+00:02:01,560 --> 00:02:06,600
+comme fonction on fournit la fonction qui met
+son argument -- un nombre entier -- au carré,
+
+33
+00:02:06,600 --> 00:02:10,179
+et on applique cela à cette liste de valeurs entières
+
+34
+00:02:10,179 --> 00:02:15,959
+et on obtient une liste de valeurs carrées entières.
+
+35
+00:02:15,959 --> 00:02:18,489
+Ceci est juste une variante de ce que nous avons
+vu avant,
+
+36
+00:02:18,489 --> 00:02:23,769
+maintenant la fonction est appelée <u>map2</u>,
+car elle fonctionne sur deux listes,
+
+37
+00:02:23,769 --> 00:02:28,430
+et l'argument de la fonction doit être une fonction
+qui prend 2 arguments,
+
+38
+00:02:28,430 --> 00:02:32,280
+et l'idée est que la fonction sera toujours appliquée
+à deux éléments
+
+39
+00:02:32,280 --> 00:02:36,099
+qui occupent la même position dans les deux listes.
+
+40
+00:02:36,099 --> 00:02:38,340
+Encore une fois cela est défini par récursion,
+
+41
+00:02:38,340 --> 00:02:40,379
+noter que dans le but de faire le filtrage
+
+42
+00:02:40,379 --> 00:02:44,430
+on doit faire maintenant un filtrage sur un couple
+de listes,
+
+43
+00:02:44,430 --> 00:02:50,620
+de sorte que nous avons des motifs qui sont
+des paires de motifs de liste.
+
+44
+00:02:50,620 --> 00:02:54,030
+Il pourrait alors aussi arriver qu'on rencontre
+des erreurs d'exécution,
+
+45
+00:02:54,030 --> 00:02:57,420
+car il se peut que les deux listes soient
+de longueur différente.
+
+46
+00:02:57,420 --> 00:02:59,659
+Dans ce cas, on a cette construction <u>raise</u>
+
+47
+00:02:59,659 --> 00:03:03,859
+qui lève en fait une condition d'erreur.
+
+48
+00:03:03,859 --> 00:03:07,969
+Vous en apprendrez beaucoup plus à ce sujet
+en semaine 5.
+
+49
+00:03:07,969 --> 00:03:14,040
+Voici donc le type qu'on peut voir au toplevel,
+
+50
+00:03:14,040 --> 00:03:18,280
+avec en premier argument un argument fonctionnel
+qui est une fonction de deux paramètres,
+
+51
+00:03:18,280 --> 00:03:22,639
+et deux autres arguments qui sont des listes d'éléments
+de type qui convient.
+
+52
+00:03:22,639 --> 00:03:27,810
+Par exemple, on peut utiliser cette fonction <u>map2</u>,
+l'appliquer à la fonction d'addition,
+
+53
+00:03:27,810 --> 00:03:32,099
+puis sur deux listes <u>[1; 2; 3]</u> et <u>[10; 20; 30]</u>,
+
+54
+00:03:32,099 --> 00:03:40,239
+et l'on obtient comme résultat la liste des valeurs
+<u>[11; 22; 33]</u>.
+
+55
+00:03:40,239 --> 00:03:45,959
+Bien, voici maintenant un exemple de la façon dont on peut
+utiliser la fonction d'ordre supérieur <u>map</u>
+
+56
+00:03:45,959 --> 00:03:46,549
+du module <u>List</u>,
+
+57
+00:03:46,549 --> 00:03:52,680
+pour calculer cette liste, on aimerait
+utiliser ceci pour calculer des vecteurs,
+
+58
+00:03:52,680 --> 00:03:56,510
+comme des vecteurs d'entiers, et des matrices entières.
+
+59
+00:03:56,510 --> 00:04:03,060
+Les listes sont une solution possible pour réaliser
+ces deux types de données,
+
+60
+00:04:03,060 --> 00:04:08,519
+puisque nous pourrions définir un vecteur-ligne
+d'entiers comme une simple liste d'entiers.
+
+61
+00:04:08,519 --> 00:04:14,079
+Et puis définir une matrice d'entiers juste
+comme une liste de ses lignes vecteurs,
+
+62
+00:04:14,079 --> 00:04:17,830
+ce serait donc une liste de listes d'entiers.
+
+63
+00:04:17,830 --> 00:04:22,800
+Maintenant, si on voulait définir quelques opérations
+arithmétiques sur les matrices et sur les vecteurs,
+
+64
+00:04:22,800 --> 00:04:26,350
+on aimerait utiliser les fonctions d'ordre supérieur
+vues auparavant,
+
+65
+00:04:26,350 --> 00:04:30,650
+et les appliquer aux fonctions d'addition,
+de multiplication, et ainsi de suite.
+
+66
+00:04:30,650 --> 00:04:34,250
+Il y a une difficulté syntaxique supplémentaire ici,
+
+67
+00:04:34,250 --> 00:04:40,040
+car ces fonctions sont en fait fournies
+sous forme d'opérateurs, et non sous forme de fonctions.
+
+68
+00:04:40,040 --> 00:04:43,920
+Là il faut savoir qu'on peut transformer un
+opérateur en fonction
+
+69
+00:04:43,920 --> 00:04:46,700
+en l'écrivant simplement entre parenthèses,
+
+70
+00:04:46,700 --> 00:04:53,970
+Donc, si on écrit <u>(+)</u>, cela donne par exemple
+la fonction d'addition binaire sur des nombres entiers,
+
+71
+00:04:53,970 --> 00:04:56,040
+et il serait de même pour la division
+
+72
+00:04:56,040 --> 00:05:01,830
+et pour moins. Et pareil pour la
+multiplication, cependant il y a un petit problème
+
+73
+00:05:01,830 --> 00:05:08,700
+car si l'on écrit <u>(*)</u>, cela donnerait bien sûr
+un commentaire en OCaml.
+
+74
+00:05:08,700 --> 00:05:14,360
+Pour cette raison, et seulement dans ce cas particulier
+en fait, il faut mettre des espaces autour de la
+
+75
+00:05:14,360 --> 00:05:15,080
+l'étoile,
+
+76
+00:05:15,080 --> 00:05:24,160
+pour distinguer la fonction de multiplication
+de quelque chose qui commence un commentaire en OCaml.
+
+77
+00:05:24,160 --> 00:05:30,900
+On peut alors utiliser cette fonction <u>List.map2</u> pour
+définir l'addition sur les listes d'entiers,
+
+78
+00:05:30,900 --> 00:05:36,330
+et on peut le faire très élégamment en utilisant
+l'application partielle.
+
+79
+00:05:36,330 --> 00:05:40,020
+Cette somme de 2 listes d'entiers est maintenant
+simplement obtenue
+
+80
+00:05:40,020 --> 00:05:45,130
+en faisant une application partielle de <u>List.map2</u>
+à la fonction <u>(+)</u>,
+
+81
+00:05:45,130 --> 00:05:50,170
+écrite ici en utilisant notre notation pour les
+opérateurs infixes.
+
+82
+00:05:50,170 --> 00:05:56,310
+Le type est en fait désormais une fonction qui prend
+deux listes d'entiers et retourne une liste d'entiers,
+
+83
+00:05:56,310 --> 00:06:00,560
+et on peut l'appliquer à ces deux listes dans
+cet exemple,
+
+84
+00:06:00,560 --> 00:06:05,780
+pour obtenir exactement la somme des deux vecteurs.
+
+85
+00:06:05,780 --> 00:06:09,000
+On peut aller un peu plus loin,
+
+86
+00:06:09,000 --> 00:06:15,180
+et se servir de notre opération d'addition de vecteurs
+pour définir une opération d'addition de matrices.
+
+87
+00:06:15,180 --> 00:06:19,910
+Les matrices sont représentées par des listes de listes
+d'entiers
+
+88
+00:06:19,910 --> 00:06:27,360
+et on peut définir maintenant l'addition des matrices
+simplement par de l'application partielle imbriquée.
+
+89
+00:06:27,360 --> 00:06:32,330
+Remarquez que <u>List.map2</u> appliqué à <u>(+)</u>
+est déjà une addition de vecteurs,
+
+90
+00:06:32,330 --> 00:06:39,190
+maintenant tout ce qu'on a à faire c'est une
+application partielle de <u>List.map2</u> à l'opération
+
+91
+00:06:39,190 --> 00:06:40,820
+d'addition de vecteur,
+
+92
+00:06:40,820 --> 00:06:49,830
+ce qui nous donne pour l'addition de matrice
+<u>List.map2 (List.map2 (+))</u>.
+
+93
+00:06:49,830 --> 00:06:52,950
+Maintenant, regardons les types : les types sont
+comme ils devraient l'être.
+
+94
+00:06:52,950 --> 00:06:58,640
+Elle prend un <u>int list list</u>, qui est une matrice,
+un deuxième <u>int list list</u>, encore une matrice,
+
+95
+00:06:58,640 --> 00:07:02,930
+et elle renvoie un <u>int list list</u> qui est
+encore une matrice.
+
+96
+00:07:02,930 --> 00:07:04,380
+Essayons sur cet exemple,
+
+97
+00:07:04,380 --> 00:07:07,660
+on a donc une première matrice et une seconde matrice,
+
+98
+00:07:07,660 --> 00:07:16,900
+et si on calcule la somme on obtient ce qu'on
+devrait obtenir.
+
+99
+00:07:16,900 --> 00:07:20,650
+Enfin, regardons un exemple qui est
+un peu plus complexe.
+
+100
+00:07:20,650 --> 00:07:28,280
+Dans cet exemple, on veut calculer la liste
+de toutes les sous-listes d'une liste donnée.
+
+101
+00:07:28,280 --> 00:07:29,710
+Mais tout d'abord, qu'est-ce que cela signifie ?
+
+102
+00:07:29,710 --> 00:07:35,530
+En général, on peut dire qu'une sous-liste, toute
+sous-liste d'une liste donnée <u>l</u>,
+
+103
+00:07:35,530 --> 00:07:39,860
+est obtenue à partir de la liste <u>l</u> en supprimant
+certains de ses éléments
+
+104
+00:07:39,860 --> 00:07:43,620
+peu importe au début, à la fin ou au milieu.
+
+105
+00:07:43,620 --> 00:07:50,640
+Par exemple, la liste <u>[2; 4]</u> serait considérée
+comme une sous-liste de la liste <u>[1; 2; 3; 4]</u>.
+
+106
+00:07:50,640 --> 00:07:52,920
+Maintenant, ce qu'on voudrait faire c'est
+
+107
+00:07:52,920 --> 00:07:57,280
+écrire une fonction qui prend comme argument une
+liste, comme <u>[1; 2; 3; 4]</u>,
+
+108
+00:07:57,280 --> 00:08:01,240
+et qui renvoie la liste de toutes ses sous-listes.
+
+109
+00:08:01,240 --> 00:08:05,060
+En d'autres termes, le type de cette fonction
+serait <u>'a list</u>
+
+110
+00:08:05,060 --> 00:08:06,330
+- Bien sûr, il serait polymorphe -
+
+111
+00:08:06,330 --> 00:08:11,950
+<u>-> 'a list list</u>, de sorte qu'il donnerait
+une liste de listes d'éléments.
+
+112
+00:08:11,950 --> 00:08:15,370
+Bien, comment définir cette fonction ?
+
+113
+00:08:15,370 --> 00:08:19,030
+Commençons par le cas de base de la récurrence.
+
+114
+00:08:19,030 --> 00:08:21,210
+Si on nous donne une liste vide,
+
+115
+00:08:21,210 --> 00:08:26,980
+alors le résultat de l'application de cette fonction
+ne serait pas la liste vide,
+
+116
+00:08:26,980 --> 00:08:30,360
+mais ce serait la liste contenant la liste vide,
+
+117
+00:08:30,360 --> 00:08:36,249
+puisque la liste vide est une sous-liste d'elle-même
+et qu'il n'y a pas d'autre sous-liste
+
+118
+00:08:36,249 --> 00:08:37,259
+de la liste vide.
+
+119
+00:08:37,259 --> 00:08:43,620
+Maintenant, qu'attend-on pour une liste <u>l</u> qui
+commence sur une tête <u>h</u> et continue par une liste
+
+120
+00:08:43,620 --> 00:08:44,209
+<u>r</u> ?
+
+121
+00:08:44,209 --> 00:08:52,120
+Eh bien dans ce cas, il y a exactement deux possibilités
+pour toute sous-liste de la liste <u>l</u> :
+
+122
+00:08:52,120 --> 00:08:56,720
+soit la sous-liste utilise ce <u>h</u>, soit non.
+
+123
+00:08:56,720 --> 00:09:02,930
+Si la sous-liste n'utilise pas la tête <u>h</u>,
+c'est en fait déjà une sous-liste du
+
+124
+00:09:02,930 --> 00:09:03,730
+reste <u>r</u>,
+
+125
+00:09:03,730 --> 00:09:08,889
+ce qui signifie qu'on peut l'obtenir à partir
+d'un appel à la fonction récursive.
+
+126
+00:09:08,889 --> 00:09:13,620
+D'autre part, dans le cas où la sous-liste utilise
+la tête <u>h</u>,
+
+127
+00:09:13,620 --> 00:09:17,519
+alors elle a une forme qui doit commencer
+par la tête <u>h</u>,
+
+128
+00:09:17,519 --> 00:09:23,269
+et doit continuer par quelque chose qui
+est une sous-liste du reste <u>r</u>.
+
+129
+00:09:23,269 --> 00:09:30,620
+Ce qui est encore quelque chose qu'on peut obtenir
+à partir d'un appel récursif à la même fonction.
+
+130
+00:09:30,620 --> 00:09:35,519
+Donc, en rassemblant toutes ces idées, on peut
+maintenant dériver une réalisation de la fonction
+
+131
+00:09:35,519 --> 00:09:40,019
+<u>sublist</u> en OCaml.
+
+132
+00:09:40,019 --> 00:09:44,670
+Donc, ce qu'on peut voir sur ce code est que,
+bien sûr, nous avons une fonction récursive
+
+133
+00:09:44,670 --> 00:09:45,790
+<u>sublist</u>.
+
+134
+00:09:45,790 --> 00:09:48,790
+Voici le premier cas discuté précédemment,
+
+135
+00:09:48,790 --> 00:09:53,980
+dans le cas d'une liste vide on renvoie une liste
+qui contient ce seul élément: la liste
+
+136
+00:09:53,980 --> 00:09:54,930
+vide.
+
+137
+00:09:54,930 --> 00:09:58,949
+Maintenant, dans l'autre cas, lorsqu'on a un argument
+qui est une liste non vide,
+
+138
+00:09:58,949 --> 00:10:05,019
+alors comme on l'a vu, on doit utiliser deux fois
+le résultat de l'application de la fonction au
+
+139
+00:10:05,019 --> 00:10:06,290
+reste de la liste.
+
+140
+00:10:06,290 --> 00:10:08,920
+Donc, on lui donne un nom et nous le calculons
+juste une fois.
+
+141
+00:10:08,920 --> 00:10:11,660
+Nous lui donnons un nom qui est <u>rp</u>,
+
+142
+00:10:11,660 --> 00:10:13,860
+puis on construit ce qu'on renvoie.
+
+143
+00:10:13,860 --> 00:10:16,620
+Ce qu'on renvoie est en fait la liste elle-même,
+
+144
+00:10:16,620 --> 00:10:22,279
+ce qui correspond au fait que la sous-liste
+n'utilise pas la tête de la liste d'entrée,
+
+145
+00:10:22,279 --> 00:10:29,740
+et la deuxième partie : on prend cette liste, et
+on met la tête <u>h</u> en préfixe de chacun
+
+146
+00:10:29,740 --> 00:10:31,480
+de ses éléments.
+
+147
+00:10:31,480 --> 00:10:38,259
+Et ceci est obtenu par une application de la
+fonction <u>map</u> que nous avons déjà vue avant.
+
+148
+00:10:38,259 --> 00:10:41,279
+Ainsi, le type qu'on obtient est, eh bien
+
+149
+00:10:41,279 --> 00:10:45,740
+nous avons un argument qui est une liste de n'importe
+quel type arbitraire, un <u>'a list</u>,
+
+150
+00:10:45,740 --> 00:10:48,949
+et ce qui est rendu est une liste de <u>'a list</u>.
+
+151
+00:10:48,949 --> 00:10:53,420
+Essayons maintenant d'appliquer notre fonction à la
+liste <u>[1; 2]</u>,
+
+152
+00:10:53,420 --> 00:10:57,300
+pour voir que tout fonctionne bien,
+
+153
+00:10:57,300 --> 00:11:04,620
+pour cette liste <u>[1; 2]</u>, on obtient en effet
+4 sous-listes différentes.
+
+154
+00:11:04,620 --> 00:11:11,660
+Enfin, pour tout savoir sur le module <u>List</u>,
+il suffit de regarder dans le manuel OCaml
+
+155
+00:11:11,660 --> 00:11:16,980
+et sa description dans la bibliothèque standard.

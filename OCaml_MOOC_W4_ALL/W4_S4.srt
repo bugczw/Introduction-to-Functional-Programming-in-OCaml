@@ -1,0 +1,721 @@
+1
+00:00:00,229 --> 00:00:03,230
+Hello, so in this and the next sequence,
+
+2
+00:00:03,230 --> 00:00:08,280
+we will have a look at how functions, as first-class
+values,
+
+3
+00:00:08,280 --> 00:00:15,429
+can help us to write very nice and concise
+programs working on lists.
+
+4
+00:00:15,429 --> 00:00:18,099
+First a bit about the <u>List</u> library.
+
+5
+00:00:18,099 --> 00:00:24,650
+The library module <u>List</u> contains many useful functions
+for working on lists.
+
+6
+00:00:24,650 --> 00:00:29,470
+There are two ways of using functions, which
+you can find in this module:
+
+7
+00:00:29,470 --> 00:00:35,770
+either you can open the module, using the
+notation <u>open</u>, and then the name of the
+
+8
+00:00:35,770 --> 00:00:36,149
+module,
+
+9
+00:00:36,149 --> 00:00:37,149
+which is just <u>List</u>.
+
+10
+00:00:37,149 --> 00:00:40,730
+After that you can use the functions just
+like any other function.
+
+11
+00:00:40,730 --> 00:00:44,350
+Or alternatively you can use the pointed notation
+
+12
+00:00:44,350 --> 00:00:48,879
+which always put the name of the module as
+prefix in front of the function.
+
+13
+00:00:48,879 --> 00:00:52,350
+We will come back to modules in the very last
+week,
+
+14
+00:00:52,350 --> 00:00:55,710
+and however I think this is all you have to
+know for the moment
+
+15
+00:00:55,710 --> 00:01:00,199
+about using the <u>List</u> module for working
+on lists.
+
+16
+00:01:00,199 --> 00:01:02,519
+Since lists are themselves a polymorphic datatype,
+
+17
+00:01:02,519 --> 00:01:04,300
+as you have learned in week 3,
+
+18
+00:01:04,300 --> 00:01:09,360
+the functions working on lists also of course have to
+be polymorphic,
+
+19
+00:01:09,360 --> 00:01:14,410
+in order to make use of this generality.
+
+20
+00:01:14,410 --> 00:01:17,400
+So here we have the definition of the <u>map</u>
+function,
+
+21
+00:01:17,400 --> 00:01:21,590
+which in reality is already defined in the
+standard library of OCaml,
+
+22
+00:01:21,590 --> 00:01:24,080
+and here we have just repeated its definition.
+
+23
+00:01:24,080 --> 00:01:29,960
+So this function takes as first argument a
+function, and as second argument a list,
+
+24
+00:01:29,960 --> 00:01:36,570
+and returns as a result the result of applying the function
+to each of the elements of the list.
+
+25
+00:01:36,570 --> 00:01:39,320
+And this is of course a simple recursion on
+the form of the list:
+
+26
+00:01:39,320 --> 00:01:42,270
+if the list is empty, we return the empty
+list,
+
+27
+00:01:42,270 --> 00:01:46,290
+and otherwise, we apply the function to the
+head of the list,
+
+28
+00:01:46,290 --> 00:01:51,530
+and we do a recursive call of the <u>map</u> function
+to the rest of the list.
+
+29
+00:01:51,530 --> 00:01:58,000
+So the type is as expected we have a function
+argument and an <u>'a list</u>, and the result will be a
+
+30
+00:01:58,000 --> 00:01:58,830
+<u>'b list</u>.
+
+31
+00:01:58,830 --> 00:02:01,560
+So for instance, we can now take our <u>map</u>
+function,
+
+32
+00:02:01,560 --> 00:02:06,600
+as a function we provide the function which
+squares its argument as an integer,
+
+33
+00:02:06,600 --> 00:02:10,179
+and apply this to this list of integer values
+
+34
+00:02:10,179 --> 00:02:15,959
+and we obtain a list of squared integer values.
+
+35
+00:02:15,959 --> 00:02:18,489
+This now is a just a variant of what we have
+seen before,
+
+36
+00:02:18,489 --> 00:02:23,769
+now the function is called <u>map2</u>,
+because it works on two lists,
+
+37
+00:02:23,769 --> 00:02:28,430
+and the function argument has to be a function
+which takes 2 arguments,
+
+38
+00:02:28,430 --> 00:02:32,280
+and the idea is that the function will always
+be applied to two elements
+
+39
+00:02:32,280 --> 00:02:36,099
+which occur at the same position in both lists.
+
+40
+00:02:36,099 --> 00:02:38,340
+Again this is defined by recursion,
+
+41
+00:02:38,340 --> 00:02:40,379
+note that in order to do the pattern-matching
+
+42
+00:02:40,379 --> 00:02:44,430
+we now have to do a pattern-matching on a
+pair of lists,
+
+43
+00:02:44,430 --> 00:02:50,620
+so we have patterns which also are patterns
+which are pairs of list patterns.
+
+44
+00:02:50,620 --> 00:02:54,030
+It might also happen that we now encounter
+runtime errors,
+
+45
+00:02:54,030 --> 00:02:57,420
+since it might happen that both lists are
+of different length.
+
+46
+00:02:57,420 --> 00:02:59,659
+In this case we have this <u>raise</u> construction
+
+47
+00:02:59,659 --> 00:03:03,859
+which in fact raises an error condition.
+
+48
+00:03:03,859 --> 00:03:07,969
+You will learn much more about this in week
+5.
+
+49
+00:03:07,969 --> 00:03:14,040
+So, the type is now of course the one we see
+at the toplevel,
+
+50
+00:03:14,040 --> 00:03:18,280
+so the first argument is a functional argument
+which a function of two arguments,
+
+51
+00:03:18,280 --> 00:03:22,639
+and the other two arguments are lists of the
+corresponding element types.
+
+52
+00:03:22,639 --> 00:03:27,810
+For instance we can use now this <u>map2</u> function,
+apply it to the addition function,
+
+53
+00:03:27,810 --> 00:03:32,099
+over two lists <u>[1; 2; 3]</u> and <u>[10; 20; 30]</u>,
+
+54
+00:03:32,099 --> 00:03:40,239
+and we obtain as result the list of values
+<u>[11; 22; 33]</u>.
+
+55
+00:03:40,239 --> 00:03:45,959
+Ok, now let's look at an example of how we
+can use the <u>map</u> higher order function of
+
+56
+00:03:45,959 --> 00:03:46,549
+the <u>List</u> module,
+
+57
+00:03:46,549 --> 00:03:52,680
+to calculate this list, in we would like to
+use this to calculate vectors,
+
+58
+00:03:52,680 --> 00:03:56,510
+like integer vectors, and integer matrices.
+
+59
+00:03:56,510 --> 00:04:03,060
+Lists are some possible solution to implement
+these two datatypes,
+
+60
+00:04:03,060 --> 00:04:08,519
+since we could define a row-vector of integers
+just as a list of integers.
+
+61
+00:04:08,519 --> 00:04:14,079
+And then define a matrix of integers just
+as a list of its row-vectors,
+
+62
+00:04:14,079 --> 00:04:17,830
+so it would be a list of lists of integers.
+
+63
+00:04:17,830 --> 00:04:22,800
+Now if we would like to define some arithmetic
+operations on matrices and on vectors,
+
+64
+00:04:22,800 --> 00:04:26,350
+we would like to use the higher order functions
+we have seen so far,
+
+65
+00:04:26,350 --> 00:04:30,650
+and apply them the functions of addition,
+multiplication, and so on.
+
+66
+00:04:30,650 --> 00:04:34,250
+There is one more syntactical difficulty here,
+
+67
+00:04:34,250 --> 00:04:40,040
+since these functions are in fact provided
+in form of operators, and not in form of functions.
+
+68
+00:04:40,040 --> 00:04:43,920
+Here you have to know that you can turn an
+operator into a function
+
+69
+00:04:43,920 --> 00:04:46,700
+just by writing it between parenthesis,
+
+70
+00:04:46,700 --> 00:04:53,970
+so if you write <u>(+)</u>, this gives you for
+example the binary addition function on integers,
+
+71
+00:04:53,970 --> 00:04:56,040
+and it would be same for division.
+
+72
+00:04:56,040 --> 00:05:01,830
+And for minus, however, it is the same for
+multiplication, there is one small problem
+
+73
+00:05:01,830 --> 00:05:08,700
+since if you write <u>(*)</u>, this would of course
+give you a comment in OCaml.
+
+74
+00:05:08,700 --> 00:05:14,360
+For this reason and only in this special case
+in fact, you must write spaces around the
+
+75
+00:05:14,360 --> 00:05:15,080
+star,
+
+76
+00:05:15,080 --> 00:05:24,160
+to distinguish the function of multiplication
+from something which starts a comment in OCaml.
+
+77
+00:05:24,160 --> 00:05:30,900
+Now we can use this <u>List.map2</u> function to
+define an operation of addition on integer values.
+
+78
+00:05:30,900 --> 00:05:36,330
+And we can do this very elegantely by using
+partial application.
+
+79
+00:05:36,330 --> 00:05:40,020
+SInce this sum of 2 integer values is now
+just obtained
+
+80
+00:05:40,020 --> 00:05:45,130
+by doing a partial application of <u>List.map2</u>
+to the <u>(+)</u> function,
+
+81
+00:05:45,130 --> 00:05:50,170
+written here using our notation for infix
+operators.
+
+82
+00:05:50,170 --> 00:05:56,310
+The type is in fact now a function which takes
+two integer lists and returns an integer list,
+
+83
+00:05:56,310 --> 00:06:00,560
+and we can apply this to the two lists in
+this example,
+
+84
+00:06:00,560 --> 00:06:05,780
+and we obtain exactly the sum of the two vectors.
+
+85
+00:06:05,780 --> 00:06:09,000
+We can carry this a little bit further,
+
+86
+00:06:09,000 --> 00:06:15,180
+and now using our operation of vector addition
+to define an operation of matrix addition.
+
+87
+00:06:15,180 --> 00:06:19,910
+So matrices are represented as lists of lists
+of integer values
+
+88
+00:06:19,910 --> 00:06:27,360
+and we can now define the operation of matrix
+addition just by nested partial application.
+
+89
+00:06:27,360 --> 00:06:32,330
+Please note that <u>List.map2</u> applied to <u>(+)</u>
+is already a vector addition,
+
+90
+00:06:32,330 --> 00:06:39,190
+and now all we have to do is to do a partial
+application of <u>List.map2</u> to the operation
+
+91
+00:06:39,190 --> 00:06:40,820
+of vector addition,
+
+92
+00:06:40,820 --> 00:06:49,830
+which gives us for matrix addition <u>List.map2
+(List.map2 (+))</u>.
+
+93
+00:06:49,830 --> 00:06:52,950
+Now let's look at the types: the types are
+as they should be.
+
+94
+00:06:52,950 --> 00:06:58,640
+It takes an <u>int list list</u>, which is a matrix,
+a second <u>int list list</u>, again a matrix,
+
+95
+00:06:58,640 --> 00:07:02,930
+and it returns a <u>int list list</u> which is
+again a matrix.
+
+96
+00:07:02,930 --> 00:07:04,380
+So let's do this on this example,
+
+97
+00:07:04,380 --> 00:07:07,660
+so we have a first matrix and a second matrix,
+
+98
+00:07:07,660 --> 00:07:16,900
+and if we calculate the sum we obtain what
+we should obtain.
+
+99
+00:07:16,900 --> 00:07:20,650
+Finally let's look at an example which is
+little bit more involved.
+
+100
+00:07:20,650 --> 00:07:28,280
+In this example we would like to calculate
+the list of all sublists of a given list,
+
+101
+00:07:28,280 --> 00:07:29,710
+but first of all, what does it mean?
+
+102
+00:07:29,710 --> 00:07:35,530
+In general, we would say that a sublist, any
+sublist of a given list <u>l</u>,
+
+103
+00:07:35,530 --> 00:07:39,860
+is obtained from the list <u>l</u> by removing
+some of its elements
+
+104
+00:07:39,860 --> 00:07:43,620
+no matter at the beginning, at the end or
+inside.
+
+105
+00:07:43,620 --> 00:07:50,640
+For instance, the list <u>[2;4]</u> would be considered
+to be a sublist of the list <u>[1; 2; 3; 4]</u>.
+
+106
+00:07:50,640 --> 00:07:52,920
+Now what we would like to do is
+
+107
+00:07:52,920 --> 00:07:57,280
+write a function which takes as argument a
+list, like <u>[1; 2 ;3 ;4]</u>,
+
+108
+00:07:57,280 --> 00:08:01,240
+and which returns the list of all its sublists.
+
+109
+00:08:01,240 --> 00:08:05,060
+In other words, the type of this function
+would be <u>'a list</u>
+
+110
+00:08:05,060 --> 00:08:06,330
+-- of course it would be polymorphic --
+
+111
+00:08:06,330 --> 00:08:11,950
+<u>-> 'a list list</u>, so it would give a list
+of lists of elements.
+
+112
+00:08:11,950 --> 00:08:15,370
+Ok, now how can this function be defined?
+
+113
+00:08:15,370 --> 00:08:19,030
+Let's start with the induction base.
+
+114
+00:08:19,030 --> 00:08:21,210
+If we are given an empty list,
+
+115
+00:08:21,210 --> 00:08:26,980
+then the result of this function application
+would be of course not the empty list,
+
+116
+00:08:26,980 --> 00:08:30,360
+but it would be the list cointaining the empty
+list,
+
+117
+00:08:30,360 --> 00:08:36,249
+since the empty list is a sublist of itself
+we must obtain this result in case of application
+
+118
+00:08:36,249 --> 00:08:37,259
+to an empty list.
+
+119
+00:08:37,259 --> 00:08:43,620
+Now what would we expect for a list <u>l</u> which
+starts on a head <u>h</u> and continues on a list
+
+120
+00:08:43,620 --> 00:08:44,209
+<u>r</u>?
+
+121
+00:08:44,209 --> 00:08:52,120
+Well in that case there are exactly two possibilities
+for any sublist of this list <u>l</u>:
+
+122
+00:08:52,120 --> 00:08:56,720
+either the sublist uses that <u>h</u>, or it doesn't.
+
+123
+00:08:56,720 --> 00:09:02,930
+If the sublist does not use the head <u>h</u>,
+then it is in fact a sublist already of the
+
+124
+00:09:02,930 --> 00:09:03,730
+rest <u>r</u>,
+
+125
+00:09:03,730 --> 00:09:08,889
+which means that we can obtain it from a call
+to the recursive function.
+
+126
+00:09:08,889 --> 00:09:13,620
+On the other hand, in case the sublist uses the head
+<u>h</u>,
+
+127
+00:09:13,620 --> 00:09:17,519
+then it is of the form where it must start
+on the head <u>h</u>,
+
+128
+00:09:17,519 --> 00:09:23,269
+and it must continue over something which
+is itself a sublist of the rest <u>r</u>.
+
+129
+00:09:23,269 --> 00:09:30,620
+And this is again something which we can obtain
+from a recursive call to the same function.
+
+130
+00:09:30,620 --> 00:09:35,519
+So putting together all these ideas, we can
+now derive an implementation of the function
+
+131
+00:09:35,519 --> 00:09:40,019
+<u>sublist</u> in OCaml.
+
+132
+00:09:40,019 --> 00:09:44,670
+So what we can see on this code here is that,
+well of course we have a recursive function
+
+133
+00:09:44,670 --> 00:09:45,790
+<u>sublist</u>.
+
+134
+00:09:45,790 --> 00:09:48,790
+This is the first case we have discussed before,
+
+135
+00:09:48,790 --> 00:09:53,980
+in case of an empty list we return a list
+which contains this only element: the empty
+
+136
+00:09:53,980 --> 00:09:54,930
+list.
+
+137
+00:09:54,930 --> 00:09:58,949
+Now, in the other case, when we have an argument
+which is non-empty list,
+
+138
+00:09:58,949 --> 00:10:05,019
+then as we have seen we have to use twice
+the result of applying the function to the
+
+139
+00:10:05,019 --> 00:10:06,290
+rest of the list.
+
+140
+00:10:06,290 --> 00:10:08,920
+So we give a name to this and we compute it
+only once.
+
+141
+00:10:08,920 --> 00:10:11,660
+We give a name to it which is <u>rp</u>,
+
+142
+00:10:11,660 --> 00:10:13,860
+and then we construct what we return.
+
+143
+00:10:13,860 --> 00:10:16,620
+What we return is in fact the list itself,
+
+144
+00:10:16,620 --> 00:10:22,279
+this corresponds to the fact that the sublist
+does not use the head of the input list,
+
+145
+00:10:22,279 --> 00:10:29,740
+and the second part: we take this list, and
+we put to each of its element the head <u>h</u>
+
+146
+00:10:29,740 --> 00:10:31,480
+at the beginning.
+
+147
+00:10:31,480 --> 00:10:38,259
+And this is used by an application of the
+function <u>map</u> we have already seen before.
+
+148
+00:10:38,259 --> 00:10:41,279
+So the type which we obtain is, well,
+
+149
+00:10:41,279 --> 00:10:45,740
+we have an argument which is a list of any
+arbitrary type, an <u>'a list</u>,
+
+150
+00:10:45,740 --> 00:10:48,949
+and what we obtain is a list of <u>'a list</u>.
+
+151
+00:10:48,949 --> 00:10:53,420
+Let's try to apply now our function to the
+list <u>[1; 2]</u>,
+
+152
+00:10:53,420 --> 00:10:57,300
+to see that everything works fine,
+
+153
+00:10:57,300 --> 00:11:04,620
+and for the list <u>[1; 2]</u>, we obtain indeed
+4 different sublists.
+
+154
+00:11:04,620 --> 00:11:11,660
+Finally, to learn everything about the <u>List</u>
+module, just look into the OCaml manual
+
+155
+00:11:11,660 --> 00:11:16,980
+and its description in the standard library.
+

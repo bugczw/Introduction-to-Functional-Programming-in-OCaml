@@ -1,0 +1,1089 @@
+1
+00:00:00,000 --> 00:00:05,859
+Well, in this sequence, we will learn how
+to use exceptions in the OCaml programming
+
+2
+00:00:05,859 --> 00:00:06,359
+language.
+
+3
+00:00:06,359 --> 00:00:08,889
+Well, what are exceptions?
+
+4
+00:00:08,889 --> 00:00:12,000
+OCaml provides exceptions, which are useful
+for
+
+5
+00:00:12,000 --> 00:00:13,969
+signaling and handling exceptional conditions,
+
+6
+00:00:13,969 --> 00:00:16,270
+like in many other programming languages,
+
+7
+00:00:16,270 --> 00:00:23,680
+but here, exceptions are just constructors
+of a special sum type written <u>exn</u> but we
+
+8
+00:00:23,680 --> 00:00:26,320
+all call it exception anyway.
+
+9
+00:00:26,320 --> 00:00:29,599
+This constructor
+can have arguments like all other constructors.
+
+10
+00:00:29,599 --> 00:00:32,689
+So it seems like just typical constructor
+of sum type,
+
+11
+00:00:32,689 --> 00:00:34,960
+like the one we have already
+discover.
+
+12
+00:00:34,960 --> 00:00:38,890
+But there are a few differences,
+with respect to the typical constructor of
+
+13
+00:00:38,890 --> 00:00:39,950
+traditional sum types.
+
+14
+00:00:39,950 --> 00:00:45,250
+The first one is that
+you can define new exceptions at any time.
+
+15
+00:00:45,250 --> 00:00:48,200
+This is not the case for traditional sum types.
+
+16
+00:00:48,200 --> 00:00:52,559
+So this sum type exception is somehow special,
+
+17
+00:00:52,559 --> 00:00:57,379
+it can be extended dynamically, when you need
+it.
+
+18
+00:00:57,379 --> 00:01:01,309
+On the other side there is also limitations
+that comes with this extra power:
+
+19
+00:01:01,309 --> 00:01:04,619
+the fact
+that exceptions cannot be polymorphic.
+
+20
+00:01:04,619 --> 00:01:06,760
+You must fix the type at the beginning.
+
+21
+00:01:06,760 --> 00:01:11,119
+Well, to declare an exception, it's extremely
+simple
+
+22
+00:01:11,119 --> 00:01:11,790
+in the system.
+
+23
+00:01:11,790 --> 00:01:14,600
+You just use the keyword <u>exception</u>,
+like here:
+
+24
+00:01:14,600 --> 00:01:18,710
+in the toplevel we have written
+<u>exception E</u>,
+
+25
+00:01:18,710 --> 00:01:22,509
+and when it returns, the system
+will answer just saying:
+
+26
+00:01:22,509 --> 00:01:26,820
+ok, there is a new
+exception declared with the constructor <u>E</u>.
+
+27
+00:01:26,820 --> 00:01:29,310
+And these are really just constructors.
+
+28
+00:01:29,310 --> 00:01:32,009
+After the definition, we can just use, you
+see as
+
+29
+00:01:32,009 --> 00:01:32,250
+here,
+
+30
+00:01:32,250 --> 00:01:37,360
+we just can type <u>E</u> in this case,
+and the system says: yes,
+
+31
+00:01:37,360 --> 00:01:40,670
+that's a value <u>E</u>
+of type <u>exception</u>.
+
+32
+00:01:40,670 --> 00:01:43,670
+Of the exception type.
+
+33
+00:01:43,670 --> 00:01:46,420
+Well, once you have defined exception,
+
+34
+00:01:46,420 --> 00:01:48,310
+the first thing you can do we this exception
+is
+
+35
+00:01:48,310 --> 00:01:49,090
+to raise it.
+
+36
+00:01:49,090 --> 00:01:51,060
+I mean you can tell the system:
+
+37
+00:01:51,060 --> 00:01:52,689
+I have found an exception, exception <u>E</u>,
+
+38
+00:01:52,689 --> 00:01:55,740
+please
+stop everything and tell the world.
+
+39
+00:01:55,740 --> 00:02:00,860
+To signal
+this exception, we use the <u>raise</u> keyword,
+
+40
+00:02:00,860 --> 00:02:03,200
+like here: <u>raise E</u>.
+
+41
+00:02:03,200 --> 00:02:06,590
+The system answers now
+<u>exception: E</u>,
+
+42
+00:02:06,590 --> 00:02:09,470
+saying I have stopped the
+computation because I got an exception and
+
+43
+00:02:09,470 --> 00:02:11,530
+this exception is <u>E</u>.
+
+44
+00:02:11,530 --> 00:02:13,160
+Let me make it more clear:
+
+45
+00:02:13,160 --> 00:02:18,080
+when an exception is raised, everything is
+immediately stopped, any computation,
+
+46
+00:02:18,080 --> 00:02:21,110
+and we only get the exceptional value as a
+return.
+
+47
+00:02:21,110 --> 00:02:27,920
+For example here, we have make a definition
+where we say first raise E in the expression
+
+48
+00:02:27,920 --> 00:02:30,590
+that should return the list <u>[1; 2]</u>,
+
+49
+00:02:30,590 --> 00:02:34,860
+and if
+we hit return, the system doesn't compute
+
+50
+00:02:34,860 --> 00:02:36,760
+the list <u>[1; 2]</u>, doesn't return 1 and 2,
+
+51
+00:02:36,760 --> 00:02:41,280
+but just stops with the special exception
+<u>E</u> as soon as it sees it.
+
+52
+00:02:41,280 --> 00:02:46,950
+Let's see this applied
+in a more realistic example.
+
+53
+00:02:46,950 --> 00:02:51,319
+So let's say we want to define a head function
+that takes a list,
+
+54
+00:02:51,319 --> 00:02:54,190
+and gets the first element
+which is present in the list.
+
+55
+00:02:54,190 --> 00:02:56,580
+A natural definition
+could look like this:
+
+56
+00:02:56,580 --> 00:02:59,709
+the function <u>head</u>, that
+takes a list.
+
+57
+00:02:59,709 --> 00:03:03,930
+We define it by pattern matching
+the list: is it list of elements ?
+
+58
+00:03:03,930 --> 00:03:06,150
+Then we return the first element.
+
+59
+00:03:06,150 --> 00:03:08,700
+But what can we do if the list is empty ?
+
+60
+00:03:08,700 --> 00:03:10,280
+There is nothing to return.
+
+61
+00:03:10,280 --> 00:03:13,920
+Well, this is a typical case where
+an exception comes in handy.
+
+62
+00:03:13,920 --> 00:03:17,900
+So let's define an
+exception <u>Empty_List</u>.
+
+63
+00:03:17,900 --> 00:03:24,890
+OK, so choose a meaningful name.
+
+64
+00:03:24,890 --> 00:03:27,010
+And if we are passed an empty list,
+
+65
+00:03:27,010 --> 00:03:30,780
+we just raise an exception saying this is
+an exceptional condition.
+
+66
+00:03:30,780 --> 00:03:39,019
+Well, let's see.
+
+67
+00:03:39,019 --> 00:03:42,610
+So we pass the definition to the toplevel.
+
+68
+00:03:42,610 --> 00:03:46,060
+We have defined our <u>Empty_List</u> exception.
+
+69
+00:03:46,060 --> 00:03:49,340
+We define the function <u>head</u>.
+
+70
+00:03:49,340 --> 00:03:53,909
+OK, so now you see that this function is accepted
+by the compiler
+
+71
+00:03:53,909 --> 00:03:54,349
+that says:
+
+72
+00:03:54,349 --> 00:03:57,370
+you have the <u>head</u> function taking <u>'a list</u> and returning <u>'a</u>.
+
+73
+00:03:57,370 --> 00:04:00,040
+But actually
+in one particular case, it will raise an exception.
+
+74
+00:04:00,040 --> 00:04:02,560
+Let's test it a bit.
+
+75
+00:04:02,560 --> 00:04:15,239
+So, we can say, for example, head of the list
+<u>[1; 2; 3]</u>.
+
+76
+00:04:15,239 --> 00:04:18,290
+Of course we get 1, which is fine.
+
+77
+00:04:18,290 --> 00:04:30,180
+And if we call the <u>head</u> function with an empty
+list, well as you might expect, we got an
+
+78
+00:04:30,180 --> 00:04:30,830
+exception now.
+
+79
+00:04:30,830 --> 00:04:32,460
+This is an exception saying:
+
+80
+00:04:32,460 --> 00:04:35,050
+well, we couldn't find a meaningful result
+to return,
+
+81
+00:04:35,050 --> 00:04:39,009
+then we got an exceptional situation,
+what we get back is an exception.
+
+82
+00:04:39,009 --> 00:04:43,669
+Well, it's very interesting to raise exceptions,
+
+83
+00:04:43,669 --> 00:04:49,370
+but it is also fundamental to be able to capture
+them and do something with them, in case you
+
+84
+00:04:49,370 --> 00:04:51,930
+want to handle exceptional situations.
+
+85
+00:04:51,930 --> 00:04:55,360
+This is done in the OCaml programming language
+with the try/with construction.
+
+86
+00:04:55,360 --> 00:04:57,750
+Here we have an example of the syntax,
+
+87
+00:04:57,750 --> 00:05:02,259
+so basically you write <u>try</u>, then any expression
+you want then
+
+88
+00:05:02,259 --> 00:05:04,560
+<u>with</u>, and then you have a pattern matching.
+
+89
+00:05:04,560 --> 00:05:05,410
+What happens ?
+
+90
+00:05:05,410 --> 00:05:09,030
+Well basically, expression <u>e</u> is evaluated.
+
+91
+00:05:09,030 --> 00:05:16,759
+If it doesn't raise any exception: fantastic,
+the result of the try/with construct is just
+
+92
+00:05:16,759 --> 00:05:18,090
+the result of <u>e</u>.
+
+93
+00:05:18,090 --> 00:05:23,280
+But if an exception, let's say <u>E</u>,
+is raised,
+
+94
+00:05:23,280 --> 00:05:29,050
+then this exception is
+matched with all the patterns that come after
+
+95
+00:05:29,050 --> 00:05:30,850
+the with clause.
+
+96
+00:05:30,850 --> 00:05:36,570
+And here, it is just general
+pattern matching, you can use any legal pattern.
+
+97
+00:05:36,570 --> 00:05:40,850
+If this exception matches some pattern, let's
+say pattern <u>i</u>,
+
+98
+00:05:40,850 --> 00:05:48,240
+then the result of the whole
+construct will be the result of evaluating
+
+99
+00:05:48,240 --> 00:05:50,750
+expression <u>e_i</u>.
+
+100
+00:05:50,750 --> 00:05:58,370
+Be careful: all of the <u>e_i</u>
+must have the same type and must have the
+
+101
+00:05:58,370 --> 00:05:59,470
+same type as <u>e</u>,
+
+102
+00:05:59,470 --> 00:06:03,550
+because these are all the
+values we return in the exceptional situations
+
+103
+00:06:03,550 --> 00:06:06,190
+in place of the result of <u>e</u>, of course.
+
+104
+00:06:06,190 --> 00:06:11,630
+Now, so let's consider an interesting question.
+
+105
+00:06:11,630 --> 00:06:15,350
+Let's take a list, possibly long list of integers.
+
+106
+00:06:15,350 --> 00:06:20,699
+We want to multiply all the elements in this
+list, and doing it efficiently.
+
+107
+00:06:20,699 --> 00:06:22,750
+So we have already seen solutions to this
+problem,
+
+108
+00:06:22,750 --> 00:06:26,389
+but now we are considering a corner case which
+is interesting:
+
+109
+00:06:26,389 --> 00:06:29,960
+what happens when inside a
+list we find the number 0?
+
+110
+00:06:29,960 --> 00:06:32,460
+As soon as we find the number 0,
+
+111
+00:06:32,460 --> 00:06:36,120
+we know that there is no point
+in continuing the evaluation of the rest of
+
+112
+00:06:36,120 --> 00:06:38,389
+the list, the end result will be 0.
+
+113
+00:06:38,389 --> 00:06:43,710
+So, a straightforward way of implementing this remark is
+a definition
+
+114
+00:06:43,710 --> 00:06:44,590
+like this one.
+
+115
+00:06:44,590 --> 00:06:48,819
+You see we're defining our
+recursive function <u>multl</u> for multiplication
+
+116
+00:06:48,819 --> 00:06:51,770
+of a list that returns 1 on the empty list,
+
+117
+00:06:51,770 --> 00:06:56,160
+and when the list is not empty, it checks
+whether the result is 0,
+
+118
+00:06:56,160 --> 00:07:00,400
+at the beginning,
+that case just stops the computation and return 0.
+
+119
+00:07:00,710 --> 00:07:04,530
+And, otherwise, it calls itself recursively on the rest and does the multiplication by <u>a</u>.
+
+120
+00:07:04,840 --> 00:07:09,180
+OK, this is a definition that works perfectly
+well.
+
+121
+00:07:09,180 --> 00:07:14,729
+We can try it on an example.
+
+122
+00:07:14,729 --> 00:07:18,310
+For example, on this one.
+
+123
+00:07:18,310 --> 00:07:21,759
+OK, of course the
+result is 0:
+
+124
+00:07:21,759 --> 00:07:23,770
+see, we can find the 0 in
+the middle.
+
+125
+00:07:23,770 --> 00:07:27,520
+But the point is that this is
+not as efficient as it seems,
+
+126
+00:07:27,520 --> 00:07:30,710
+because indeed
+as soon as a 0 is found, in the list,
+
+127
+00:07:30,710 --> 00:07:34,949
+for
+example in this position here, what happens
+
+128
+00:07:34,949 --> 00:07:38,259
+is that when the expected result is 0
+
+129
+00:07:38,259 --> 00:07:42,449
+but then all the pending recursive calls have
+to be executed,
+
+130
+00:07:42,449 --> 00:07:47,580
+and this will end up making a
+lot of multiplications of the 0 that we get
+
+131
+00:07:47,580 --> 00:07:51,160
+here as the result, for the element which are
+appending there.
+
+132
+00:07:51,160 --> 00:07:56,930
+So it can take a lot of time,
+imagine you have one million integers so you
+
+133
+00:07:56,930 --> 00:07:58,220
+just find a 0 at the end,
+
+134
+00:07:58,220 --> 00:08:02,129
+we will need to
+make one million multiplications by 0 by coming
+
+135
+00:08:02,129 --> 00:08:02,900
+back.
+
+136
+00:08:02,900 --> 00:08:04,830
+So is it possible to be faster than
+that?
+
+137
+00:08:04,830 --> 00:08:05,400
+Yes.
+
+138
+00:08:05,400 --> 00:08:11,210
+And this is a typical situation
+where having exceptions can save you a lot
+
+139
+00:08:11,210 --> 00:08:13,229
+of computation time.
+
+140
+00:08:13,229 --> 00:08:18,590
+So let's redo the previous
+example but now using an exception to stop
+
+141
+00:08:18,590 --> 00:08:22,270
+the computation really without coming back
+to recursive calls,
+
+142
+00:08:22,270 --> 00:08:23,860
+instead of just returning 0.
+
+143
+00:08:23,860 --> 00:08:25,580
+How can this be?
+
+144
+00:08:25,580 --> 00:08:29,620
+So we define an exception <u>Zero</u>,
+that's a meaningful name.
+
+145
+00:08:29,620 --> 00:08:33,019
+And then, we define our multiplication of
+list with
+
+146
+00:08:33,019 --> 00:08:36,589
+exception, this function here, in a different
+way.
+
+147
+00:08:36,589 --> 00:08:43,390
+What we want to do is to do a computation
+like the previous one that will raise a <u>Zero</u>
+
+148
+00:08:43,390 --> 00:08:46,610
+exception as soon as a 0 integer is found,
+
+149
+00:08:46,610 --> 00:08:49,600
+then catch the <u>Zero</u> exception and return
+0
+
+150
+00:08:49,600 --> 00:08:51,560
+as an integer result.
+
+151
+00:08:51,560 --> 00:08:55,510
+So definition of this
+internal function, auxiliary function, is
+
+152
+00:08:55,510 --> 00:08:57,040
+similar to the previous one,
+
+153
+00:08:57,040 --> 00:09:01,459
+the only point
+is that as soon as we find a 0,
+
+154
+00:09:01,459 --> 00:09:04,899
+we raise an
+exception, we raise exception <u>Zero</u> here.
+
+155
+00:09:04,899 --> 00:09:09,019
+This will have a net effect of throwing away
+all
+
+156
+00:09:09,019 --> 00:09:10,839
+the recursive callstack,
+
+157
+00:09:10,839 --> 00:09:14,640
+and just raise a final exception <u>Zero</u> to
+the call.
+
+158
+00:09:14,640 --> 00:09:19,459
+So we can pass this to the interpreter and
+see what is going on.
+
+159
+00:09:19,459 --> 00:09:23,649
+So we can test that it is accepted again.
+
+160
+00:09:23,649 --> 00:09:37,820
+And again, we can test
+it on a similar example.
+
+161
+00:09:37,820 --> 00:09:40,610
+Here we also get 0, but believe me,
+
+162
+00:09:40,610 --> 00:09:48,000
+this time it was much faster because
+we are throwing away the callstack.
+
+163
+00:09:48,000 --> 00:09:54,720
+We have seen how to create new exception,
+how to raise them, how to handle them.
+
+164
+00:09:54,720 --> 00:09:57,959
+But it is very interesting to know that in
+the
+
+165
+00:09:57,959 --> 00:09:58,959
+OCaml system,
+
+166
+00:09:58,959 --> 00:10:04,649
+many runtime errors are also
+catched as exceptions and returned to you as
+
+167
+00:10:04,649 --> 00:10:06,220
+exceptions that you can manipulate.
+
+168
+00:10:06,220 --> 00:10:10,940
+Well, you remember, in OCaml the type errors
+are catched
+
+169
+00:10:10,940 --> 00:10:11,829
+at compile time,
+
+170
+00:10:11,829 --> 00:10:16,100
+but there are many other
+errors, which are not type errors, that cannot
+
+171
+00:10:16,100 --> 00:10:17,870
+be catched at compile time.
+
+172
+00:10:17,870 --> 00:10:19,010
+So these are runtime errors.
+
+173
+00:10:19,010 --> 00:10:26,510
+Typically, division by zero, incomplete
+pattern matching, out-of-bound access to mutable
+
+174
+00:10:26,510 --> 00:10:29,480
+data structures, and many others.
+
+175
+00:10:29,480 --> 00:10:35,860
+What is very nice is that in OCaml, when these
+errors occur, your program does not crash.
+
+176
+00:10:35,860 --> 00:10:40,920
+What happens is that the system wraps this
+error into an exception which is raised,
+
+177
+00:10:40,920 --> 00:10:43,209
+and then this exception is something that
+you
+
+178
+00:10:43,209 --> 00:10:45,430
+can handle.
+
+179
+00:10:45,430 --> 00:10:46,870
+Let's see this on some examples.
+
+180
+00:10:46,870 --> 00:10:53,070
+OK, so let's try to see what happens if we
+make a division by zero.
+
+181
+00:10:53,070 --> 00:10:57,110
+For example let's divide three by zero.
+
+182
+00:10:57,110 --> 00:11:01,640
+Well, of course we get an error and system
+says that an exception
+
+183
+00:11:01,640 --> 00:11:05,839
+was raised which is actually named <u>Division_by_zero</u>.
+
+184
+00:11:05,839 --> 00:11:11,050
+This is really the constructor of the exception
+type which is named <u>Division_by_zero</u>.
+
+185
+00:11:11,050 --> 00:11:17,630
+Other examples: let's try to make an out-of-bounds
+access to mutable data structure, for example
+
+186
+00:11:17,630 --> 00:11:18,959
+an array.
+
+187
+00:11:18,959 --> 00:11:24,230
+Here we define an array with three elements.
+
+188
+00:11:24,230 --> 00:11:29,260
+We see here: the first element is
+1, second is 2 and third is 3.
+
+189
+00:11:29,260 --> 00:11:34,459
+But now you
+remember arrays in OCaml start from 0 as it
+
+190
+00:11:34,459 --> 00:11:41,579
+happens in other languages, so if I access
+the first element, it's actually <u>v.(0)</u>.
+
+191
+00:11:41,579 --> 00:11:44,730
+But imagine at some time in your program you forget that you are
+
+192
+00:11:44,730 --> 00:11:45,420
+starting from 0,
+
+193
+00:11:45,420 --> 00:11:49,640
+and you try to access the
+third element by using <u>v.(3)</u> instead of
+
+194
+00:11:49,640 --> 00:11:50,680
+<u>v.(2)</u>.
+
+195
+00:11:50,680 --> 00:11:58,310
+In that case, well we get another
+exception which is an out-of-bounds error
+
+196
+00:11:58,310 --> 00:11:59,300
+from the array.
+
+197
+00:11:59,300 --> 00:12:03,000
+But in this case you see,
+instead of crashing the program as it can
+
+198
+00:12:03,000 --> 00:12:05,680
+happen in other languages,
+
+199
+00:12:05,680 --> 00:12:10,279
+you get just the
+runtime error wrapped into an exception that
+
+200
+00:12:10,279 --> 00:12:12,649
+you can capture, that you can manipulate.
+
+201
+00:12:12,649 --> 00:12:14,850
+And this is an <u>Invalid_argument "index out of bounds"</u>,
+
+202
+00:12:14,850 --> 00:12:17,459
+actually tells you that at runtime,
+
+203
+00:12:17,459 --> 00:12:20,389
+there is a right bound check which is performed
+for
+
+204
+00:12:20,389 --> 00:12:21,740
+you by the system.
+
+205
+00:12:21,740 --> 00:12:28,760
+A third case we want to show is what happens
+if you decide to ignore
+
+206
+00:12:28,760 --> 00:12:30,320
+the recommendation of the compiler,
+
+207
+00:12:30,320 --> 00:12:32,260
+like for example in this definition of the
+function
+
+208
+00:12:32,260 --> 00:12:33,050
+here,
+
+209
+00:12:33,050 --> 00:12:38,000
+it is clear, at this point in the course,
+that the pattern matching is not complete
+
+210
+00:12:38,000 --> 00:12:42,450
+because we are not handling the case of the
+empty list.
+
+211
+00:12:42,450 --> 00:12:46,850
+This is just a drop function that
+takes a list, drops the first element and
+
+212
+00:12:46,850 --> 00:12:49,550
+keeps the rest, but what happens if you have
+an empty list?
+
+213
+00:12:49,550 --> 00:12:50,899
+There is nothing to drop.
+
+214
+00:12:50,899 --> 00:12:53,380
+And we didn't say what is going to happen.
+
+215
+00:12:53,380 --> 00:12:57,820
+So the compiler, if we send this function
+definition to it,
+
+216
+00:12:57,820 --> 00:13:02,019
+finds that the pattern matching
+is not complete and actually the example of
+
+217
+00:13:02,019 --> 00:13:05,459
+a value which is not matched is exactly the
+empty list.
+
+218
+00:13:05,459 --> 00:13:10,820
+Anyway we can bypass or ignore
+this warning and the function is still defined
+
+219
+00:13:10,820 --> 00:13:11,149
+here.
+
+220
+00:13:11,149 --> 00:13:18,910
+We can try to use it as it is, of course
+as long as we use it on a non-empty list,
+
+221
+00:13:18,910 --> 00:13:19,990
+everything works.
+
+222
+00:13:19,990 --> 00:13:25,750
+But when we are trying it on the single case
+on which the function
+
+223
+00:13:25,750 --> 00:13:29,230
+definition was not perfectly done,
+
+224
+00:13:29,230 --> 00:13:32,740
+we get an error which is a <u>Match_failure</u>
+exception.
+
+225
+00:13:32,740 --> 00:13:37,570
+So at runtime there is a case which was not handled by the pattern matching definition.
+
+226
+00:13:37,570 --> 00:13:41,820
+But again, the program doesn't crash,
+it only raises an exception
+
+227
+00:13:41,820 --> 00:13:44,910
+that we can catch and handle later on.
+
+228
+00:13:44,910 --> 00:13:50,420
+To sum up, we have seen how exceptions work.
+
+229
+00:13:50,420 --> 00:13:56,050
+There are constructors of a special exception
+sum type which is extensible.
+
+230
+00:13:56,050 --> 00:13:59,540
+They can be
+declared and raised using very simple to remember
+
+231
+00:13:59,540 --> 00:14:01,600
+keywords: just <u>exception</u> and <u>raise</u>.
+
+232
+00:14:01,600 --> 00:14:05,560
+You can handle and capture exceptions using
+the <u>try ... with ...</u>
+
+233
+00:14:05,560 --> 00:14:06,550
+construct.
+
+234
+00:14:06,550 --> 00:14:10,300
+And they are very useful for signalling
+and handling exceptional conditions, for altering
+
+235
+00:14:10,300 --> 00:14:11,170
+flow control,
+
+236
+00:14:11,170 --> 00:14:16,959
+for writing more efficient algorithms,
+and what is really good to know is that unlike
+
+237
+00:14:16,959 --> 00:14:19,329
+what it happens in other programming languages,
+
+238
+00:14:19,329 --> 00:14:23,899
+raising, handling exceptions is extremely
+fast.
+
+239
+00:14:23,899 --> 00:14:29,800
+So please use them if they fit your algorithms.
+

@@ -1,0 +1,793 @@
+1
+00:00:00,190 --> 00:00:03,899
+In this sequence, we will discover
+what are called references in OCaml
+
+2
+00:00:03,899 --> 00:00:07,240
+which are similar to variables
+in other programming languages.
+
+3
+00:00:07,240 --> 00:00:11,110
+What are variables in typical
+imperative languages?
+
+4
+00:00:11,110 --> 00:00:14,740
+Let's consider this little fragment
+of program
+
+5
+00:00:14,740 --> 00:00:17,980
+that could be part of a C or Java program.
+
+6
+00:00:17,980 --> 00:00:23,230
+The first line is a definition of a variable
+<u>i</u>.
+
+7
+00:00:23,230 --> 00:00:28,160
+<u>i</u> is a name of the variable,
+it is initialised to 0.
+
+8
+00:00:28,160 --> 00:00:33,670
+This name <u>i</u> may refer to a memory cell
+when it is put on the left of the <u>=</u> sign
+
+9
+00:00:33,670 --> 00:00:35,410
+(it's the memory cell that you are writing)
+
+10
+00:00:35,410 --> 00:00:40,210
+or to the contents of a memory cell
+typically when it is on the right of the <u>=</u> sign.
+
+11
+00:00:40,210 --> 00:00:46,899
+But this can become pretty complicated,
+in general you can make knots in your head
+
+12
+00:00:46,899 --> 00:00:51,030
+thinking about l-values, r-values
+in different programming languages.
+
+13
+00:00:51,030 --> 00:00:54,850
+Well if you really want to have variables
+in OCaml
+
+14
+00:00:54,850 --> 00:00:58,379
+we can use the mutable records
+we have just discovered
+
+15
+00:00:58,379 --> 00:00:59,600
+to get the same effect.
+
+16
+00:00:59,600 --> 00:01:02,570
+So, again, let's consider this program:
+
+17
+00:01:02,570 --> 00:01:07,400
+an integer variable <u>i</u> initialized to 0
+and then later on somebody decided
+
+18
+00:01:07,400 --> 00:01:12,610
+to increment this value by adding 1 to it.
+
+19
+00:01:12,610 --> 00:01:17,729
+But this can be written in OCaml
+by defining a record type
+
+20
+00:01:17,729 --> 00:01:20,479
+we will call it "reference cell", <u>refcell</u>,
+
+21
+00:01:20,479 --> 00:01:24,530
+that has just one field, which is called <u>content</u>,
+of type integer
+
+22
+00:01:24,530 --> 00:01:27,570
+and we define this field as mutable.
+
+23
+00:01:27,570 --> 00:01:32,920
+Now the first line of the imperative program
+
+24
+00:01:32,920 --> 00:01:36,460
+we have there
+<u>int i = 0</u> can be actually written as
+
+25
+00:01:36,460 --> 00:01:41,060
+<u>let i</u> be a name of record <u>refcell</u>
+
+26
+00:01:41,060 --> 00:01:44,110
+which is initialized with the content field
+equal to 0.
+
+27
+00:01:44,110 --> 00:01:47,360
+And then the modification can be
+done in place
+
+28
+00:01:47,360 --> 00:01:50,229
+in the second line you see here.
+
+29
+00:01:50,229 --> 00:01:55,530
+We're saying we are updating
+the content field of <u>i</u>
+
+30
+00:01:55,530 --> 00:01:59,659
+with the old value of this content field
+plus one.
+
+31
+00:01:59,659 --> 00:02:05,939
+Here, this update operator clearly indicates
+what is read and what is written.
+
+32
+00:02:05,939 --> 00:02:11,750
+In OCaml actually, you have
+a predefined <u>ref</u> type
+
+33
+00:02:11,750 --> 00:02:15,209
+that is defined exactly this way,
+
+34
+00:02:15,209 --> 00:02:19,260
+but has its special syntax
+to be used in a more concise way.
+
+35
+00:02:19,260 --> 00:02:22,540
+Actually, this is called a reference type.
+
+36
+00:02:22,540 --> 00:02:25,959
+As well, its instances, we all call them
+references.
+
+37
+00:02:25,959 --> 00:02:27,940
+The definition is exactly like this:
+
+38
+00:02:27,940 --> 00:02:35,220
+we define a polymorphic record type
+with a mutable, single field named <u>contents</u>
+
+39
+00:02:35,220 --> 00:02:38,379
+that contains the information
+we want to store.
+
+40
+00:02:38,379 --> 00:02:41,060
+This comes with a really convenient
+syntactic support:
+
+41
+00:02:41,060 --> 00:02:45,010
+you have a function, predefined for you,
+it is also called <u>ref</u>,
+
+42
+00:02:45,010 --> 00:02:46,860
+that is able to create a reference:
+
+43
+00:02:46,860 --> 00:02:51,290
+we pass the function the value to store
+in the reference, and it provides us
+
+44
+00:02:51,290 --> 00:02:54,550
+with a reference initialized to this
+particular value.
+
+45
+00:02:54,550 --> 00:03:00,590
+Now you have a prefix operator <u>!</u>, here,
+which is used to explicitely indicate
+
+46
+00:03:00,590 --> 00:03:03,370
+you want to read the content of the reference.
+
+47
+00:03:03,370 --> 00:03:09,860
+And then you have an infix operator,
+<u>:=</u> which is used to perform update of
+
+48
+00:03:09,860 --> 00:03:11,780
+the content of the reference.
+
+49
+00:03:11,780 --> 00:03:15,360
+So this will mean
+"update the content of the reference r
+
+50
+00:03:15,360 --> 00:03:17,640
+by putting in there the value v".
+
+51
+00:03:17,640 --> 00:03:20,980
+Let us see this at work on a simple example.
+
+52
+00:03:22,900 --> 00:03:27,450
+Well, so, now let's get familiar with the references.
+
+53
+00:03:27,450 --> 00:03:29,480
+We start with a very simple example:
+
+54
+00:03:29,480 --> 00:03:37,870
+here, on the first line, we are defining
+an identifier <u>i</u>, which is a name for a reference
+
+55
+00:03:37,870 --> 00:03:39,470
+that contains zero.
+
+56
+00:03:39,470 --> 00:03:45,400
+So you remember, this <u>ref</u> function here
+takes a value and creates a cell
+
+57
+00:03:45,400 --> 00:03:49,599
+that contains exactly that value.
+
+58
+00:03:49,599 --> 00:03:54,040
+So we pass it to the interpreter,
+and you see
+
+59
+00:03:54,040 --> 00:03:55,689
+now what the compiler tells us:
+
+60
+00:03:55,689 --> 00:03:59,489
+that he has seen the definition of the identifier
+<u>i</u>
+
+61
+00:03:59,489 --> 00:04:04,110
+that is a name of a reference cell
+containing an integer
+
+62
+00:04:04,110 --> 00:04:06,989
+and the contents is really this zero here,
+inside.
+
+63
+00:04:06,989 --> 00:04:14,950
+Well, again, if now I try to look at what
+is <u>i</u>,
+
+64
+00:04:14,950 --> 00:04:17,530
+I get the same result, it is always this reference
+cell
+
+65
+00:04:17,530 --> 00:04:18,889
+with content zero.
+
+66
+00:04:18,889 --> 00:04:22,049
+Now let's start to modify the reference.
+
+67
+00:04:22,049 --> 00:04:25,960
+We have seen that to modify a reference
+to make an update,
+
+68
+00:04:25,960 --> 00:04:32,190
+we have this <u>:=</u> operator
+that changes the content of the reference
+
+69
+00:04:32,190 --> 00:04:34,440
+cell on the left,
+
+70
+00:04:34,440 --> 00:04:40,350
+by the value which is
+on the right of the colon-equal sign.
+
+71
+00:04:40,350 --> 00:04:41,940
+And what is the value we are taking here?
+
+72
+00:04:41,940 --> 00:04:48,280
+We are adding 1 to the content of the <u>i</u>
+reference.
+
+73
+00:04:48,280 --> 00:04:52,680
+And the content is taken by this bang operator
+here.
+
+74
+00:04:52,680 --> 00:05:03,000
+So we would expect to see, now,
+<u>i</u> changing value moving to 1.
+
+75
+00:05:03,000 --> 00:05:06,100
+Well the system tells us that this
+operation has been performed.
+
+76
+00:05:06,100 --> 00:05:12,669
+As it is only working by side-effect,
+the result is of unit type.
+
+77
+00:05:12,669 --> 00:05:20,199
+Now if we look at <u>i</u> again, now the content
+of the reference cell has been changed
+
+78
+00:05:20,199 --> 00:05:22,340
+and contains 1, as expected.
+
+79
+00:05:22,340 --> 00:05:25,370
+So basically, this is a way of simulating
+variables,
+
+80
+00:05:25,370 --> 00:05:29,759
+but the difference is now, for us
+it is really clear when we are taking the
+
+81
+00:05:29,759 --> 00:05:31,169
+content of the variable,
+
+82
+00:05:31,169 --> 00:05:35,009
+you see, we're taking this content operator
+with <u>!</u>
+
+83
+00:05:35,009 --> 00:05:39,970
+and when we are updating the content of the
+variable,
+
+84
+00:05:39,970 --> 00:05:42,500
+by this update operator <u>:=</u>.
+
+85
+00:05:43,100 --> 00:05:46,520
+Ok, so let's see an example:
+
+86
+00:05:46,520 --> 00:05:50,130
+imagine we want to compute
+the integer base to logarithm of the integer
+
+87
+00:05:50,130 --> 00:05:50,490
+<u>n</u>
+
+88
+00:05:50,490 --> 00:05:53,520
+well, a very easy way of doing this is just
+counting
+
+89
+00:05:53,520 --> 00:05:57,400
+how many time you can divide
+this integer by two, before getting below
+
+90
+00:05:57,400 --> 00:05:58,410
+one.
+
+91
+00:05:58,410 --> 00:06:01,830
+So let's program it the same way you would
+do it
+
+92
+00:06:01,830 --> 00:06:03,020
+in other programming languages.
+
+93
+00:06:03,020 --> 00:06:06,819
+In imperative programming languages
+we define the <u>log2int</u> function: it takes
+
+94
+00:06:06,819 --> 00:06:14,569
+an integer <u>n</u> as a parameter
+then we define two "variables" -- now we know
+
+95
+00:06:14,569 --> 00:06:17,000
+the real name here is "references":
+
+96
+00:06:17,000 --> 00:06:21,960
+one named <u>count</u>, which is a reference
+initialized to 0,
+
+97
+00:06:21,960 --> 00:06:27,410
+and another named <u>v</u>, which is initialized
+to the value <u>n</u>
+
+98
+00:06:27,410 --> 00:06:29,130
+which has been passed as a parameter.
+
+99
+00:06:29,130 --> 00:06:30,009
+Now what we do:
+
+100
+00:06:30,009 --> 00:06:38,280
+we do a simple while loop
+that keeps dividing the original integer by
+
+101
+00:06:38,280 --> 00:06:43,620
+2
+until it goes below, or equal, to 1,
+
+102
+00:06:43,620 --> 00:06:48,080
+and at the same time, increments this counter
+to keep track of how many times
+
+103
+00:06:48,080 --> 00:06:49,569
+we did this operation.
+
+104
+00:06:49,569 --> 00:06:56,210
+At the end of the loop, we return the content
+of this counter <u>count</u>.
+
+105
+00:06:56,210 --> 00:07:02,349
+So we can pass the definition to the compiler.
+
+106
+00:07:02,349 --> 00:07:04,789
+You see the compiler tells you it is just
+a function
+
+107
+00:07:04,789 --> 00:07:11,099
+that takes an integer and return an integer
+and as you can expect, the base 2 logarithm of
+
+108
+00:07:11,099 --> 00:07:13,039
+16 is really 4,
+
+109
+00:07:13,039 --> 00:07:23,220
+of 1024 is 10
+and of one million, it is 19.
+
+110
+00:07:25,200 --> 00:07:29,930
+Ok, so let's try now something
+a little more sophisticated:
+
+111
+00:07:29,930 --> 00:07:33,740
+let's try to read a list of integers
+from the standard input.
+
+112
+00:07:33,740 --> 00:07:38,479
+Well, we can start by defining a function
+that reads an integer.
+
+113
+00:07:38,479 --> 00:07:40,830
+It's pretty easy, we just use the <u>read_line</u>
+function
+
+114
+00:07:40,830 --> 00:07:41,889
+we already know.
+
+115
+00:07:41,889 --> 00:07:45,479
+This will return a string, and then we convert
+it to an integer.
+
+116
+00:07:45,479 --> 00:07:48,099
+By the way, this is a function which is predefined
+in OCaml.
+
+117
+00:07:48,099 --> 00:07:49,639
+It is defined exactly this way.
+
+118
+00:07:49,639 --> 00:07:55,620
+Then, to write a <u>read_intlist</u> function,
+
+119
+00:07:55,620 --> 00:07:59,490
+what we can do,
+doing it the really imperative way:
+
+120
+00:07:59,490 --> 00:08:05,120
+we use a "variable", our reference,
+which is initialized to the empty list
+
+121
+00:08:05,120 --> 00:08:10,020
+and this variable will be updated in a loop
+here
+
+122
+00:08:10,020 --> 00:08:14,979
+which is defined in a new function we will
+call <u>doread</u>.
+
+123
+00:08:14,979 --> 00:08:17,280
+This is an infinite loop: <u>while true do ... done</u>,
+
+124
+00:08:17,280 --> 00:08:24,190
+it will never stop, and
+in this loop, we read an integer,
+
+125
+00:08:24,190 --> 00:08:31,090
+we add it in front of the content of our <u>l</u>
+variable
+
+126
+00:08:31,090 --> 00:08:34,260
+and update the content of our <u>l</u> variable.
+
+127
+00:08:34,260 --> 00:08:41,339
+So you see here again we are taking the content
+of the value of <u>l</u>,
+
+128
+00:08:41,339 --> 00:08:46,110
+do the concatenation
+with the integer we have just read, and then
+
+129
+00:08:46,110 --> 00:08:49,390
+use this value to update the content of <u>l</u>,
+
+130
+00:08:49,390 --> 00:08:51,810
+so we have a new value coming out.
+
+131
+00:08:51,810 --> 00:08:54,870
+Well, when will this loop stop?
+
+132
+00:08:54,870 --> 00:08:57,269
+As soon as we get an exceptional condition,
+
+133
+00:08:57,269 --> 00:09:02,120
+this can happen if you type something which
+is not an integer, so <u>read_int</u> will raise
+
+134
+00:09:02,120 --> 00:09:04,180
+an exception or,
+
+135
+00:09:04,180 --> 00:09:07,080
+for example, if you finish the standard
+input.
+
+136
+00:09:07,080 --> 00:09:12,220
+As soon as we get an exception, we want
+to catch it
+
+137
+00:09:12,220 --> 00:09:15,649
+so this is why we have a <u>try ... with</u> around
+this infinite loop
+
+138
+00:09:15,649 --> 00:09:21,810
+and when the exception raises, the computation
+is stopped and we just return <u>()</u>.
+
+139
+00:09:21,810 --> 00:09:28,580
+Now that we have these two elements,
+I mean our reference and the infinite loop,
+
+140
+00:09:28,580 --> 00:09:35,519
+we can just write <u>do_read ()</u>,
+this will read until we stop the computation
+
+141
+00:09:35,519 --> 00:09:38,470
+with an exception
+and as soon as we have done this,
+
+142
+00:09:38,470 --> 00:09:45,890
+we will find inside our variable <u>l</u>
+all the integers we have typed in
+
+143
+00:09:45,890 --> 00:09:46,930
+but they are in reverse order,
+
+144
+00:09:46,930 --> 00:09:48,600
+so to put them
+in the right order
+
+145
+00:09:48,600 --> 00:09:52,519
+we just the call the <u>List.rev</u> function
+on top of this.
+
+146
+00:09:52,519 --> 00:09:57,420
+So let's see if this really works
+as expected.
+
+147
+00:09:57,420 --> 00:10:04,800
+Fine, so our compiler is happy,
+the type checked properly
+
+148
+00:10:04,800 --> 00:10:08,300
+and we have defined a function
+that waits for a unit element
+
+149
+00:10:08,300 --> 00:10:12,980
+and returns the integers list read
+on the standard input.
+
+150
+00:10:12,980 --> 00:10:18,980
+So, let's try it out.
+
+151
+00:10:18,980 --> 00:10:27,130
+Ok, you see, now, this <u>read_int</u> has been
+called
+
+152
+00:10:27,130 --> 00:10:27,920
+for the first time,
+
+153
+00:10:27,920 --> 00:10:33,570
+we have a popup in our environment
+which is used to read the line.
+
+154
+00:10:33,570 --> 00:10:36,410
+I will enter the integer one.
+
+155
+00:10:36,410 --> 00:10:44,130
+Then it keeps coming up again, so,
+let's type 2, 3, 4, 5...
+
+156
+00:10:44,130 --> 00:10:49,079
+Now I want to stop this so I'll enter something
+which is not an integer.
+
+157
+00:10:49,079 --> 00:10:55,070
+And here it is, we get our integer list,
+in the proper order.
+
+158
+00:10:55,070 --> 00:11:00,300
+So to sum up, the usual variables in
+imperative languages can be implemented
+
+159
+00:11:00,300 --> 00:11:01,990
+via mutable records.
+
+160
+00:11:01,990 --> 00:11:04,250
+This is exactly what
+can be done in OCaml.
+
+161
+00:11:04,250 --> 00:11:08,579
+The notion of memory cell,
+and of contents of memory cell
+
+162
+00:11:08,579 --> 00:11:10,899
+in this interpretation with mutable records,
+
+163
+00:11:10,899 --> 00:11:14,399
+are clearly distinguished
+and we have a special syntax which is available
+
+164
+00:11:14,399 --> 00:11:19,170
+for writing more concise programs
+using references.
+
+165
+00:11:19,170 --> 00:11:22,430
+So after having seen all these notions in this
+week,
+
+166
+00:11:22,430 --> 00:11:25,779
+we have concluded our short exploration
+on the imperative features
+
+167
+00:11:25,779 --> 00:11:27,029
+of the OCaml language.
+
+168
+00:11:27,029 --> 00:11:31,730
+So if you really want, you can write
+fully imperative programs in the language.
+
+169
+00:11:31,730 --> 00:11:36,310
+But our recommendation is to use these
+features only where they are really, really
+
+170
+00:11:36,310 --> 00:11:38,339
+needed
+for efficiency reasons.
+

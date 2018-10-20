@@ -1,0 +1,469 @@
+1
+00:00:00,179 --> 00:00:04,040
+In this sequence,
+we meet another kind of mutable data structures:
+
+2
+00:00:04,040 --> 00:00:07,470
+records with mutable fields.
+
+3
+00:00:07,470 --> 00:00:08,400
+Let's remind the records.
+
+4
+00:00:08,400 --> 00:00:11,570
+That's the data structure
+we have seen in the beginning of week two.
+
+5
+00:00:11,570 --> 00:00:16,139
+Records are tuples with distinct named components.
+
+6
+00:00:16,139 --> 00:00:18,939
+As you remember,
+a typical record type declaration
+
+7
+00:00:18,939 --> 00:00:19,810
+looks like this:
+
+8
+00:00:19,810 --> 00:00:22,080
+we define a type
+the type of the record type
+
+9
+00:00:22,080 --> 00:00:26,990
+and this record type between curly braces
+contains a list of field names
+
+10
+00:00:26,990 --> 00:00:29,010
+with the types of each of the field names.
+
+11
+00:00:29,010 --> 00:00:33,890
+And the typical record definition is
+between curly braces
+
+12
+00:00:33,890 --> 00:00:41,469
+the list of the field names
+with the values to which they're initialized.
+
+13
+00:00:41,469 --> 00:00:44,700
+Let's see
+again a simple example
+
+14
+00:00:44,700 --> 00:00:50,039
+of the use of records
+in a simple program.
+
+15
+00:00:50,039 --> 00:00:53,370
+So let's go back
+to our two dimensional points we have seen
+
+16
+00:00:53,370 --> 00:00:57,440
+a few lessons ago.
+
+17
+00:00:57,440 --> 00:01:01,510
+To remember, so
+we can define the type of a two-dimensional
+
+18
+00:01:01,510 --> 00:01:02,199
+point.
+
+19
+00:01:02,199 --> 00:01:09,350
+Then you can define
+a particular two-dimensional point <u>origin</u>.
+
+20
+00:01:09,350 --> 00:01:12,619
+x equals 0, y equals 0, perfectly sensible.
+
+21
+00:01:12,619 --> 00:01:15,780
+Now you can define function
+to create a new point
+
+22
+00:01:15,780 --> 00:01:17,750
+at a offset of a given one.
+
+23
+00:01:17,750 --> 00:01:22,290
+For example here,
+<u>offset_h</u> is a function
+
+24
+00:01:22,290 --> 00:01:23,310
+that takes a point
+
+25
+00:01:23,310 --> 00:01:27,950
+and a delta on the x axis
+and gives you back another point
+
+26
+00:01:27,950 --> 00:01:29,189
+which is the same as <u>p</u>
+
+27
+00:01:29,189 --> 00:01:33,659
+but where it has changed
+the value of the <u>x</u> field
+
+28
+00:01:33,659 --> 00:01:36,860
+by adding this <u>dx</u>.
+
+29
+00:01:36,860 --> 00:01:41,320
+We can do the same
+for shifting the point
+
+30
+00:01:41,320 --> 00:01:42,950
+on the vertical line.
+
+31
+00:01:42,950 --> 00:01:43,630
+Ok?
+
+32
+00:01:43,630 --> 00:01:46,640
+But now, what is really,
+really happening here?
+
+33
+00:01:46,640 --> 00:01:50,470
+If I take the origin
+and I apply an offset,
+
+34
+00:01:50,470 --> 00:01:54,729
+horizontal offset of 10 from it.
+
+35
+00:01:54,729 --> 00:01:58,360
+Then I'm getting a 2-dimensional point
+which is actually shifted
+
+36
+00:01:58,360 --> 00:02:00,399
+on the x axis by 10 points.
+
+37
+00:02:00,399 --> 00:02:03,750
+But this is actually a new point
+which has been created
+
+38
+00:02:03,750 --> 00:02:05,630
+starting from the origin.
+
+39
+00:02:05,630 --> 00:02:08,700
+The origin didn't change at all.
+
+40
+00:02:08,700 --> 00:02:09,819
+It's still there.
+
+41
+00:02:09,819 --> 00:02:15,300
+So with this <u>with</u>
+construct is a very powerful abbreviation
+
+42
+00:02:15,300 --> 00:02:18,090
+that allows you to avoid
+to make a copy of all the fields
+
+43
+00:02:18,090 --> 00:02:19,349
+that stay the same.
+
+44
+00:02:19,349 --> 00:02:22,190
+It allows you to change
+only the fields that you want to change
+
+45
+00:02:22,190 --> 00:02:24,550
+in a record
+
+46
+00:02:24,550 --> 00:02:29,910
+but doesn't change the original record,
+just makes a copy.
+
+47
+00:02:29,910 --> 00:02:32,340
+It is interesting to know
+that we can declare
+
+48
+00:02:32,340 --> 00:02:36,230
+some of the fields of a record
+as mutable.
+
+49
+00:02:36,230 --> 00:02:38,110
+Let's see for example
+in the definition like this.
+
+50
+00:02:38,110 --> 00:02:42,819
+We have the definition of a record:
+there are field names to their types.
+
+51
+00:02:42,819 --> 00:02:46,400
+But we can decide to put
+the <u>mutable</u> keyword
+
+52
+00:02:46,400 --> 00:02:50,700
+in front of the field name
+for some of the fields.
+
+53
+00:02:50,700 --> 00:02:52,830
+Not all, or all as we want.
+
+54
+00:02:52,830 --> 00:02:57,010
+The fields which are declared mutable
+can be modified in place
+
+55
+00:02:57,010 --> 00:03:01,440
+and again we can use the update operator
+to do this.
+
+56
+00:03:01,440 --> 00:03:04,780
+To see this at work,
+let's try to modify a bit
+
+57
+00:03:04,780 --> 00:03:08,360
+our previous example
+and let's build movable points.
+
+58
+00:03:08,360 --> 00:03:14,230
+Well, now let's build
+a really movable point.
+
+59
+00:03:14,230 --> 00:03:15,810
+Points that can be changed.
+
+60
+00:03:15,810 --> 00:03:18,780
+And to make things interesting,
+let's add the colors.
+
+61
+00:03:18,780 --> 00:03:22,680
+Ok, so
+let's add a rgb color,
+
+62
+00:03:22,680 --> 00:03:23,849
+for example black.
+
+63
+00:03:23,849 --> 00:03:32,060
+And now our movable
+colored 2-dimensional point
+
+64
+00:03:32,060 --> 00:03:35,190
+can be defined by using
+the keyword <u>mutable</u> we have seen.
+
+65
+00:03:35,190 --> 00:03:38,650
+So we want to have the <u>x</u> field mutable
+the <u>y</u> field mutable
+
+66
+00:03:38,650 --> 00:03:41,129
+but the color, no, it will not change.
+
+67
+00:03:41,129 --> 00:03:46,720
+Now we can again define
+a point which is the origin
+
+68
+00:03:46,720 --> 00:03:48,140
+as before.
+
+69
+00:03:48,140 --> 00:03:50,780
+Which is black, by the way.
+
+70
+00:03:50,780 --> 00:03:55,409
+We still have exactly
+look at this, this is nice,
+
+71
+00:03:55,409 --> 00:03:58,689
+exactly the same code we had before
+with a non-mutable,
+
+72
+00:03:58,689 --> 00:04:05,750
+non modifiable 2-dimensional point.
+
+73
+00:04:05,750 --> 00:04:09,769
+Because here, already see,
+change the position
+
+74
+00:04:09,769 --> 00:04:12,610
+in this particular place.
+
+75
+00:04:12,610 --> 00:04:16,750
+So now,
+if I do create a point
+
+76
+00:04:16,750 --> 00:04:18,720
+which is at a given offset of the origin.
+
+77
+00:04:18,720 --> 00:04:22,300
+Of course I did not change the origin.
+
+78
+00:04:22,300 --> 00:04:28,419
+Again, it's still at position
+<u>x = 0</u> and <u>y = 0</u>.
+
+79
+00:04:28,419 --> 00:04:31,699
+But now I'm able
+to write a <u>move</u> function
+
+80
+00:04:31,699 --> 00:04:34,580
+that takes a point
+and adds a delta
+
+81
+00:04:34,580 --> 00:04:36,040
+on the <u>x</u> and the <u>y</u> axes.
+
+82
+00:04:36,040 --> 00:04:37,500
+And how does it work?
+
+83
+00:04:37,500 --> 00:04:40,850
+It really updates
+with this update operator,
+
+84
+00:04:40,850 --> 00:04:43,580
+now you see the importance
+of having something that is syntactically
+
+85
+00:04:43,580 --> 00:04:45,880
+clearly
+an update operation.
+
+86
+00:04:45,880 --> 00:04:49,460
+We're changing
+the <u>x</u> field and the <u>y field</u>
+
+87
+00:04:49,460 --> 00:04:57,080
+of the point p wich is passed as a parameter.
+
+88
+00:04:57,080 --> 00:05:03,449
+So now we have this move operation,
+remember our original <u>p</u> point is
+
+89
+00:05:03,449 --> 00:05:07,300
+at position 10 and 0
+and the color is black.
+
+90
+00:05:07,300 --> 00:05:16,660
+Now if I move the point <u>p</u>
+of two points horizontally and vertically.
+
+91
+00:05:16,660 --> 00:05:19,960
+Then this move operation
+has a unit type again
+
+92
+00:05:19,960 --> 00:05:23,030
+so there has been a side effect happening.
+
+93
+00:05:23,030 --> 00:05:28,280
+If I look at <u>p</u> now,
+it is no longer at position 10, 0
+
+94
+00:05:28,280 --> 00:05:30,930
+but it is now physically positioned
+12 and 2.
+
+95
+00:05:30,930 --> 00:05:32,229
+I really have changed it.
+
+96
+00:05:32,229 --> 00:05:36,630
+I can keep changing it
+as much as I want.
+
+97
+00:05:36,630 --> 00:05:43,310
+All changes will be reported
+in my point <u>p</u>.
+
+98
+00:05:43,310 --> 00:05:48,090
+To sum up,
+we have seen that it is possible
+
+99
+00:05:48,090 --> 00:05:50,840
+to declare mutable selector fields
+to a record type
+
+100
+00:05:50,840 --> 00:05:53,729
+and the same update operator
+we have used for arrays
+
+101
+00:05:53,729 --> 00:05:56,780
+can be used to modify in place
+these mutable fields.
+

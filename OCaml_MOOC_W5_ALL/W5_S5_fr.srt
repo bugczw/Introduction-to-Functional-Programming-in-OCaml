@@ -1,0 +1,463 @@
+1
+00:00:00,179 --> 00:00:04,040
+Dans cette séquence, nous rencontrons une
+nouvelle sorte de structure de données mutables :
+
+2
+00:00:04,040 --> 00:00:07,470
+les enregistrements à champs mutables.
+
+3
+00:00:07,470 --> 00:00:08,400
+Rappelons ce que sont les enregistrements.
+
+4
+00:00:08,400 --> 00:00:11,570
+C'est une structure de données que nous avons
+vue en début de semaine 2.
+
+5
+00:00:11,570 --> 00:00:16,139
+Les enregistrements sont des n-uplets avec des composants nommés.
+
+6
+00:00:16,139 --> 00:00:18,939
+Comme vous vous en souvenez, une déclaration typique
+d'un type enregistrement
+
+7
+00:00:18,939 --> 00:00:19,810
+ressemble à ceci :
+
+8
+00:00:19,810 --> 00:00:22,080
+on définit un type, le type
+de l'enregistrement
+
+9
+00:00:22,080 --> 00:00:26,990
+et le type de cet enregistrement entre accolades
+contient une liste des noms des champs
+
+10
+00:00:26,990 --> 00:00:29,010
+avec le type de chacun d'eux.
+
+11
+00:00:29,010 --> 00:00:33,890
+Et une définition typique de valeur d'enregistrement
+est, entre accolades,
+
+12
+00:00:33,890 --> 00:00:41,469
+la liste de chacun des noms des champs
+ainsi que les valeurs auquels ils sont initialisés.
+
+13
+00:00:41,469 --> 00:00:44,700
+Revoyons un court exemple
+
+14
+00:00:44,700 --> 00:00:50,039
+d'utilisation des enregistrements
+dans un programme simple.
+
+15
+00:00:50,039 --> 00:00:53,370
+Revenons donc sur les points à deux dimensions que nous
+
+16
+00:00:53,370 --> 00:00:57,440
+avons vu quelques leçons plus tôt.
+
+17
+00:00:57,440 --> 00:01:01,510
+Pour rappel, on définit le type
+d'un point à deux
+
+18
+00:01:01,510 --> 00:01:02,199
+dimensions.
+
+19
+00:01:02,199 --> 00:01:09,350
+On peut alors définir un point à deux dimensions
+particulier <u>origin</u>.
+
+20
+00:01:09,350 --> 00:01:12,619
+avec x égal à 0, et y égal à 0, cela semble censé.
+
+21
+00:01:12,619 --> 00:01:15,780
+Maintenant vous pouvez définir une fonction
+pour créer un nouveau point
+
+22
+00:01:15,780 --> 00:01:17,750
+qui est le résultat du décalage du point donné.
+
+23
+00:01:17,750 --> 00:01:22,290
+Par exemple ici,
+<u>offset_h</u> est une fonction
+
+24
+00:01:22,290 --> 00:01:23,310
+qui prend un point
+
+25
+00:01:23,310 --> 00:01:27,950
+ainsi qu'un décalage sur l'axe horizontal des x,
+et qui donne en retour un autre point
+
+26
+00:01:27,950 --> 00:01:29,189
+qui est le même que <u>p</u>
+
+27
+00:01:29,189 --> 00:01:33,659
+mais avec la valeur du champ <u>x</u>
+qui a été modifiée
+
+28
+00:01:33,659 --> 00:01:36,860
+en ajoutant ce <u>dx</u>.
+
+29
+00:01:36,860 --> 00:01:41,320
+Nous pouvons faire la même chose
+pour décaler le point
+
+30
+00:01:41,320 --> 00:01:42,950
+sur l'axe vertical des y.
+
+31
+00:01:42,950 --> 00:01:43,630
+OK ?
+
+32
+00:01:43,630 --> 00:01:46,640
+Mais maintenant, qu'est-ce qu'il se
+passe réellement ici ?
+
+33
+00:01:46,640 --> 00:01:50,470
+Si je prend l'origine
+et que j'y applique un décalage
+
+34
+00:01:50,470 --> 00:01:54,729
+horizontal de 10 unités.
+
+35
+00:01:54,729 --> 00:01:58,360
+Alors je récupère un point à deux dimensions
+qui est bien décalé,
+
+36
+00:01:58,360 --> 00:02:00,399
+sur l'axe des x, de 10 unités.
+
+37
+00:02:00,399 --> 00:02:03,750
+Mais c'est en fait un nouveau point
+qui a été créé
+
+38
+00:02:03,750 --> 00:02:05,630
+à partir du point d'origine.
+
+39
+00:02:05,630 --> 00:02:08,700
+Le point origine n'a pas du tout été modifié.
+
+40
+00:02:08,700 --> 00:02:09,819
+Il est toujours ici.
+
+41
+00:02:09,819 --> 00:02:15,300
+Donc avec cette construction <u>with</u>
+qui est une abréviation très puissante
+
+42
+00:02:15,300 --> 00:02:18,090
+qui vous permet d'éviter
+de faire une copie de tous les champs,
+
+43
+00:02:18,090 --> 00:02:19,349
+l'enregistrement reste le même.
+
+44
+00:02:19,349 --> 00:02:22,190
+Cela vous permet de changer seulement les
+champs que vous voulez changer
+
+45
+00:02:22,190 --> 00:02:24,550
+dans un enregistrement
+
+46
+00:02:24,550 --> 00:02:29,910
+mais ne modifie pas réellement l'enregistrement original,
+en fait juste une copie.
+
+47
+00:02:29,910 --> 00:02:32,340
+Il est intéressant de savoir
+que l'on peut déclarer
+
+48
+00:02:32,340 --> 00:02:36,230
+plusieurs champs d'un enregistrement
+comme étant mutables.
+
+49
+00:02:36,230 --> 00:02:38,110
+Voyons un exemple avec la
+définition qui suit.
+
+50
+00:02:38,110 --> 00:02:42,819
+Nous avons la définition d'un enregistrement :
+il y a des noms de champs et leurs types.
+
+51
+00:02:42,819 --> 00:02:46,400
+Mais nous pouvons décider d'ajouter
+le mot-clé <u>mutable</u>
+
+52
+00:02:46,400 --> 00:02:50,700
+devant le nom d'un
+ou plusieurs de ces champs.
+
+53
+00:02:50,700 --> 00:02:52,830
+Pas tous, mais tous ceux que l'on souhaite.
+
+54
+00:02:52,830 --> 00:02:57,010
+Les champs qui sont déclarés comme mutables
+peuvent être modifiés en place
+
+55
+00:02:57,010 --> 00:03:01,440
+et on utilise cette fois également l'opérateur
+de mise à jour pour ce faire.
+
+56
+00:03:01,440 --> 00:03:04,780
+Pour voir ça en action,
+essayons de modifier un peu
+
+57
+00:03:04,780 --> 00:03:08,360
+notre exemple précédent
+et construisons des points mobiles.
+
+58
+00:03:08,360 --> 00:03:14,230
+Bien, maintenant construisons
+un point réellement mobile.
+
+59
+00:03:14,230 --> 00:03:15,810
+Des points qui peuvent être modifiés.
+
+60
+00:03:15,810 --> 00:03:18,780
+Et pour rendre les choses intéressantes,
+ajoutons des couleurs.
+
+61
+00:03:18,780 --> 00:03:22,680
+Bien, ajoutons donc une couleur RGB,
+
+62
+00:03:22,680 --> 00:03:23,849
+par exemple noire.
+
+63
+00:03:23,849 --> 00:03:32,060
+Maintenant notre point 2D
+mobile et coloré
+
+64
+00:03:32,060 --> 00:03:35,190
+peut être défini en utilisant
+le mot-clé <u>mutable</u> que nous venons de voir.
+
+65
+00:03:35,190 --> 00:03:38,650
+Nous souhaitons avoir les champs <u>x</u> et
+<u>y</u> mutables,
+
+66
+00:03:38,650 --> 00:03:41,129
+mais pas la couleur qui ,elle, ne sera pas changée.
+
+67
+00:03:41,129 --> 00:03:46,720
+Maintenant nous pouvons définir à nouveau
+un point qui est l'origine
+
+68
+00:03:46,720 --> 00:03:48,140
+comme plus tôt.
+
+69
+00:03:48,140 --> 00:03:50,780
+Et qui est noir. Au passage,
+
+70
+00:03:50,780 --> 00:03:55,409
+nous voyons ici, et c'est bien,
+
+71
+00:03:55,409 --> 00:03:58,689
+que c'est exactement le même code que nous avions
+plus tôt avec le point à deux
+
+72
+00:03:58,689 --> 00:04:05,750
+dimensions non mutable, non modifiable.
+
+73
+00:04:05,750 --> 00:04:09,769
+Sauf qu'ici, comme nous venons de le voir,
+on peut changer la position
+
+74
+00:04:09,769 --> 00:04:12,610
+d'un point à cet endroit.
+
+75
+00:04:12,610 --> 00:04:16,750
+Donc pour créer un point
+
+76
+00:04:16,750 --> 00:04:18,720
+qui est à un certain décalage donné de l'origine.
+
+77
+00:04:18,720 --> 00:04:22,300
+Bien sûr je n'ai pas changé l'origine.
+
+78
+00:04:22,300 --> 00:04:28,419
+Encore une fois, il est toujours à la position
+<u>x = 0</u> et <u>y = 0</u>.
+
+79
+00:04:28,419 --> 00:04:31,699
+Je peux maintenant
+écrire une fonction <u>move</u>
+
+80
+00:04:31,699 --> 00:04:34,580
+qui prend un point
+et lui ajoute un décalage
+
+81
+00:04:34,580 --> 00:04:36,040
+sur les axes <u>x</u> et <u>y</u>.
+
+82
+00:04:36,040 --> 00:04:37,500
+Et comment cela fonctionne-t-il ?
+
+83
+00:04:37,500 --> 00:04:40,850
+Ça modifie réellement,
+grâce à l'opérateur de mise à jour,
+
+84
+00:04:40,850 --> 00:04:43,580
+Vous voyez maintenant l'importance
+d'avoir quelque chose d'identifiable
+
+85
+00:04:43,580 --> 00:04:45,880
+syntaxiquement, clairement,
+comme une opération de mise à jour.
+
+86
+00:04:45,880 --> 00:04:49,460
+Nous changeons le champ <u>x</u>
+et le champ <u>y</u>
+
+87
+00:04:49,460 --> 00:04:57,080
+du point <u>p</u> qui est passé en paramètre.
+
+88
+00:04:57,080 --> 00:05:03,449
+Nous avons donc maintenant cette opération de mouvement,
+souvenez-vous de notre point original <u>p</u> qui est
+
+89
+00:05:03,449 --> 00:05:07,300
+à la position 10 et 0,
+et dont la couleur est noire.
+
+90
+00:05:07,300 --> 00:05:16,660
+Si je bouge ce point <u>p</u>
+de deux unités horizontales et verticales.
+
+91
+00:05:16,660 --> 00:05:19,960
+Alors cette opération de mouvement
+a encore le type <u>unit</u>
+
+92
+00:05:19,960 --> 00:05:23,030
+elle opère donc sous la forme d'effets de bord.
+
+93
+00:05:23,030 --> 00:05:28,280
+Si je regarde <u>p</u> maintenant,
+il n'est plus à la position 10 et 0,
+
+94
+00:05:28,280 --> 00:05:30,930
+mais est maintenant physiquement positionné
+en 12 et 2.
+
+95
+00:05:30,930 --> 00:05:32,229
+Je l'ai réellement modifié.
+
+96
+00:05:32,229 --> 00:05:36,630
+Je peux continuer à le
+modifier autant que je le souhaite.
+
+97
+00:05:36,630 --> 00:05:43,310
+Toutes les modifications seront reportées
+sur mon point <u>p</u>.
+
+98
+00:05:43,310 --> 00:05:48,090
+En résumé,
+nous avons vu qu'il est possible
+
+99
+00:05:48,090 --> 00:05:50,840
+de déclarer un champ d'enregistrement
+comme étant mutable,
+
+100
+00:05:50,840 --> 00:05:53,729
+et que le même opérateur de modification
+que nous avons utilisé pour les tableaux
+
+101
+00:05:53,729 --> 00:05:56,780
+peut être utilisé pour modifier en place
+ces champs mutables.

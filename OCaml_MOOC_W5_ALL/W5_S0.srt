@@ -1,0 +1,188 @@
+1
+00:00:08,059 --> 00:00:12,070
+Welcome back to this introduction to functional
+programming in OCaml.
+
+2
+00:00:12,070 --> 00:00:16,090
+This is week 5, and
+in this week we will discover all the imperative
+
+3
+00:00:16,090 --> 00:00:18,420
+features of the OCaml programming language.
+
+4
+00:00:18,420 --> 00:00:22,640
+Actually, OCaml is a functional language.
+
+5
+00:00:22,640 --> 00:00:26,410
+We have learned to do many many things up
+to this point,
+
+6
+00:00:26,410 --> 00:00:32,710
+and if you notice, you did
+all this using only data structures which
+
+7
+00:00:32,710 --> 00:00:35,390
+are immutable (we cannot modify them),
+
+8
+00:00:35,390 --> 00:00:39,350
+identifiers
+for values but these are just names for values
+
+9
+00:00:39,350 --> 00:00:40,450
+that you cannot change;
+
+10
+00:00:40,450 --> 00:00:44,899
+there is no in-place
+modifications (no variables, no memory cells).
+
+11
+00:00:44,899 --> 00:00:50,270
+And then you are using pure functions: just
+functions that have no side effects whatsoever.
+
+12
+00:00:50,270 --> 00:00:55,649
+And also the control, the flow of the control,
+is not changing in their way.
+
+13
+00:00:55,649 --> 00:01:00,050
+With this fragment
+of the language, we can go really very far,
+
+14
+00:01:00,050 --> 00:01:02,430
+doing just pure functional programming;
+
+15
+00:01:02,430 --> 00:01:05,089
+remember
+Church thesis, we can program whatever you
+
+16
+00:01:05,089 --> 00:01:05,970
+want.
+
+17
+00:01:05,970 --> 00:01:11,180
+Anyway, there are situations where imperative
+features can be useful:
+
+18
+00:01:11,180 --> 00:01:15,970
+to be more efficient
+in space, faster in execution.
+
+19
+00:01:15,970 --> 00:01:19,960
+Well, OCaml
+is a functional programming language, which
+
+20
+00:01:19,960 --> 00:01:21,780
+has a range of imperative features.
+
+21
+00:01:21,780 --> 00:01:25,070
+For example,
+we will discover that there are exceptions,
+
+22
+00:01:25,070 --> 00:01:31,950
+that are useful to model alteration of the
+flow control or capture exceptional situations.
+
+23
+00:01:31,950 --> 00:01:35,009
+We have operations for interacting with the
+outside world:
+
+24
+00:01:35,009 --> 00:01:37,970
+input and output which are
+of course modifying the state.
+
+25
+00:01:37,970 --> 00:01:41,650
+Then you have
+data structures which can be modified in place;
+
+26
+00:01:41,650 --> 00:01:47,470
+they are mutable and they are useful for very
+specific efficient imperative algorithms.
+
+27
+00:01:47,470 --> 00:01:54,130
+And, of course, you have specific syntax to
+help you write for and while loops in the usual
+
+28
+00:01:54,130 --> 00:01:55,040
+way.
+
+29
+00:01:55,040 --> 00:01:58,320
+Well basically let be just saying this:
+it's really your choice.
+
+30
+00:01:58,320 --> 00:02:00,549
+In OCaml you can
+be purely functional,
+
+31
+00:02:00,549 --> 00:02:04,170
+or you can program in
+fully imperative style.
+
+32
+00:02:04,170 --> 00:02:10,440
+In any case, the type
+system will be helping you stay safe.
+
+33
+00:02:10,440 --> 00:02:14,470
+What
+we'll be presenting this week: we will look
+
+34
+00:02:14,470 --> 00:02:16,230
+more in details at exceptions,
+
+35
+00:02:16,230 --> 00:02:20,030
+input/output
+operations and the special type we will learn
+
+36
+00:02:20,030 --> 00:02:22,209
+to use which is the unit type,
+
+37
+00:02:22,209 --> 00:02:25,720
+the mutable
+data structures, references which represent
+
+38
+00:02:25,720 --> 00:02:28,480
+variables, and for and while loops.
+
+39
+00:02:28,480 --> 00:02:33,310
+So, hang
+tight, and let's start to see these extra
+
+40
+00:02:33,310 --> 00:02:34,220
+imperative features.
+

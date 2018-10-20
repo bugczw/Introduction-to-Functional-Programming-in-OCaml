@@ -33,3 +33,22 @@
 	* S3: Case study: a story teller
 	* S4: Polymorphic algebraic datatypes 
 	* S5: Advanced topics
+		
+	
+4. _Week 4: Higher order functions:_	
+    * S0: Functional Expressions
+	* S1: Functions as First-Class Values
+	* S2: Functions with Multiple Arguments 
+	* S3: Partial Function Application
+	* S4: Mapping Functions on Lists
+	* S5: Folding Functions on Lists
+	
+	
+5. _Week 5: Exceptions, input/output and imperative constructs:_	
+    * S0: Imperative features in OCaml
+	* S1: Getting and handling your Exceptions
+	* S2: Getting information in and out
+	* S3: Sequences and iterations
+	* S4: Mutable arrays
+	* S5: Mutable record fields
+	* S6: Variables, aka References

@@ -1,0 +1,609 @@
+1
+00:00:00,170 --> 00:00:00,450
+Hello
+
+2
+00:00:00,450 --> 00:00:05,600
+This sequence is called
+"functions as first class values",
+
+3
+00:00:05,600 --> 00:00:08,400
+and I will try to explain to you
+what it means,
+
+4
+00:00:08,400 --> 00:00:13,030
+that functions are considered as first class values,
+in functional languages.
+
+5
+00:00:13,030 --> 00:00:16,600
+In week one we have seen
+an introduction to expressions in OCaml,
+
+6
+00:00:16,600 --> 00:00:21,480
+and we have seen that expressions
+can denote or calculate values
+
+7
+00:00:21,480 --> 00:00:25,859
+of types like integers, booleans,
+or other basic types.
+
+8
+00:00:25,859 --> 00:00:31,609
+In the previous sequence, we have seen that
+expressions may also calculate values
+
+9
+00:00:31,609 --> 00:00:32,800
+of a functional type
+
+10
+00:00:32,800 --> 00:00:38,249
+by using for instance the construction
+<u>function parameter -> some value</u>.
+
+11
+00:00:38,249 --> 00:00:43,799
+In fact in functional languages,
+functional values are just values
+
+12
+00:00:43,799 --> 00:00:49,229
+like any other values, using a particular type.
+
+13
+00:00:49,229 --> 00:00:53,729
+As we have also seen in the previous sequence,
+
+14
+00:00:53,729 --> 00:00:57,690
+this allows use to use one unique way of naming stuff,
+
+15
+00:00:57,690 --> 00:01:01,249
+which is <u>let identifier = something</u>.
+
+16
+00:01:01,249 --> 00:01:05,500
+The only generalization comes from
+what we can write into the expression
+
+17
+00:01:05,500 --> 00:01:07,940
+which is used to calculate this value.
+
+18
+00:01:07,950 --> 00:01:13,759
+And this might be in fact of any type
+which is allowed in the OCaml language.
+
+19
+00:01:13,759 --> 00:01:18,219
+Types play of course a very important role
+for functions and for function applications.
+
+20
+00:01:18,219 --> 00:01:24,640
+In fact it is types who govern what is allowed
+in function applications and what is not allowed.
+
+21
+00:01:24,640 --> 00:01:30,359
+In general if you have a function <u>f</u>
+which has a type <u>t1 -> t2</u>.
+
+22
+00:01:30,359 --> 00:01:34,929
+Then we can apply this function
+to some argument,
+
+23
+00:01:34,929 --> 00:01:39,700
+provided that the type of <u>e1</u>
+is equal to the argument of the function.
+
+24
+00:01:39,700 --> 00:01:47,700
+Or more generally that the type of the argument
+<u>t1</u> matches the type of the argument of our function.
+
+25
+00:01:47,719 --> 00:01:49,799
+This doesn't stop here.
+
+26
+00:01:49,799 --> 00:01:55,380
+Functions may be used in many other ways in OCaml.
+
+27
+00:01:55,380 --> 00:01:59,170
+Functions may be part
+of any structured data constructions
+
+28
+00:01:59,170 --> 00:02:01,659
+that we have seen in week 2 and week 3.
+
+29
+00:02:01,660 --> 00:02:06,140
+For instance functions may be part of a list,
+of a record, of a tuple, of an array
+
+30
+00:02:06,140 --> 00:02:10,140
+or whatever you can imagine.
+
+31
+00:02:10,140 --> 00:02:12,290
+Functions can be actual argument to functions.
+
+32
+00:02:12,290 --> 00:02:16,150
+So they can be passed as values to other functions.
+
+33
+00:02:16,150 --> 00:02:22,170
+And furthermore, functions
+may return as a value another function.
+
+34
+00:02:22,170 --> 00:02:26,200
+Which means that with functions, we can do exactly
+the same things that we can do,
+
+35
+00:02:26,200 --> 00:02:31,549
+with any other value of any other type in
+our programming language.
+
+36
+00:02:31,549 --> 00:02:36,309
+That is precisely what it means for a function
+to be a first class value.
+
+37
+00:02:39,120 --> 00:02:42,260
+This example shows that functions can, in fact,
+
+38
+00:02:42,260 --> 00:02:46,610
+as any other value of OCaml,
+be part of complex data structure.
+
+39
+00:02:46,610 --> 00:02:52,769
+Which enforces our point:
+that functions are first class values in OCaml.
+
+40
+00:02:52,769 --> 00:02:55,379
+What we have here is a list of functions.
+
+41
+00:02:55,379 --> 00:02:58,540
+We can write it using the things
+that we already know.
+
+42
+00:02:58,540 --> 00:03:02,079
+We define <u>fl</u> to be a list which contains
+two functional expressions.
+
+43
+00:03:02,079 --> 00:03:04,860
+Let's see what its type is.
+
+44
+00:03:04,860 --> 00:03:07,049
+It is of course a list of functions.
+
+45
+00:03:07,049 --> 00:03:11,439
+And this function all have to be of the same type.
+
+46
+00:03:11,439 --> 00:03:14,480
+In our case from integers to integers.
+
+47
+00:03:14,480 --> 00:03:17,890
+And now we can take for instance this list,
+take its first element,
+
+48
+00:03:17,890 --> 00:03:20,720
+which is a function from integers to integers,
+
+49
+00:03:20,720 --> 00:03:24,590
+and apply it to an integer value.
+
+50
+00:03:24,590 --> 00:03:27,629
+And we see that this works just fine.
+
+51
+00:03:30,280 --> 00:03:33,200
+On this example, now we can see the usefulness
+
+52
+00:03:33,209 --> 00:03:37,290
+of passing function as values to other functions.
+
+53
+00:03:37,290 --> 00:03:40,950
+For instance here we have a first function
+which is called <u>apply_twice</u>.
+
+54
+00:03:40,950 --> 00:03:43,769
+It takes a function as argument.
+A function <u>f</u>.
+
+55
+00:03:43,769 --> 00:03:47,560
+And applies it twice to the argument <u>x</u>.
+
+56
+00:03:47,560 --> 00:03:51,239
+This would be just written as you can expect.
+
+57
+00:03:51,239 --> 00:03:53,659
+What we obtain now is a function,
+
+58
+00:03:53,659 --> 00:03:58,300
+which takes a first argument
+of functional type <u>'a -> 'a</u>,
+
+59
+00:03:58,310 --> 00:03:59,370
+then a value <u>'a</u>,
+
+60
+00:03:59,370 --> 00:04:00,579
+and returns <u>'a</u>.
+
+61
+00:04:00,579 --> 00:04:02,219
+And as you might have noticed,
+
+62
+00:04:02,219 --> 00:04:04,269
+this is of course a polymorphic type,
+
+63
+00:04:04,269 --> 00:04:10,100
+since nothing constrains the type
+of the values used in this construction.
+
+64
+00:04:10,159 --> 00:04:16,570
+For instance we can now try out
+our function <u>apply_twice</u>,
+
+65
+00:04:16,570 --> 00:04:20,670
+applied to the doubling function,
+and applied to the value 1.
+
+66
+00:04:20,670 --> 00:04:26,520
+In this case we obtain the value 4.
+
+67
+00:04:26,520 --> 00:04:30,600
+You can go a little bit further,
+and also define a recursive function
+
+68
+00:04:30,660 --> 00:04:35,110
+which applies a function <u>f</u>,
+<u>n</u> times, to a value <u>x</u>.
+
+69
+00:04:35,110 --> 00:04:39,760
+Just by recursing over the value <u>n</u>.
+
+70
+00:04:39,760 --> 00:04:42,140
+If we do this, we obtain a function <u>apply_n_times</u>,
+
+71
+00:04:42,140 --> 00:04:44,910
+that has as first argument a functionnal type,
+
+72
+00:04:44,910 --> 00:04:46,590
+and an integer argument,
+
+73
+00:04:46,590 --> 00:04:50,950
+and finally the value to which the function
+will be applied <u>n</u> times.
+
+74
+00:04:50,950 --> 00:04:54,300
+For instance,
+if we use this construction now,
+
+75
+00:04:54,300 --> 00:04:58,160
+to apply the doubling function,
+10 times, to the value 1.
+
+76
+00:04:58,160 --> 00:05:02,800
+We obtain, of course,
+the value 2 to the power of 10.
+
+77
+00:05:02,800 --> 00:05:07,080
+That is 1024.
+
+78
+00:05:10,240 --> 00:05:16,580
+Here we have now an example of a function
+which returns a functional result.
+
+79
+00:05:16,580 --> 00:05:18,150
+So this would be the compose function.
+
+80
+00:05:18,150 --> 00:05:21,260
+The compose function takes two functions,
+
+81
+00:05:21,260 --> 00:05:25,780
+and will return as result the composition
+of the two functions passed as arguments.
+
+82
+00:05:25,790 --> 00:05:27,470
+How can we write this ?
+
+83
+00:05:27,470 --> 00:05:30,810
+Well compose takes two arguments,
+<u>f</u> and <u>g</u>,
+
+84
+00:05:30,810 --> 00:05:33,710
+and what it returns is a new function.
+
+85
+00:05:33,710 --> 00:05:38,420
+And this functions takes <u>x</u>
+and applies <u>f</u>, to <u>g</u> applied to <u>x</u>.
+
+86
+00:05:38,420 --> 00:05:42,750
+Now please observe the type
+that we get in the toplevel.
+
+87
+00:05:42,750 --> 00:05:44,890
+We have a first function as argument,
+
+88
+00:05:44,890 --> 00:05:47,350
+a second function as argument,
+
+89
+00:05:47,350 --> 00:05:51,780
+the result again is a function, even if
+the parenthesis seems to be missing here.
+
+90
+00:05:51,780 --> 00:05:53,740
+But in fact they are not.
+
+91
+00:05:53,740 --> 00:05:59,440
+What is interesting to note is that
+here, the argument type of the first function
+
+92
+00:05:59,440 --> 00:06:03,220
+must be the same as
+the result type of the second function.
+
+93
+00:06:03,220 --> 00:06:08,500
+Which is normal if you think about the way
+the functions are applied.
+
+94
+00:06:08,530 --> 00:06:11,000
+So we can for instance try this out,
+
+95
+00:06:11,000 --> 00:06:12,720
+and use our compose function,
+
+96
+00:06:12,720 --> 00:06:18,870
+to compose the successor function
+with the doubling function,
+
+97
+00:06:18,870 --> 00:06:21,940
+and to the value 10.
+
+98
+00:06:21,940 --> 00:06:27,400
+And we obtain indeed that
+this gives us the value 21.
+
+99
+00:06:27,400 --> 00:06:31,120
+The type restrictions are very useful here
+since the type checker will guarantee
+
+100
+00:06:31,120 --> 00:06:34,600
+that we cannot compose
+two functions who do not fit together,
+
+101
+00:06:34,610 --> 00:06:36,210
+according to their types.
+
+102
+00:06:36,210 --> 00:06:39,210
+For instance if we try to compose
+these two functions here,
+
+103
+00:06:39,210 --> 00:06:42,870
+then in fact the type checker tells us
+that this doesn't work.
+
+104
+00:06:42,870 --> 00:06:44,670
+Since the types do not fit.
+
+105
+00:06:47,410 --> 00:06:50,660
+Finally a word about sequences
+of function applications.
+
+106
+00:06:50,660 --> 00:06:53,810
+From a syntactic point of view
+this is absolutely OK to write.
+
+107
+00:06:53,810 --> 00:06:57,490
+<u>(exp1 exp2) exp3</u>
+
+108
+00:06:57,490 --> 00:06:58,600
+This means the following:
+
+109
+00:06:58,600 --> 00:07:03,090
+We will first apply <u>exp1</u> to <u>exp2</u>.
+
+110
+00:07:03,090 --> 00:07:06,210
+The result obtained by this function application,
+
+111
+00:07:06,210 --> 00:07:10,340
+would be used to apply it finally to <u>exp3</u>.
+
+112
+00:07:10,340 --> 00:07:13,120
+And with what we have seen so far,
+this might make sense,
+
+113
+00:07:13,120 --> 00:07:15,020
+depending on the types.
+
+114
+00:07:15,020 --> 00:07:18,800
+Since it is absolutely possible
+that applying <u>exp1</u> to <u>exp2</u>,
+
+115
+00:07:18,800 --> 00:07:21,600
+yields a value which is a functional value,
+
+116
+00:07:21,620 --> 00:07:24,590
+and which hence can be applied to <u>exp3</u>.
+
+117
+00:07:24,590 --> 00:07:30,280
+We say that function application
+associates to the left,
+
+118
+00:07:30,280 --> 00:07:33,440
+which means that the sequence written
+on the top of the slide,
+
+119
+00:07:33,440 --> 00:07:36,700
+is equivalent to parentheses pushed to the left.
+
+120
+00:07:39,210 --> 00:07:41,690
+So this example is to demonstrate that
+
+121
+00:07:41,690 --> 00:07:44,310
+function application associates to the left.
+
+122
+00:07:44,310 --> 00:07:47,680
+As we have seen already before in week one.
+
+123
+00:07:47,680 --> 00:07:49,410
+So this is just a reminder.
+
+124
+00:07:49,410 --> 00:07:52,450
+So for instance if we have here
+the doubling function,
+
+125
+00:07:52,450 --> 00:07:57,150
+which we have already seen several times
+during this MOOC.
+
+126
+00:07:57,150 --> 00:08:02,580
+If you try to write down something like
+<u>double double 5</u>.
+
+127
+00:08:02,580 --> 00:08:05,800
+This would be read as
+applying first <u>double</u> to <u>double</u>,
+
+128
+00:08:05,800 --> 00:08:08,940
+and then applying the result of this calculation to 5.
+
+129
+00:08:08,940 --> 00:08:12,110
+Which in some cases might make sense,
+
+130
+00:08:12,110 --> 00:08:17,610
+but doesn't in our case here,
+since this will raise a type error.
+
+131
+00:08:17,610 --> 00:08:20,430
+So if we want to apply the functions
+in the right order,
+
+132
+00:08:20,430 --> 00:08:23,310
+then we have to indicate it,
+and you have to override
+
+133
+00:08:23,310 --> 00:08:27,190
+the left associativity of function applications,
+using parentheses.
+
+134
+00:08:27,190 --> 00:08:29,990
+And then we have to write in this way.
+
+135
+00:08:29,990 --> 00:08:32,750
+And then we obtain the right result of 20.
+

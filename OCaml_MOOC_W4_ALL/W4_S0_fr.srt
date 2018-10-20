@@ -1,0 +1,459 @@
+1
+00:00:07,799 --> 00:00:13,000
+Bonnier, bienvenue à la semaine 4
+qui est dédiée aux fonctions en OCaml.
+
+2
+00:00:14,000 --> 00:00:19,720
+Cette semaine, nous commencerons avec des expressions
+fonctionnelles ; en fait, certaines expressions
+
+3
+00:00:20,000 --> 00:00:22,000
+désignent des fonctions en tant que valeurs.
+
+4
+00:00:22,000 --> 00:00:26,620
+Il se trouve que les fonctions sont ce qu'on appelle
+des valeurs de première classe en OCaml.
+
+5
+00:00:26,620 --> 00:00:32,620
+Cela signifie qu'elles ont exactement le même statut
+que toute autre valeur que l'on peut écrire en OCaml.
+
+6
+00:00:33,000 --> 00:00:36,000
+Ensuite, nous allons continuer avec des
+fonctions à plusieurs arguments,
+
+7
+00:00:36,000 --> 00:00:40,000
+et, en relation avec cela, ce qu'on appelle
+l'application partielle de fonction.
+
+8
+00:00:40,000 --> 00:00:46,000
+Et enfin, on verra certaines applications
+des fonctions d'ordre supérieur sur les listes.
+
+9
+00:00:46,000 --> 00:00:51,000
+Et on verra les fonctions de mapping et de pliage
+sur les listes.
+
+10
+00:00:51,340 --> 00:00:56,900
+Donc, la syntaxe pour une expression fonctionnelle
+utilise un nouveau mot-clé <u>function</u>,
+
+11
+00:00:56,900 --> 00:00:58,900
+pour indiquer que nous définissons une fonction.
+
+12
+00:00:59,000 --> 00:01:04,000
+C'est <u>function</u> puis un identificateur <u>-></u> une expression.
+
+13
+00:01:04,000 --> 00:01:06,000
+Alors qu'est-ce que cela signifie ?
+
+14
+00:01:06,000 --> 00:01:12,000
+Toute cette construction est une expression
+qui dénote une fonction sans nom,
+
+15
+00:01:12,000 --> 00:01:19,000
+cette fonction prend un argument appelé <u>id</u>, et
+elle a un corps qui est écrit dans l'expression <u>exp</u>.
+
+16
+00:01:19,000 --> 00:01:26,000
+Et bien sûr, on utilise en général l'identificateur <u>id</u>
+lors de l'écriture du corps <u>exp</u>.
+
+17
+00:01:26,980 --> 00:01:31,500
+Un exemple de ceci serait
+la fonction qui envoie <u>x</u> vers <u>x + 1</u>.
+
+18
+00:01:31,500 --> 00:01:34,500
+Cela s'écrit: <u>function x -> x + 1</u>.
+
+19
+00:01:35,380 --> 00:01:39,140
+Donc, c'est très simple à écrire.
+
+20
+00:01:40,200 --> 00:01:45,600
+Bien entendu, la portée du paramètre de cette fonction
+sera limitée à l'expression,
+
+21
+00:01:45,600 --> 00:01:52,100
+comme auparavant,
+lorsque nous avons défini les fonctions avec un nom.
+
+22
+00:01:52,100 --> 00:01:56,100
+Comme toute expression,
+une expression fonctionnelle a aussi un type.
+
+23
+00:01:56,100 --> 00:02:00,000
+Et maintenant, puisque nous définissons une fonction,
+cette expression a bien sûr un type fonctionnel.
+
+24
+00:02:00,100 --> 00:02:06,100
+Ainsi, le type obtenu pour cette construction
+est un certain type flèche <u>t1 -> t2</u>,
+
+25
+00:02:06,100 --> 00:02:11,600
+qui est un type dérivé, où
+<u>t1</u> est le type du paramètre <u>id</u>,
+
+26
+00:02:11,600 --> 00:02:17,100
+et <u>t2</u> est le type de l'expression
+formant le corps de cette fonction.
+
+27
+00:02:17,100 --> 00:02:23,100
+Quel est donc l'intérêt de ces
+expressions fonctionnelles sans nom ?
+
+28
+00:02:25,580 --> 00:02:28,880
+Regardons quelques exemples
+d'expressions fonctionnelles,
+
+29
+00:02:28,880 --> 00:02:32,400
+qui sont des expressions qui
+calculent une valeur de type fonctionnel.
+
+30
+00:02:32,400 --> 00:02:37,320
+Comme ici, sur la première ligne, on a l'expression
+qui calcule la fonction successeur.
+
+31
+00:02:37,320 --> 00:02:42,100
+Voilà une fonction de type <u>int</u> vers <u>int</u>,
+et qui envoie <u>x</u> vers <u>x + 1</u>.
+
+32
+00:02:42,100 --> 00:02:46,500
+On pourrait bien sûr avoir des expressions
+plus compliquées dans le corps de la fonction.
+
+33
+00:02:46,500 --> 00:02:48,280
+Comme ici, sur la ligne suivante,
+
+34
+00:02:48,280 --> 00:02:55,040
+c'est la fonction qui envoie un <u>y</u> vers une liste
+de listes, qui utilise <u>y</u> dans sa définition.
+
+35
+00:02:55,040 --> 00:03:01,680
+Donc, nous obtenons ici une expression de type
+<u>int -> int list list</u>, une liste de listes d'entiers.
+
+36
+00:03:03,220 --> 00:03:06,700
+Enfin, nous avons ici quelque chose de nouveau
+sur l'application de fonction.
+
+37
+00:03:07,640 --> 00:03:11,180
+Ce qu'on voit sur cette ligne, c'est ce qu'on
+écrit en position de fonction,
+
+38
+00:03:11,180 --> 00:03:12,920
+lorsqu'on écrit une application de fonction,
+
+39
+00:03:12,920 --> 00:03:16,020
+et en fait ce n'est pas nécessairement le nom d'une fonction,
+
+40
+00:03:16,020 --> 00:03:20,200
+mais toute expression qui nous donne
+quelque chose ayant le type d'une fonction.
+
+41
+00:03:20,200 --> 00:03:24,200
+Comme cette expression de fonction,
+écrite sur cette ligne.
+
+42
+00:03:24,200 --> 00:03:28,280
+Cela fonctionne parfaitement bien
+et renvoie ce à quoi on s'attend.
+
+43
+00:03:30,140 --> 00:03:36,240
+En utilisant ces expressions fonctionnelles,
+on peut maintenant écrire différemment
+
+44
+00:03:36,240 --> 00:03:39,580
+les définitions de fonctions utilisant un nom.
+
+45
+00:03:39,580 --> 00:03:42,900
+En fait, la forme montrée en semaine 1,
+
+46
+00:03:42,900 --> 00:03:50,200
+lorsqu'on a défini une fonction <u>f</u> en écrivant
+<u>let f x = e</u> est juste une abréviation.
+
+47
+00:03:50,200 --> 00:03:55,820
+C'est une abréviation pour la définition d'un
+identificateur <u>f</u>,
+
+48
+00:03:55,820 --> 00:04:00,700
+qui signifie quelque chose que
+l'on peut écrire <u>let f = quelque chose</u>.
+
+49
+00:04:00,700 --> 00:04:06,200
+Et ce quelque chose est la valeur qui
+sera attribuée au nom <u>f</u>, qui est une fonction.
+
+50
+00:04:06,420 --> 00:04:17,440
+Pour résumer, cela signifie que la forme <u>let f x = e</u>
+est une simple abréviation pour <u>let f = function x -> e</u>.
+
+51
+00:04:17,500 --> 00:04:26,200
+Donc on a juste une façon unique de définir un
+identificateur, qui est <u>let nom = quelque chose</u>.
+
+52
+00:04:26,200 --> 00:04:30,780
+La seule chose qui est plus générale que ce qu'on a
+vu en semaine 1 est que le quelque chose,
+
+53
+00:04:30,780 --> 00:04:34,540
+l'expression, est maintenant une expression
+d'un type plus compliqué,
+
+54
+00:04:34,540 --> 00:04:36,540
+c'est-à-dire, un type fonctionnel.
+
+55
+00:04:38,480 --> 00:04:43,960
+On voit maintenant qu'en fait on a utilisé jusqu'ici
+quelque chose qui est une juste une abréviation,
+
+56
+00:04:43,960 --> 00:04:50,260
+pour la liaison d'un identificateur à une expression
+fonctionnelle dans la définition d'une fonction.
+
+57
+00:04:50,260 --> 00:04:56,800
+Donc revoici la première forme que nous avons vu
+pour définir une fonction, en semaine 1.
+
+58
+00:04:56,800 --> 00:05:01,240
+Ici, on définit la fonction [double],
+sous sa forme habituelle, et on écrit:
+
+59
+00:05:01,500 --> 00:05:04,500
+<u>let double x =</u> son corps.
+
+60
+00:05:04,500 --> 00:05:11,220
+Et vous voyez que cela définit en fait une fonction,
+qu'on appelle [double], qui se comporte comme prévu.
+
+61
+00:05:11,540 --> 00:05:14,140
+Et comme expliqué sur la diapositive précédente,
+
+62
+00:05:14,240 --> 00:05:17,860
+c'est juste une abréviation pour lier
+l'identificateur [double]
+
+63
+00:05:17,860 --> 00:05:22,040
+à une expression de fonction,
+qui désigne la même fonction.
+
+64
+00:05:22,040 --> 00:05:25,980
+Donc, on obtient exactement la même réponse
+du toplevel.
+
+65
+00:05:25,980 --> 00:05:30,940
+Et en fait, la fonction obtenue
+calcule précisément la même chose.
+
+66
+00:05:33,020 --> 00:05:37,260
+La forme la plus générale d'une définition de fonction,
+ou d'une expression fonctionnelle,
+
+67
+00:05:37,260 --> 00:05:41,660
+est, en effet, la suivante:
+elle commence toujours par le mot-clé <u>function</u>.
+
+68
+00:05:41,660 --> 00:05:46,000
+Et puis en général,
+nous avons une séquence de filtrages.
+
+69
+00:05:46,000 --> 00:05:50,460
+Nous avons donc une séquence de motifs,
+et associée à chacun de ces motifs,
+
+70
+00:05:50,460 --> 00:05:51,700
+nous avons une expression.
+
+71
+00:05:51,700 --> 00:05:54,000
+Et comme toujours avec le filtrage
+
+72
+00:05:54,040 --> 00:05:59,840
+dans l'expression, on peut utiliser les identificateurs
+introduits par le motif correspondant.
+
+73
+00:06:00,360 --> 00:06:04,400
+On peut noter que la forme que je vous ai montrée,
+au début de cette séquence,
+
+74
+00:06:04,400 --> 00:06:11,200
+<u>fonction x -> exp</u>, est un cas particulier
+de cette forme générale qui a un seul cas.
+
+75
+00:06:11,200 --> 00:06:15,200
+Et le motif unique est réduit à un seul identifiant.
+
+76
+00:06:15,200 --> 00:06:20,840
+Vous pouvez noter que dans ce cas, on n'a pas mis
+de barre verticale devant le motif,
+
+77
+00:06:20,840 --> 00:06:22,720
+ce qui est autorisé dans la syntaxe,
+
+78
+00:06:22,720 --> 00:06:30,980
+puisque la barre verticale en face du premier motif
+est en fait facultative.
+
+79
+00:06:33,780 --> 00:06:37,780
+Maintenant, voyons certaines définitions de fonctions
+utilisant le filtrage.
+
+80
+00:06:37,780 --> 00:06:41,540
+Ici par exemple, on a la fonction longueur
+sur les listes.
+
+81
+00:06:41,540 --> 00:06:43,540
+On voit que, dans cette définition,
+
+82
+00:06:43,540 --> 00:06:48,100
+on utilise directement après le mot-clé <u>function</u>,
+la distinction de cas par filtrage.
+
+83
+00:06:48,100 --> 00:06:54,100
+Et on n'a pas à introduire un nom
+pour le paramètre formel de cette fonction.
+
+84
+00:06:54,100 --> 00:07:01,280
+Quand on soumet ceci au toplevel, on obtient, en fait,
+la fonction du type attendu <u>'a list -> int</u>.
+
+85
+00:07:01,280 --> 00:07:06,440
+Et on peut, par exemple, évaluer cette fonction
+sur un petit exemple,
+
+86
+00:07:06,560 --> 00:07:10,100
+et se convaincre que cela fonctionne.
+
+87
+00:07:10,100 --> 00:07:17,400
+Un peu plus intéressant, on peut faire la même chose sur
+des structures de données vues en semaine 3.
+
+88
+00:07:17,400 --> 00:07:21,900
+Donc ici, nous avons par exemple un petit type de
+données d'expressions qui sont
+
+89
+00:07:21,900 --> 00:07:29,760
+des constantes entières ou qui sont composées
+au moyen d'un constructeur d'addition binaire.
+
+90
+00:07:29,760 --> 00:07:35,120
+Bon, et maintenant on peut définir une fonction
+récursive qui évalue une telle expression,
+
+91
+00:07:35,120 --> 00:07:42,440
+en utilisant le filtrage, et prenant la forme
+d'une définition de fonction sans paramètre explicite.
+
+92
+00:07:42,440 --> 00:07:46,740
+Et vous pouvez observer qu'en fait,
+la forme de cette fonction
+
+93
+00:07:46,740 --> 00:07:51,880
+suit précisément la définition
+du type sur lequel nous travaillons.
+
+94
+00:07:52,600 --> 00:07:56,600
+Ainsi on obtient ici une fonction de type
+<u>expr -> int</u>.
+
+95
+00:07:56,600 --> 00:08:03,780
+On peut alors évaluer notre fonction sur une petite
+expression, et si vous faites le calcul vous-même,
+
+96
+00:08:03,780 --> 00:08:07,280
+vous verrez que ce qui est trouvé correspond
+exactement à ce qu'il faut.

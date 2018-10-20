@@ -1,0 +1,454 @@
+1
+00:00:07,799 --> 00:00:13,000
+Hello again, welcome to week 4
+which is dedicated to functions in OCaml.
+
+2
+00:00:14,000 --> 00:00:19,720
+In this week, we will start with functional expressions,
+we will see that in fact you can write down expressions,
+
+3
+00:00:20,000 --> 00:00:22,000
+which denote functions as values.
+
+4
+00:00:22,000 --> 00:00:26,620
+As it turns out, functions are
+what is called first-class values in OCaml.
+
+5
+00:00:26,620 --> 00:00:32,620
+Which means they have precisely the same status
+as any other value that you can write down in OCaml.
+
+6
+00:00:33,000 --> 00:00:36,000
+Then, we'll continue with
+functions with multiple arguments,
+
+7
+00:00:36,000 --> 00:00:40,000
+and, related to that,
+what we call partial function application.
+
+8
+00:00:40,000 --> 00:00:46,000
+And finally, we will look at some applications
+of higher order functions on lists.
+
+9
+00:00:46,000 --> 00:00:51,000
+And we will look at mapping functions over lists
+and folding functions over lists.
+
+10
+00:00:51,340 --> 00:00:56,900
+So, the syntax for a functional expression
+uses a new keyword <u>function</u>,
+
+11
+00:00:56,900 --> 00:00:58,900
+to denote that we are defining a function.
+
+12
+00:00:59,000 --> 00:01:04,000
+So, it's <u>function</u> then some identifier <u>-></u> an expression.
+
+13
+00:01:04,000 --> 00:01:06,000
+So what does it mean ?
+
+14
+00:01:06,000 --> 00:01:12,000
+This whole construction is an expression
+which denotes a function without a name,
+
+15
+00:01:12,000 --> 00:01:19,000
+this function takes one argument called <u>id</u>, and
+it has a body which is written in the expression <u>exp</u>.
+
+16
+00:01:19,000 --> 00:01:26,000
+And, of course, in general you will use the identifier <u>id</u>
+when writing the body <u>exp</u>.
+
+17
+00:01:26,980 --> 00:01:31,500
+An example of this would be
+the function which maps <u>x</u> to <u>x+1</u>.
+
+18
+00:01:31,500 --> 00:01:34,500
+This will be written: <u>function x -> x+1</u>.
+
+19
+00:01:35,380 --> 00:01:39,140
+So this is quite simple to write down.
+
+20
+00:01:40,200 --> 00:01:45,600
+Of course, the scope of the parameter of this function will be restricted to the expression,
+
+21
+00:01:45,600 --> 00:01:52,100
+as it was before,
+when we defined functions with a name.
+
+22
+00:01:52,100 --> 00:01:56,100
+As any expression,
+a functional expression also has a type.
+
+23
+00:01:56,100 --> 00:02:00,000
+And now, since we are defining a function,
+this expression, of course, has a functional type.
+
+24
+00:02:00,100 --> 00:02:06,100
+So the type that we would obtain for this construction
+would be some arrow type <u>t1 -> t2</u>,
+
+25
+00:02:06,100 --> 00:02:11,600
+which is a derived type,
+<u>t1</u> would be the type of the parameter <u>id</u>,
+
+26
+00:02:11,600 --> 00:02:17,100
+and <u>t2</u> would be the type of the expression
+which is the body of this function.
+
+27
+00:02:17,100 --> 00:02:23,100
+So, why is this interesting?
+This nameless construction of functional expressions?
+
+28
+00:02:25,580 --> 00:02:28,880
+So let's have a look at
+some examples of functional expressions,
+
+29
+00:02:28,880 --> 00:02:32,400
+which are expressions that
+calculate a value of functional type.
+
+30
+00:02:32,400 --> 00:02:37,320
+Like here, on the first line, we have the expression
+which calculates the successor function.
+
+31
+00:02:37,320 --> 00:02:42,100
+That is a function of type <u>int</u> to <u>int</u>,
+and it sends <u>x</u> to <u>x+1</u>.
+
+32
+00:02:42,100 --> 00:02:46,500
+You might of course have more complicated
+expressions in the body of the function.
+
+33
+00:02:46,500 --> 00:02:48,280
+Like here, on the next line,
+
+34
+00:02:48,280 --> 00:02:55,040
+this is the function which sends a <u>y</u> to a list of lists,
+which uses the <u>y</u> in its definition.
+
+35
+00:02:55,040 --> 00:03:01,680
+So we obtain here an expression which has the type
+<u>int -> int list list</u> that is a list of integer lists.
+
+36
+00:03:03,220 --> 00:03:06,700
+Finally we have here a new thing
+about function application.
+
+37
+00:03:07,640 --> 00:03:11,180
+What we see on this line is that what we write
+at the position of the function,
+
+38
+00:03:11,180 --> 00:03:12,920
+when we write a function application,
+
+39
+00:03:12,920 --> 00:03:16,020
+is in fact not necessarily the name of a function,
+
+40
+00:03:16,020 --> 00:03:20,200
+but any expression which gives us
+something of the type of a function.
+
+41
+00:03:20,200 --> 00:03:24,200
+Like this function expression, written on this line.
+
+42
+00:03:24,200 --> 00:03:28,280
+And it works perfectly fine
+and returns what we might expect.
+
+43
+00:03:30,140 --> 00:03:36,240
+Using these functional expressions,
+we can now write down a different way
+
+44
+00:03:36,240 --> 00:03:39,580
+of defining functions using a name.
+
+45
+00:03:39,580 --> 00:03:42,900
+In fact, the form that I showed in week 1,
+
+46
+00:03:42,900 --> 00:03:50,200
+when we defined a function <u>f</u> by writing
+<u>let f x = e</u> is just an abbreviation.
+
+47
+00:03:50,200 --> 00:03:55,820
+It's an abbreviation for the definition of an identifier <u>f</u>,
+
+48
+00:03:55,820 --> 00:04:00,700
+which means something that
+we could write as <u>let f = something</u>.
+
+49
+00:04:00,700 --> 00:04:06,200
+And this something is the value which
+will be assigned to the name <u>f</u>, which is the function.
+
+50
+00:04:06,420 --> 00:04:17,440
+To summarize, this means that the form <u>let f x = e</u>
+is just an abbreviation for <u>let f = function x -> e</u>.
+
+51
+00:04:17,500 --> 00:04:26,200
+So we just have one unique form of defining
+an identifier, which is <u>let name = something</u>.
+
+52
+00:04:26,200 --> 00:04:30,780
+The only thing which is more general than
+what we have seen in week 1 is that the something,
+
+53
+00:04:30,780 --> 00:04:34,540
+the expression,
+is now an expression of a more complicated type.
+
+54
+00:04:34,540 --> 00:04:36,540
+That is, a functional type
+
+55
+00:04:38,480 --> 00:04:43,960
+Here, we can now see that in fact we have used so far just something which is an abbreviation,
+
+56
+00:04:43,960 --> 00:04:50,260
+for the binding of an identifier
+to a functional expression in the definition of a function.
+
+57
+00:04:50,260 --> 00:04:56,800
+So this is the first form that we have seen
+to define a function, in week number 1.
+
+58
+00:04:56,800 --> 00:05:01,240
+So here we define a double function,
+in the usual form, and we write:
+
+59
+00:05:01,500 --> 00:05:04,500
+<u>let double x =</u> its body.
+
+60
+00:05:04,500 --> 00:05:11,220
+And you see that this in fact defines a function,
+that we just call double, which behaves as expected.
+
+61
+00:05:11,540 --> 00:05:14,140
+Now as I've explained to you on the previous slide,
+
+62
+00:05:14,240 --> 00:05:17,860
+this is just an abbreviation to bind the identifier double
+
+63
+00:05:17,860 --> 00:05:22,040
+to a function expression,
+which denotes the same function.
+
+64
+00:05:22,040 --> 00:05:25,980
+So we obtain exactly the same response
+from the toplevel.
+
+65
+00:05:25,980 --> 00:05:30,940
+And, in fact, the function we have obtained
+calculates precisely the same thing.
+
+66
+00:05:33,020 --> 00:05:37,260
+The most general form of a function definition,
+or of a functional expression,
+
+67
+00:05:37,260 --> 00:05:41,660
+is, in fact, the following one:
+it always starts with the keyword <u>function</u>.
+
+68
+00:05:41,660 --> 00:05:46,000
+And then in general,
+we have a sequence of pattern matches.
+
+69
+00:05:46,000 --> 00:05:50,460
+So we have a sequence of patterns,
+and associated with each of these patterns,
+
+70
+00:05:50,460 --> 00:05:51,700
+we have an expression.
+
+71
+00:05:51,700 --> 00:05:54,000
+And as always with pattern matching
+
+72
+00:05:54,040 --> 00:05:59,840
+In the expression you can use the identifiers
+introduced by the according pattern.
+
+73
+00:06:00,360 --> 00:06:04,400
+You might note that the form which I've shown to you,
+at the beginning of this sequence,
+
+74
+00:06:04,400 --> 00:06:11,200
+<u>function x -> exp</u>, is just a special case
+of this general form that only has one case.
+
+75
+00:06:11,200 --> 00:06:15,200
+And the only pattern is reduced to only one identifier.
+
+76
+00:06:15,200 --> 00:06:20,840
+You might note that in this case, we don't have
+a vertical bar in front of the pattern,
+
+77
+00:06:20,840 --> 00:06:22,720
+which is allowed in the syntax,
+
+78
+00:06:22,720 --> 00:06:30,980
+since the vertical bar in front only of the first pattern
+is in fact optional and is not mandatory to write.
+
+79
+00:06:33,780 --> 00:06:37,780
+Now, let's have a look to some function definitions
+using pattern matching.
+
+80
+00:06:37,780 --> 00:06:41,540
+Here, we have, for instance the length function on lists.
+
+81
+00:06:41,540 --> 00:06:43,540
+And observe that in this definition,
+
+82
+00:06:43,540 --> 00:06:48,100
+we use directly after the keyword <u>function</u>,
+the distinction of cases by pattern matching.
+
+83
+00:06:48,100 --> 00:06:54,100
+And we don't have to introduce a name
+for the formal parameter of this function.
+
+84
+00:06:54,100 --> 00:07:01,280
+So when we pass this to the toplevel, we obtain in fact
+the function of the expected type <u>'a list -> int</u>.
+
+85
+00:07:01,280 --> 00:07:06,440
+And we can for instance evaluate this function
+on a small example,
+
+86
+00:07:06,560 --> 00:07:10,100
+and convince ourselves that it works.
+
+87
+00:07:10,100 --> 00:07:17,400
+A little bit more interesting, is to do the same on
+data structures as we have seen them in week 3.
+
+88
+00:07:17,400 --> 00:07:21,900
+So here, we have for instance a small data type
+of expressions which are either:
+
+89
+00:07:21,900 --> 00:07:29,760
+integer constants which are composed
+using a binary addition constructor.
+
+90
+00:07:29,760 --> 00:07:35,120
+Okay, and now we can define a recursive function
+which evaluates such an expression,
+
+91
+00:07:35,120 --> 00:07:42,440
+using pattern matching, and taking the form
+of a function definition without an explicit parameter.
+
+92
+00:07:42,440 --> 00:07:46,740
+And you might observe that in fact,
+the form of this function
+
+93
+00:07:46,740 --> 00:07:51,880
+follows precisely the definition
+of the type on which we are working.
+
+94
+00:07:52,600 --> 00:07:56,600
+So we obtain here a function of type
+<u>expr -> int</u>.
+
+95
+00:07:56,600 --> 00:08:03,780
+And now we can evaluate our function on a
+small expression, and if you do the calculation yourself,
+
+96
+00:08:03,780 --> 00:08:07,280
+you will see that we receive,
+precisely what we should.
+

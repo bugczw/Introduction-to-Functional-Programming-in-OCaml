@@ -1,0 +1,346 @@
+1
+00:00:00,130 --> 00:00:05,670
+In this sequence we will learn of functions
+with several arguments fit into the picture.
+
+2
+00:00:05,670 --> 00:00:10,930
+In the first sequence we have seen the syntax
+for function expressions with one argument
+
+3
+00:00:10,930 --> 00:00:17,519
+which used the keyword <u>function</u>. If you would
+like to write a function expression with several
+
+4
+00:00:17,519 --> 00:00:22,989
+arguments then you would use a different keyword
+which is <u>fun</u> so you would write <u>fun</u> and
+
+5
+00:00:22,989 --> 00:00:28,489
+then the sequence of its formal arguments
+arrow its body. There is a small difference
+
+6
+00:00:28,489 --> 00:00:32,680
+between this keyword <u>fun</u> and the keyword
+<u>function</u> : as we have seen in the first sequence
+
+7
+00:00:32,680 --> 00:00:38,870
+<u>function</u> allows you to write directly a
+pattern and to define your function by a pattern
+
+8
+00:00:38,870 --> 00:00:45,010
+matching. This is not allowed with the <u>fun</u>
+form, in the <u>fun</u> form you can only use  a name
+
+9
+00:00:45,010 --> 00:00:49,750
+for the formal parameters of your function
+expression. If you want to do a pattern matching
+
+10
+00:00:49,750 --> 00:00:54,230
+of some of them you have to use an explicit pattern
+matching.
+
+11
+00:00:54,230 --> 00:00:58,710
+As I have already explained to you in the
+last sequence functions are in fact first-class
+
+12
+00:00:58,710 --> 00:01:05,729
+values in OCaml, which means that it's perfectly
+okay to write a function which take an argument
+
+13
+00:01:05,729 --> 00:01:12,640
+and depending of that argument returns another
+function. Something like in this example : here
+
+14
+00:01:12,640 --> 00:01:17,859
+we would have a function expression which
+uses one parameter <u>n</u> and depending on this
+
+15
+00:01:17,859 --> 00:01:24,299
+parameter <u>n</u> returns a function which would
+augment its argument <u>x</u> by the value of <u>n</u>.
+
+16
+00:01:24,299 --> 00:01:30,549
+Now, what would be the type of such expression? Well, in fact the type of this expression
+
+17
+00:01:30,549 --> 00:01:37,329
+is something that we have seen before as I
+can demonstrate to you now on the following example
+
+18
+00:01:38,999 --> 00:01:44,459
+On this slide we will now see that the definition
+of a function with several arguments is in
+
+19
+00:01:44,459 --> 00:01:50,810
+reality the same thing as a nested definition
+of functions with only one argument.
+
+20
+00:01:50,810 --> 00:01:54,719
+So we might for instance define a function
+<u>f1</u> which first takes the first parameter
+
+21
+00:01:54,719 --> 00:02:00,740
+<u>n</u> and depending on <u>n</u> returns a second
+function which takes <u>x</u> and sends it to <u>n+x</u>.
+
+22
+00:02:00,740 --> 00:02:09,220
+And as you can see this gives us something
+that we have read so far as a function taking
+
+23
+00:02:09,220 --> 00:02:14,570
+two arguments. In fact what we can do now
+with this function is that we can in fact
+
+24
+00:02:14,570 --> 00:02:20,340
+apply it to a first argument and then apply
+the result obtained from this to its second
+
+25
+00:02:20,340 --> 00:02:27,580
+argument and it behaves exactly the same as
+the form we have used so far that is writing
+
+26
+00:02:27,580 --> 00:02:34,130
+it in a way which ressembles a bit more of
+a function that expects two arguments. However
+
+27
+00:02:34,130 --> 00:02:40,290
+as we have seen it's just an abbreviation
+for the form which we have shown you before
+
+28
+00:02:40,290 --> 00:02:46,960
+on line 3. Now let's write exactly the same
+thing in the form that we have used so far
+
+29
+00:02:46,960 --> 00:02:52,470
+as I have explained to you on the previous
+slide what's written on line 1 is just the
+
+30
+00:02:52,470 --> 00:02:58,210
+real form that is behind the abbreviation
+on line 7 that we have used so far. So if
+
+31
+00:02:58,210 --> 00:03:03,230
+you define now a function <u>f2</u> in the way
+as we have seen in week 1 we see that the
+
+32
+00:03:03,230 --> 00:03:09,510
+type is precisely the same and if you apply
+the function now to its arguments you see
+
+33
+00:03:09,510 --> 00:03:18,090
+that also it behaves exactly the same as the
+function f1 defined before.
+
+34
+00:03:21,660 --> 00:03:27,720
+Now, what we have seen on this example is
+not an accident. In fact, functions with multiple
+
+35
+00:03:27,730 --> 00:03:34,760
+arguments are exactly the same thing as functions
+returning functions as values. And this is
+
+36
+00:03:34,760 --> 00:03:40,400
+not the complete truth about functions with
+multiple arguments in OCaml: if you write
+
+37
+00:03:40,400 --> 00:03:46,770
+something like <u>fun x1 ... xn</u>, so a function
+expression with n parameters returning some
+
+38
+00:03:46,770 --> 00:03:54,180
+body than this is just an abbreviation for
+a nested unary function. So it's just an abbreviation
+
+39
+00:03:54,180 --> 00:03:59,420
+for a function which first takes <u>x1</u>, depending
+on this returns a function which takes <u>x2</u>
+
+40
+00:03:59,420 --> 00:04:06,210
+and so on, until the end. So functions with
+multiple arguments are just an abbreviation
+
+41
+00:04:06,210 --> 00:04:10,190
+for nested functions with one argument.
+
+42
+00:04:12,180 --> 00:04:16,959
+Now, using what we have learned so far about
+the different ways to write down the same
+
+43
+00:04:16,959 --> 00:04:22,380
+definition of a function I can now show you
+an example when we can in fact give at least
+
+44
+00:04:22,380 --> 00:04:27,930
+four different definitions of precisely the
+same function. This example works with a recursively
+
+45
+00:04:27,930 --> 00:04:33,530
+defined algebraic datatype which is in fact
+a variant of what we have seen so far. So
+
+46
+00:04:33,530 --> 00:04:40,260
+we have again expressions, however now expressions
+are formed with variables which contain the
+
+47
+00:04:40,260 --> 00:04:45,990
+name and binary
+addition. Which means that in order to interpret,
+
+48
+00:04:45,990 --> 00:04:51,410
+to evaluate now such an expression we have
+to use an environment. And here we see in
+
+49
+00:04:51,410 --> 00:04:57,500
+fact the first example of this function, the
+function <u>eval</u> , now written as a function
+
+50
+00:04:57,500 --> 00:05:03,550
+expression taking two arguments, <u>environment</u>
+, <u>expression</u>, and then using an explicit pattern
+
+51
+00:05:03,550 --> 00:05:09,210
+matching on the second argument expression.
+And what we can see here on this example in
+
+52
+00:05:09,210 --> 00:05:14,310
+fact is that depending on what we find in
+the expression we either look up the value
+
+53
+00:05:14,310 --> 00:05:25,020
+in the environment or we calculate an addition.
+So the type is an association list which associates
+
+54
+00:05:25,020 --> 00:05:30,840
+integer values to strings as first argument
+then you have an expression and we return
+
+55
+00:05:30,840 --> 00:05:36,860
+an integer value at the end. So for instance
+here we have our running example then we evaluate
+
+56
+00:05:36,860 --> 00:05:43,430
+this small expression on an environment in
+which <u>x</u> has value 2 and <u>y</u> has value 5, then
+
+57
+00:05:43,430 --> 00:05:45,660
+we obtain here the value of 9.
+
+58
+00:05:47,280 --> 00:05:54,440
+Now we have a second equivalent form of the
+same function which uses first a functional
+
+59
+00:05:54,440 --> 00:05:59,850
+expression with an explicit parameter called
+<u>environment</u> and then a second function expression
+
+60
+00:05:59,850 --> 00:06:05,820
+with a direct pattern matching without introducing
+a name for a second parameter.
+
+61
+00:06:05,820 --> 00:06:12,980
+So when we pass this now to the top level
+we obtain precisely the same type, and when
+
+62
+00:06:12,980 --> 00:06:21,639
+we execute this function now on our running
+example we also obtain the same result.
+
+63
+00:06:21,639 --> 00:06:26,460
+Now in the third definition we have a function
+expression which uses first a name for the
+
+64
+00:06:26,460 --> 00:06:33,970
+first parameter, <u>environment</u>, and then an
+implicit pattern matching on the second argument.
+
+65
+00:06:33,970 --> 00:06:40,350
+So the type that we obtain here is again the
+same, and the result if you apply this function
+
+66
+00:06:40,350 --> 00:06:43,880
+also is the same as before.
+
+67
+00:06:44,920 --> 00:06:53,960
+And finally, we have the fourth, the last
+form which uses let eval environment so we
+
+68
+00:06:53,960 --> 00:07:00,820
+define the function together with its first
+parameter and as a result return a function
+
+69
+00:07:00,820 --> 00:07:08,120
+which is defined by an implicit pattern matching.
+And again, what we obtain in the top level
+
+70
+00:07:08,120 --> 00:07:17,639
+is the same for the type and it's also the
+same for the result.
+

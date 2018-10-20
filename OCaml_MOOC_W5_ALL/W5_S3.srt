@@ -1,0 +1,495 @@
+1
+00:00:00,149 --> 00:00:04,319
+In this sequence we will explore sequences
+and iterations.
+
+2
+00:00:04,319 --> 00:00:10,630
+Well, now we have discovered how to write functions
+which perform side effects,
+
+3
+00:00:10,630 --> 00:00:15,160
+and since we have functions with side effects
+it becomes interesting to put them one after
+
+4
+00:00:15,160 --> 00:00:17,359
+the other to create sequences.
+
+5
+00:00:17,359 --> 00:00:22,449
+Or maybe to execute them many many times over by
+writing loops.
+
+6
+00:00:22,449 --> 00:00:24,260
+Let's start with sequences of expressions:
+
+7
+00:00:24,260 --> 00:00:27,789
+imagine we want to print several values one
+after the other.
+
+8
+00:00:27,789 --> 00:00:35,250
+If we want to print 1, 2, 3, how could we
+write this with the syntax and the constructs
+
+9
+00:00:35,250 --> 00:00:37,180
+we know up to now?
+
+10
+00:00:37,180 --> 00:00:38,649
+A possibility is this one:
+
+11
+00:00:38,649 --> 00:00:43,790
+we can use a let construct to say, well,
+
+12
+00:00:43,790 --> 00:00:47,870
+<u>print_int 1</u>, then drop the result,
+
+13
+00:00:47,870 --> 00:00:50,780
+then <u>print_int 2</u> and then drop the result
+
+14
+00:00:50,780 --> 00:00:53,699
+and then the final expression is <u>print_int 3</u>.
+
+15
+00:00:53,699 --> 00:00:55,789
+And of course I get "123" on the standard output as
+
+16
+00:00:55,789 --> 00:01:01,379
+I wanted, but this is kind of cumbersome to
+write and very verbose.
+
+17
+00:01:01,379 --> 00:01:05,939
+More concisely, OCaml allows you to write
+something like this:
+
+18
+00:01:05,939 --> 00:01:11,240
+several expressions one after the other separated
+just by a single semicolon.
+
+19
+00:01:11,240 --> 00:01:13,920
+So you have <u>print_int 1</u> here, then a semicolon,
+
+20
+00:01:13,920 --> 00:01:16,040
+then <u>print_int 2</u>, then a semicolon,
+
+21
+00:01:16,040 --> 00:01:17,830
+then <u>print_int 3</u>.
+
+22
+00:01:17,830 --> 00:01:21,790
+It does exactly the same as this expression
+here.
+
+23
+00:01:21,790 --> 00:01:24,170
+And indeed the result is always "123".
+
+24
+00:01:24,170 --> 00:01:32,320
+An expression sequence is a list of expressions
+like here - e1 to en - separated by semicolons.
+
+25
+00:01:32,320 --> 00:01:37,119
+The evaluation of an expression sequence actually
+performs evaluation of each of the <u>e_i</u> in
+
+26
+00:01:37,119 --> 00:01:37,490
+turn,
+
+27
+00:01:37,490 --> 00:01:39,210
+from the first to the last one,
+
+28
+00:01:39,210 --> 00:01:44,850
+all the intermediate results are dropped and
+we get as a final result the result of the
+
+29
+00:01:44,850 --> 00:01:47,130
+last expression of the sequence.
+
+30
+00:01:47,130 --> 00:01:52,649
+It is expected that all the intermediate are
+of type unit since we are dropping their values.
+
+31
+00:01:52,649 --> 00:01:57,420
+Otherwise, the OCaml compiler prints a warning
+for you.
+
+32
+00:01:57,420 --> 00:02:07,090
+A word of caution when you start using the
+semicolon because it is tempting to start
+
+33
+00:02:07,090 --> 00:02:09,020
+writing pieces of code like this one:
+
+34
+00:02:09,020 --> 00:02:16,480
+<u>if condition then print_string ... then ... ; then
+print_string ...</u>, something like this.
+
+35
+00:02:16,480 --> 00:02:21,840
+The indentation let you think that actually
+these two print statements will be executed
+
+36
+00:02:21,840 --> 00:02:26,420
+only on the then-branch but as soon as you
+hit "Enter",
+
+37
+00:02:26,420 --> 00:02:31,330
+you will see that unfortunately there is this
+dot here that comes from this print statement
+
+38
+00:02:31,330 --> 00:02:38,959
+which means that actually the semicolon is
+binding less than the other constructs.
+
+39
+00:02:38,959 --> 00:02:44,680
+So if you want to make explicit the order
+in which the sequence should be parsed,
+
+40
+00:02:44,680 --> 00:02:46,450
+use parentheses around the sequence,
+
+41
+00:02:46,450 --> 00:02:51,530
+or the more verbose <u>begin ... end</u> that behaves
+exactly like the parentheses.
+
+42
+00:02:51,530 --> 00:02:55,980
+So, what we really wanted to write before
+was something like this:
+
+43
+00:02:55,980 --> 00:03:00,700
+<u>if condition then begin ... end</u> with this sequence
+of statements here.
+
+44
+00:03:00,700 --> 00:03:09,080
+In this case you see there is no more spare
+dot polluting your output here.
+
+45
+00:03:09,080 --> 00:03:12,890
+Well now let's move to iterations:
+
+46
+00:03:12,890 --> 00:03:16,459
+if we want to print all integers from 1 to
+10 for example?
+
+47
+00:03:16,459 --> 00:03:21,129
+Well of course we could print 1, then print
+2, then 3, etc, up to 10.
+
+48
+00:03:21,129 --> 00:03:24,680
+It's better to have a programmatic way of
+doing this,
+
+49
+00:03:24,680 --> 00:03:29,230
+and at this point in the course I'm sure you
+are pretty able to come up with a solution
+
+50
+00:03:29,230 --> 00:03:29,879
+like this one:
+
+51
+00:03:29,879 --> 00:03:33,310
+you can define a recursive function <u>foreach</u> that
+has the two parameters:
+
+52
+00:03:33,310 --> 00:03:36,830
+the start value of the index, the end value
+of the index,
+
+53
+00:03:36,830 --> 00:03:44,519
+and then the function <u>f</u> which is passed
+the value of the index at each step.
+
+54
+00:03:44,519 --> 00:03:48,340
+We will not really comment on this code in
+particular here,
+
+55
+00:03:48,340 --> 00:03:51,200
+the only point is that it really does what
+you want:
+
+56
+00:03:51,200 --> 00:03:57,750
+if I do <u>foreach 1 10</u> and pass the printing
+function as a parameter,
+
+57
+00:03:57,750 --> 00:04:02,260
+I get exactly the integers from 1 to 10 printed
+on the standard output.
+
+58
+00:04:02,260 --> 00:04:05,610
+But you see, this is kind of cumbersome to
+read:
+
+59
+00:04:05,610 --> 00:04:10,780
+we would really like to be able to write sort
+of a for loop as in other languages.
+
+60
+00:04:10,780 --> 00:04:12,769
+Well the good news is you can do it,
+
+61
+00:04:12,769 --> 00:04:14,420
+there is syntax for doing this,
+
+62
+00:04:14,420 --> 00:04:20,009
+and actually you can do exactly the same by
+writing a more concise code like this one:
+
+63
+00:04:20,009 --> 00:04:25,560
+you see it's the typical for loop where you
+here have a variable for the loop initialized
+
+64
+00:04:25,560 --> 00:04:26,430
+to 1,
+
+65
+00:04:26,430 --> 00:04:27,660
+goes up to 10,
+
+66
+00:04:27,660 --> 00:04:30,710
+and then you have the body evaluated for each
+of the values.
+
+67
+00:04:30,710 --> 00:04:33,050
+The result is again the same.
+
+68
+00:04:33,050 --> 00:04:35,790
+The general structure is <u>for</u>,
+
+69
+00:04:35,790 --> 00:04:41,250
+then an identifier bound to an initial value
+<u>to</u> a final value <u>do</u> the expression of
+
+70
+00:04:41,250 --> 00:04:42,229
+the body of the loop,
+
+71
+00:04:42,229 --> 00:04:44,100
+and the final keyword <u>done</u>.
+
+72
+00:04:44,100 --> 00:04:52,340
+The look identifier <u>id</u> will take all integers
+values from <u>e1</u> to <u>e2</u> in turn but,
+
+73
+00:04:52,340 --> 00:04:54,979
+big difference with other programming languages,
+
+74
+00:04:54,979 --> 00:04:58,720
+you cannot change the content of this identifier:
+
+75
+00:04:58,720 --> 00:05:01,860
+you can hide it inside the body but you cannot
+modify it.
+
+76
+00:05:01,860 --> 00:05:08,949
+The loop of the body is evaluated for each
+of the values of <u>id</u> and does exactly what you want.
+
+77
+00:05:08,949 --> 00:05:15,870
+Now, as for types, the type of the for loop
+as a whole is a unit type as you have seen
+
+78
+00:05:15,870 --> 00:05:16,240
+here.
+
+79
+00:05:16,240 --> 00:05:20,550
+I have no value returned, only the side effects.
+
+80
+00:05:20,550 --> 00:05:25,460
+And also, the type of the loop body is expected
+to be unit,
+
+81
+00:05:25,460 --> 00:05:29,139
+otherwise again here the OCaml compiler will print a warning.
+
+82
+00:05:29,139 --> 00:05:34,370
+As always a warning means you can force the
+compiler to execute the program anyway, but
+
+83
+00:05:34,370 --> 00:05:37,229
+you have been warned.
+
+84
+00:05:37,229 --> 00:05:39,889
+There is an alternative form for the for loop:
+
+85
+00:05:39,889 --> 00:05:41,630
+you can go also backwards,
+
+86
+00:05:41,630 --> 00:05:45,250
+so when you do <u>for i = 10 downto 1</u>
+
+87
+00:05:45,250 --> 00:05:51,410
+what happens is that you are printing integers
+the other way around and of course know that
+
+88
+00:05:51,410 --> 00:05:55,110
+it behaves exactly like the other form of
+the loop but now we are going for the higher
+
+89
+00:05:55,110 --> 00:05:58,470
+value to the smaller one.
+
+90
+00:05:58,470 --> 00:06:03,449
+And finally, we can also write while loops,
+
+91
+00:06:03,449 --> 00:06:04,990
+the typical form is simply like this:
+
+92
+00:06:04,990 --> 00:06:09,930
+so we have <u>while</u>, the condition, <u>do</u>, the
+body of the loop, <u>done</u>.
+
+93
+00:06:09,930 --> 00:06:13,830
+So what happens is that the condition <u>e1</u>
+is evaluated
+
+94
+00:06:13,830 --> 00:06:19,380
+if it is true, then the loop body <u>e2</u> is
+evaluated, and the loop repeated again.
+
+95
+00:06:19,380 --> 00:06:22,940
+If the condition is false, then loop stops.
+
+96
+00:06:22,940 --> 00:06:26,150
+The type of the while loop again is unit.
+
+97
+00:06:26,150 --> 00:06:32,220
+And again here also the loop body is expected
+to be of type unit, otherwise you get a warning.
+
+98
+00:06:32,220 --> 00:06:39,789
+Well, finally let me remark that in some cases
+you may really want to use in the body of
+
+99
+00:06:39,789 --> 00:06:44,039
+the loop an expression that has not the unit
+type.
+
+100
+00:06:44,039 --> 00:06:52,110
+Well, there is a predefined function <u>ignore</u>
+which is of type <u>'a -> unit</u> that you can
+
+101
+00:06:52,110 --> 00:06:56,400
+use to wrap this value and transform them
+in something of value <u>()</u> and avoid the warning
+
+102
+00:06:56,400 --> 00:07:01,819
+but at this point your intention of ignoring
+this particular content as been made explicit.
+
+103
+00:07:01,819 --> 00:07:08,550
+To sum up, we have seen we can create sequences
+of expressions,
+
+104
+00:07:08,550 --> 00:07:12,830
+we can write for loops going up or going down,
+
+105
+00:07:12,830 --> 00:07:15,319
+we can write while loops,
+
+106
+00:07:15,319 --> 00:07:19,199
+and in all these situations the body of the
+loops, the intermediate expressions,
+
+107
+00:07:19,199 --> 00:07:24,030
+should all be of type <u>unit</u> or otherwise
+you should declare your intention by using
+
+108
+00:07:24,030 --> 00:07:25,949
+the <u>ignore</u> function.
+

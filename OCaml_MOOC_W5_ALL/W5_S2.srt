@@ -1,0 +1,461 @@
+1
+00:00:00,140 --> 00:00:06,850
+In this sequence, we will look at how we can
+get information in and out of an OCaml program.
+
+2
+00:00:06,850 --> 00:00:09,740
+But let me just first remind you something.
+
+3
+00:00:09,740 --> 00:00:17,390
+Up to now, we have been using the OCaml toplevel
+extensively, it is very handy.
+
+4
+00:00:17,390 --> 00:00:20,410
+It reads our program incrementaly phrase by
+phrase
+
+5
+00:00:20,410 --> 00:00:23,859
+and it prints the result of the execution
+of our programs.
+
+6
+00:00:23,859 --> 00:00:26,070
+That is fantastic because up to now
+
+7
+00:00:26,070 --> 00:00:32,489
+we could really do all this work without discovering
+a single input/output operation:
+
+8
+00:00:32,489 --> 00:00:35,390
+everything was done by the toplevel for us.
+
+9
+00:00:35,390 --> 00:00:41,030
+But in real programs, of course you need to
+be able to read and write to a file,
+
+10
+00:00:41,030 --> 00:00:44,469
+to a standard input, a standard output.
+
+11
+00:00:44,469 --> 00:00:49,590
+OCaml offers a rich set of I/O primitives.
+Now we will look at some of them here,
+
+12
+00:00:49,590 --> 00:00:55,079
+but first of all, we need to meet a strange
+type which is called the unit type,
+
+13
+00:00:55,079 --> 00:00:59,980
+which is very useful when you start doing
+operation that have side effects like
+
+14
+00:00:59,980 --> 00:01:01,210
+input/output operations.
+
+15
+00:01:01,210 --> 00:01:03,289
+So let's meet the unit type.
+
+16
+00:01:03,289 --> 00:01:09,060
+Look at this strange expression, open parenthesis
+and close parenthesis, and nothing else.
+
+17
+00:01:09,060 --> 00:01:18,800
+If we hit 'return', the system tells us that
+we have defined some value which is again
+
+18
+00:01:18,800 --> 00:01:24,400
+<u>()</u>, of a type we didn't know,
+which is called <u>unit</u>.
+
+19
+00:01:24,549 --> 00:01:33,430
+Well, this unit type is a typical type you
+find as input or as a result type with functions
+
+20
+00:01:33,430 --> 00:01:34,369
+with side-effets.
+
+21
+00:01:34,369 --> 00:01:44,000
+It has only one value, which we also call
+unit, and which is just written <u>()</u>.
+
+22
+00:01:44,000 --> 00:01:49,719
+That is a special syntax for the only value
+of this unit type.
+
+23
+00:01:49,719 --> 00:01:58,149
+This may look like a strange syntax for a
+unique value of a type, but it has precise
+
+24
+00:01:58,149 --> 00:01:59,719
+reasons to be there,
+
+25
+00:01:59,719 --> 00:02:03,079
+this will be clear just in a few slides.
+
+26
+00:02:03,079 --> 00:02:10,390
+Now that we have met this unit type, this
+<u>()</u>, it doesn't shock us too much anymore,
+
+27
+00:02:10,390 --> 00:02:13,620
+let's look at the functions for input and
+output.
+
+28
+00:02:13,620 --> 00:02:19,400
+The first one we can use is for performing
+simple output: printing an integer.
+
+29
+00:02:19,400 --> 00:02:23,709
+There is a function predefined for you which
+is called <u>print_int</u>,
+
+30
+00:02:23,709 --> 00:02:28,190
+the type is actually <u>int -> unit</u>, so what
+does it do?
+
+31
+00:02:28,190 --> 00:02:32,819
+It takes an interger in input, prints the
+integer on the standard output
+
+32
+00:02:32,819 --> 00:02:37,730
+and returns the single value <u>()</u> of the unit
+type.
+
+33
+00:02:37,730 --> 00:02:43,900
+So, for example let's print the integer 12345.
+
+34
+00:02:43,900 --> 00:02:49,069
+We hit 'return', this is the result.
+
+35
+00:02:49,069 --> 00:02:52,470
+To understand what is going on here in the
+standard output
+
+36
+00:02:52,470 --> 00:02:56,629
+is important to understand that the first
+thing that has happened
+
+37
+00:02:56,629 --> 00:02:59,989
+is that the printing function has really printed
+on the standard output
+
+38
+00:02:59,989 --> 00:03:05,879
+the number 12345 and just stopped there.
+
+39
+00:03:05,879 --> 00:03:11,519
+Just after that, the toplevel starts printing
+its own message,
+
+40
+00:03:11,519 --> 00:03:17,599
+which says basically that the evaluation is returning
+the value <u>()</u> of the unit type,
+
+41
+00:03:17,599 --> 00:03:21,440
+and there is no identifier bound to it, I
+mean the '- :'
+
+42
+00:03:21,440 --> 00:03:26,209
+We can also perform simple input operations,
+
+43
+00:03:26,209 --> 00:03:29,780
+there is a predefined function which is called
+<u>read_line</u> for you.
+
+44
+00:03:29,780 --> 00:03:37,019
+This is a type that says: takes a unit and
+gives you back a string.
+
+45
+00:03:37,019 --> 00:03:41,310
+What actually really happens is that this
+function waits for a input value of type unit,
+
+46
+00:03:41,310 --> 00:03:45,430
+there is juste one, I mean this <u>()</u>,
+
+47
+00:03:45,430 --> 00:03:51,129
+and as soon as it gets this value it read
+a line of characters from the standard input
+
+48
+00:03:51,129 --> 00:03:51,830
+as a string,
+
+49
+00:03:51,830 --> 00:03:54,790
+and returns it to us.
+
+50
+00:03:54,790 --> 00:03:57,879
+So for example let's try to read a line, now
+you write <u>read_line</u>,
+
+51
+00:03:57,879 --> 00:04:05,250
+you need to give a parameter of unit type,
+the only one we know is just <u>()</u>.
+
+52
+00:04:05,250 --> 00:04:11,140
+When we hit 'return', the system waits for
+our input, so I write "some text" here,
+
+53
+00:04:11,140 --> 00:04:17,540
+and as soon as I hit 'Enter', the result which
+I get from the system
+
+54
+00:04:17,540 --> 00:04:22,810
+is the string containing "some text", of type
+string.
+
+55
+00:04:22,810 --> 00:04:24,840
+I mean ,what happens really:
+
+56
+00:04:24,840 --> 00:04:28,440
+<u>read_line</u> receives the argument <u>()</u>,
+
+57
+00:04:28,440 --> 00:04:30,410
+starts reading from the standard input,
+
+58
+00:04:30,410 --> 00:04:34,130
+after we type "some text" and hit 'return',
+
+59
+00:04:34,130 --> 00:04:38,440
+the toplevel prints its message which says:
+the evaluation returns a value, a string,
+
+60
+00:04:38,440 --> 00:04:41,940
+of the string type,
+
+61
+00:04:41,940 --> 00:04:44,850
+and there is no identifer bound to it.
+
+62
+00:04:44,850 --> 00:04:50,570
+Very simple two situations: printing an integer
+or reading a line.
+
+63
+00:04:50,570 --> 00:04:54,850
+Now I think we are ready to understand the
+particular choice of the syntax here,
+
+64
+00:04:54,850 --> 00:04:59,510
+so it should be easy to see now why for the
+unique value of the unit type,
+
+65
+00:04:59,510 --> 00:05:03,560
+it has been chosen to use <u>()</u>.
+
+66
+00:05:03,560 --> 00:05:08,350
+Because <u>read_line</u> for example, the example
+I've shown before,
+
+67
+00:05:08,350 --> 00:05:14,910
+written this way really looks like a function
+with no arguments in other languages,
+
+68
+00:05:14,910 --> 00:05:19,110
+which you use for, for example, performing
+side effects.
+
+69
+00:05:19,110 --> 00:05:21,800
+That's very familiar for outsiders,
+
+70
+00:05:21,800 --> 00:05:25,480
+but for us now that we are learning this OCaml
+programming language,
+
+71
+00:05:25,480 --> 00:05:31,850
+we should remember that is really means the
+<u>read_line</u> function applied to one argument,
+
+72
+00:05:31,850 --> 00:05:37,450
+which happens to be of the unit type, so it
+happens to be written <u>()</u>.
+
+73
+00:05:37,450 --> 00:05:42,520
+Well, of course when we are starting to do
+input and output,
+
+74
+00:05:42,520 --> 00:05:45,240
+there are many other base types that can be
+printed,
+
+75
+00:05:45,240 --> 00:05:49,710
+so you have a function for printing characters,
+strings, floating points.
+
+76
+00:05:49,710 --> 00:05:54,560
+You have a functions for printing a newline,
+flushing the standard output,
+
+77
+00:05:54,560 --> 00:05:56,780
+and there is much much more available,
+
+78
+00:05:56,780 --> 00:06:00,050
+so you can manipulate standard input, standard output and standard error,
+
+79
+00:06:00,050 --> 00:06:01,810
+create, open and close files,
+
+80
+00:06:01,810 --> 00:06:03,450
+read and write on channels,
+
+81
+00:06:03,450 --> 00:06:06,820
+perform sophisticated operations like <u>scanf</u>...
+
+82
+00:06:06,820 --> 00:06:11,970
+This is beautiful in this language, <u>scanf</u>,
+unlike what happens in C, is really well-typed.
+
+83
+00:06:11,970 --> 00:06:15,630
+I do recommand that you look at the manual
+section of Pervasives
+
+84
+00:06:15,630 --> 00:06:17,890
+to get an idea on this kind of functions.
+
+85
+00:06:17,890 --> 00:06:19,970
+But a word of warning,
+
+86
+00:06:19,970 --> 00:06:24,720
+some of these functions make no sense when
+you are running them inside a browser,
+
+87
+00:06:24,720 --> 00:06:26,990
+like the exercise and environment we are providing
+to you,
+
+88
+00:06:26,990 --> 00:06:30,530
+and so they are not implemented in the toplevel
+running in your browser.
+
+89
+00:06:30,530 --> 00:06:36,190
+You should just stick to printing and reading
+lines.
+
+90
+00:06:36,190 --> 00:06:40,500
+To sum up, we have discovered the unit type,
+the input and output functions.
+
+91
+00:06:40,500 --> 00:06:45,590
+So unit type as soon as you see it, in general,
+you suspect there is some side effect going
+
+92
+00:06:45,590 --> 00:06:46,210
+on,
+
+93
+00:06:46,210 --> 00:06:49,710
+it is often used with functions with side-effects.
+
+94
+00:06:49,710 --> 00:06:54,930
+When you see something like <u>read_line ()</u>, coming
+from another programming language,
+
+95
+00:06:54,930 --> 00:06:57,700
+you could think this is a function with
+0 parameters.
+
+96
+00:06:57,700 --> 00:07:02,150
+It is really a function with one parameter that
+happens to be of the unit type.
+
+97
+00:07:02,150 --> 00:07:07,410
+And now, we know how to perform basic input/output
+operations,
+
+98
+00:07:07,410 --> 00:07:13,830
+but if you want to know more, do not hesitate
+in looking at the reference manual for more
+
+99
+00:07:13,830 --> 00:07:17,710
+information.
+

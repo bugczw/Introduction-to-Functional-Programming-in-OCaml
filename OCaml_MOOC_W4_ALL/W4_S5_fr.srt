@@ -1,0 +1,807 @@
+1
+00:00:00,140 --> 00:00:06,350
+Dans cette séquence, nous allons regarder le pliage
+d'un opérateur binaire sur les listes.
+
+2
+00:00:06,350 --> 00:00:11,660
+Dans la séquence précédente je vous ai expliqué
+comment on peut utiliser une fonction définie dans
+
+3
+00:00:11,660 --> 00:00:16,980
+la bibliothèque standard <u>List</u> pour appliquer une
+fonction unaire quelconque aux éléments d'une liste.
+
+4
+00:00:16,980 --> 00:00:19,460
+Dans cette opération sur une liste,
+
+5
+00:00:19,460 --> 00:00:23,400
+tous les éléments de la liste sont en fait
+considérés isolément,
+
+6
+00:00:23,400 --> 00:00:29,140
+ce qui, incidemment, en fait une opération
+très facile à paralléliser
+
+7
+00:00:29,140 --> 00:00:34,710
+et à exécuter sur plusieurs machines indépendamment
+jusqu'à ce que nous combinions les résultats.
+
+8
+00:00:34,710 --> 00:00:40,090
+Maintenant, alors que [map] applique une fonction
+unaire à tous les éléments d'une liste,
+
+9
+00:00:40,090 --> 00:00:43,530
+le pliage les combine au moyen d'un opérateur binaire.
+
+10
+00:00:43,530 --> 00:00:49,329
+Les choses deviennent cependant un peu plus compliquées
+lors de l'utilisation d'un opérateur binaire
+
+11
+00:00:49,329 --> 00:00:55,410
+puisqu'en fait, il y a fondamentalement deux
+façons différentes de plier un opérateur binaire
+
+12
+00:00:55,410 --> 00:00:56,739
+sur une liste.
+
+13
+00:00:56,739 --> 00:00:59,660
+L'un est appelé <u>fold_left</u>,
+l'autre est <u>fold_right</u>
+
+14
+00:00:59,660 --> 00:01:03,579
+comme on va le voir sur les prochaines diapositives.
+
+15
+00:01:03,579 --> 00:01:07,909
+Commençons avec l'opération <u>List.fold_right</u>.
+
+16
+00:01:07,909 --> 00:01:12,119
+Ce qu'est cette opération est mieux expliqué
+par le schéma que vous voyez en bas
+
+17
+00:01:12,119 --> 00:01:12,840
+de la diapositive.
+
+18
+00:01:12,840 --> 00:01:19,939
+En fait, ici, on utilise la fonction binaire <u>f</u>
+qu'on applique dans un ordre que l'on pourrait
+
+19
+00:01:19,939 --> 00:01:25,450
+penser naïvement être l'ordre naturel des
+applications de fonction,
+
+20
+00:01:25,450 --> 00:01:31,509
+puisque <u>f</u> serait d'abord appliquée au premier
+argument de la liste, puis au pliage
+
+21
+00:01:31,509 --> 00:01:34,570
+du reste de la liste.
+
+22
+00:01:34,570 --> 00:01:39,759
+On l'appelle <u>fold_right</u> parce qu'on peut
+imaginer cette application de fonction comme
+
+23
+00:01:39,759 --> 00:01:41,799
+un arbre de calcul
+
+24
+00:01:41,799 --> 00:01:45,240
+qui penche du côté droit de la diapositive.
+
+25
+00:01:45,240 --> 00:01:48,170
+Maintenant, que devrait être le type de cette fonction ?
+
+26
+00:01:48,170 --> 00:01:55,070
+Eh bien, les alpha seraient le type des éléments
+de notre liste, et les bêtas seraient le type du
+
+27
+00:01:55,070 --> 00:01:57,579
+résultat de la fonction <u>f</u>
+
+28
+00:01:57,579 --> 00:02:03,570
+ce qui signifie que <u>fold_right</u> prendrait comme
+premier argument la fonction binaire qui devrait
+
+29
+00:02:03,570 --> 00:02:04,810
+être de type <u>'a</u>,
+
+30
+00:02:04,810 --> 00:02:06,520
+un élément de la liste,
+
+31
+00:02:06,520 --> 00:02:11,489
+<u>'b</u>, quelque chose qui est renvoyé à partir de <u>f</u>
+lui-même et donne le résultat <u>'b</u>
+
+32
+00:02:11,489 --> 00:02:13,860
+ainsi ce serait le type fonctionnel ;
+
+33
+00:02:13,860 --> 00:02:16,099
+il serait appliqué à une <u>'a list</u>
+
+34
+00:02:16,099 --> 00:02:19,260
+et enfin, nous avons aussi besoin d'une valeur
+qui est utilisée à la fin,
+
+35
+00:02:19,260 --> 00:02:24,430
+et qui est toujours nécessaire puisque notre opération
+de pliage peut être appliquée à une liste vide
+
+36
+00:02:24,430 --> 00:02:29,440
+et ce qu'on met à la fin est le résultat qui est
+renvoyé dans le cas d'une application à la liste vide.
+
+37
+00:02:29,440 --> 00:02:37,620
+On a donc une constante à la fin, qui est fournie et
+qui est utilisée comme dernier argument de l'application
+
+38
+00:02:37,620 --> 00:02:39,000
+de <u>f</u>.
+
+39
+00:02:39,000 --> 00:02:47,450
+Donc, pour comprendre <u>fold_right</u>, juste garder
+cette image à l'esprit pour expliquer ce que fait cette
+
+40
+00:02:47,450 --> 00:02:50,420
+opération.
+
+41
+00:02:50,420 --> 00:02:57,120
+Essayons maintenant notre définition de la fonction
+<u>fold_right</u> que j'ai répétée ici
+
+42
+00:02:57,120 --> 00:03:01,799
+et comme on peut le voir le type de cette fonction
+est exactement le même que ce que je vous ai expliqué
+
+43
+00:03:01,799 --> 00:03:03,549
+sur la diapositive précédente.
+
+44
+00:03:03,549 --> 00:03:09,769
+Maintenant, on peut utiliser cette fonction <u>fold_right</u>
+et l'appliquer à une fonction intéressante et
+
+45
+00:03:09,769 --> 00:03:11,280
+la liste et voir ce que ça donne.
+
+46
+00:03:11,280 --> 00:03:17,390
+On a donc ici, par exemple, <u>fold_right</u> appliqué
+une première fonction qui est juste l'opération
+
+47
+00:03:17,390 --> 00:03:19,140
+cons sur les listes,
+
+48
+00:03:19,140 --> 00:03:21,090
+une liste d'entiers et une liste vide.
+
+49
+00:03:21,090 --> 00:03:26,230
+Ce qu'on obtient, dans ce cas, est en fait
+exactement la même liste.
+
+50
+00:03:26,230 --> 00:03:31,909
+Pour comprendre pourquoi c'est le cas,
+revenons à la diapositive précédente et regardons
+
+51
+00:03:31,909 --> 00:03:32,950
+l'image
+
+52
+00:03:32,950 --> 00:03:38,000
+que je vous ai donnée qui explique dans
+quel ordre la fonction <u>f</u> est appliquée à
+
+53
+00:03:38,000 --> 00:03:38,480
+la liste,
+
+54
+00:03:38,480 --> 00:03:42,870
+et quand vous regardez cette image, vous
+comprenez pourquoi vous obtenez exactement le même
+
+55
+00:03:42,870 --> 00:03:45,830
+résultat pour cette application.
+
+56
+00:03:45,830 --> 00:03:52,810
+Une application plus intéressante de <u>List.fold_right</u>
+est de plier l'opération <u>(+)</u> sur une liste.
+
+57
+00:03:52,810 --> 00:03:57,340
+Vous vous attendez à ce que cela calcule la somme de
+la liste.
+
+58
+00:03:57,340 --> 00:04:01,049
+Le dernier argument qu'on doit fournir
+est l'argument qui correspond au cas
+
+59
+00:04:01,049 --> 00:04:02,459
+d'une liste vide
+
+60
+00:04:02,459 --> 00:04:05,349
+et la somme d'une liste vide devrait bien sûr
+être égale à zéro,
+
+61
+00:04:05,349 --> 00:04:09,849
+et c'est pourquoi on doit donner ici comme dernier
+argument la valeur zéro.
+
+62
+00:04:09,849 --> 00:04:16,110
+Donc, si on fait cette application, on obtient bien
+dans notre cas la somme de la liste <u>[1; 2; 3; 4]</u>.
+
+63
+00:04:16,110 --> 00:04:16,980
+
+
+64
+00:04:16,980 --> 00:04:20,670
+De même pour la multiplication, ainsi dans le cas
+de la multiplication,
+
+65
+00:04:20,670 --> 00:04:26,110
+ce qu'on devrait obtenir pour une liste vide est
+bien entendu la valeur 1
+
+66
+00:04:26,110 --> 00:04:33,350
+et c'est pourquoi on doit donner ici 1 comme
+troisième argument à cette application de <u>fold_right</u>,
+
+67
+00:04:33,350 --> 00:04:38,540
+et cela nous permet de calculer le produit
+de tous les éléments de la liste <u>[1; 2; 3; 4]</u>
+
+68
+00:04:38,540 --> 00:04:41,540
+qui est 24.
+
+69
+00:04:41,540 --> 00:04:45,790
+Pour généraliser la première application de
+<u>fold_right</u>, que je vous ai montrée,
+
+70
+00:04:45,790 --> 00:04:51,780
+on peut même définir l'opération de concaténation
+en utilisant <u>fold_right</u>.
+
+71
+00:04:51,780 --> 00:04:56,350
+Tout ce qu'on doit changer pour cette troisième
+application de <u>fold_right</u> c'est
+
+72
+00:04:56,350 --> 00:05:02,600
+le troisième argument, qui avant
+était la liste vide, par la liste qui
+
+73
+00:05:02,600 --> 00:05:06,800
+est concaténée à droite de la première liste.
+
+74
+00:05:06,800 --> 00:05:14,290
+Donc, si on envoie cette application au toplevel,
+on voit d'abord que le type de cela
+
+75
+00:05:14,290 --> 00:05:17,390
+est ce qu'on devrait attendre de l'opération
+de concaténation,
+
+76
+00:05:17,390 --> 00:05:24,030
+et si on applique cette opération à deux
+listes, on voit que ce que l'on obtient
+
+77
+00:05:24,030 --> 00:05:29,150
+est exactement ce que l'on a prévu.
+
+78
+00:05:29,150 --> 00:05:33,410
+Contrairement à l'opération de pliage à droite,
+l'opération de pliage à gauche a une forme
+
+79
+00:05:33,410 --> 00:05:35,780
+complètement différente de son arbre de calcul.
+
+80
+00:05:35,780 --> 00:05:38,650
+En fait, comme son nom l'indique, elle accumule
+à gauche.
+
+81
+00:05:38,650 --> 00:05:41,970
+Essayons de comprendre ce qu'est le type de cette
+fonction,
+
+82
+00:05:41,970 --> 00:05:46,180
+ici, <u>'b</u> serait le type des éléments
+de la liste
+
+83
+00:05:46,180 --> 00:05:51,430
+et <u>'a</u> serait le type du résultat
+de la fonction <u>f</u>.
+
+84
+00:05:51,430 --> 00:05:52,850
+En conséquence, qu'est-ce qu'on obtient ?
+
+85
+00:05:52,850 --> 00:06:00,190
+Eh bien, notre fonction elle-même serait d'abord
+appliquée à un argument qui est du même type que
+
+86
+00:06:00,190 --> 00:06:02,670
+le résultat de <u>f</u>, qui est <u>'a</u>,
+
+87
+00:06:02,670 --> 00:06:04,760
+puis à un élément de la liste qui est <u>'b</u>
+
+88
+00:06:04,760 --> 00:06:06,570
+et bien sûr elle renverrait un <u>'a</u>.
+
+89
+00:06:06,570 --> 00:06:12,790
+Donc on a pour argument de la fonction le type
+<u>'a ->' b -> 'a</u>,
+
+90
+00:06:12,790 --> 00:06:18,450
+on a un type <u>'a</u> pour la constante
+qui est utilisée dans le cas de la liste vide
+
+91
+00:06:18,450 --> 00:06:25,980
+et enfin, on a la liste en argument qui
+doit naturellement être de type <u>'b list</u>.
+
+92
+00:06:25,980 --> 00:06:29,200
+Maintenant, regardons l'opération <u>fold_left</u>
+
+93
+00:06:29,200 --> 00:06:35,810
+que j'ai répétée ici, on voit donc dans le
+toplevel que le type est précisément ce que je vous
+
+94
+00:06:35,810 --> 00:06:38,030
+ai expliqué dans la diapositive précédente.
+
+95
+00:06:38,030 --> 00:06:42,900
+Maintenant, appliquons cette opération <u>fold_left</u>
+à des arguments.
+
+96
+00:06:42,900 --> 00:06:49,070
+Donc, on calcule ici la somme d'une liste, mais cette
+fois avec <u>fold_left</u> au lieu de <u>fold_right</u>
+
+97
+00:06:49,070 --> 00:06:52,040
+et on constate que l'ordre des arguments
+est différent maintenant.
+
+98
+00:06:52,040 --> 00:06:56,170
+C'est en fait pour ressembler aux
+arbres de calcul que je vous ai montré
+
+99
+00:06:56,170 --> 00:07:00,500
+sur les diapositives précédentes pour <u>fold_right</u>
+et pour <u>fold_left</u>.
+
+100
+00:07:00,500 --> 00:07:02,830
+Donc, pour <u>fold_left</u> ce doit être dans ce sens :
+
+101
+00:07:02,830 --> 00:07:04,680
+d'abord la première opération binaire
+
+102
+00:07:04,680 --> 00:07:07,150
+puis la valeur qui correspond au résultat
+sur la liste vide
+
+103
+00:07:07,150 --> 00:07:08,380
+et enfin la liste.
+
+104
+00:07:08,380 --> 00:07:13,650
+Donc, quand on envoie cela au toplevel, on
+obtient à nouveau la somme des éléments de
+
+105
+00:07:13,650 --> 00:07:15,390
+la liste <u>[1; 2; 3; 4]</u>.
+
+106
+00:07:15,390 --> 00:07:24,030
+Du fait que l'opération <u>fold_left</u>
+effectue le pliage de l'opération binaire
+
+107
+00:07:24,030 --> 00:07:26,930
+dans un ordre différent sur la liste
+
+108
+00:07:26,930 --> 00:07:32,250
+par rapport à l'opération <u>fold_right</u>, on peut
+maintenant utiliser l'opération <u>fold_left</u>
+
+109
+00:07:32,250 --> 00:07:33,160
+de manière à définir
+
+110
+00:07:33,160 --> 00:07:35,220
+le renversement d'une liste.
+
+111
+00:07:35,220 --> 00:07:43,770
+Pour ce faire, on passerait la fonction
+qui prend le résultat précédent <u>x</u>, un élément
+
+112
+00:07:43,770 --> 00:07:44,570
+<u>y</u>
+
+113
+00:07:44,570 --> 00:07:49,410
+et qui renvoie la liste avec <u>y</u>
+mis en tête de <u>x</u>.
+
+114
+00:07:49,410 --> 00:07:51,780
+Pour comprendre comment cela fonctionne,
+
+115
+00:07:51,780 --> 00:07:54,590
+encore une fois, revenir à la diapositive précédente,
+
+116
+00:07:54,590 --> 00:07:57,190
+regarder le schéma que je vous ai montré
+
+117
+00:07:57,190 --> 00:08:01,530
+et qui explique l'ordre dans lequel les
+les opérations sont appliquées.
+
+118
+00:08:01,530 --> 00:08:08,160
+On pourrait donc définir l'opération renverse
+sur les listes de cette façon
+
+119
+00:08:08,160 --> 00:08:13,720
+et on peut déjà voir que son type est en effet
+<u>'a list ->' a list</u>,
+
+120
+00:08:13,720 --> 00:08:18,240
+et si on applique cette fonction à une
+liste d'entiers donnée
+
+121
+00:08:18,240 --> 00:08:23,160
+on voit en fait qu'elle renverse bien
+l'ordre de la liste.
+
+122
+00:08:23,160 --> 00:08:31,440
+Maintenant, voyons comment on peut utiliser
+l'opération de pliage pour définir, par exemple,
+
+123
+00:08:31,440 --> 00:08:34,200
+l'opération de produit scalaire de deux vecteurs
+d'entiers.
+
+124
+00:08:34,200 --> 00:08:39,560
+Donc, cette équation vous rappelle ce qu'est le
+produit scalaire de deux vecteurs.
+
+125
+00:08:39,560 --> 00:08:44,640
+Afin de calculer un tel produit scalaire,
+
+126
+00:08:44,640 --> 00:08:50,310
+ce qu'on a à faire est d'abord de calculer
+le produit deux à deux des éléments de deux
+
+127
+00:08:50,310 --> 00:08:54,580
+listes ce qui donnerait une liste d'entiers
+
+128
+00:08:54,580 --> 00:08:59,490
+qui doit finalement être sommée dans l'ordre
+pour obtenir le résultat.
+
+129
+00:08:59,490 --> 00:09:06,490
+Maintenant, enfin, on peut mettre ensemble les
+opérations mathématiques qu'on a vues
+
+130
+00:09:06,490 --> 00:09:11,060
+et l'opération de pliage pour définir de façon très
+élégante et concise
+
+131
+00:09:11,060 --> 00:09:16,880
+l'opération de calcul du produit scalaire
+de vecteurs d'entiers.
+
+132
+00:09:16,880 --> 00:09:22,840
+Pour calculer le produit scalaire de deux entiers,
+on utiliserait d'abord l'opération <u>List.map2</u>
+
+133
+00:09:22,840 --> 00:09:30,260
+afin de faire une multiplication 2 à 2
+des éléments des deux vecteurs,
+
+134
+00:09:30,260 --> 00:09:36,560
+puis on sommerait le résultat en utilisant l'opération
+<u>List.fold_left</u> vue dans l'exemple
+
+135
+00:09:36,560 --> 00:09:38,140
+précédent.
+
+136
+00:09:38,140 --> 00:09:43,110
+Cela nous donne une définition de la fonction
+produit scalaire de deux vecteurs qui est écrite
+
+137
+00:09:43,110 --> 00:09:44,620
+ici
+
+138
+00:09:44,620 --> 00:09:49,750
+et vous voyez bien que c'est une fonction
+qui prend deux listes d'entiers et renvoie une
+
+139
+00:09:49,750 --> 00:09:49,980
+liste d'entiers.
+
+140
+00:09:49,980 --> 00:09:56,260
+Donc, appliquons cette fonction à ces
+deux vecteurs
+
+141
+00:09:56,260 --> 00:10:03,140
+On obtient en effet un résultat de 44, et vous
+pouvez vérifier très facilement que c'est exactement
+
+142
+00:10:03,140 --> 00:10:07,530
+le résultat attendu.
+
+143
+00:10:07,530 --> 00:10:11,080
+Pour finir, on a une quatrième application différente
+du pliage,
+
+144
+00:10:11,080 --> 00:10:14,840
+avec une autre fonction peut-être
+un peu plus intéressante
+
+145
+00:10:14,840 --> 00:10:16,990
+et qui est passée comme argument de fonction.
+
+146
+00:10:16,990 --> 00:10:22,880
+L'idée ici est qu'on aimerait
+compter le nombre d'éléments qui satisfont
+
+147
+00:10:22,880 --> 00:10:25,010
+un certain critère.
+
+148
+00:10:25,010 --> 00:10:31,010
+L'idée est maintenant de faire du critère
+un paramètre de cette fonction qui, bien sûr
+
+149
+00:10:31,010 --> 00:10:33,090
+serait un paramètre fonctionnel.
+
+150
+00:10:33,090 --> 00:10:36,310
+Donc, on obtient une fonction appelée <u>countif</u>,
+
+151
+00:10:36,310 --> 00:10:40,940
+<u>p</u> serait le critère qui est une
+fonction <u>'a -> bool</u>,
+
+152
+00:10:40,940 --> 00:10:46,890
+et <u>l</u> serait une liste d'éléments dont
+on aimerait compter les éléments satisfaisant
+
+153
+00:10:46,890 --> 00:10:47,470
+<u>p</u>.
+
+154
+00:10:47,470 --> 00:10:51,260
+On peut y arriver en utilisant l'opération <u>fold_left</u>
+
+155
+00:10:51,260 --> 00:10:57,670
+puisque la fonction qu'on plie sur la liste est
+la fonction qui prend ce qu'on a
+
+156
+00:10:57,670 --> 00:10:58,580
+comptabilisé jusqu'à présent
+
+157
+00:10:58,580 --> 00:11:00,690
+et l'élément suivant de la liste
+
+158
+00:11:00,690 --> 00:11:04,400
+et si l'élément de la liste vérifie le
+critère <u>p</u>
+
+159
+00:11:04,400 --> 00:11:07,440
+alors elle renvoie le compteur plus 1
+
+160
+00:11:07,440 --> 00:11:10,900
+sinon elle renvoie le compteur lui-même.
+
+161
+00:11:10,900 --> 00:11:14,900
+Dans le cas d'une liste vide, bien sûr, on
+compterait 0 élément.
+
+162
+00:11:14,900 --> 00:11:21,270
+Ainsi, le type de cette fonction serait...
+
+163
+00:11:21,270 --> 00:11:25,610
+eh bien, on a un premier argument qui est le
+critère qui est une fonction <u>'a -> bool</u>
+
+164
+00:11:25,610 --> 00:11:27,730
+puis on prend une <u>'a list</u>
+
+165
+00:11:27,730 --> 00:11:30,930
+et on renvoie une valeur entière comme résultat.
+
+166
+00:11:30,930 --> 00:11:31,540
+Par exemple,
+
+167
+00:11:31,540 --> 00:11:36,580
+appliquons cette fonction <u>countif</u> à la
+fonction qui utilise le critère d'être
+
+168
+00:11:36,580 --> 00:11:37,910
+une valeur positive
+
+169
+00:11:37,910 --> 00:11:43,810
+appliquée à une liste mélangeant des éléments
+entiers positifs et négatifs
+
+170
+00:11:43,810 --> 00:11:46,060
+Quand on calcule cette application
+
+171
+00:11:46,060 --> 00:11:51,790
+on constate en effet qu'il y a exactement
+deux valeurs de cette liste qui sont strictement
+
+172
+00:11:51,790 --> 00:11:54,380
+positives.
+
+173
+00:11:54,380 --> 00:11:59,130
+Comme toujours, vous pouvez apprendre beaucoup plus sur
+les listes et les fonctions d'ordre supérieur qui sont
+
+174
+00:11:59,130 --> 00:12:00,650
+définies dans ce module
+
+175
+00:12:00,650 --> 00:12:03,490
+dans le manuel OCaml, il suffit de regarder dans
+la bibliothèque standard
+
+176
+00:12:03,490 --> 00:12:09,440
+où vous trouverez la description du module <u>List</u>.

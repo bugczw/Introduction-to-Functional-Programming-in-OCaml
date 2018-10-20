@@ -1,0 +1,410 @@
+1
+00:00:00,199 --> 00:00:05,390
+In this sequence we will see partial application
+of functions which is in fact one of the interesting
+
+2
+00:00:05,390 --> 00:00:11,080
+and surprising features of OCaml. What does
+it mean? Well, as I have explained to you
+
+3
+00:00:11,080 --> 00:00:15,400
+on the previous sequence when you write down
+the definition of a function with several
+
+4
+00:00:15,400 --> 00:00:22,400
+arguments in the form for instance <u>let f1
+= fun x y -> ...</u> some body expression then this
+
+5
+00:00:22,400 --> 00:00:29,760
+is precisely the same as defining <u>f</u> as a function
+which takes first an <u>x</u> and returns another
+
+6
+00:00:29,760 --> 00:00:37,750
+function which takes <u>y</u> and finally returns
+the body <u>exp</u>. Now, since both definitions
+
+7
+00:00:37,750 --> 00:00:42,940
+are precisely the same thing, and since in
+the second form we see that this function
+
+8
+00:00:42,940 --> 00:00:48,750
+can be applied to one argument only, the same
+must be true for the first definition. And
+
+9
+00:00:48,750 --> 00:00:55,149
+this is precisely partial function application.
+So <u>f1</u> which looks to be a function which mandatorily
+
+10
+00:00:55,149 --> 00:01:02,630
+expects two arguments can in fact be applied
+to one argument only. And what we get in this
+
+11
+00:01:02,630 --> 00:01:08,429
+case? Well as you can see very easily when
+you look at the equivalent form of this application,
+
+12
+00:01:08,429 --> 00:01:14,530
+what you get is a function which takes the
+second argument <u>y</u> and finally returns
+
+13
+00:01:14,530 --> 00:01:16,240
+the body.
+
+14
+00:01:16,240 --> 00:01:23,249
+Now let's see how partial function application
+works on a small toy example. Here we first
+
+15
+00:01:23,249 --> 00:01:29,859
+define the function <u>f1</u> which takes three
+arguments. Please observe the types of the
+
+16
+00:01:29,859 --> 00:01:35,729
+function that we obtain now so we see on the
+type that <u>f1</u> expects three arguments which
+
+17
+00:01:35,729 --> 00:01:41,810
+are integers and returns an integer value.
+Now we can do a partial application of the
+
+18
+00:01:41,810 --> 00:01:48,759
+function <u>f1</u> to one argument only and we will
+call the result <u>f2</u>. What we obtain here
+
+19
+00:01:48,759 --> 00:01:54,880
+is now a function which takes only two arguments
+and returns an integer which can be read as
+
+20
+00:01:54,880 --> 00:02:00,469
+the function <u>f1</u> where we have already applied
+one argument but remaining two others missing.
+
+21
+00:02:00,469 --> 00:02:06,189
+Now we do precisely the same : we take the
+function <u>f2</u>, apply it to an integer argument
+
+22
+00:02:06,189 --> 00:02:12,370
+and we call the result of this <u>f3</u>. So what
+you obtain now is a function <u>f3</u> which takes
+
+23
+00:02:12,370 --> 00:02:18,110
+only one argument : the last argument of <u>f1</u>
+which still is missing and returns an integer
+
+24
+00:02:18,110 --> 00:02:24,890
+value. And finally, when we take this function
+<u>f3</u> and apply it finally to an integer value
+
+25
+00:02:24,890 --> 00:02:31,540
+we obtain as expected the value 9 which would
+have been the application of function <u>f1</u> to
+
+26
+00:02:31,540 --> 00:02:37,180
+1, 2 and 4 in the first place.
+
+27
+00:02:37,180 --> 00:02:42,519
+Before I can explain to you why partial function
+application is actually a very useful feature
+
+28
+00:02:42,519 --> 00:02:47,140
+in functional programming let's step back
+a little bit and look at what happens precisely
+
+29
+00:02:47,140 --> 00:02:53,329
+when you apply a function expression to an
+argument expression. Well, you would first
+
+30
+00:02:53,329 --> 00:02:59,159
+evaluate both expressions: the function expression
+and the argument expression and then you take
+
+31
+00:02:59,159 --> 00:03:04,819
+the body of the function, <u>e</u> in our example,
+and you evaluate it in an environment, in
+
+32
+00:03:04,819 --> 00:03:11,450
+a context which contains the previous context
+augmented with the binding of the formal parameter
+
+33
+00:03:11,450 --> 00:03:15,780
+<u>x</u> to the actual parameter which is the value
+of <u>a</u>.
+
+34
+00:03:15,780 --> 00:03:21,129
+Here it is very important to note that whenever
+you do an evaluation the fact of having
+
+35
+00:03:21,129 --> 00:03:28,159
+a functional arrow in fact blocks any evaluation,
+which means that you never have any evaluation
+
+36
+00:03:28,159 --> 00:03:39,260
+below a functional arrow. And this I will
+have to show to you on the following example.
+
+37
+00:03:39,260 --> 00:03:44,430
+Now I would like to demonstrate to you that
+indeed no computation ever takes place in
+
+38
+00:03:44,430 --> 00:03:50,920
+OCaml below functional abstraction. To show
+this to you let's look at the function <u>f1</u>,
+
+39
+00:03:50,920 --> 00:03:57,489
+<u>f1</u> takes two arguments and then as soon as
+we will evaluate <u>f1</u> on its two arguments it
+
+40
+00:03:57,489 --> 00:04:05,249
+will raise an error since we try to do a division
+by zero. So, let's pass this to the toplevel.
+
+41
+00:04:05,249 --> 00:04:08,489
+So fat the toplevel has not detected this
+kind of error of course because it cannot know
+
+42
+00:04:08,489 --> 00:04:14,939
+and it indicates just the right type <u>int
+-> int -> int</u>. Now, let's do a partial application.
+
+43
+00:04:14,939 --> 00:04:22,220
+A priori we could expect that as soon as we
+give the value of <u>x</u> then we could perhaps
+
+44
+00:04:22,220 --> 00:04:28,520
+already do an evaluation of <u>x</u> divided by zero
+and raise the error. This will not happen,
+
+45
+00:04:28,520 --> 00:04:34,010
+why? Because this calculation is still protected
+by the functional abstraction which is behind
+
+46
+00:04:34,010 --> 00:04:40,670
+the <u>fun y</u> expecting the second argument.
+So when we pass this to the toplevel we just
+
+47
+00:04:40,670 --> 00:04:45,690
+obtain a new function which still expects
+<u>y</u> and this is why we have here a function
+
+48
+00:04:45,690 --> 00:04:50,560
+which takes still an integer and returns an
+integer value.
+
+49
+00:04:50,560 --> 00:04:57,500
+Only then we apply now this function <u>f2</u> to
+its last, final argument, say 42. The real
+
+50
+00:04:57,500 --> 00:05:03,140
+calculation takes place and then we obtain
+indeed a runtime error.
+
+51
+00:05:04,340 --> 00:05:10,380
+Once we have understood what is evaluated and what is not evaluated
+in partial evaluation we can now use this
+
+52
+00:05:10,390 --> 00:05:16,640
+knowledge in order to optimize our function
+to take advantage of partial evaluation. Sometimes
+
+53
+00:05:16,640 --> 00:05:22,310
+it is in fact possible that a function does
+already part of its work when only some of
+
+54
+00:05:22,310 --> 00:05:28,360
+its first arguments are provided. If this
+is the case then you have in fact to move
+
+55
+00:05:28,360 --> 00:05:35,300
+this part of the calculation out of the functional
+arrow to calculate it before you go inside
+
+56
+00:05:35,300 --> 00:05:41,640
+the next functional abstraction. This is demonstrated
+by the following example.
+
+57
+00:05:43,740 --> 00:05:51,520
+So as we have learned now there is no computation taking place below
+functional abstraction. This is something
+
+58
+00:05:51,530 --> 00:05:56,580
+a little bit annoying because sometimes you
+would like to take advantage of partial evaluation
+
+59
+00:05:56,580 --> 00:06:04,130
+and already do some part of the computation
+when we only have parts of the arguments passed
+
+60
+00:06:04,130 --> 00:06:09,430
+to the function. So let's for instance look
+at this definition of the function <u>egal</u>
+
+61
+00:06:09,430 --> 00:06:15,020
+which is supposed to compare two lists up to
+order. Now of course the most efficient way
+
+62
+00:06:15,020 --> 00:06:23,870
+to do this is take the two lists, sort both
+list and then compare the results. So this
+
+63
+00:06:23,870 --> 00:06:29,340
+is the definition which we have here, and
+as we can see, we obtain here a polymorphic
+
+64
+00:06:29,340 --> 00:06:35,750
+function which takes two lists of elements
+of the same type and returns a boolean value.
+
+65
+00:06:35,750 --> 00:06:44,110
+Now we might use the partial application because maybe we want to compare many lists to one single
+
+66
+00:06:44,110 --> 00:06:51,060
+fixed list, so it makes sense to do a partial
+application to apply our function <u>egal</u> already
+
+67
+00:06:51,060 --> 00:06:57,700
+to the first list which should remain the
+same for all further applications. So if you
+
+68
+00:06:57,700 --> 00:07:02,840
+do this, according to our principle of partial
+application we obtain a function which takes
+
+69
+00:07:02,840 --> 00:07:08,030
+another list, in this case we know it must
+be an integer list and returns a boolean and
+
+70
+00:07:08,030 --> 00:07:16,040
+we can take this function now and apply it
+to another list and observe the result.
+
+71
+00:07:16,040 --> 00:07:23,500
+So this looks fine, however since we know
+now that in reality no computation takes place
+
+72
+00:07:23,500 --> 00:07:30,590
+under function abstraction we also know that
+this doesn't give us any advantage in efficiency.
+
+73
+00:07:30,590 --> 00:07:35,780
+In fact what we would like now to have is
+that as soon as we give the first argument
+
+74
+00:07:35,780 --> 00:07:42,710
+we can already once and for all sort this first
+argument and then once we obtain the second
+
+75
+00:07:42,710 --> 00:07:49,860
+argument sort only the second argument and
+compare the result to the sorted first argument.
+
+76
+00:07:49,860 --> 00:07:54,770
+If we want this then we have to change the
+way our definition is defined and pull the
+
+77
+00:07:54,770 --> 00:08:00,530
+sorting, the calculation of the first parameter
+only out of the functional abstraction. And
+
+78
+00:08:00,530 --> 00:08:07,560
+this is the form which is now written here: if we pass this now to our toplevel we
+
+79
+00:08:07,560 --> 00:08:12,790
+obtain of course a function exactly of the
+same type, it's just that the calculation
+
+80
+00:08:12,790 --> 00:08:20,260
+can be done already a little bit earlier only
+on the first parameter. So we can do now exactly
+
+81
+00:08:20,260 --> 00:08:25,570
+the same kind of application: first do a
+partial application of our new function to
+
+82
+00:08:25,570 --> 00:08:33,520
+a first list and apply the result to a second
+list and we see that it behaves precisely
+
+83
+00:08:33,520 --> 00:08:36,920
+the same.
+

@@ -1,0 +1,189 @@
+1
+00:00:08,059 --> 00:00:12,070
+Bienvenue dans cette nouvelle séquence du cours
+d'introduction à la programmation fonctionelle
+en OCaml.
+
+2
+00:00:12,070 --> 00:00:16,090
+Il s'agit de la semaine 5, et
+cette semaine, nous découvrons tous les
+
+3
+00:00:16,090 --> 00:00:18,420
+traits impératifs du langage OCaml.
+
+4
+00:00:18,420 --> 00:00:22,640
+En réalité, OCaml est un langage fonctionnel.
+
+5
+00:00:22,640 --> 00:00:26,410
+Nous avons vu comment faire de nombreuses
+choses avec, jusqu'à maintenant,
+
+6
+00:00:26,410 --> 00:00:32,710
+vous avez peut-être remarqué que
+nous avons tout fait en utilisant seulement
+des structures de données
+
+7
+00:00:32,710 --> 00:00:35,390
+qui sont immutables (on ne peut pas les modifier),
+
+8
+00:00:35,390 --> 00:00:39,350
+des identifiants pour les valeurs,
+qui ne sont en fait que des noms vers
+des valeurs
+
+9
+00:00:39,350 --> 00:00:40,450
+que vous ne pouvez pas changer ;
+
+10
+00:00:40,450 --> 00:00:44,899
+il n'y a pas non plus de modifications
+en place (pas de variables, pas de cellules mémoire).
+
+11
+00:00:44,899 --> 00:00:50,270
+Ensuite, vous avez les fonctions pures,
+fonctions qui n'effectuent absolument aucun effet de bord.
+
+12
+00:00:50,270 --> 00:00:55,649
+Également, le flot de contrôle
+n'est pas altéré.
+
+13
+00:00:55,649 --> 00:01:00,050
+Avec ce seul fragment du langage,
+nous pouvons aller très loin,
+
+14
+00:01:00,050 --> 00:01:02,430
+en faisant donc de la programmation fonctionnelle pure ;
+
+15
+00:01:02,430 --> 00:01:05,089
+souvenez-vous de la thèse de Church,
+on peut programmer ce que l'on
+
+16
+00:01:05,089 --> 00:01:05,970
+souhaite.
+
+17
+00:01:05,970 --> 00:01:11,180
+Tout de même, il y a des situations pour
+lesquelles des traits impératifs peuvent être utiles :
+
+18
+00:01:11,180 --> 00:01:15,970
+pour être plus efficace en place,
+plus rapide en exécution.
+
+19
+00:01:15,970 --> 00:01:19,960
+OCaml est un langage de programmation fonctionnelle
+
+20
+00:01:19,960 --> 00:01:21,780
+qui propose plusieurs fonctionnalités impératives.
+
+21
+00:01:21,780 --> 00:01:25,070
+Par exemple,
+nous verrons qu'il propose des exceptions,
+
+22
+00:01:25,070 --> 00:01:31,950
+qui sont utiles pour altérer le flot
+de contrôle ou capturer des situations exceptionnelles.
+
+23
+00:01:31,950 --> 00:01:35,009
+Nous avons également des opérations pour interagir
+avec le monde extérieur :
+
+24
+00:01:35,009 --> 00:01:37,970
+les entrées et sorties, qui bien
+sûr modifient l'état.
+
+25
+00:01:37,970 --> 00:01:41,650
+Puis nous avons les structures de données
+modifiables en place ;
+
+26
+00:01:41,650 --> 00:01:47,470
+elles sont mutables et utiles pour des
+algorithmes impératifs très efficaces.
+
+27
+00:01:47,470 --> 00:01:54,130
+Enfin, bien sûr, nous avons des syntaxes spécifiques
+pour nous aider à écrire des boucles for ou while
+
+28
+00:01:54,130 --> 00:01:55,040
+de façon classique.
+
+29
+00:01:55,040 --> 00:01:58,320
+Nous résumerons en disant cela :
+c'est vraiment votre choix.
+
+30
+00:01:58,320 --> 00:02:00,549
+En OCaml, vous pouvez être
+purement fonctionnel,
+
+31
+00:02:00,549 --> 00:02:04,170
+ou vous pouvez programmer
+avec un style complètement impératif.
+
+32
+00:02:04,170 --> 00:02:10,440
+Dans tous les cas, le système de type
+vous aidera à conserver la sûreté.
+
+33
+00:02:10,440 --> 00:02:14,470
+Ce que nous présenterons cette semaine :
+nous verrons
+
+34
+00:02:14,470 --> 00:02:16,230
+en détails les exceptions,
+
+35
+00:02:16,230 --> 00:02:20,030
+les opérations d'entrées / sorties
+ainsi qu'un type spécial
+
+36
+00:02:20,030 --> 00:02:22,209
+qui est le type <u>unit</u>.
+
+37
+00:02:22,209 --> 00:02:25,720
+les structures de données mutables,
+les références qui représentent
+
+38
+00:02:25,720 --> 00:02:28,480
+les variables, et les boucles for et while.
+
+39
+00:02:28,480 --> 00:02:33,310
+Donc, restez en ligne, et commençons à
+voir toutes ces fonctionnalités
+
+40
+00:02:33,310 --> 00:02:34,220
+impératives supplémentaires.

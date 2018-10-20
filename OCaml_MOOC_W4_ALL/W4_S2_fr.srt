@@ -1,0 +1,345 @@
+1
+00:00:00,130 --> 00:00:05,670
+Dans cette séquence, on va voir comment les fonctions
+à plusieurs arguments entrent en scène.
+
+2
+00:00:05,670 --> 00:00:10,930
+Dans la première séquence, nous avons vu la syntaxe
+pour les expressions de fonction à un argument
+
+3
+00:00:10,930 --> 00:00:17,519
+qui utilisait le mot-clé <u>function</u>. Si on veut
+écrire une expression de fonction à plusieurs
+
+4
+00:00:17,519 --> 00:00:22,989
+arguments alors on utilise un autre mot-clé
+qui est <u>fun</u>, on écrit donc <u>fun</u> et
+
+5
+00:00:22,989 --> 00:00:28,489
+ensuite la séquence de ses arguments formels
+flèche son corps. Il existe une légère différence
+
+6
+00:00:28,489 --> 00:00:32,680
+entre ce mot-clé <u>fun</u> et le mot-clé <u>function</u>:
+comme on l'a vu dans la première séquence
+
+7
+00:00:32,680 --> 00:00:38,870
+<u>function</u> permet d'écrire directement un
+motif et de définir une fonction par un filtrage
+
+8
+00:00:38,870 --> 00:00:45,010
+Ceci n'est pas permis avec la forme <u>fun</u>, avec
+la forme <u>fun</u> on peut seulement utiliser un nom
+
+9
+00:00:45,010 --> 00:00:49,750
+pour les paramètres formels de l'expression de
+fonction. Si on veut faire du filtrage sur
+
+10
+00:00:49,750 --> 00:00:54,230
+certains d'entre eux, on doit utiliser explicitement
+une construction de filtrage.
+
+11
+00:00:54,230 --> 00:00:58,710
+Comme expliqué déjà dans la dernière séquence, les
+fonctions sont en fait des valeurs de première classe
+
+12
+00:00:58,710 --> 00:01:05,729
+ce qui signifie qu'il est parfaitement
+correct d'écrire une fonction qui prend un argument
+
+13
+00:01:05,729 --> 00:01:12,640
+et en fonction de cet argument renvoie une autre
+fonction. Quelque chose comme dans cet exemple: ici
+
+14
+00:01:12,640 --> 00:01:17,859
+on a une expression de fonction qui utilise un
+paramètre <u>n</u> et en fonction de ce
+
+15
+00:01:17,859 --> 00:01:24,299
+paramètre <u>n</u> renvoie une fonction qui augmente
+son argument <u>x</u> de la valeur de <u>n</u>.
+
+16
+00:01:24,299 --> 00:01:30,549
+Maintenant, quel serait le type de cette expression ?
+Eh bien, en fait le type de cette expression
+
+17
+00:01:30,549 --> 00:01:37,329
+est quelque chose qu'on a vu auparavant, ce que je
+peux vous démontrer sur l'exemple suivant
+
+18
+00:01:38,999 --> 00:01:44,459
+Sur cette diapositive, on va voir que la définition
+d'une fonction à plusieurs arguments est en
+
+19
+00:01:44,459 --> 00:01:50,810
+réalité la même chose qu'une définition imbriquée
+de fonctions à un seul argument.
+
+20
+00:01:50,810 --> 00:01:54,719
+Donc on pourrait, par exemple, définir une fonction
+<u>f1</u> qui prend d'abord le premier paramètre
+
+21
+00:01:54,719 --> 00:02:00,740
+<u>n</u> et en fonction de <u>n</u> renvoie une seconde
+fonction qui prend <u>x</u> et l'envoie vers <u>n + x</u>.
+
+22
+00:02:00,740 --> 00:02:09,220
+Et comme on peut le voir cela nous donne quelque chose
+qu'on a lu jusqu'ici comme une fonction à
+
+23
+00:02:09,220 --> 00:02:14,570
+deux arguments. En fait ce qu'on peut faire
+avec cette fonction c'est
+
+24
+00:02:14,570 --> 00:02:20,340
+l'appliquer à un premier argument et ensuite appliquer
+le résultat ainsi obtenu à son deuxième
+
+25
+00:02:20,340 --> 00:02:27,580
+argument et elle se comporte exactement comme
+la forme utilisée jusqu'ici qui s'écrit
+
+26
+00:02:27,580 --> 00:02:34,130
+d'une manière qui ressemble un peu plus à
+une fonction qui attend deux arguments. Toutefois
+
+27
+00:02:34,130 --> 00:02:40,290
+comme on l'a vu, c'est juste une abréviation
+pour la forme qu'on vous a montrée auparavant
+
+28
+00:02:40,290 --> 00:02:46,960
+à la ligne 3. Maintenant écrivons exactement la même
+chose sous la forme utilisée jusqu'à présent.
+
+29
+00:02:46,960 --> 00:02:52,470
+Comme expliqué sur la diapositive précédente
+ce qui est écrit à la ligne 1 est juste la
+
+30
+00:02:52,470 --> 00:02:58,210
+forme réelle de ce qui est derrière l'abréviation
+de la ligne 7 utilisée jusqu'ici. Alors si
+
+31
+00:02:58,210 --> 00:03:03,230
+on définit maintenant une fonction <u>f2</u> de la
+manière vue à la semaine 1, on voit que le
+
+32
+00:03:03,230 --> 00:03:09,510
+type est exactement le même et si on applique
+maintenant la fonction à ses arguments on voit
+
+33
+00:03:09,510 --> 00:03:18,090
+qu'elle se comporte également exactement comme
+la fonction f1 définie avant.
+
+34
+00:03:21,660 --> 00:03:27,720
+Maintenant, ce qu'on a vu sur cet exemple n'est
+pas accidentel. En fait, les fonctions à plusieurs
+
+35
+00:03:27,730 --> 00:03:34,760
+arguments sont exactement la même chose que les
+fonctions qui renvoient des fonctions en résultat. Et
+
+36
+00:03:34,760 --> 00:03:40,400
+ce n'est pas toute la vérité sur les fonctions à
+plusieurs arguments en OCaml: si on écrit
+
+37
+00:03:40,400 --> 00:03:46,770
+quelque chose comme <u>fun x1 ... xn</u>, donc une
+expression de fonction à n paramètres renvoyant un
+
+38
+00:03:46,770 --> 00:03:54,180
+corps, c'est juste une abréviation pour une fonction
+unaire imbriquée. Donc, c'est juste une abréviation
+
+39
+00:03:54,180 --> 00:03:59,420
+pour une fonction qui prend d'abord <u>x1</u>, selon
+lequel elle renvoie une fonction qui prend <u>x2</u>
+
+40
+00:03:59,420 --> 00:04:06,210
+et ainsi de suite jusqu'à la fin. Donc les fonctions
+à plusieurs arguments sont juste une abréviation
+
+41
+00:04:06,210 --> 00:04:10,190
+pour des fonctions imbriquées à un argument.
+
+42
+00:04:12,180 --> 00:04:16,959
+Maintenant, en utilisant ce qu'on a appris jusqu'ici
+sur les différentes façons d'écrire la même
+
+43
+00:04:16,959 --> 00:04:22,380
+définition de fonction, je peux vous
+montrer un exemple où on peut en fait donner au moins
+
+44
+00:04:22,380 --> 00:04:27,930
+quatre définitions différentes de la même fonction.
+Cet exemple fonctionne avec un type de données
+
+45
+00:04:27,930 --> 00:04:33,530
+algébrique défini récursivement qui est en fait
+une variante de ce que nous avons vu jusqu'ici. Ainsi
+
+46
+00:04:33,530 --> 00:04:40,260
+nous avons à nouveau des expressions, mais maintenant
+les expressions sont formées avec des variables qui
+
+47
+00:04:40,260 --> 00:04:45,990
+contiennent le nom et l'addition binaire.
+Ce qui signifie que, pour interpréter,
+
+48
+00:04:45,990 --> 00:04:51,410
+évaluer une telle expression, on doit utiliser
+un environnement. Et ici on voit en
+
+49
+00:04:51,410 --> 00:04:57,500
+fait le premier exemplaire de cette fonction, la
+fonction <u>eval</u>, écrite ici comme une expression
+
+50
+00:04:57,500 --> 00:05:03,550
+de fonction prenant deux arguments, <u>environment</u>,
+<u>expression</u>, puis utilisant un filtrage explicite
+
+51
+00:05:03,550 --> 00:05:09,210
+sur le deuxième argument [expression].
+Et ce qu'on peut voir ici sur cet exemple
+
+52
+00:05:09,210 --> 00:05:14,310
+en fait est que selon ce que l'on trouve dans
+l'expression, soit on examinera la valeur
+
+53
+00:05:14,310 --> 00:05:25,020
+dans l'environnement soit on calculera une addition.
+Donc, le type est une liste d'association qui associe
+
+54
+00:05:25,020 --> 00:05:30,840
+des entiers à des chaînes comme premier argument,
+puis on a une expression et finalement on renvoie
+
+55
+00:05:30,840 --> 00:05:36,860
+une valeur entière. Par exemple,
+ici on a notre exemple, on évalue
+
+56
+00:05:36,860 --> 00:05:43,430
+cette petite expression sur un environnement dans lequel
+<u>x</u> a la valeur 2 et <u>y</u> a une valeur 5, puis
+
+57
+00:05:43,430 --> 00:05:45,660
+on obtient ici la valeur de 9.
+
+58
+00:05:47,280 --> 00:05:54,440
+Maintenant, on a une deuxième forme équivalente à la
+même fonction qui utilise d'abord une expression
+
+59
+00:05:54,440 --> 00:05:59,850
+fonctionnelle avec un paramètre explicite appelé
+<u>environment</u> puis une seconde expression de fonction
+
+60
+00:05:59,850 --> 00:06:05,820
+avec un filtrage direct sans introduire
+de nom pour le deuxième paramètre.
+
+61
+00:06:05,820 --> 00:06:12,980
+Alors, quand on passe ceci au toplevel
+on obtient exactement le même type, et lorsqu'on
+
+62
+00:06:12,980 --> 00:06:21,639
+exécute cette fonction sur notre exemple,
+on obtient aussi le même résultat.
+
+63
+00:06:21,639 --> 00:06:26,460
+Dans la troisième définition on a une expression de
+fonction qui utilise d'abord un nom pour le
+
+64
+00:06:26,460 --> 00:06:33,970
+premier paramètre, <u>environnement</u>, puis un
+filtrage implicite sur le second argument.
+
+65
+00:06:33,970 --> 00:06:40,350
+Le type obtenu ici est de nouveau le même,
+et le résultat si on applique cette fonction
+
+66
+00:06:40,350 --> 00:06:43,880
+est également le même qu'avant.
+
+67
+00:06:44,920 --> 00:06:53,960
+Et enfin, on a la quatrième, la dernière forme qui
+utilise [let eval environment], ainsi on
+
+68
+00:06:53,960 --> 00:07:00,820
+définit la fonction en même temps que son premier
+paramètre et elle renvoie en résultat une fonction
+
+69
+00:07:00,820 --> 00:07:08,120
+définie par un filtrage implicite. Encore une fois,
+ce qu'on obtient au toplevel
+
+70
+00:07:08,120 --> 00:07:17,639
+est identique tant pour le type que pour le résultat.

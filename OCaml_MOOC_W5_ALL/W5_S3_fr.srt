@@ -1,0 +1,495 @@
+1
+00:00:00,149 --> 00:00:04,319
+Dans cette séquence nous allons explorer les séquences
+et les itérations.
+
+2
+00:00:04,319 --> 00:00:10,630
+Nous avons découvrir comment écrire des fonctions
+qui effectuent des effets de bord,
+
+3
+00:00:10,630 --> 00:00:15,160
+et comme nous avons des fonctions à effets de bord,
+il devient intéressant de les chaîner les unes après
+
+4
+00:00:15,160 --> 00:00:17,359
+les autres pour créer des séquences.
+
+5
+00:00:17,359 --> 00:00:22,449
+Ou peut-être les exécuter un certain nombre de fois,
+à travers des boucles.
+
+6
+00:00:22,449 --> 00:00:24,260
+Commençons par séquencer des expressions :
+
+7
+00:00:24,260 --> 00:00:27,789
+imaginons que nous voulons afficher plusieurs valeurs
+les unes après les autres.
+
+8
+00:00:27,789 --> 00:00:35,250
+Si nous voulons afficher 1, 2, 3, comment pourrait-
+on écrire cela avec la syntaxe et les constructions
+
+9
+00:00:35,250 --> 00:00:37,180
+que nous connaissons jusqu'à maintenant ?
+
+10
+00:00:37,180 --> 00:00:38,649
+Une possibilité est la suivante :
+
+11
+00:00:38,649 --> 00:00:43,790
+on peut utiliser la construction let pour
+
+12
+00:00:43,790 --> 00:00:47,870
+appeler <u>print_int 1</u>, puis jeter le résultat,
+
+13
+00:00:47,870 --> 00:00:50,780
+puis <u>print_int 2</u> et jeter le résultat,
+
+14
+00:00:50,780 --> 00:00:53,699
+et enfin l'expression finale serait <u>print_int 3</u>.
+
+15
+00:00:53,699 --> 00:00:55,789
+Et bien sûr, j'obtient "123" sur la sortie standard comme
+
+16
+00:00:55,789 --> 00:01:01,379
+souhaité, mais c'est un peu lourd comme
+notation, et très verbeux.
+
+17
+00:01:01,379 --> 00:01:05,939
+De façon plus concise, OCaml vous permet d'écrire
+quelque chose comme ça :
+
+18
+00:01:05,939 --> 00:01:11,240
+plusieurs expressions les unes après les autres
+séparées uniquement par un point-virgule.
+
+19
+00:01:11,240 --> 00:01:13,920
+Vous avez donc <u>print_int 1</u> ici, puis un
+point-virgule,
+
+20
+00:01:13,920 --> 00:01:16,040
+puis <u>print_int 2</u>, et un point-virgule,
+
+21
+00:01:16,040 --> 00:01:17,830
+puis <u>print_int 3</u>.
+
+22
+00:01:17,830 --> 00:01:21,790
+Cela fait exactement la même chose que
+cette expression ici.
+
+23
+00:01:21,790 --> 00:01:24,170
+Et en effet, le résultat est toujours "123".
+
+24
+00:01:24,170 --> 00:01:32,320
+Une séquence d'expressions est une liste d'expressions
+comme ici - de e1 à en - séparées par des points-virgule.
+
+25
+00:01:32,320 --> 00:01:37,119
+L'évaluation de la séquence effectue en fait
+l'évaluation de chacune des expressions <u>e_i</u>
+
+26
+00:01:37,119 --> 00:01:37,490
+tour à tour,
+
+27
+00:01:37,490 --> 00:01:39,210
+depuis la première jusqu'à la dernière,
+
+28
+00:01:39,210 --> 00:01:44,850
+tous les résultats intermédiaires sont jetés et
+on obtient en résultat final le résultat de la
+
+29
+00:01:44,850 --> 00:01:47,130
+toute dernière expression de la séquence.
+
+30
+00:01:47,130 --> 00:01:52,649
+Il est attendu que toutes les expressions intermédiaires
+aient le type <u>unit</u> puisque nous jetons leurs valeurs.
+
+31
+00:01:52,649 --> 00:01:57,420
+Sinon, le compilateur OCaml affiche un avertissement
+à notre attention.
+
+32
+00:01:57,420 --> 00:02:07,090
+Un avertissement : lorsque vous commençez à utiliser
+le point-virgule, il est tentant
+
+33
+00:02:07,090 --> 00:02:09,020
+d'écrire des morceaux de code comme celui-ci :
+
+34
+00:02:09,020 --> 00:02:16,480
+<u>if condition then print_string ... then ... ; then
+print_string ...</u>, quelque chose dans ce style.
+
+35
+00:02:16,480 --> 00:02:21,840
+L'indentation vous laisse penser que ce code
+va effectivement exécuter deux affichages
+
+36
+00:02:21,840 --> 00:02:26,420
+seulement dans la branche 'then', mais lorsque
+l'on presse 'Entrée',
+
+37
+00:02:26,420 --> 00:02:31,330
+vous verrez que malheureusement il y a un
+point ici qui vient de cette instruction d'affichage
+
+38
+00:02:31,330 --> 00:02:38,959
+qui signifie qu'en fait le point-virgule a une
+priorité plus faible que les autres constructions.
+
+39
+00:02:38,959 --> 00:02:44,680
+Donc si vous voulez rendre explicite l'ordre
+dans lequel la séquence devra être parsée,
+
+40
+00:02:44,680 --> 00:02:46,450
+utilisez les parentèses autour de la séquence,
+
+41
+00:02:46,450 --> 00:02:51,530
+ou le plus verbeux <u>begin ... end</u> qui se comporte
+exactement comme les parenthèses.
+
+42
+00:02:51,530 --> 00:02:55,980
+Donc, ce que nous souhaitions réellement écrire
+plus tôt ressemble plutôt à ce qui suit :
+
+43
+00:02:55,980 --> 00:03:00,700
+<u>if condition then begin ... end</u> avec cette séquence
+d'instructions ici.
+
+44
+00:03:00,700 --> 00:03:09,080
+Dans ce cas, vous voyez ici qu'il n'y a plus de
+point qui pollue notre sortie.
+
+45
+00:03:09,080 --> 00:03:12,890
+Voyons maintenant les itérations :
+
+46
+00:03:12,890 --> 00:03:16,459
+et si nous souhaitions afficher tous les entiers
+de 1 à 10 par exemple ?
+
+47
+00:03:16,459 --> 00:03:21,129
+Bien sûr, nous pourrions afficher 1,
+puis 2, puis 3, etc, jusqu'à 10.
+
+48
+00:03:21,129 --> 00:03:24,680
+Il est préférable d'avoir une approche
+plus programmatique pour faire ça,
+
+49
+00:03:24,680 --> 00:03:29,230
+et à ce niveau du cours je suis certain
+que vous êtes capable de fournir une solution
+
+50
+00:03:29,230 --> 00:03:29,879
+comme celle-ci :
+
+51
+00:03:29,879 --> 00:03:33,310
+vous pouvez définir une fonction récursive <u>foreach</u>
+qui a deux paramètres :
+
+52
+00:03:33,310 --> 00:03:36,830
+la valeur de début de l'indice, la valeur
+de fin de l'indice,
+
+53
+00:03:36,830 --> 00:03:44,519
+et ensuite la fonction <u>f</u> qui est appliquée
+à la valeur de chaque indice.
+
+54
+00:03:44,519 --> 00:03:48,340
+Nous ne commenterons pas ce code en particulier,
+
+55
+00:03:48,340 --> 00:03:51,200
+le seul point important est que cela
+fait ce que vous souhaitez :
+
+56
+00:03:51,200 --> 00:03:57,750
+si j'entre <u>foreach 1 10</u> en lui passant une
+fonction en paramètre,
+
+57
+00:03:57,750 --> 00:04:02,260
+j'ai exactement les entiers de 1 à 10 affichés
+sur la sortie standard.
+
+58
+00:04:02,260 --> 00:04:05,610
+Mais comme vous le voyez, cette façon de faire
+est un peu lourde et difficile à lire :
+
+59
+00:04:05,610 --> 00:04:10,780
+on aimerait pouvoir écrire ce type de fonction
+à l'aide d'une boucle 'for' comme dans d'autres langages.
+
+60
+00:04:10,780 --> 00:04:12,769
+La bonne nouvelle est que vous pouvez le faire,
+
+61
+00:04:12,769 --> 00:04:14,420
+il y a une syntaxe pour faire cela,
+
+62
+00:04:14,420 --> 00:04:20,009
+et elle permet de faire exactement la même
+chose de manière plus concise :
+
+63
+00:04:20,009 --> 00:04:25,560
+vous voyez une boucle 'for' typique où vous
+avez ici une variable initialisée
+
+64
+00:04:25,560 --> 00:04:26,430
+à 1,
+
+65
+00:04:26,430 --> 00:04:27,660
+qui croît jusqu'à 10,
+
+66
+00:04:27,660 --> 00:04:30,710
+et puis vous avez le corps de la boucle évalué
+pour chacune des valeurs.
+
+67
+00:04:30,710 --> 00:04:33,050
+Le résultat est le même que précédemment.
+
+68
+00:04:33,050 --> 00:04:35,790
+La structure générale est <u>for</u>,
+
+69
+00:04:35,790 --> 00:04:41,250
+puis un identifiant lié à la valeur initiale
+<u>to</u> une valeur finale <u>do</u> l'expression
+
+70
+00:04:41,250 --> 00:04:42,229
+du corps de la boucle,
+
+71
+00:04:42,229 --> 00:04:44,100
+et le mot-clé terminal <u>done</u>.
+
+72
+00:04:44,100 --> 00:04:52,340
+L'identifiant <u>id</u> prendra toutes les valeurs
+entières depuis <u>e1<u> jusqu'à <u>e2</u> tour à tour,
+
+73
+00:04:52,340 --> 00:04:54,979
+mais la grande différence avec les autres langages est que
+
+74
+00:04:54,979 --> 00:04:58,720
+vous ne pouvez pas changer le contenu de cet identifiant :
+
+75
+00:04:58,720 --> 00:05:01,860
+vous pouvez seulement le masquer à l'intérieur de la boucle,
+mais pas le modifier.
+
+76
+00:05:01,860 --> 00:05:08,949
+Le corps de cette boucle est évalué pour chacune
+des valeurs de <u>id</u> et fait exactement ce que nous souhaitons.
+
+77
+00:05:08,949 --> 00:05:15,870
+Maintenant, pour les types, le type de la boucle 'for'
+en entier est le type <u>unit</u> que vous avez vu
+
+78
+00:05:15,870 --> 00:05:16,240
+ici.
+
+79
+00:05:16,240 --> 00:05:20,550
+Il n'y a pas de valeur retournée, juste des effets de bord.
+
+80
+00:05:20,550 --> 00:05:25,460
+Et aussi, il est attendu que le type du corps de
+la boucle soit <u>unit</u>,
+
+81
+00:05:25,460 --> 00:05:29,139
+sinon une fois encore, le compilateur OCaml affichera
+un avertissement.
+
+82
+00:05:29,139 --> 00:05:34,370
+Comme toujours, un avertissement signifie que vous
+pouvez forcer le compilateur à exécuter tout de même le programme,
+
+83
+00:05:34,370 --> 00:05:37,229
+mais vous avez été prévenus.
+
+84
+00:05:37,229 --> 00:05:39,889
+Il y a une forme alternative pour la boucle 'for' :
+
+85
+00:05:39,889 --> 00:05:41,630
+vous pouvez compter vers l'arrière,
+
+86
+00:05:41,630 --> 00:05:45,250
+donc lorsque vous faites <u>for i = 10 downto 1</u>
+
+87
+00:05:45,250 --> 00:05:51,410
+ce qu'il se passe est que vous écrirez les entiers
+dans l'autre sens et bien sûr, sachez que
+
+88
+00:05:51,410 --> 00:05:55,110
+cette boucle se comporte exactement comme sous son autre
+forme mais que vous allez de la plus grande
+
+89
+00:05:55,110 --> 00:05:58,470
+valeur à la plus petite.
+
+90
+00:05:58,470 --> 00:06:03,449
+Et finalement, on peut aussi écrire des boucles 'while',
+
+91
+00:06:03,449 --> 00:06:04,990
+la forme typique est simplement comme ceci :
+
+92
+00:06:04,990 --> 00:06:09,930
+on a <u>while</u>, une condition, <u>do</u>, le
+corps de la boucle, <u>done</u>.
+
+93
+00:06:09,930 --> 00:06:13,830
+Ce qu'il se passe est que la condition <u>e1</u>
+est évaluée,
+
+94
+00:06:13,830 --> 00:06:19,380
+si elle est vraie, alors le corps de la boucle <u>e2</u> est
+évalué, et la boucle est répétée.
+
+95
+00:06:19,380 --> 00:06:22,940
+Si la condition est fausse, alors la boucle s'arrête.
+
+96
+00:06:22,940 --> 00:06:26,150
+Le type de la boucle 'while' est également <u>unit</u>.
+
+97
+00:06:26,150 --> 00:06:32,220
+Et là encore, il est attendu que le corps de la boucle
+soit de type <u>unit</u>, sinon vous aurez un avertissement.
+
+98
+00:06:32,220 --> 00:06:39,789
+On termine sur la remarque que vous pouvez vouloir
+utiliser dans le corps d'une
+
+99
+00:06:39,789 --> 00:06:44,039
+boucle une expression dont le type est
+différent de <u>unit</u>.
+
+100
+00:06:44,039 --> 00:06:52,110
+Il y a la fonction prédéfinie <u>ignore</u>
+qui a le type <u>'a -> unit</u> qui vous permet
+
+101
+00:06:52,110 --> 00:06:56,400
+d'envelopper cette valeur et la transformer en
+la valeur <u>()</u> afin d'éviter l'avertissement
+
+102
+00:06:56,400 --> 00:07:01,819
+mais dans ce cas votre intention d'ignorer
+cet avertissement est fait volontairement.
+
+103
+00:07:01,819 --> 00:07:08,550
+En résumé, nous avons vu que nous pouvons
+créer des séquences d'expressions,
+
+104
+00:07:08,550 --> 00:07:12,830
+on peut écrire des boucles 'for' augmentant ou diminuant un indice,
+
+105
+00:07:12,830 --> 00:07:15,319
+on peut écrire des boucles 'while',
+
+106
+00:07:15,319 --> 00:07:19,199
+et dans toutes ces situations le corps des
+boucles et des expressions intermédiaires,
+
+107
+00:07:19,199 --> 00:07:24,030
+doivent tous avoir le type <u>unit</u> ou bien
+être ignorés explicitement
+
+108
+00:07:24,030 --> 00:07:25,949
+à l'aide de la fonction <u>ignore</u>.
