@@ -1,0 +1,407 @@
+1
+00:00:00,340 --> 00:00:03,000
+Welcome back.
+
+2
+00:00:03,000 --> 00:00:10,620
+In this case study, we will go into more details
+about
+
+3
+00:00:10,620 --> 00:00:16,200
+how abstract data types can be used to improve
+the modularity of programs.
+
+4
+00:00:18,880 --> 00:00:25,699
+So in this case study, we will define a module
+type, an interface,
+
+5
+00:00:25,699 --> 00:00:31,099
+that corresponds to what expecting from a
+module
+
+6
+00:00:31,099 --> 00:00:34,750
+that provide a data structure for dictionary,
+
+7
+00:00:34,750 --> 00:00:38,820
+with the functions that work on dictionaries.
+
+8
+00:00:38,820 --> 00:00:46,270
+So, it's a little story, let's imagine first
+that
+
+9
+00:00:46,270 --> 00:00:52,070
+the designer of the interface wrote something
+like that:
+
+10
+00:00:52,070 --> 00:00:59,239
+the type for dictionary is an association
+list,
+
+11
+00:00:59,239 --> 00:01:05,100
+so a list of pairs, with a key and a value,
+
+12
+00:01:05,100 --> 00:01:09,070
+and then, there exists an empty dictionary,
+
+13
+00:01:09,070 --> 00:01:14,140
+a function that takes a dictionary, a key
+and a value and
+
+14
+00:01:14,140 --> 00:01:19,640
+returns a new dictionary that contains all
+the keys of the previous dictionary
+
+15
+00:01:19,640 --> 00:01:28,350
+plus the new key related to the provided value.
+
+16
+00:01:28,350 --> 00:01:31,890
+There also exists an exception that is raised
+
+17
+00:01:31,890 --> 00:01:36,840
+when a lookup fails.
+
+18
+00:01:36,840 --> 00:01:38,560
+And so there is this lookup function
+
+19
+00:01:38,560 --> 00:01:41,259
+that takes a dictionary, a key,
+
+20
+00:01:41,259 --> 00:01:46,460
+and returns a value associated to this key
+in the dictionary
+
+21
+00:01:46,460 --> 00:01:50,530
+if it exists, or raise <u>NotFound</u> otherwise.
+
+22
+00:01:50,530 --> 00:02:00,299
+So, this is a module type, and it is accepted
+by the OCaml compiler.
+
+23
+00:02:00,299 --> 00:02:09,470
+Now, this is an obvious implementation that
+I won't detail,
+
+24
+00:02:09,470 --> 00:02:10,929
+for the signature,
+
+25
+00:02:10,929 --> 00:02:24,470
+and we can write a client that makes use of
+all this definition
+
+26
+00:02:24,470 --> 00:02:34,590
+to define a module that store some relation
+between name and integer,
+
+27
+00:02:34,590 --> 00:02:36,250
+and it works.
+
+28
+00:02:36,250 --> 00:02:38,670
+So everything looks fine,
+
+29
+00:02:38,670 --> 00:02:42,810
+except that the interface is not well designed.
+
+30
+00:02:42,810 --> 00:02:46,450
+Indeed, imagine the following scenario:
+
+31
+00:02:46,450 --> 00:02:52,840
+the developer of this module notices that
+
+32
+00:02:52,840 --> 00:02:57,780
+finally, this implementation based on association
+list
+
+33
+00:02:57,780 --> 00:03:02,170
+is not valid, because it's not really efficient.
+
+34
+00:03:02,170 --> 00:03:06,040
+The lookup function is linear on the size
+of the list.
+
+35
+00:03:06,040 --> 00:03:12,310
+So he want to change the data structure that
+implements the dictionary.
+
+36
+00:03:12,310 --> 00:03:19,620
+But unfortunately, the interface mentions
+the way the dictionary is implemented.
+
+37
+00:03:19,620 --> 00:03:27,629
+So the client has used this information to
+implement this value in this module,
+
+38
+00:03:27,629 --> 00:03:35,430
+so here <u>force</u> is a list, so its valid to
+apply <u>List.map</u> function.
+
+39
+00:03:35,430 --> 00:03:39,030
+So something is wrong here.
+
+40
+00:03:39,030 --> 00:03:42,920
+The evolution of the first module, the implementation
+of the dictionary,
+
+41
+00:03:42,920 --> 00:03:47,620
+cannot be done without changing the client.
+
+42
+00:03:47,620 --> 00:03:51,670
+So imagine that there is an hundred clients
+for this module,
+
+43
+00:03:51,670 --> 00:03:55,959
+they will have to change an hundred clients,
+
+44
+00:03:55,959 --> 00:04:00,340
+just because you have a badly designed interface.
+
+45
+00:04:00,340 --> 00:04:05,620
+So imagine now that we have made this type
+abstract,
+
+46
+00:04:05,620 --> 00:04:10,799
+then at the first place it would be impossible
+for the client
+
+47
+00:04:10,799 --> 00:04:15,090
+to write a call like that.
+
+48
+00:04:15,090 --> 00:04:19,269
+Let us check that the compiler rejects this
+code.
+
+49
+00:04:19,269 --> 00:04:24,220
+Yes, for the reasons that are now clear to
+us,
+
+50
+00:04:24,220 --> 00:04:27,800
+<u>Dict.t</u> is an abstract type,
+
+51
+00:04:27,800 --> 00:04:30,860
+so even if it internally implemented as an
+list,
+
+52
+00:04:30,860 --> 00:04:33,990
+it's not a list from the outside.
+
+53
+00:04:33,990 --> 00:04:39,740
+So we have to remove this definition,
+
+54
+00:04:39,740 --> 00:04:42,580
+and now, we can continue the story and
+
+55
+00:04:42,580 --> 00:04:51,820
+change the implementation of the dictionary,
+
+56
+00:04:51,820 --> 00:04:54,040
+to be for instance a binary search tree.
+
+57
+00:04:54,040 --> 00:04:56,729
+Again, I won't detail this implementation,
+
+58
+00:04:56,729 --> 00:05:03,410
+except that it's a valid implementation for
+dictionary.
+
+59
+00:05:03,410 --> 00:05:04,860
+Just have to know that,
+
+60
+00:05:04,860 --> 00:05:14,090
+and indeed the compiler checked that the module
+satisfies the dictionary signature.
+
+61
+00:05:14,090 --> 00:05:18,860
+The nice thing is the fact that
+
+62
+00:05:18,860 --> 00:05:25,100
+you can reuse exactly the same code for the
+client,
+
+63
+00:05:25,100 --> 00:05:29,650
+and it is a valid code.
+
+64
+00:05:29,650 --> 00:05:31,289
+Just a final remark:
+
+65
+00:05:31,289 --> 00:05:37,430
+notice that when I evaluate this module,
+
+66
+00:05:37,430 --> 00:05:41,759
+the exception <u>Dict.NotFound</u> is raised.
+
+67
+00:05:41,759 --> 00:05:46,910
+So one of the <u>lookup</u> here failed.
+
+68
+00:05:46,910 --> 00:05:50,180
+But the exception is not really informative
+
+69
+00:05:50,180 --> 00:05:54,270
+because I would have loved to have here
+
+70
+00:05:54,270 --> 00:05:57,220
+the name of the key that was not found
+
+71
+00:05:57,220 --> 00:05:58,139
+in the dictionary.
+
+72
+00:05:59,800 --> 00:06:04,060
+So, all this module programming is very nice,
+
+73
+00:06:04,060 --> 00:06:10,110
+but still, some points can be improved.
+
+74
+00:06:10,110 --> 00:06:14,949
+The first one is the fact that the exception
+that is raised
+
+75
+00:06:14,949 --> 00:06:21,460
+when a lookup has failed is not very informative.
+
+76
+00:06:21,460 --> 00:06:25,610
+We would love to write an exception declaration
+
+77
+00:06:25,610 --> 00:06:30,259
+mentioning not only the fact that the key
+is not found,
+
+78
+00:06:30,259 --> 00:06:34,419
+but which key has been not found.
+
+79
+00:06:34,419 --> 00:06:38,630
+Yet, that's not directly possible in OCaml,
+
+80
+00:06:38,630 --> 00:06:42,039
+because exceptions cannot be polymorphic.
+
+81
+00:06:42,039 --> 00:06:53,030
+Also, our dictionary implementations based
+on trees and lists
+
+82
+00:06:53,030 --> 00:06:58,840
+are using the default polymorphic comparisons
+of values
+
+83
+00:06:58,840 --> 00:07:00,849
+that OCaml provides,
+
+84
+00:07:00,849 --> 00:07:09,030
+but sometimes it can be convenient to define
+another comparison
+
+85
+00:07:09,030 --> 00:07:13,099
+and that's not really possible in our implementation.
+
+86
+00:07:13,099 --> 00:07:21,449
+Finally, in the client, the reference to the
+module <u>Dict</u> is hardcoded into the code.
+
+87
+00:07:21,449 --> 00:07:25,660
+So that you can't change it afterwards.
+
+88
+00:07:25,660 --> 00:07:29,419
+Delaying this choice would make the client
+more reusable
+
+89
+00:07:29,419 --> 00:07:35,050
+because the same code could be used with different
+configurations,
+
+90
+00:07:35,050 --> 00:07:40,360
+depending on the implementation of <u>Dict</u>
+that we want to use.
+
+91
+00:07:40,360 --> 00:07:44,660
+In the next sequence, we will discover functors.
+
+92
+00:07:44,660 --> 00:07:47,680
+And they will solve all these issues.
+

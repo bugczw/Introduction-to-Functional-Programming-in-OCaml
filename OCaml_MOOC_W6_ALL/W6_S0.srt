@@ -1,0 +1,584 @@
+1
+00:00:07,660 --> 00:00:14,660
+So welcome to this final week about functional
+programming in OCaml.
+
+2
+00:00:14,660 --> 00:00:18,810
+So, what do we have so far?
+
+3
+00:00:18,810 --> 00:00:25,210
+We are able to define toplevel types, functions
+and basic values.
+
+4
+00:00:25,210 --> 00:00:31,970
+So what we have done is to program in the
+small,
+
+5
+00:00:31,970 --> 00:00:39,989
+which means that we have defined very fine
+data structures and algorithms,
+
+6
+00:00:39,989 --> 00:00:46,329
+and what we have seen is that OCaml, the core
+language of OCaml,
+
+7
+00:00:46,329 --> 00:00:51,590
+is great to write these data structures and
+algorithms
+
+8
+00:00:51,590 --> 00:00:54,620
+in a safe, sound and efficient way.
+
+9
+00:00:54,620 --> 00:01:03,989
+So now, when you have to deal with the development
+of a large project,
+
+10
+00:01:03,989 --> 00:01:10,659
+you have an extra difficulty which is to manage
+the complexity of your system.
+
+11
+00:01:10,659 --> 00:01:16,070
+That can comes from the high number of definitions.
+
+12
+00:01:16,070 --> 00:01:19,470
+The problem is that sometimes, in a large
+system,
+
+13
+00:01:19,470 --> 00:01:23,360
+you can be lost into the implementation details,
+
+14
+00:01:23,360 --> 00:01:32,259
+and an answer to that problem is what is called
+abstraction in software engineering.
+
+15
+00:01:32,259 --> 00:01:40,590
+An abstraction is a concept that can be understood
+intrinsically,
+
+16
+00:01:40,590 --> 00:01:45,740
+without a precise knowledge of its implementation.
+
+17
+00:01:45,740 --> 00:01:49,390
+So its a way to forget about the details,
+
+18
+00:01:49,390 --> 00:01:54,649
+and understand some part of the system by
+itself.
+
+19
+00:01:54,649 --> 00:01:59,710
+An abstraction can be built on top of other
+abstractions,
+
+20
+00:01:59,710 --> 00:02:04,570
+so that the sytem is built using some vocabulary
+
+21
+00:02:04,570 --> 00:02:13,510
+that clearly describes the answer to some
+problems at some level of abstraction.
+
+22
+00:02:13,510 --> 00:02:17,620
+In fact when you design a software,
+
+23
+00:02:17,620 --> 00:02:23,190
+good architecture are made of layers of abstractions.
+
+24
+00:02:23,190 --> 00:02:30,300
+So, the rules of the game are different now,
+
+25
+00:02:30,300 --> 00:02:33,550
+and what you want to do is really different
+
+26
+00:02:33,550 --> 00:02:37,590
+from what you do when you implement algorithms.
+
+27
+00:02:37,590 --> 00:02:39,610
+The first thing that you want to do is
+
+28
+00:02:39,610 --> 00:02:45,030
+to be able to split the system into smaller
+components,
+
+29
+00:02:45,030 --> 00:02:48,370
+that can be understood separately,
+
+30
+00:02:48,370 --> 00:02:57,800
+and also whose development can be delegated
+to several programmers.
+
+31
+00:02:57,800 --> 00:03:01,739
+Then you don't know if two programmers won't
+use the same name
+
+32
+00:03:01,739 --> 00:03:06,260
+so you want to have a way to avoid conflicts.
+
+33
+00:03:06,260 --> 00:03:14,629
+Also, you want the software engineering to
+be respected,
+
+34
+00:03:14,629 --> 00:03:20,739
+which means that a programmer is not allowed
+to break the abstraction,
+
+35
+00:03:20,739 --> 00:03:24,440
+to go into details that he should not know.
+
+36
+00:03:24,440 --> 00:03:29,129
+And also, a good property of components is
+
+37
+00:03:29,129 --> 00:03:35,049
+their ability to be recomposed, reconfigured,
+after their development.
+
+38
+00:03:35,049 --> 00:03:42,790
+In fact, the module system of OCaml fulfills
+all these requirements.
+
+39
+00:03:42,790 --> 00:03:47,030
+And that will be the topic of this final week.
+
+40
+00:03:47,030 --> 00:03:50,379
+So we will see how to structure software with
+modules,
+
+41
+00:03:50,379 --> 00:03:53,220
+how to hide information.
+
+42
+00:03:53,220 --> 00:04:00,310
+We will do a small case study about how to
+design a library for dictionaries.
+
+43
+00:04:00,310 --> 00:04:05,760
+We will give some basic notions about what
+functors are.
+
+44
+00:04:05,760 --> 00:04:13,480
+And finally, we will see how nude modules
+can be used to compile
+
+45
+00:04:13,480 --> 00:04:19,410
+and produce a large executable program.
+
+46
+00:04:19,410 --> 00:04:25,380
+The first thing to know is that a module defines
+a namespace.
+
+47
+00:04:25,380 --> 00:04:32,970
+So we already saw that the dot notation
+can be used to access a module component.
+
+48
+00:04:32,970 --> 00:04:34,590
+When you write <u>List.length</u>,
+
+49
+00:04:34,590 --> 00:04:38,690
+it is the reference to the <u>length</u> function,
+
+50
+00:04:38,690 --> 00:04:41,550
+which is defined inside the module <u>List</u>.
+
+51
+00:04:41,550 --> 00:04:46,610
+Now if you want to avoid writing this <u>List.something</u>,
+
+52
+00:04:46,610 --> 00:04:51,479
+it is always possible to open the namespace
+of the module List,
+
+53
+00:04:51,479 --> 00:05:01,300
+to implicitly refer to <u>List.length</u> when
+you write <u>length</u>.
+
+54
+00:05:01,300 --> 00:05:05,740
+So just by writing <u>open List</u>, you can be
+in that settings.
+
+55
+00:05:05,740 --> 00:05:11,900
+Now if you open two modules, and they define
+identical identifiers,
+
+56
+00:05:11,900 --> 00:05:15,430
+then the last one will have the priority.
+
+57
+00:05:15,430 --> 00:05:19,150
+So now, how can you define a module?
+
+58
+00:05:19,150 --> 00:05:22,720
+The syntax is the following one:
+
+59
+00:05:22,720 --> 00:05:28,520
+you use the keyword <u>module</u> followed by the
+identifier of this module,
+
+60
+00:05:28,520 --> 00:05:32,539
+and between <u>struct</u> and <u>end</u>,
+
+61
+00:05:32,539 --> 00:05:36,530
+you just write a sequence of definitions,
+
+62
+00:05:36,530 --> 00:05:40,440
+that will be part of this module.
+
+63
+00:05:40,440 --> 00:05:42,680
+The things that you have to know is the fact
+that
+
+64
+00:05:42,680 --> 00:05:46,820
+an identifier of a module must start with
+an uppercase letter.
+
+65
+00:05:46,820 --> 00:05:53,600
+Then, you can just write definitions as you
+already know:
+
+66
+00:05:53,600 --> 00:05:58,789
+value, type, exception definitions, inside
+the implementation of the module.
+
+67
+00:05:58,789 --> 00:06:03,220
+Sometimes you may be interesting of changing
+the name of a module for some reason,
+
+68
+00:06:03,220 --> 00:06:07,830
+so you can also alias a module just by writing:
+
+69
+00:06:07,830 --> 00:06:17,900
+<u>module</u>, one identifier for the module you
+want to define, <u>=</u>, an other module identifier.
+
+70
+00:06:17,900 --> 00:06:26,340
+So let us see what module implementation looks
+like in OCaml.
+
+71
+00:06:26,340 --> 00:06:31,440
+So we have this module keyword that introduces
+a module.
+
+72
+00:06:31,440 --> 00:06:35,819
+Here we have named this module <u>Stack</u>,
+
+73
+00:06:35,819 --> 00:06:42,110
+and we used an uppercase letter to start the
+identifier.
+
+74
+00:06:42,110 --> 00:06:48,699
+And between <u>struct</u> we have implemented
+several functions and types,
+
+75
+00:06:48,699 --> 00:06:53,919
+that implement the data structure of <u>Stack</u>.
+
+76
+00:06:53,919 --> 00:06:58,419
+So we know that <u>Stack</u> is implemented here
+by a <u>list</u>,
+
+77
+00:06:58,419 --> 00:07:02,020
+the empty stack is the empty list,
+
+78
+00:07:02,020 --> 00:07:09,599
+pushing an element on top of the stack is
+adding an element at the beginning of the
+
+79
+00:07:09,599 --> 00:07:10,680
+list,
+
+80
+00:07:10,680 --> 00:07:16,330
+and if you want to <u>pop</u> the element that
+is on the top of the stack,
+
+81
+00:07:16,330 --> 00:07:20,500
+then it's not possible if you have an empty
+list,
+
+82
+00:07:20,500 --> 00:07:22,569
+but if you have a non empty list,
+
+83
+00:07:22,569 --> 00:07:26,520
+you can just return the head of the list,
+
+84
+00:07:26,520 --> 00:07:31,690
+and the new stack is the tail of the list.
+
+85
+00:07:31,690 --> 00:07:40,090
+So if we evaluate this, we can see that OCaml
+accepts this definition,
+
+86
+00:07:40,090 --> 00:07:44,849
+and infers what is called a signature,
+
+87
+00:07:44,849 --> 00:07:49,259
+which is in fact the type of the module,
+
+88
+00:07:49,259 --> 00:07:53,699
+and it describes the declaration for types,
+
+89
+00:07:53,699 --> 00:08:00,900
+for example, but also what are the values
+provided by the module.
+
+90
+00:08:00,900 --> 00:08:06,780
+Here we can see that there is a value <u>empty</u>
+of type <u>'a list</u>.
+
+91
+00:08:06,780 --> 00:08:18,080
+We can use the module, using the dot notation,
+here to extract the empty list.
+
+92
+00:08:18,080 --> 00:08:22,190
+Here to push an element on top of the list,
+
+93
+00:08:22,190 --> 00:08:26,879
+and here for instance to pop an element of
+the list.
+
+94
+00:08:26,879 --> 00:08:32,430
+If we try to pop again we have an <u>empty</u>
+result.
+
+95
+00:08:32,430 --> 00:08:46,420
+Modules have types too, and these types are
+called signature, or interface.
+
+96
+00:08:46,420 --> 00:08:54,690
+We have seen in the previous example that
+OCaml infers signatures of modules.
+
+97
+00:08:54,690 --> 00:08:59,930
+But in fact the programmer can force a module
+to have a specific signature,
+
+98
+00:08:59,930 --> 00:09:02,560
+and in fact he should do it,
+
+99
+00:09:02,560 --> 00:09:11,649
+because publishing a well-designed signature
+is a very important communication aspect in
+
+100
+00:09:11,649 --> 00:09:13,209
+a large project,
+
+101
+00:09:13,209 --> 00:09:16,170
+and that will be the topic of the next sequence.
+
+102
+00:09:16,170 --> 00:09:20,870
+So we have a syntax to define signatures:
+
+103
+00:09:20,870 --> 00:09:27,790
+you use the keyword <u>sig</u>, and between <u>sig</u>
+and <u>end</u>,
+
+104
+00:09:27,790 --> 00:09:34,670
+you have declarations for the different components
+of your module.
+
+105
+00:09:34,670 --> 00:09:35,980
+For instance if you have a value,
+
+106
+00:09:35,980 --> 00:09:41,450
+you use the keyword <u>val</u>, followed by the
+identifier of the value,
+
+107
+00:09:41,450 --> 00:09:45,860
+<u>:</u>, the type of this value.
+
+108
+00:09:45,860 --> 00:09:51,450
+The other declarations for types and exceptions
+are exactly written in
+
+109
+00:09:51,450 --> 00:09:56,220
+the same way as you can do in a module implementation.
+
+110
+00:09:56,220 --> 00:10:01,620
+A module can in fact contain other modules,
+
+111
+00:10:01,620 --> 00:10:05,000
+so that we can create a hierarchy of modules.
+
+112
+00:10:05,000 --> 00:10:13,230
+And similarly, a signature can also contain
+other module signatures.
+
+113
+00:10:13,230 --> 00:10:17,190
+Now, if you want to refer to a submodule,
+
+114
+00:10:17,190 --> 00:10:21,930
+you just have to use a path,
+
+115
+00:10:21,930 --> 00:10:29,550
+so you have to extend the dot notation by
+just adding more module name to enter into
+
+116
+00:10:29,550 --> 00:10:33,320
+the module namespace more deeply.
+
+117
+00:10:33,320 --> 00:10:40,070
+It is forbidden to define two submodules with
+the same name in a module,
+
+118
+00:10:40,070 --> 00:10:46,100
+but you can define for instance two values
+with the same name in a module.
+
+119
+00:10:46,100 --> 00:10:52,209
+So, if you have defined a module <u>Forest</u>,
+
+120
+00:10:52,209 --> 00:10:58,750
+you can have a module <u>Tree</u> inside,
+
+121
+00:10:58,750 --> 00:11:01,610
+to represent a tree of the forest,
+
+122
+00:11:01,610 --> 00:11:09,920
+and the type definition for trees you can
+use
+
+123
+00:11:09,920 --> 00:11:18,800
+here the type <u>forest</u>, which is defined before
+in the module <u>Forest</u>.
+
+124
+00:11:18,800 --> 00:11:24,910
+When we enter this to the OCaml toplevel,
+
+125
+00:11:24,910 --> 00:11:31,320
+we can observe that the signature of the module
+<u>Forest</u> contains an other signature for the
+
+126
+00:11:31,320 --> 00:11:33,149
+inner module <u>Tree</u>.
+
+127
+00:11:33,149 --> 00:11:37,000
+If you want to access to this namespace,
+
+128
+00:11:37,000 --> 00:11:39,380
+you can just write <u>open</u>
+
+129
+00:11:39,380 --> 00:11:51,760
+and after that you can construct a <u>Leaf</u>
+of a <u>tree</u>.
+

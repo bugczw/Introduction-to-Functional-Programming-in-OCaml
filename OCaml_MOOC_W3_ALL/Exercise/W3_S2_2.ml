@@ -87,7 +87,7 @@ let rec insert trie w v =
     and s = String.sub w 1 (slen - 1) in
     let ot = children_from_char m c in
     match ot with
-    | (Some t) -> Trie (v', update_children m c (insert   s v))
+    | (Some t) -> Trie (v', update_children m c (insert t s v))
     | None -> Trie (v', update_children m c (insert empty s v));;
 
 	

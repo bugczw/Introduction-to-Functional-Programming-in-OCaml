@@ -1,0 +1,387 @@
+1
+00:00:00,550 --> 00:00:04,480
+Welcome back.
+
+2
+00:00:04,480 --> 00:00:08,670
+So when someone is implementing a module,
+
+3
+00:00:08,670 --> 00:00:18,279
+does in his mind a well delimited set of features
+that are offered by his module.
+
+4
+00:00:18,279 --> 00:00:25,449
+Now, when he wants to publish this module,
+
+5
+00:00:25,449 --> 00:00:30,080
+to have the module used by other programmers,
+
+6
+00:00:30,080 --> 00:00:39,070
+he wants this features to be describe in something
+like a user manual
+
+7
+00:00:39,070 --> 00:00:44,390
+so that they are use in the way they are designed
+to.
+
+8
+00:00:44,390 --> 00:00:46,059
+What does that mean exactly?
+
+9
+00:00:46,059 --> 00:00:53,420
+Well, functions preconditions must be verified
+by the client.
+
+10
+00:00:53,420 --> 00:00:59,640
+Also the client should not break data invariants
+
+11
+00:00:59,640 --> 00:01:05,199
+that are the key for data structure to work.
+
+12
+00:01:05,199 --> 00:01:15,220
+Also the client should not use a definition,
+that is internal,
+
+13
+00:01:15,220 --> 00:01:20,130
+that should be private because it may change
+in the future.
+
+14
+00:01:20,130 --> 00:01:26,509
+So that's like a contract that must be respected
+in exchange for the module features.
+
+15
+00:01:26,509 --> 00:01:30,850
+Moreover the type checker will help us
+
+16
+00:01:30,850 --> 00:01:37,360
+to enforce the data invariant of the data
+structure
+
+17
+00:01:37,360 --> 00:01:44,070
+and also will prevent a client from using
+definitions he shouldn't use.
+
+18
+00:01:44,070 --> 00:01:48,799
+For the syntax to assign a signature to a
+module is the following one:
+
+19
+00:01:48,799 --> 00:01:57,119
+you use the keyword <u>module</u>, <u>M</u> like in a
+standard module definition, <u>:</u>,
+
+20
+00:01:57,119 --> 00:02:02,140
+and just after the <u>:</u> you write the signature
+you want to assign to this module.
+
+21
+00:02:02,140 --> 00:02:07,530
+In fact you can name a signature so that
+
+22
+00:02:07,530 --> 00:02:12,739
+you don't have to rewrite it if you have to
+write it several time.
+
+23
+00:02:12,739 --> 00:02:17,780
+To do so you use the keyword <u>module type</u>
+
+24
+00:02:17,780 --> 00:02:22,459
+followed by the identifier of the signature
+
+25
+00:02:22,459 --> 00:02:27,590
+and then you just write the definition of
+this signature.
+
+26
+00:02:27,590 --> 00:02:37,739
+Again an identifier of a signature must start
+with an uppercase letter.
+
+27
+00:02:37,739 --> 00:02:47,190
+Then of course you can use this name to constraint
+some module implementation.
+
+28
+00:02:47,190 --> 00:02:51,599
+So let us now define a module for natural
+numbers.
+
+29
+00:02:51,599 --> 00:02:56,620
+A natural number is a positive integer
+
+30
+00:02:56,620 --> 00:03:02,540
+so we will use the type int to represent a
+value of natural number.
+
+31
+00:03:02,540 --> 00:03:10,909
+We will have only three functions, three values,
+
+32
+00:03:10,909 --> 00:03:17,959
+the first value is <u>zero</u> that represents
+the 0 in natural number
+
+33
+00:03:17,959 --> 00:03:24,019
+and then we have the ability to go from a
+natural number to the successor of this natural
+
+34
+00:03:24,019 --> 00:03:24,550
+number.
+
+35
+00:03:24,550 --> 00:03:28,879
+And also from a natural number to its predecessor.
+
+36
+00:03:28,879 --> 00:03:31,390
+The implementation is straightforward
+
+37
+00:03:31,390 --> 00:03:36,620
+except that you have to take care not to break
+the invariant
+
+38
+00:03:36,620 --> 00:03:43,909
+that the int that you are using to represent
+a natural number is indeed a natural number.
+
+39
+00:03:43,909 --> 00:03:48,840
+So here you have to take care not to overflow
+
+40
+00:03:48,840 --> 00:03:54,560
+which means that when you
+take the successor of something
+
+41
+00:03:54,560 --> 00:04:00,599
+that is <u>max_int</u> you don't want to do plus
+one otherwise we go to <u>min_int</u>.
+
+42
+00:04:00,599 --> 00:04:05,260
+You prefer to return <u>0</u> in that case
+
+43
+00:04:05,260 --> 00:04:14,340
+and if <u>n</u> is not <u>max_int</u> it is then between
+<u>0</u> and <u>max_int - 1</u>
+
+44
+00:04:14,340 --> 00:04:16,449
+so you can do <u>n + 1</u>.
+
+45
+00:04:16,449 --> 00:04:22,680
+The same kind of reasoning is applied to <u>pred</u>
+saying that
+
+46
+00:04:22,680 --> 00:04:25,380
+you don't want to take the predecessor of
+<u>0</u>
+
+47
+00:04:25,380 --> 00:04:31,050
+and that time we choose to stay at <u>0</u>.
+
+48
+00:04:31,050 --> 00:04:40,600
+So this valid module can be given to the OCaml
+toplevel and indeed it is accepted.
+
+49
+00:04:40,600 --> 00:04:44,610
+And we can try to use it for instance here
+
+50
+00:04:44,610 --> 00:04:51,400
+I define a function which performs the addition
+between two natural numbers <u>x</u> and <u>y</u>,
+
+51
+00:04:51,400 --> 00:04:56,699
+if you have the fact that <u>x</u> is equal to
+<u>0</u> you return <u>y</u>
+
+52
+00:04:56,699 --> 00:05:02,400
+because <u>0 + y</u> is equal to <u>y</u>,
+
+53
+00:05:02,400 --> 00:05:16,180
+and otherwise you call yourself recursively
+by computing <u>(x - 1) + y</u>
+
+54
+00:05:16,180 --> 00:05:23,220
+and finally you take the successor of this
+natural number to get the result of the addition.
+
+55
+00:05:23,220 --> 00:05:24,530
+So this is working well.
+
+56
+00:05:24,530 --> 00:05:35,350
+The problem is that it is also easy for a
+client to break the abstraction.
+
+57
+00:05:35,350 --> 00:05:40,030
+Here for instance as I know that <u>t</u> is equal
+to <u>int</u>
+
+58
+00:05:40,030 --> 00:05:51,479
+as a client I can use the module in a bad
+way by providing <u>-1</u> to the function <u>pred</u>
+
+59
+00:05:51,479 --> 00:05:55,199
+and I get a natural number which is negative
+
+60
+00:05:55,199 --> 00:06:04,370
+and this is very wrong because it is against
+our invariant.
+
+61
+00:06:04,370 --> 00:06:08,819
+So we have a problem in this example
+
+62
+00:06:08,819 --> 00:06:16,400
+because some invariant is broken by the programmer
+that used a fact that he shouldn't use.
+
+63
+00:06:16,400 --> 00:06:23,840
+The fact that <u>t</u> is in fact implemented by
+integer.
+
+64
+00:06:23,840 --> 00:06:27,289
+Well we could write a comment in the signature
+
+65
+00:06:27,289 --> 00:06:33,430
+saying that he should be gentle and don't
+use this fact.
+
+66
+00:06:33,430 --> 00:06:40,410
+But still the temptation can be very hard
+to resist.
+
+67
+00:06:40,410 --> 00:06:45,389
+That's why we will use what is called abstract
+types
+
+68
+00:06:45,389 --> 00:06:53,949
+that will give no choice to the client programmer
+but to respect this rule.
+
+69
+00:06:53,949 --> 00:06:57,190
+So let us come back to our example.
+
+70
+00:06:57,190 --> 00:07:05,120
+And let's just change just a small thing in
+the interface.
+
+71
+00:07:05,120 --> 00:07:13,340
+So in the signature I will remove the equality
+between <u>t</u> and <u>int</u>.
+
+72
+00:07:13,340 --> 00:07:20,449
+So now in the signature we just know that
+there exists some type <u>t</u>
+
+73
+00:07:20,449 --> 00:07:26,099
+but we know nothing about its implementation.
+
+74
+00:07:26,099 --> 00:07:32,889
+So let us check that the toplevel accepts
+this definition
+
+75
+00:07:32,889 --> 00:07:38,220
+and indeed inside the inferred signature we
+can see that
+
+76
+00:07:38,220 --> 00:07:45,690
+type <u>t</u> is just declared but no implementation
+about type <u>t</u> is given.
+
+77
+00:07:45,690 --> 00:07:56,629
+So type <u>t</u> is a type identifier that is just
+equal to itself
+
+78
+00:07:56,629 --> 00:08:07,300
+but if I try to apply this <u>pred</u> function
+to now an integer I can't,
+
+79
+00:08:07,300 --> 00:08:19,080
+because for the type checker <u>Naturals.t</u>
+is a type that is different from <u>int</u>.
+
+80
+00:08:19,080 --> 00:08:28,650
+So what we have done with an abstract type
+is just to hide the definition of the type.
+
+81
+00:08:28,650 --> 00:08:33,919
+So now the signature does not publish <u>t</u>'s
+implementation details anymore.
+
+82
+00:08:33,919 --> 00:08:43,219
+And the type checker ensures that the clients
+cannot use that fact.
+
+83
+00:08:43,219 --> 00:08:47,419
+So that's exactly why <u>t</u> is called an abstract
+type.
+

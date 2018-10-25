@@ -1,0 +1,702 @@
+1
+00:00:00,459 --> 00:00:01,260
+Welcome back.
+
+2
+00:00:01,260 --> 00:00:05,879
+So for the moment,
+
+3
+00:00:05,879 --> 00:00:11,179
+you probably have programmed in OCaml
+
+4
+00:00:11,179 --> 00:00:18,779
+using the website that we have provided for
+this MOOC.
+
+5
+00:00:18,779 --> 00:00:24,609
+But at some point, you may be interested in
+
+6
+00:00:24,609 --> 00:00:31,010
+developing real size programs using real world
+tools.
+
+7
+00:00:31,010 --> 00:00:35,649
+So we will see how to compile OCaml programs.
+
+8
+00:00:35,649 --> 00:00:42,350
+The first thing to know is that extension
+of the filename
+
+9
+00:00:42,350 --> 00:00:45,460
+of an OCaml source code is <u>.ml</u>.
+
+10
+00:00:45,460 --> 00:00:52,390
+The OCaml language enjoys the separate compilation
+property
+
+11
+00:00:52,390 --> 00:00:58,129
+which means that we can produce an executable
+program
+
+12
+00:00:58,129 --> 00:00:59,809
+in the following way:
+
+13
+00:00:59,809 --> 00:01:02,920
+you first compile each file separately,
+
+14
+00:01:02,920 --> 00:01:06,640
+following the dependencies,
+
+15
+00:01:06,640 --> 00:01:10,159
+and when you have all the compiled units
+
+16
+00:01:10,159 --> 00:01:13,400
+you can put them together,
+
+17
+00:01:13,400 --> 00:01:15,799
+link them together,
+
+18
+00:01:15,799 --> 00:01:21,290
+in order to produce an executable program.
+
+19
+00:01:21,290 --> 00:01:24,060
+To do so you will use <u>ocamlc</u>
+
+20
+00:01:24,060 --> 00:01:31,110
+which is a compiler from OCaml to the OCaml
+virtual machine,
+
+21
+00:01:31,110 --> 00:01:35,970
+or <u>ocamlopt</u> which is the compiler from OCaml
+code
+
+22
+00:01:35,970 --> 00:01:43,750
+to native code, which means the code that
+your processor is understanding directly.
+
+23
+00:01:43,750 --> 00:01:52,000
+In the sequel, we will use <u>ocamlc</u> but you
+can use the same commands
+
+24
+00:01:52,000 --> 00:01:57,009
+and they will work with <u>ocamlopt</u> too.
+
+25
+00:01:57,009 --> 00:02:00,299
+So imagine that you have a project with two
+files
+
+26
+00:02:00,299 --> 00:02:02,890
+<u>a.ml</u> and <u>b.ml</u>,
+
+27
+00:02:02,890 --> 00:02:06,549
+and that <u>b.ml</u> uses <u>a.ml</u>.
+
+28
+00:02:06,549 --> 00:02:11,250
+So first, you have to compile <u>a.ml</u>.
+
+29
+00:02:11,250 --> 00:02:18,390
+The command is <u>ocamlc -c a.ml</u>.
+
+30
+00:02:18,390 --> 00:02:21,720
+This command will produce two files:
+
+31
+00:02:21,720 --> 00:02:30,420
+the first one is a <u>.cmo</u> file and it's actually
+the compiled code.
+
+32
+00:02:30,420 --> 00:02:35,510
+In this case, in the case of <u>ocamlc</u> it's
+just bytecode that can be interpreted
+
+33
+00:02:35,510 --> 00:02:37,510
+by the virtual machine.
+
+34
+00:02:37,510 --> 00:02:46,660
+If you had chosen <u>ocamlopt</u> then you will
+produce
+
+35
+00:02:46,660 --> 00:02:52,290
+a <u>.cmx</u> file,
+
+36
+00:02:52,290 --> 00:02:58,560
+which will contain machine code.
+
+37
+00:02:58,560 --> 00:03:04,379
+There is another file that is produced both
+by
+
+38
+00:03:04,379 --> 00:03:11,200
+<u>ocamlc</u> and <u>ocamlopt</u> and that's a <u>.cmi</u>
+file.
+
+39
+00:03:11,200 --> 00:03:15,680
+It's a compiled interface and I will come
+back on that
+
+40
+00:03:15,680 --> 00:03:18,780
+in the next slide.
+
+41
+00:03:18,780 --> 00:03:25,010
+Now you can compile <u>b.ml</u> using the same
+method,
+
+42
+00:03:25,010 --> 00:03:34,760
+and finally to link <u>a.cmo</u> and <u>b.cmo</u> into
+the same executable program,
+
+43
+00:03:34,760 --> 00:03:45,409
+you use <u>ocamlc -o prog</u> to say that the output
+executable program will be names <u>prog</u>,
+
+44
+00:03:45,409 --> 00:03:51,049
+and after that the list of the compiled units
+
+45
+00:03:51,049 --> 00:03:53,849
+but in the order of dependencies.
+
+46
+00:03:53,849 --> 00:04:05,450
+So as <u>a.cmo</u> is used by <u>b.cmo</u> it must come
+before <u>b.cmo</u>.
+
+47
+00:04:05,450 --> 00:04:15,330
+In fact, compilation units are seen as modules
+from the programming point of view.
+
+48
+00:04:15,330 --> 00:04:23,120
+If you have a file named <u>a.ml</u>, then it will
+appear as a module <u>A</u> in the program.
+
+49
+00:04:23,120 --> 00:04:35,090
+The only change in the name is the fact that
+the first letter is now in uppercase, so the
+
+50
+00:04:35,090 --> 00:04:38,840
+filename is capitalized.
+
+51
+00:04:38,840 --> 00:04:44,100
+If you want to refer in <u>b.ml</u> to a value
+<u>x</u> defined in <u>a.ml</u>,
+
+52
+00:04:44,100 --> 00:04:48,660
+you just write <u>A.x</u> and it will work.
+
+53
+00:04:48,660 --> 00:04:52,810
+So, as compilation units are modules,
+
+54
+00:04:52,810 --> 00:04:57,540
+then we should be able to represent also the
+interface
+
+55
+00:04:57,540 --> 00:04:58,979
+of a module.
+
+56
+00:04:58,979 --> 00:05:07,270
+And that's possible if you write a file named
+<u>a.mli</u>,
+
+57
+00:05:07,270 --> 00:05:10,490
+so 'i' like "interface",
+
+58
+00:05:10,490 --> 00:05:17,289
+you can define the signature of the module
+<u>A</u> that you are defining.
+
+59
+00:05:17,289 --> 00:05:28,710
+So the content of <u>a.mli</u> is basically what
+you would have written
+
+60
+00:05:28,710 --> 00:05:33,810
+between <u>sig</u> and <u>end</u> when you define a
+signature.
+
+61
+00:05:33,810 --> 00:05:40,169
+So you will write declarations only in that
+kind of file.
+
+62
+00:05:40,169 --> 00:05:47,310
+When <u>a.ml</u> is compiled, the compiler looks
+for an interface,
+
+63
+00:05:47,310 --> 00:05:53,710
+if the programmer wrote an interface it will
+use it to compile the interface,
+
+64
+00:05:53,710 --> 00:05:59,150
+if there is no such file it will use the inferred
+module interface,
+
+65
+00:05:59,150 --> 00:06:01,900
+the one that shows everything.
+
+66
+00:06:01,900 --> 00:06:06,400
+If you want to compile interfaces separately,
+
+67
+00:06:06,400 --> 00:06:07,220
+you can do it,
+
+68
+00:06:07,220 --> 00:06:12,650
+you just have to provide an <u>a.mli</u> file to
+the compiler,
+
+69
+00:06:12,650 --> 00:06:15,710
+it will detect that it is an interface
+
+70
+00:06:15,710 --> 00:06:19,180
+and produce a <u>.cmi</u> file.
+
+71
+00:06:19,180 --> 00:06:25,169
+This operation can be interesting if you want
+to parallelize
+
+72
+00:06:25,169 --> 00:06:31,990
+a lot of compilation because when the compilation
+of the interface of <u>A</u> is done,
+
+73
+00:06:31,990 --> 00:06:37,949
+you can compile both the implementation of
+<u>A</u> but also in parallel,
+
+74
+00:06:37,949 --> 00:06:41,560
+the implementation of <u>B</u>,
+
+75
+00:06:41,560 --> 00:06:47,970
+since this compilation is using only the compiled
+interface.
+
+76
+00:06:47,970 --> 00:06:57,039
+You may wonder, especially if you have programmed
+in the C language or Java,
+
+77
+00:06:57,039 --> 00:07:02,610
+what is the entry point of an OCaml program.
+
+78
+00:07:02,610 --> 00:07:03,590
+The answer is simple:
+
+79
+00:07:03,590 --> 00:07:05,669
+there is no such thing.
+
+80
+00:07:05,669 --> 00:07:08,240
+There is no entry point.
+
+81
+00:07:08,240 --> 00:07:13,430
+There is no <u>main</u> function in an OCaml program.
+
+82
+00:07:13,430 --> 00:07:19,310
+The evaluation of a program is the evaluation
+of the modules
+
+83
+00:07:19,310 --> 00:07:23,509
+that compose this program.
+
+84
+00:07:23,509 --> 00:07:29,660
+And they are evaluated in the order given
+at the link time,
+
+85
+00:07:29,660 --> 00:07:35,919
+so the order that you gave to <u>ocamlc</u> when
+you produced the executable program.
+
+86
+00:07:35,919 --> 00:07:37,770
+And that's all.
+
+87
+00:07:37,770 --> 00:07:40,250
+As in any programming language
+
+88
+00:07:40,250 --> 00:07:52,020
+you can aggregate compilation units into a
+single file called a library.
+
+89
+00:07:52,020 --> 00:08:02,139
+To do so, you use a <u>-a</u> command of <u>ocamlc</u>
+followed by the list of files that you want
+
+90
+00:08:02,139 --> 00:08:03,810
+to put inside your library,
+
+91
+00:08:03,810 --> 00:08:14,879
+and afterwards you just <u>-o</u> option to define
+the name of the library you want to use.
+
+92
+00:08:14,879 --> 00:08:22,229
+The file extension for libraries in OCaml
+is <u>.cma</u>.
+
+93
+00:08:22,229 --> 00:08:28,740
+If you defined a native code library,
+
+94
+00:08:28,740 --> 00:08:32,240
+its a <u>.cmxa</u>.
+
+95
+00:08:32,240 --> 00:08:33,909
+Now once you have a library,
+
+96
+00:08:33,909 --> 00:08:36,490
+it can be used by another program,
+
+97
+00:08:36,490 --> 00:08:40,519
+exactly as if it were a compilation unit.
+
+98
+00:08:40,519 --> 00:08:49,040
+To install a library in the system you just
+have to copy the compiled files <u>.cmi</u>, <u>.cmo</u>
+
+99
+00:08:49,040 --> 00:08:50,589
+and <u>.cma</u>
+
+100
+00:08:50,589 --> 00:08:55,750
+into some directory that you choose to install
+your library.
+
+101
+00:08:55,750 --> 00:08:59,190
+After that, if you want to able to use the
+library
+
+102
+00:08:59,190 --> 00:09:01,230
+to compile another program,
+
+103
+00:09:01,230 --> 00:09:07,209
+you just use the option <u>-I</u> followed by the
+name of the directory
+
+104
+00:09:07,209 --> 00:09:10,260
+in which the library is installed,
+
+105
+00:09:10,260 --> 00:09:17,269
+and you will get all the exported values and
+modules
+
+106
+00:09:17,269 --> 00:09:19,870
+that are available in the library.
+
+107
+00:09:19,870 --> 00:09:22,950
+When you produce the executable program,
+
+108
+00:09:22,950 --> 00:09:27,450
+you also need to provide the library as an
+input
+
+109
+00:09:27,450 --> 00:09:33,269
+to push it inside the executable program.
+
+110
+00:09:33,269 --> 00:09:41,430
+To do so, you use again the <u>-I</u> some dir
+to configure the compiler to explain
+
+111
+00:09:41,430 --> 00:09:45,130
+where he can find the library files,
+
+112
+00:09:45,130 --> 00:09:48,589
+and you have to provide the library file too.
+
+113
+00:09:48,589 --> 00:09:54,830
+This can be a bit exhausting to do all that
+command line,
+
+114
+00:09:54,830 --> 00:09:59,089
+all that configuration for all the libraries
+you use in a program.
+
+115
+00:09:59,089 --> 00:10:07,370
+Fortunately there exists a tool called <u>findlib</u>
+that will automates some generation of the
+
+116
+00:10:07,370 --> 00:10:09,380
+compilation options
+
+117
+00:10:09,380 --> 00:10:12,670
+that you want to provide to <u>ocamlc</u>.
+
+118
+00:10:12,670 --> 00:10:23,079
+Also <u>findlib</u> will take care of finding a
+place where to install a library and indexing
+
+119
+00:10:23,079 --> 00:10:26,490
+the libraries that are installed in your system.
+
+120
+00:10:26,490 --> 00:10:31,579
+OCaml comes with a build system tool named
+<u>ocamlbuild</u>.
+
+121
+00:10:31,579 --> 00:10:39,480
+Its role is to build compiled files, libraries,
+executable programs,
+
+122
+00:10:39,480 --> 00:10:43,130
+anything that can be produced by the compiler
+of OCaml
+
+123
+00:10:43,130 --> 00:10:47,079
+can also be produced by <u>ocamlbuild</u>.
+
+124
+00:10:47,079 --> 00:10:51,500
+What is interesting is the fact that <u>ocamlfind</u>
+computes for you
+
+125
+00:10:51,500 --> 00:10:56,910
+the dependencies between the modules.
+
+126
+00:10:56,910 --> 00:11:01,269
+It is also configurable using a file that
+will describe for instance
+
+127
+00:11:01,269 --> 00:11:07,990
+the libraries that you want to use to compile
+your program.
+
+128
+00:11:07,990 --> 00:11:11,290
+To do so it of course interacts with <u>findlib</u>.
+
+129
+00:11:11,290 --> 00:11:18,560
+And if there are some aspects that you want
+to do that are
+
+130
+00:11:18,560 --> 00:11:20,769
+very specific to your project,
+
+131
+00:11:20,769 --> 00:11:28,730
+it is also customizable using plugins that
+are written in OCaml.
+
+132
+00:11:28,730 --> 00:11:30,060
+But most of the time,
+
+133
+00:11:30,060 --> 00:11:36,519
+when you have a simple program like for instance
+just a bunch of ml files that you want to
+
+134
+00:11:36,519 --> 00:11:37,649
+compile
+
+135
+00:11:37,649 --> 00:11:44,560
+and modules for instance <u>a.ml</u> that corresponds
+to what should do your program,
+
+136
+00:11:44,560 --> 00:11:47,470
+then just by typing <u>ocamlbuild a.byte</u>,
+
+137
+00:11:47,470 --> 00:11:55,320
+it will compile <u>a.ml</u> with all its dependencies
+
+138
+00:11:55,320 --> 00:11:58,860
+and produce an executable program.
+
+139
+00:11:58,860 --> 00:12:00,200
+At another level,
+
+140
+00:12:00,200 --> 00:12:03,399
+OCaml has a package manager
+
+141
+00:12:03,399 --> 00:12:06,880
+and it is called <u>opam</u>.
+
+142
+00:12:06,880 --> 00:12:09,560
+I won't describe its use
+
+143
+00:12:09,560 --> 00:12:14,720
+but you can online and you will find enough
+documentation
+
+144
+00:12:14,720 --> 00:12:17,660
+to install it and to use it.
+
+145
+00:12:17,660 --> 00:12:24,709
+A package is a bunch of libraries and program
+files
+
+146
+00:12:24,709 --> 00:12:28,430
+that are useful to other developments.
+
+147
+00:12:28,430 --> 00:12:35,269
+So it's a way to build on top of the work
+of other people
+
+148
+00:12:35,269 --> 00:12:36,579
+your projects.
+
+149
+00:12:36,579 --> 00:12:40,670
+So it's a way to be very productive.
+
+150
+00:12:40,670 --> 00:12:46,839
+And <u>opam</u> gives you a nice, very nice tool
+to be able to get
+
+151
+00:12:46,839 --> 00:12:51,800
+all the packages that have been developed
+by our community.
+
+152
+00:12:51,800 --> 00:13:02,269
+Of course, maybe some day you will be able
+to define your own package,
+
+153
+00:13:02,269 --> 00:13:05,510
+your own project written in OCaml,
+
+154
+00:13:05,510 --> 00:13:09,670
+and contribute to our community of programmers.
+
+155
+00:13:09,670 --> 00:13:11,190
+So thank you a lot
+
+156
+00:13:11,190 --> 00:13:14,040
+to have followed this course,
+
+157
+00:13:14,040 --> 00:13:21,510
+and now we hope you are ready to tackle your
+first challenge: the project.
+

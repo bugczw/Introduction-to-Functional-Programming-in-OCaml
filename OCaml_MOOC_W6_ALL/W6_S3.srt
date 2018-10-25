@@ -1,0 +1,764 @@
+1
+00:00:00,229 --> 00:00:01,140
+Welcome back.
+
+2
+00:00:01,140 --> 00:00:11,080
+So, we have seen in our case study that the
+client has a reference to the module <u>Dict</u>.
+
+3
+00:00:11,080 --> 00:00:15,620
+And we noticed that a more configurable client,
+
+4
+00:00:15,620 --> 00:00:18,789
+hence a more reusable one,
+
+5
+00:00:18,789 --> 00:00:24,689
+would let us choose the dictionary implementation
+
+6
+00:00:24,689 --> 00:00:32,070
+in a second time, externally, when the module
+is already compiled.
+
+7
+00:00:32,070 --> 00:00:36,329
+That will be exactly the purpose of a module
+functor.
+
+8
+00:00:36,329 --> 00:00:43,879
+Our functorized client will have a reference
+to a module
+
+9
+00:00:43,879 --> 00:00:46,890
+which implements the dictionary interface.
+
+10
+00:00:46,890 --> 00:00:54,180
+So, let us come back to the example of the
+case study.
+
+11
+00:00:54,180 --> 00:00:56,809
+We have this module type for dictionary,
+
+12
+00:00:56,809 --> 00:00:59,739
+that is unchanged.
+
+13
+00:00:59,739 --> 00:01:05,420
+And now, we want to be able to reuse a client
+afterwards,
+
+14
+00:01:05,420 --> 00:01:08,140
+on different implementations of this dictionary.
+
+15
+00:01:08,140 --> 00:01:14,890
+So we introduce a functor which means that
+in the code,
+
+16
+00:01:14,890 --> 00:01:19,090
+we add an argument, but this argument takes
+not a value
+
+17
+00:01:19,090 --> 00:01:29,200
+but a module, <u>Dict</u> here, and we provide
+the signature for this module.
+
+18
+00:01:29,200 --> 00:01:33,170
+The rest of the code is unchanged.
+
+19
+00:01:33,170 --> 00:01:42,829
+But now, we have not a module but a functor,
+that is a parameterized module.
+
+20
+00:01:42,829 --> 00:01:47,960
+If we have two different implementations for
+the dictionary,
+
+21
+00:01:47,960 --> 00:01:58,170
+like this, on lists, or like that, on binary
+search trees,
+
+22
+00:01:58,170 --> 00:02:03,040
+now I can define not only one client,
+
+23
+00:02:03,040 --> 00:02:11,780
+but two clients, the first client that is
+implemented using the dictionary represented
+
+24
+00:02:11,780 --> 00:02:13,230
+by lists,
+
+25
+00:02:13,230 --> 00:02:20,800
+and another client whose dictionaries are
+implemented using binary search trees.
+
+26
+00:02:20,800 --> 00:02:27,930
+A functor is a function from modules to modules.
+
+27
+00:02:27,930 --> 00:02:34,489
+So, a functor is a module waiting for another
+module.
+
+28
+00:02:34,489 --> 00:02:43,110
+The syntax to define a functor mimics the
+definition of a function.
+
+29
+00:02:43,110 --> 00:02:47,739
+You start with standard syntax for module
+definition
+
+30
+00:02:47,739 --> 00:02:53,530
+and you just add after the identifier,
+
+31
+00:02:53,530 --> 00:02:59,150
+as an argument, the module that you are expecting.
+
+32
+00:02:59,150 --> 00:03:05,690
+This module must be constrainted by some signature.
+
+33
+00:03:05,690 --> 00:03:16,000
+In that case, OCaml is unable to infer the
+type of the module of a functor argument.
+
+34
+00:03:16,000 --> 00:03:24,090
+As any function, a functor can be applied.
+
+35
+00:03:24,090 --> 00:03:30,760
+So to apply a functor to a module you just
+use the name of your functor
+
+36
+00:03:30,760 --> 00:03:38,260
+and between parentheses the module that you
+want to provide to the functor.
+
+37
+00:03:38,260 --> 00:03:43,909
+In fact, this module can be a module identifier,
+
+38
+00:03:43,909 --> 00:03:49,709
+but also directly an implementation using
+<u>struct</u> and <u>end</u>,
+
+39
+00:03:49,709 --> 00:03:53,080
+or even an other functor application,
+
+40
+00:03:53,080 --> 00:03:58,230
+so that you can chain the application of functors
+if you want.
+
+41
+00:03:58,230 --> 00:04:04,480
+The language of signatures is extended to
+be able to handle functors.
+
+42
+00:04:04,480 --> 00:04:14,739
+We have just a new keyword <u>functor</u> with
+the type of the argument and the name of the
+
+43
+00:04:14,739 --> 00:04:15,439
+argument,
+
+44
+00:04:15,439 --> 00:04:18,870
+an arrow, and a signature.
+
+45
+00:04:18,870 --> 00:04:26,169
+The type that is in the argument can be mentioned
+
+46
+00:04:26,169 --> 00:04:29,930
+inside the definition of the signature.
+
+47
+00:04:29,930 --> 00:04:34,880
+If you goes through the documentation of the
+standard library of OCaml,
+
+48
+00:04:34,880 --> 00:04:40,870
+you will discover two very interesting modules
+and very useful ones:
+
+49
+00:04:40,870 --> 00:04:42,780
+<u>Set</u> and <u>Map</u>.
+
+50
+00:04:42,780 --> 00:04:53,509
+In fact, these two modules define functors
+that are waiting for an other module satisfying
+
+51
+00:04:53,509 --> 00:04:55,990
+the following signature.
+
+52
+00:04:55,990 --> 00:05:02,470
+This signature is named <u>OrderedType</u> because
+it contains a type <u>t</u>
+
+53
+00:05:02,470 --> 00:05:12,380
+which is equipped with a function that compares
+two values of type <u>t</u>
+
+54
+00:05:12,380 --> 00:05:18,580
+and produces 0 if these two values are equal,
+
+55
+00:05:18,580 --> 00:05:24,810
+and <u>-1</u> if the first one is greater than
+the second one,
+
+56
+00:05:24,810 --> 00:05:28,680
+and <u>1</u> otherwise.
+
+57
+00:05:28,680 --> 00:05:35,310
+Then if you are able to construct such a module,
+
+58
+00:05:35,310 --> 00:05:40,030
+and you apply the functor <u>Set.Make</u> on it,
+
+59
+00:05:40,030 --> 00:05:44,560
+then you will get a very large number of functions
+
+60
+00:05:44,560 --> 00:05:53,139
+that manipulate sets whose elements have type
+<u>E.t</u>.
+
+61
+00:05:53,139 --> 00:06:00,380
+Similarly, if you apply <u>Map.Make</u> on this
+module,
+
+62
+00:06:00,380 --> 00:06:10,530
+you will get a large set of functions manipulating
+maps whose keys are of type <u>E.t</u>.
+
+63
+00:06:10,530 --> 00:06:17,000
+So remember another remark that we have done
+about the case study in the last sequence.
+
+64
+00:06:17,000 --> 00:06:29,259
+We've said that it was a pity that the exception
+<u>NotFound</u> cannot be adjusted in a way
+
+65
+00:06:29,259 --> 00:06:33,360
+that it carries the key that has not been
+found.
+
+66
+00:06:33,360 --> 00:06:36,460
+It would a more informative exception.
+
+67
+00:06:36,460 --> 00:06:43,630
+But it was not possible because the type parameter
+<u>'key</u> should then be shared between the type
+
+68
+00:06:43,630 --> 00:06:45,039
+of dictionaries
+
+69
+00:06:45,039 --> 00:06:46,419
+and the type of the exception,
+
+70
+00:06:46,419 --> 00:06:50,410
+but the type of exceptions in OCaml cannot
+be polymorphic.
+
+71
+00:06:50,410 --> 00:06:58,660
+In fact, such a type parameterization can
+be done using a functor.
+
+72
+00:06:58,660 --> 00:07:06,270
+So, let us come back to our example of the
+case study.
+
+73
+00:07:06,270 --> 00:07:15,060
+We had a signature that was a bit different
+from the one that we have here.
+
+74
+00:07:15,060 --> 00:07:22,099
+So previously we had a parameterized type
+with two parameters,
+
+75
+00:07:22,099 --> 00:07:28,889
+but we said that we want to share the type
+parameter <u>'key</u>
+
+76
+00:07:28,889 --> 00:07:31,039
+between several definitions.
+
+77
+00:07:31,039 --> 00:07:35,490
+So we have split this type in two.
+
+78
+00:07:35,490 --> 00:07:39,780
+And now it is a component of the signature
+of the module.
+
+79
+00:07:39,780 --> 00:07:48,039
+It's simply a type <u>key</u> that should be given
+inside the type of the module.
+
+80
+00:07:48,039 --> 00:07:55,169
+So now, this type <u>key</u> can be used not only
+in the definition of functions,
+
+81
+00:07:55,169 --> 00:08:01,479
+like this, but also in the definition of exception.
+
+82
+00:08:01,479 --> 00:08:09,020
+So now, <u>NotFound</u> can carry the key.
+
+83
+00:08:09,020 --> 00:08:20,229
+How can we now implement a module that fulfills
+this signature?
+
+84
+00:08:20,229 --> 00:08:27,650
+Well, we have to provide a way to give this
+type <u>key</u>
+
+85
+00:08:27,650 --> 00:08:33,310
+so we will give it through a module argument.
+
+86
+00:08:33,310 --> 00:08:41,019
+So <u>Dict</u> is now a functor, it is a function
+from module to module.
+
+87
+00:08:41,019 --> 00:08:50,170
+So it takes a module <u>Key</u> whose signature
+is a type <u>t</u>
+
+88
+00:08:50,170 --> 00:08:53,160
+which is a type for keys,
+
+89
+00:08:53,160 --> 00:09:01,940
+and also a comparison function working on
+keys.
+
+90
+00:09:01,940 --> 00:09:07,600
+We can use this module inside the implementation
+of the functor body,
+
+91
+00:09:07,600 --> 00:09:17,510
+so type <u>key</u> can be equal to the module <u>Key</u>
+which was given as an argument,
+
+92
+00:09:17,510 --> 00:09:22,630
+dot <u>t</u>, so the type <u>t</u> in the provided module.
+
+93
+00:09:22,630 --> 00:09:24,790
+That's nice.
+
+94
+00:09:24,790 --> 00:09:30,370
+After that, the code is essentially the same
+as before,
+
+95
+00:09:30,370 --> 00:09:34,200
+except that during the lookup you can use
+now
+
+96
+00:09:34,200 --> 00:09:39,320
+the comparison function that is found in the
+module argument
+
+97
+00:09:39,320 --> 00:09:43,600
+to compare the keys when you are looking for
+some key.
+
+98
+00:09:43,600 --> 00:09:48,100
+OK, so let's see if this is working.
+
+99
+00:09:48,100 --> 00:09:51,940
+So, first, evaluate the signature,
+
+100
+00:09:51,940 --> 00:09:54,740
+after that, the functor,
+
+101
+00:09:54,740 --> 00:09:59,839
+and we can notice that the inferred signature
+
+102
+00:09:59,839 --> 00:10:13,470
+indeed introduces a functor with a description
+of the signature of its input module.
+
+103
+00:10:13,470 --> 00:10:24,700
+So now we can apply this functor on a module
+that defines the type for <u>key</u> which is equal
+
+104
+00:10:24,700 --> 00:10:25,850
+to <u>string</u>
+
+105
+00:10:25,850 --> 00:10:33,709
+and let's say to compare two keys we will
+first lowercase them,
+
+106
+00:10:33,709 --> 00:10:38,640
+so that if there is some cases that are different
+between two keys
+
+107
+00:10:38,640 --> 00:10:40,709
+that means the same,
+
+108
+00:10:40,709 --> 00:10:46,890
+they will be made equal by this comparison
+function.
+
+109
+00:10:46,890 --> 00:10:51,480
+So this one is accepted.
+
+110
+00:10:51,480 --> 00:10:56,170
+We now have a dictionary,
+
+111
+00:10:56,170 --> 00:11:02,500
+and let's try to use it in a client.
+
+112
+00:11:02,500 --> 00:11:04,860
+So our client is now a functor
+
+113
+00:11:04,860 --> 00:11:10,380
+that is waiting for a module implementing
+the signature for dictionary.
+
+114
+00:11:10,380 --> 00:11:13,700
+So let's try to evaluate this.
+
+115
+00:11:13,700 --> 00:11:18,130
+Oww... We have a typing error.
+
+116
+00:11:18,130 --> 00:11:25,120
+It says <u>"luke"</u> is a <u>string</u>, but you must
+provide a <u>Dict.key</u>.
+
+117
+00:11:25,120 --> 00:11:29,790
+Oh yes, <u>Dict.key</u> is an abstract type,
+
+118
+00:11:29,790 --> 00:11:36,810
+so there is no reason that it is equal to
+<u>string</u>.
+
+119
+00:11:36,810 --> 00:11:42,779
+So what we have to do is to express the fact
+that
+
+120
+00:11:42,779 --> 00:11:54,529
+here the type <u>key</u> must be equal to <u>string</u>.
+
+121
+00:11:54,529 --> 00:11:55,760
+OK?
+
+122
+00:11:55,760 --> 00:12:04,079
+Because after that with this extra information
+the program
+
+123
+00:12:04,079 --> 00:12:07,000
+that was rejected will be accepted.
+
+124
+00:12:07,000 --> 00:12:12,870
+So what I've written here is what is called
+a typing constraint,
+
+125
+00:12:12,870 --> 00:12:14,910
+that is put on a signature.
+
+126
+00:12:14,910 --> 00:12:20,700
+It's a way to give more information to the
+body of the functor.
+
+127
+00:12:20,700 --> 00:12:22,800
+So let's see if this is accepted...
+
+128
+00:12:22,800 --> 00:12:24,870
+Oh yes, it is!
+
+129
+00:12:24,870 --> 00:12:26,050
+Nice.
+
+130
+00:12:26,050 --> 00:12:27,139
+Can I continue?
+
+131
+00:12:27,139 --> 00:12:40,430
+Yes, I can try to now instanciate some archive
+using this functor,
+
+132
+00:12:40,430 --> 00:12:45,990
+and implementing the dictionary using the
+first implementation of the dictionary.
+
+133
+00:12:45,990 --> 00:12:47,779
+Is it accepted?
+
+134
+00:12:47,779 --> 00:12:51,040
+Oh no... Why?
+
+135
+00:12:51,040 --> 00:12:54,430
+Yes, I see why.
+
+136
+00:12:54,430 --> 00:13:02,120
+<u>Dict1</u> is a module that also has the type
+for <u>key</u> that is abstract
+
+137
+00:13:02,120 --> 00:13:07,850
+so I have to, again, express more information
+about the relation
+
+138
+00:13:07,850 --> 00:13:11,790
+between the type of the key of the output
+module
+
+139
+00:13:11,790 --> 00:13:13,839
+and the type of the key of the input module.
+
+140
+00:13:13,839 --> 00:13:18,000
+And again, I can use a typing constraint to
+do so.
+
+141
+00:13:18,000 --> 00:13:26,519
+So I will write a new functor for <u>Dict</u> that
+says
+
+142
+00:13:26,519 --> 00:13:32,779
+that the output module will fulfills the typing
+constraint
+
+143
+00:13:32,779 --> 00:13:38,560
+that the type <u>key</u> that is inside this module
+is equal to the type <u>key</u> that is provided
+
+144
+00:13:38,560 --> 00:13:40,510
+in the input module argument.
+
+145
+00:13:40,510 --> 00:13:50,070
+And now, even if these two types are abstract,
+
+146
+00:13:50,070 --> 00:13:56,560
+there are made equal in the output of the
+functor.
+
+147
+00:13:56,560 --> 00:14:08,660
+I I try now to apply the <u>ForceArchive</u> functor
+to <u>Dict1</u>,
+
+148
+00:14:08,660 --> 00:14:15,949
+sorry, <u>Dict1</u> has to be redefined too...
+
+149
+00:14:15,949 --> 00:14:36,510
+OK, so if I now apply my functor it's accepted,
+
+150
+00:14:36,510 --> 00:14:41,910
+and moreover I can see that now my exception
+is informative,
+
+151
+00:14:41,910 --> 00:14:48,300
+saying that <u>"r2d2"</u> is not a Jedi.
+
+152
+00:14:48,300 --> 00:14:51,600
+What we have seen with this example is
+
+153
+00:14:51,600 --> 00:14:58,600
+first, a very nice way to implement type parameterization
+
+154
+00:14:58,600 --> 00:15:05,250
+between several components, an exception definition
+and values and so on,
+
+155
+00:15:05,250 --> 00:15:09,100
+but also we have seen that sometimes,
+
+156
+00:15:09,100 --> 00:15:15,360
+type abstraction must be relaxed a little
+bit a posteriori, afterwards.
+
+157
+00:15:15,360 --> 00:15:20,199
+And this is exactly the role of a type constraint.
+
+158
+00:15:20,199 --> 00:15:26,600
+It expresses the fact that some typing signature
+which is abstract
+
+159
+00:15:26,600 --> 00:15:36,209
+verifies, satisfies, some constraints, some
+equalities with other types.
+
+160
+00:15:36,209 --> 00:15:42,230
+So when you have a type constraint on a signature
+
+161
+00:15:42,230 --> 00:15:50,680
+it restricts the usage and the definition
+of the functor you are defining.
+
+162
+00:15:50,680 --> 00:15:56,940
+But in exchange, the functor client will get
+more guarantees about abstract types.
+
+163
+00:15:56,940 --> 00:16:03,769
+The fact that two types for instance share
+the same definition even if
+
+164
+00:16:03,769 --> 00:16:08,589
+you don't know exactly what this definition
+is.
+
+165
+00:16:08,589 --> 00:16:19,000
+The syntax to put a type constraint on a signature
+is
+
+166
+00:16:19,000 --> 00:16:28,240
+just a signature and then a sequence of type
+equalities
+
+167
+00:16:28,240 --> 00:16:34,610
+that are introduced using the keyword <u>with</u>
+and separated
+
+168
+00:16:34,610 --> 00:16:37,490
+using the keyword <u>and</u>.
+

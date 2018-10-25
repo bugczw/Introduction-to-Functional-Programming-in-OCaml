@@ -52,3 +52,11 @@
 	* S4: Mutable arrays
 	* S5: Mutable record fields
 	* S6: Variables, aka References
+	
+	
+6. _Week 6: Modules and data abstraction:_	
+    * S0: Structuring software with modules
+	* S1: Information hiding 
+	* S2: Case study: A module for dictionaries
+	* S3: __Functors__ 
+	* S4: Modules as compilation units 
